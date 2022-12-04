@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TheDreaming">
+        <item name="the_dreaming_background_color">@android:color/holo_green_dark</item>
+        <item name="the_dreaming_stroke_color">@android:color/holo_red_dark</item>
+    </style>
+</resources>

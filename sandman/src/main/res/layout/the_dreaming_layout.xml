@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/the_dreaming_background"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/td_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/td_dreams_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp" />
+
+</merge>
