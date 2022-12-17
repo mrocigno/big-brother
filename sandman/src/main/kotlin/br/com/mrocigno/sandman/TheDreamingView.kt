@@ -1,10 +1,9 @@
 package br.com.mrocigno.sandman
 
-import android.app.Activity
-import android.content.ContextWrapper
 import android.transition.TransitionManager
 import android.view.ContextThemeWrapper
 import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
 import androidx.core.transition.doOnEnd
 import androidx.core.transition.doOnStart
@@ -38,13 +37,17 @@ class TheDreamingView(
         isInvisible = true
         setPadding(resources.getDimensionPixelSize(R.dimen.spacing_stroke))
 
-        doOnPreDraw {
-            y = statusBarHeight + vortex.height.toFloat()
-            layoutParams = LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                measuredHeight - vortex.height - navigationBarHeight - statusBarHeight
-            )
-        }
+
+        viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                viewTreeObserver.removeOnGlobalLayoutListener(this)
+                y = statusBarHeight + vortex.height.toFloat()
+                layoutParams = LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    measuredHeight - vortex.height - navigationBarHeight - statusBarHeight
+                )
+            }
+        })
 
         val list = mutableListOf<DreamData>()
         TheDreaming.getDream(activity::class)?.let(list::addAll)

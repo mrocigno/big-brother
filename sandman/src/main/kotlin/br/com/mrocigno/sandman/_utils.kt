@@ -1,11 +1,19 @@
 package br.com.mrocigno.sandman
 
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.res.Configuration
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewConfiguration
+import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -54,3 +62,14 @@ internal val Fragment.decorView: FrameLayout? get() =
     if (this is AppCompatDialogFragment) {
         dialog?.window?.decorView as? FrameLayout
     } else null
+
+internal fun ViewGroup.inflate(@LayoutRes resId: Int) =
+    LayoutInflater.from(context).inflate(resId, this, false)
+
+internal fun Context.copyToClipboard(text: String, toastFeedback: String? = null) {
+    val clipboard = getSystemService(ClipboardManager::class.java)
+    clipboard.setPrimaryClip(ClipData.newPlainText("value", text))
+    toastFeedback?.run {
+        Toast.makeText(this@copyToClipboard, toastFeedback, Toast.LENGTH_SHORT).show()
+    }
+}

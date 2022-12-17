@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
 import android.graphics.RectF
+import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.VelocityTracker
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.FrameLayout
+import androidx.core.graphics.toRect
 import androidx.core.view.contains
 import androidx.core.view.updateLayoutParams
 import androidx.dynamicanimation.animation.DynamicAnimation
@@ -29,9 +31,6 @@ class VortexView @JvmOverloads constructor(
     val theDreamingView = TheDreamingView(this)
     val moveDuration = 200L
 
-    private val flingX = FlingAnimation(this, DynamicAnimation.X)
-    private val flingY = FlingAnimation(this, DynamicAnimation.Y)
-    private var velocity: VelocityTracker? = null
     private var downMillis: Long = 0L
 
     private val statusBarHeight = (context as Activity).statusBarHeight.toFloat()
@@ -88,8 +87,6 @@ class VortexView @JvmOverloads constructor(
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 downMillis = System.currentTimeMillis()
-                velocity = velocity ?: VelocityTracker.obtain()
-                velocity?.addMovement(event)
                 alpha = 1f
             }
             MotionEvent.ACTION_MOVE -> {
@@ -100,21 +97,11 @@ class VortexView @JvmOverloads constructor(
                         y = removableView.y
                     }
                 } else {
-                    velocity?.apply {
-                        addMovement(event)
-                        computeCurrentVelocity(5000)
-
-                        val pointerId = event.getPointerId(event.actionIndex)
-                        flingX.setStartVelocity(getXVelocity(pointerId))
-                        flingY.setStartVelocity(getYVelocity(pointerId))
-                    }
                     updateLayoutParams<LayoutParams> {
                         x = max(area.left, min(event.rawX - width / 2, area.right))
                         y = max(area.top, min(event.rawY - height / 2, area.bottom))
-
-                        flingX.setStartValue(x)
-                        flingY.setStartValue(y)
                     }
+
                 }
                 if (parentVG.contains(theDreamingView)) theDreamingView.collapse()
             }
@@ -123,17 +110,7 @@ class VortexView @JvmOverloads constructor(
                 if (!move) return
                 if (isInRemovableArea(event)) {
                      Morpheus.killVortex(this)
-                } else {
-                    flingX.setMinValue(area.left)
-                    flingX.setMaxValue(area.right)
-                    flingX.start()
-
-                    flingY.setMinValue(area.top)
-                    flingY.setMaxValue(area.bottom)
-                    flingY.start()
                 }
-                velocity?.recycle()
-                velocity = null
             }
         }
     }
@@ -203,5 +180,13 @@ class VortexView @JvmOverloads constructor(
 
     private fun RectF.intersects(bounds: RectF): Boolean {
         return intersects(bounds.left, bounds.top, bounds.right, bounds.bottom)
+    }
+
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            systemGestureExclusionRects = listOf(this.bounds.toRect())
+        }
     }
 }

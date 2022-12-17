@@ -2,4 +2,14 @@
 <resources>
 
     <color name="the_dreaming_background">#FFE0E0E0</color>
+
+    <color name="brand_default">#FF5722</color>
+    <color name="brand_secondary">#A83612</color>
+
+    <color name="co_brand_default">#FF242424</color>
+    <color name="co_brand_secondary">#FF000000</color>
+
+    <color name="text_title">#FF000000</color>
+    <color name="text_paragraph">#FF808080</color>
+    <color name="text_hyperlink">#FF007BFF</color>
 </resources>
