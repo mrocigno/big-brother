@@ -12,7 +12,7 @@ import androidx.annotation.StyleRes
 open class TheDreamingProvider : ContentProvider() {
 
     @DrawableRes
-    protected open val iconRes = R.drawable.remove_area_background
+    protected open val iconRes = R.drawable.ic_sandman
     @StyleRes
     protected open val themeRes = R.style.TheDreaming
     protected open val initialLocation = PointF(0f, 200f)

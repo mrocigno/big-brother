@@ -5,9 +5,9 @@ import android.view.ContextThemeWrapper
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.core.transition.doOnEnd
 import androidx.core.transition.doOnStart
-import androidx.core.view.doOnPreDraw
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.view.setPadding
@@ -30,6 +30,13 @@ class TheDreamingView(
 
     private val tabHeader: TabLayout get() = findViewById(R.id.td_tab_layout)
     private val viewPager: ViewPager2 get() = findViewById(R.id.td_dreams_vp)
+
+    private val onBackPressed = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            vortex.animateBack()
+            remove()
+        }
+    }
 
     init {
         setBackgroundResource(R.drawable.the_dreaming_background)
@@ -66,10 +73,13 @@ class TheDreamingView(
 
         TransitionManager.beginDelayedTransition(parentVG, CircularRevealTransition())
         isVisible = true
+
+        activity.onBackPressedDispatcher.addCallback(onBackPressed)
     }
 
     fun collapse() {
         if (isAnimationRunning) return
+        onBackPressed.remove()
         isExpanded = false
         vortex.setBackgroundResource(TheDreaming.config.iconRes)
 

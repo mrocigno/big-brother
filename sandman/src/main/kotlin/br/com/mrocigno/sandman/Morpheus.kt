@@ -44,9 +44,17 @@ class Morpheus : ActivityLifecycleCallbacks {
         }
     }
 
-    override fun onActivityStarted(activity: Activity) {}
+    override fun onActivityPaused(activity: Activity) {
+        val vortex = activity.vortex
+        lastPoint.set(vortex.x, vortex.y)
+    }
+
+    override fun onActivityStarted(activity: Activity) {
+        activity.vortex.x = lastPoint.x
+        activity.vortex.y = lastPoint.y
+    }
+
     override fun onActivityResumed(activity: Activity) {}
-    override fun onActivityPaused(activity: Activity) {}
     override fun onActivityStopped(activity: Activity) {}
     override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) {}
     override fun onActivityDestroyed(activity: Activity) {}

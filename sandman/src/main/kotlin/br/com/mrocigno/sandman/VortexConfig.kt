@@ -10,7 +10,7 @@ class VortexConfig(
     val size: Int = 0,
     val disabledAlpha: Float = .5f,
     @StyleRes val themeRes: Int = R.style.TheDreaming,
-    @DrawableRes val iconRes: Int = 0,
+    @DrawableRes val iconRes: Int = R.drawable.ic_sandman,
 ) {
 
     fun initial(vortexView: VortexView) = vortexView.apply {
