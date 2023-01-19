@@ -3,4 +3,5 @@
 
     <attr name="the_dreaming_background_color" format="color"/>
     <attr name="the_dreaming_stroke_color" format="color"/>
+    <attr name="the_dreaming_primary_color" format="color"/>
 </resources>

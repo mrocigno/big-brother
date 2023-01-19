@@ -8,6 +8,7 @@ import android.graphics.PointF
 import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
+import com.jakewharton.threetenabp.AndroidThreeTen
 
 open class TheDreamingProvider : ContentProvider() {
 
@@ -22,6 +23,7 @@ open class TheDreamingProvider : ContentProvider() {
     }
 
     override fun onCreate(): Boolean {
+        AndroidThreeTen.init(context)
         TheDreaming.config = VortexConfig(
             initialLocation = initialLocation,
             size = size,

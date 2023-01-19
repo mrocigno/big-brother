@@ -20,5 +20,12 @@
     <style name="TheDreaming">
         <item name="the_dreaming_background_color">@android:color/holo_green_dark</item>
         <item name="the_dreaming_stroke_color">@android:color/holo_red_dark</item>
+        <item name="the_dreaming_primary_color">?colorPrimary</item>
+    </style>
+
+    <style name="TextAppearance_Tab">
+        <item name="android:fontFamily">@font/courier_bold</item>
+        <item name="android:textColor">@color/text_title</item>
+        <item name="android:textSize">15sp</item>
     </style>
 </resources>

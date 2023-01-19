@@ -4,5 +4,6 @@
     <style name="CustomTheDreaming">
         <item name="the_dreaming_background_color">@color/the_dreaming_background</item>
         <item name="the_dreaming_stroke_color">@android:color/black</item>
+        <item name="the_dreaming_primary_color">?colorPrimary</item>
     </style>
 </resources>

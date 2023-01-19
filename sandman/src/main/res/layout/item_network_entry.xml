@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/net_entry_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/background_method"
+        android:backgroundTint="@color/icon_positive_50">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/net_entry_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:textColor="@color/text_title"
+            android:textSize="11sp"
+            app:fontFamily="@font/lato"
+            app:layout_constraintBottom_toBottomOf="@id/net_entry_method"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/net_entry_method"
+            tools:text="12:00" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/net_entry_method"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textColor="@color/text_title"
+            android:textSize="20sp"
+            app:fontFamily="@font/lato"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="POST: 200" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/net_entry_elapsed_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/text_title"
+            android:textSize="11sp"
+            app:fontFamily="@font/lato"
+            app:layout_constraintBottom_toBottomOf="@id/net_entry_method"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/net_entry_method"
+            tools:text="300ms" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/net_entry_url"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:maxLines="2"
+            android:textColor="@color/text_title"
+            android:textSize="15sp"
+            app:autoSizeMaxTextSize="15sp"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeTextType="uniform"
+            app:fontFamily="@font/courier_bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/net_entry_method"
+            tools:text="/github" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

@@ -5,4 +5,6 @@
     <string name="json_viewer_expand_click">clique para expandir</string>
     <string name="json_viewer_disclaimer">Clique e segure em cima de qualquer item para copiar os dados</string>
     <string name="json_viewer_copy_feedback">key %1s copiado</string>
+
+    <string name="network_search_hint">Procure por metodo, status code ou url</string>
 </resources>

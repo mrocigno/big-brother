@@ -12,4 +12,9 @@
     <color name="text_title">#FF000000</color>
     <color name="text_paragraph">#FF808080</color>
     <color name="text_hyperlink">#FF007BFF</color>
+
+    <color name="icon_negative_50">#33FF0000</color>
+    <color name="icon_positive_50">#3308FF00</color>
+
+    <color name="divider">#22000000</color>
 </resources>
