@@ -142,7 +142,6 @@ class VortexView @JvmOverloads constructor(
         animate()
             .x(parentVG.width / 2f - width / 2)
             .y(statusBarHeight)
-            .setInterpolator(OvershootInterpolator())
             .setDuration(moveDuration)
             .withEndAction {
                 parentVG.addView(theDreamingView)
@@ -158,7 +157,6 @@ class VortexView @JvmOverloads constructor(
             .x(config.initialLocation.x)
             .y(config.initialLocation.y)
             .alpha(config.disabledAlpha)
-            .setInterpolator(OvershootInterpolator())
             .setStartDelay((moveDuration * 1.25).roundToLong())
             .setDuration(moveDuration)
             .start()

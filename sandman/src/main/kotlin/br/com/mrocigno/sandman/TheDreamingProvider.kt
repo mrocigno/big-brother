@@ -14,8 +14,6 @@ open class TheDreamingProvider : ContentProvider() {
 
     @DrawableRes
     protected open val iconRes = R.drawable.ic_sandman
-    @StyleRes
-    protected open val themeRes = R.style.TheDreaming
     protected open val initialLocation = PointF(0f, 200f)
     protected open val disabledAlpha = .5f
     protected open val size by lazy {
@@ -28,8 +26,7 @@ open class TheDreamingProvider : ContentProvider() {
             initialLocation = initialLocation,
             size = size,
             disabledAlpha = disabledAlpha,
-            iconRes = iconRes,
-            themeRes = themeRes
+            iconRes = iconRes
         )
         Morpheus.init(context as Application)
         return true

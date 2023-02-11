@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/the_dreaming_background"
+    android:fitsSystemWindows="false"
+    app:layoutDescription="@xml/activity_network_entry_scene">
+
+    <View
+        android:id="@+id/net_entry_details_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/icon_negative"
+        app:layout_constraintBottom_toBottomOf="@id/net_entry_details_general_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/net_entry_details_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/net_entry_details_status_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_title"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/net_entry_details_toolbar"
+        tools:text="403" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/net_entry_details_method"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_title"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/net_entry_details_status_code"
+        tools:text="POST" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/net_entry_details_general_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/text_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/net_entry_details_method" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/net_entry_details_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/net_entry_details_background">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/net_entry_details_request_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_secondary_radius_top"
+                android:drawableStart="@drawable/ic_arrow_forward"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="REQUEST"
+                android:textColor="@color/text_title"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/net_entry_details_request_headers_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_tertiary_radius_bot"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@id/net_entry_details_request_title"
+                app:layout_constraintStart_toStartOf="@id/net_entry_details_request_title"
+                app:layout_constraintTop_toBottomOf="@id/net_entry_details_request_title">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/net_entry_details_request_headers_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Headers"
+                    android:textColor="@color/text_title"
+                    android:textStyle="bold" />
+
+                <HorizontalScrollView
+                    android:id="@+id/net_entry_details_request_headers_horizontal_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/net_entry_details_request_headers_title">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/net_entry_details_request_headers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textColor="@color/text_paragraph"
+                        app:fontFamily="@font/courier_regular"
+                        tools:text="headers" />
+
+                </HorizontalScrollView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/net_entry_details_request_body_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Body"
+                    android:textColor="@color/text_title"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/net_entry_details_request_title"
+                    app:layout_constraintTop_toBottomOf="@id/net_entry_details_request_headers_container" />
+
+                <HorizontalScrollView
+                    android:id="@+id/net_entry_details_request_body_horizontal_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/net_entry_details_request_body_title">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/net_entry_details_request_body"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textColor="@color/text_paragraph"
+                        app:fontFamily="@font/courier_regular"
+                        tools:text="body" />
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/net_entry_details_response_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/background_secondary_radius_top"
+                android:drawableStart="@drawable/ic_arrow_back"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="RESPONSE"
+                android:textColor="@color/text_title"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/net_entry_details_request_headers_container" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_tertiary_radius_bot"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@id/net_entry_details_response_title"
+                app:layout_constraintStart_toStartOf="@id/net_entry_details_response_title"
+                app:layout_constraintTop_toBottomOf="@id/net_entry_details_response_title">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/net_entry_details_response_headers_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Headers"
+                    android:textColor="@color/text_title"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/net_entry_details_response_title"
+                    app:layout_constraintTop_toBottomOf="@id/net_entry_details_response_title" />
+
+                <HorizontalScrollView
+                    android:id="@+id/net_entry_details_response_headers_horizontal_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/net_entry_details_response_headers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textColor="@color/text_paragraph"
+                        app:fontFamily="@font/courier_regular"
+                        tools:text="headers" />
+
+                </HorizontalScrollView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/net_entry_details_response_body_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Body"
+                    android:textColor="@color/text_title"
+                    android:textStyle="bold" />
+
+                <HorizontalScrollView
+                    android:id="@+id/net_entry_details_response_body_horizontal_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/net_entry_details_response_body"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textColor="@color/text_paragraph"
+                        app:fontFamily="@font/courier_regular"
+                        tools:text="body" />
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

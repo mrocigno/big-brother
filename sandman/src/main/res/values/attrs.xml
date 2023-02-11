@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <attr name="the_dreaming_background_color" format="color"/>
-    <attr name="the_dreaming_stroke_color" format="color"/>
-    <attr name="the_dreaming_primary_color" format="color"/>
-</resources>

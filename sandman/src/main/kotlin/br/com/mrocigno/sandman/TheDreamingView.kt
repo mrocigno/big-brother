@@ -18,9 +18,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class TheDreamingView(
     private val vortex: VortexView
-) : FrameLayout(ContextThemeWrapper(vortex.context, TheDreaming.config.themeRes)) {
+) : FrameLayout(vortex.context) {
 
-    private val activity get() = (context as ContextThemeWrapper).baseContext as FragmentActivity
+    private val activity get() = context as FragmentActivity
     private val statusBarHeight = activity.statusBarHeight
     private val navigationBarHeight = activity.getNavigationBarHeight()
     private val parentVG get() = parent as ViewGroup

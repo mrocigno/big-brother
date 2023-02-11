@@ -7,6 +7,7 @@ import android.content.Context
 import android.graphics.PointF
 import android.os.Bundle
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -74,6 +75,11 @@ class Morpheus : ActivityLifecycleCallbacks {
             (vortex?.parent as? ViewGroup)?.removeView(vortex)
             onVortextKilled?.invoke()
             onVortextKilled = null
+        }
+
+        fun killVortex(window: Window) {
+            val vortex = window.findViewById<VortexView>(R.id.vortex) ?: return
+            (vortex.parent as ViewGroup).removeView(vortex)
         }
     }
 }

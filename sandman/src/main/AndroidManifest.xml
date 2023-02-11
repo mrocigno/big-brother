@@ -6,5 +6,9 @@
         <activity
             android:name=".json.JsonViewerActivity"
             android:theme="@style/Theme.Sandman"/>
+
+        <activity
+            android:name=".network.NetworkEntryDetailsActivity"
+            android:theme="@style/Theme.Sandman"/>
     </application>
 </manifest>

@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
+import android.os.Build
+import android.os.Bundle
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -72,4 +75,14 @@ internal fun Context.copyToClipboard(text: String, toastFeedback: String? = null
     toastFeedback?.run {
         Toast.makeText(this@copyToClipboard, toastFeedback, Toast.LENGTH_SHORT).show()
     }
+}
+
+internal inline fun <reified T> Intent.getParcelableExtraCompat(key: String): T? = when {
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getParcelableExtra(key, T::class.java)
+    else -> @Suppress("DEPRECATION") getParcelableExtra(key) as? T?
+}
+
+internal inline fun <reified T> Bundle.getParcelableExtraCompat(key: String): T? = when {
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getParcelable(key, T::class.java)
+    else -> @Suppress("DEPRECATION") getParcelable(key) as? T?
 }

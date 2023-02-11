@@ -1,35 +1,69 @@
 package br.com.mrocigno.sandman.network
 
-import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.mrocigno.sandman.R
 import br.com.mrocigno.sandman.inflate
-import org.threeten.bp.format.DateTimeFormatter
 
 class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_network_entry)) {
 
+    private val dot: View by lazy { itemView.findViewById(R.id.net_entry_dot) }
     private val hour: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_hour) }
     private val method: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_method) }
     private val elapsedTime: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_elapsed_time) }
     private val container: ViewGroup by lazy { itemView.findViewById(R.id.net_entry_container) }
     private val url: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_url) }
 
-    private val context: Context get() = itemView.context
+    fun bind(
+        model: NetworkEntryModel,
+        query: String,
+        onEntryClick: (model: NetworkEntryModel) -> Unit
+    ) {
+        hour.text = model.hour.highlightQuery(query)
+        method.text = model.method.highlightQuery(query)
+        elapsedTime.text = model.elapsedTime.highlightQuery(query)
 
-    fun bind(model: NetworkEntryModel) {
-        hour.text = model.hour.format(DateTimeFormatter.ISO_TIME)
-        method.text = "${model.method}: ${model.statusCode}"
-        elapsedTime.text = model.elapsedTime
-        url.text = model.url
+        url.text = model.url.highlightQuery(query)
 
-        val containerColor = when (model.statusCode) {
-            in 200..399 -> R.color.icon_positive_50
-            else -> R.color.icon_negative_50
+        dot.byStatusCode(model.statusCode)
+        method.byMethod(model.method)
+
+        container.setOnClickListener {
+            onEntryClick.invoke(model)
         }
-        container.backgroundTintList = ColorStateList.valueOf(context.getColor(containerColor))
     }
+
+    private fun AppCompatTextView.byMethod(method: String) {
+        val color = when (method) {
+            "POST" -> R.color.net_entry_post
+            "PUT" -> R.color.net_entry_put
+            "GET" -> R.color.net_entry_get
+            "DELETE" -> R.color.net_entry_delete
+            else -> R.color.text_title
+        }
+        val colorList = ColorStateList.valueOf(context.getColor(color))
+        backgroundTintList = colorList
+        setTextColor(colorList)
+    }
+
+    private fun String.highlightQuery(query: String): CharSequence {
+        val index = indexOf(query, ignoreCase = true)
+        return if (index < 0) this
+            else SpannableStringBuilder(this).apply {
+                setSpan(
+                    ForegroundColorSpan(Color.YELLOW),
+                    index, index + query.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+    }
+
 }

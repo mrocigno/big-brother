@@ -9,7 +9,6 @@ class VortexConfig(
     val initialLocation: PointF = PointF(0f, 200f),
     val size: Int = 0,
     val disabledAlpha: Float = .5f,
-    @StyleRes val themeRes: Int = R.style.TheDreaming,
     @DrawableRes val iconRes: Int = R.drawable.ic_sandman,
 ) {
 

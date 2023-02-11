@@ -41,7 +41,11 @@ class JsonViewerActivity : AppCompatActivity(R.layout.activity_json_viewer) {
         }
 
         recycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        recycler.adapter = JsonViewerAdapter(json.toMutableList())
+        try {
+            recycler.adapter = JsonViewerAdapter(json.toMutableList())
+        } catch (e: IllegalArgumentException) {
+            finish()
+        }
 
         searchView.addTextChangedListener {
             val search = it?.toString()?.trim() ?: return@addTextChangedListener
