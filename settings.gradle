@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "Sandman"
 include ':app'
 include ':sandman'
+include ':dreaming'
