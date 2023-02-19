@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.mrocigno.sandman.R
+import br.com.mrocigno.sandman.highlightQuery
 import br.com.mrocigno.sandman.inflate
 
 class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_network_entry)) {
@@ -53,17 +54,4 @@ class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.i
         backgroundTintList = colorList
         setTextColor(colorList)
     }
-
-    private fun String.highlightQuery(query: String): CharSequence {
-        val index = indexOf(query, ignoreCase = true)
-        return if (index < 0) this
-            else SpannableStringBuilder(this).apply {
-                setSpan(
-                    ForegroundColorSpan(Color.YELLOW),
-                    index, index + query.length,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
-    }
-
 }

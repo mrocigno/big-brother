@@ -6,8 +6,12 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -22,6 +26,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 
 internal val Activity.statusBarHeight: Int get() {
     val resId = resources.getIdentifier("status_bar_height", "dimen", "android")
@@ -85,4 +91,20 @@ internal inline fun <reified T> Intent.getParcelableExtraCompat(key: String): T?
 internal inline fun <reified T> Bundle.getParcelableExtraCompat(key: String): T? = when {
     Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getParcelable(key, T::class.java)
     else -> @Suppress("DEPRECATION") getParcelable(key) as? T?
+}
+
+internal fun String.highlightQuery(query: String): CharSequence {
+    val index = indexOf(query, ignoreCase = true)
+    return if (index < 0) this
+    else SpannableStringBuilder(this).apply {
+        setSpan(
+            ForegroundColorSpan(Color.YELLOW),
+            index, index + query.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+    }
+}
+
+internal fun RecyclerView.disableChangeAnimation() {
+    (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
 }

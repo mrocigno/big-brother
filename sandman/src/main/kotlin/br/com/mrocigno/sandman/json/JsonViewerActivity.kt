@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mrocigno.sandman.Morpheus
 import br.com.mrocigno.sandman.R
+import br.com.mrocigno.sandman.disableChangeAnimation
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.json.JSONArray
@@ -42,6 +43,7 @@ class JsonViewerActivity : AppCompatActivity(R.layout.activity_json_viewer) {
             Toast.makeText(this, "click!", Toast.LENGTH_LONG).show()
         }
 
+        recycler.disableChangeAnimation()
         recycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         try {
             recycler.adapter = JsonViewerAdapter(json.toMutableList())

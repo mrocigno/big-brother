@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import br.com.mrocigno.sandman.R
+import br.com.mrocigno.sandman.disableChangeAnimation
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -30,7 +31,7 @@ class NetworkFragment : Fragment(R.layout.fragment_network) {
     }
 
     private fun setupRecycler() {
-        (recycler.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
+        recycler.disableChangeAnimation()
         recycler.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         recycler.adapter = NetworkEntryAdapter {
             startActivity(NetworkEntryDetailsActivity.intent(requireContext(), it))

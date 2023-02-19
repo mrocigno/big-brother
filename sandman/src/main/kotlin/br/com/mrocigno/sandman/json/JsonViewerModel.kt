@@ -1,5 +1,6 @@
 package br.com.mrocigno.sandman.json
 
+import androidx.recyclerview.widget.DiffUtil
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.StringBuilder
@@ -9,15 +10,18 @@ fun JSONObject.toListModel(lvl: Int): List<JsonViewerModel> {
 
     for (key in keys()) {
         val value = this[key]
+        val type = value::class.simpleName
+        val children = when (value) {
+            is JSONObject -> value.toListModel(lvl + 1)
+            is JSONArray -> value.toListModel(lvl + 1)
+            else -> null
+        }
         result.add(JsonViewerModel(
             key = key,
             value = value.toString(),
             lvl = lvl,
-            children = when (value) {
-                is JSONObject -> value.toListModel(lvl + 1)
-                is JSONArray -> value.toListModel(lvl + 1)
-                else -> null
-            }
+            children = children,
+            type = type.toString()
         ))
     }
 
@@ -29,15 +33,19 @@ fun JSONArray.toListModel(lvl: Int): List<JsonViewerModel> {
 
     for (index in 0 until length()) {
         val value = this[index]
+        val type = value::class.simpleName
+        val children = when (value) {
+            is JSONObject -> value.toListModel(lvl + 1)
+            is JSONArray -> value.toListModel(lvl + 1)
+            else -> null
+        }
+
         result.add(JsonViewerModel(
             key = index.toString(),
             value = value.toString(),
             lvl = lvl,
-            children = when (value) {
-                is JSONObject -> value.toListModel(lvl + 1)
-                is JSONArray -> value.toListModel(lvl + 1)
-                else -> null
-            }
+            children = children,
+            type = type.toString()
         ))
     }
 
@@ -49,11 +57,25 @@ class JsonViewerModel(
     val key: String,
     val value: String?,
     val children: List<JsonViewerModel>? = null,
-    var expanded: Boolean = false
+    var expanded: Boolean = false,
+    val type: String
 ) {
 
     override fun toString() = StringBuilder()
         .appendLine(key)
         .appendLine(value)
         .toString()
+
+    class Differ : DiffUtil.ItemCallback<JsonViewerModel>() {
+
+        override fun areItemsTheSame(oldItem: JsonViewerModel, newItem: JsonViewerModel) =
+            oldItem.lvl == newItem.lvl
+                && oldItem.key == newItem.key
+                && oldItem.value == newItem.value
+
+        override fun areContentsTheSame(
+            oldItem: JsonViewerModel,
+            newItem: JsonViewerModel
+        ) = false
+    }
 }
