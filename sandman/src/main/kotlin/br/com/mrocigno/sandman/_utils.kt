@@ -15,11 +15,11 @@ import android.text.style.ForegroundColorSpan
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.Fragment
@@ -93,12 +93,12 @@ internal inline fun <reified T> Bundle.getParcelableExtraCompat(key: String): T?
     else -> @Suppress("DEPRECATION") getParcelable(key) as? T?
 }
 
-internal fun String.highlightQuery(query: String): CharSequence {
+internal fun String.highlightQuery(query: String, @ColorInt color: Int = Color.YELLOW): CharSequence {
     val index = indexOf(query, ignoreCase = true)
     return if (index < 0) this
     else SpannableStringBuilder(this).apply {
         setSpan(
-            ForegroundColorSpan(Color.YELLOW),
+            ForegroundColorSpan(color),
             index, index + query.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )

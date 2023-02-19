@@ -14,7 +14,7 @@
                 motion:framePosition="50"
                 motion:keyPositionType="deltaRelative"
                 motion:motionTarget="@+id/net_entry_details_method"
-                motion:percentY=".1" />
+                motion:percentY=".30" />
         </KeyFrameSet>
     </Transition>
 

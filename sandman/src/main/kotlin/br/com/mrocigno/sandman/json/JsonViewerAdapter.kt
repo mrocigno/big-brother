@@ -1,15 +1,10 @@
 package br.com.mrocigno.sandman.json
 
 import android.graphics.Color
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.text.style.BackgroundColorSpan
-import android.text.style.ForegroundColorSpan
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.graphics.ColorUtils
-import androidx.core.text.color
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -140,7 +135,8 @@ class JsonViewerViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layo
     }
 
     private fun adjustContent(model: JsonViewerModel, query: String, onExpand: (model: JsonViewerModel) -> Unit) {
-        key.text = model.key.plus(":").highlightQuery(query)
+        val highlightColor = context.getColor(R.color.text_highlight)
+        key.text = model.key.plus(":").highlightQuery(query, highlightColor)
         if (model.children != null) {
             icon.isVisible = true
             if (model.expanded) {
@@ -155,7 +151,7 @@ class JsonViewerViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layo
             icon.isVisible = false
             itemView.setOnClickListener(null)
             value.setTextColor(context.getColor(R.color.text_paragraph))
-            value.text = model.value.toString().highlightQuery(query)
+            value.text = model.value.toString().highlightQuery(query, highlightColor)
         }
         itemView.setOnLongClickListener {
             context.copyToClipboard(

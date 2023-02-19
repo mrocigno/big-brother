@@ -13,6 +13,7 @@
     <color name="text_title">#FF000000</color>
     <color name="text_paragraph">#FF808080</color>
     <color name="text_hyperlink">#FF007BFF</color>
+    <color name="text_highlight">#FFFF5722</color>
 
     <color name="icon_negative">#FF2626</color>
     <color name="icon_positive">#07B300</color>
