@@ -7,16 +7,11 @@ import android.graphics.RectF
 import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.VelocityTracker
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.OvershootInterpolator
 import android.widget.FrameLayout
 import androidx.core.graphics.toRect
 import androidx.core.view.contains
-import androidx.core.view.updateLayoutParams
-import androidx.dynamicanimation.animation.DynamicAnimation
-import androidx.dynamicanimation.animation.FlingAnimation
 import java.lang.Float.max
 import java.lang.Float.min
 import kotlin.math.roundToLong
@@ -28,8 +23,8 @@ class VortexView @JvmOverloads constructor(
     private val config: VortexConfig = TheDreaming.config
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    val theDreamingView = TheDreamingView(this)
-    val moveDuration = 200L
+    private val theDreamingView = TheDreamingView(this)
+    private val moveDuration = 200L
 
     private var downMillis: Long = 0L
 
@@ -92,16 +87,11 @@ class VortexView @JvmOverloads constructor(
             MotionEvent.ACTION_MOVE -> {
                 if (!move) return
                 if (isInRemovableArea(event)) {
-                    updateLayoutParams<LayoutParams> {
-                        x = removableView.x
-                        y = removableView.y
-                    }
+                    x = removableView.x
+                    y = removableView.y
                 } else {
-                    updateLayoutParams<LayoutParams> {
-                        x = max(area.left, min(event.rawX - width / 2, area.right))
-                        y = max(area.top, min(event.rawY - height / 2, area.bottom))
-                    }
-
+                    x = max(area.left, min(event.rawX - width / 2, area.right))
+                    y = max(area.top, min(event.rawY - height / 2, area.bottom))
                 }
                 if (parentVG.contains(theDreamingView)) theDreamingView.collapse()
             }
@@ -109,7 +99,7 @@ class VortexView @JvmOverloads constructor(
                 fadeAnimation.start()
                 if (!move) return
                 if (isInRemovableArea(event)) {
-                     Morpheus.killVortex(this)
+                     Sandman.killVortex(this)
                 }
             }
         }

@@ -7,7 +7,6 @@ import android.database.Cursor
 import android.graphics.PointF
 import android.net.Uri
 import androidx.annotation.DrawableRes
-import androidx.annotation.StyleRes
 import com.jakewharton.threetenabp.AndroidThreeTen
 
 open class TheDreamingProvider : ContentProvider() {
@@ -28,7 +27,7 @@ open class TheDreamingProvider : ContentProvider() {
             disabledAlpha = disabledAlpha,
             iconRes = iconRes
         )
-        Morpheus.init(context as Application)
+        Sandman.init(context as Application)
         return true
     }
 

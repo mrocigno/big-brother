@@ -12,11 +12,11 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
-class Morpheus : ActivityLifecycleCallbacks {
+class Sandman : ActivityLifecycleCallbacks {
 
     private val lastPoint = PointF(0f, 200f)
-    private val Activity.vortex: VortexView get() = findViewById(R.id.vortex) ?: create(this)
-    private val Fragment.vortex: VortexView get() = decorView?.findViewById(R.id.vortex) ?: create(requireContext())
+    private val Activity.vortex: VortexView? get() = findViewById(R.id.vortex)
+    private val Fragment.vortex: VortexView? get() = decorView?.findViewById(R.id.vortex)
 
     private fun create(context: Context) = VortexView(context).apply {
         id = R.id.vortex
@@ -25,14 +25,14 @@ class Morpheus : ActivityLifecycleCallbacks {
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
         if (!isVortexAlive) return
         try {
-            (activity.window.decorView as FrameLayout).addView(activity.vortex)
+            (activity.window.decorView as FrameLayout).addView(activity.vortex ?: create(activity))
 
             if (activity is AppCompatActivity) {
                 activity.supportFragmentManager.addFragmentOnAttachListener { _, fragment ->
                     if (!isVortexAlive) return@addFragmentOnAttachListener
                     with(fragment.lifecycle) {
                         onStart {
-                            fragment.decorView?.addView(fragment.vortex)
+                            fragment.decorView?.addView(fragment.vortex ?: create(activity))
                         }
                         onStop {
                             fragment.decorView?.removeView(fragment.vortex)
@@ -46,13 +46,13 @@ class Morpheus : ActivityLifecycleCallbacks {
     }
 
     override fun onActivityPaused(activity: Activity) {
-        val vortex = activity.vortex
+        val vortex = activity.vortex ?: return
         lastPoint.set(vortex.x, vortex.y)
     }
 
     override fun onActivityStarted(activity: Activity) {
-        activity.vortex.x = lastPoint.x
-        activity.vortex.y = lastPoint.y
+        activity.vortex?.x = lastPoint.x
+        activity.vortex?.y = lastPoint.y
     }
 
     override fun onActivityResumed(activity: Activity) {}
@@ -62,19 +62,19 @@ class Morpheus : ActivityLifecycleCallbacks {
 
     companion object {
 
-        private var onVortextKilled: (() -> Unit)? = null
+        private var onVortexKilled: (() -> Unit)? = null
         var isVortexAlive = true
 
-        fun init(context: Application, onVortextKilled: (() -> Unit)? = null) {
-            context.registerActivityLifecycleCallbacks(Morpheus())
-            this.onVortextKilled = onVortextKilled
+        fun init(context: Application, onVortexKilled: (() -> Unit)? = null) {
+            context.registerActivityLifecycleCallbacks(Sandman())
+            this.onVortexKilled = onVortexKilled
         }
 
         fun killVortex(vortex: VortexView?) {
             isVortexAlive = false
             (vortex?.parent as? ViewGroup)?.removeView(vortex)
-            onVortextKilled?.invoke()
-            onVortextKilled = null
+            onVortexKilled?.invoke()
+            onVortexKilled = null
         }
 
         fun killVortex(window: Window) {

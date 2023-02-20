@@ -8,24 +8,17 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
-import androidx.recyclerview.widget.RecyclerView
-import br.com.mrocigno.sandman.Morpheus
 import br.com.mrocigno.sandman.R
+import br.com.mrocigno.sandman.Sandman
 import br.com.mrocigno.sandman.getParcelableExtraCompat
 import br.com.mrocigno.sandman.json.JsonViewerActivity
 import br.com.mrocigno.sandman.statusBarHeight
-import org.json.JSONObject
 
 class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.activity_network_entry) {
 
@@ -54,7 +47,7 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.activity_network_
     }
 
     private fun setupToolbar() {
-        Morpheus.killVortex(window)
+        Sandman.killVortex(window)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         toolbar.updateLayoutParams<ConstraintLayout.LayoutParams> {
             setMargins(0, statusBarHeight, 0, 0)

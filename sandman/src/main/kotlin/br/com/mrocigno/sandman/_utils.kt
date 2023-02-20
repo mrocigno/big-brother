@@ -15,8 +15,10 @@ import android.text.style.ForegroundColorSpan
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.annotation.ColorInt
@@ -107,4 +109,13 @@ internal fun String.highlightQuery(query: String, @ColorInt color: Int = Color.Y
 
 internal fun RecyclerView.disableChangeAnimation() {
     (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
+}
+
+internal fun View.afterMeasure(action: (View) -> Unit) {
+    this.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            viewTreeObserver.removeOnGlobalLayoutListener(this)
+            action(this@afterMeasure)
+        }
+    })
 }

@@ -8,6 +8,9 @@ class TheDreamingCustom : TheDreamingProvider() {
         TheDreaming.addNightmare("Teste") {
             NetworkFragment()
         }
+        TheDreaming.addNightmare("Teste2") {
+            ToolsFragment()
+        }
         return super.onCreate()
     }
 }

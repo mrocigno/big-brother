@@ -9,8 +9,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.com.mrocigno.sandman.Morpheus
 import br.com.mrocigno.sandman.R
+import br.com.mrocigno.sandman.Sandman
 import br.com.mrocigno.sandman.disableChangeAnimation
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -37,7 +37,7 @@ class JsonViewerActivity : AppCompatActivity(R.layout.activity_json_viewer) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Morpheus.killVortex(window)
+        Sandman.killVortex(window)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
         searchLayout.setEndIconOnClickListener {
             Toast.makeText(this, "click!", Toast.LENGTH_LONG).show()
