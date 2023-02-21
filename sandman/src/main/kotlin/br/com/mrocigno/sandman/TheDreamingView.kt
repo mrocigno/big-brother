@@ -1,10 +1,10 @@
 package br.com.mrocigno.sandman
 
 import android.transition.TransitionManager
+import android.view.ContextThemeWrapper
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.transition.doOnEnd
 import androidx.core.transition.doOnStart
 import androidx.core.view.isInvisible
@@ -19,7 +19,7 @@ class TheDreamingView(
 ) : FrameLayout(vortex.context) {
 
     private val list: MutableList<DreamData> = mutableListOf()
-    private val activity get() = context as FragmentActivity
+    private val activity get() = (context as ContextThemeWrapper).baseContext as FragmentActivity
     private val statusBarHeight = activity.statusBarHeight
     private val navigationBarHeight = activity.getNavigationBarHeight()
     private val parentVG get() = parent as ViewGroup
@@ -38,7 +38,7 @@ class TheDreamingView(
 
     init {
         setBackgroundResource(R.drawable.the_dreaming_background)
-        inflate(activity, R.layout.the_dreaming_layout, this)
+        inflate(context, R.layout.the_dreaming_layout, this)
         isInvisible = true
         setPadding(resources.getDimensionPixelSize(R.dimen.spacing_stroke))
 
@@ -108,7 +108,7 @@ class TheDreamingView(
     private fun addFragment(position: Int) {
         val data = list[position]
         val fragment = data.creator(vortex)
-        (context as AppCompatActivity).supportFragmentManager.apply {
+        activity.supportFragmentManager.apply {
             beginTransaction()
                 .replace(R.id.td_dreams_container, fragment, "page ${data.name}")
                 .commit()
@@ -116,7 +116,7 @@ class TheDreamingView(
     }
 
     private fun clearFragment() {
-        (context as FragmentActivity).supportFragmentManager.apply {
+        activity.supportFragmentManager.apply {
             val data = list[tabHeader.selectedTabPosition]
             val fragment = findFragmentByTag("page ${data.name}") ?: return
             beginTransaction()

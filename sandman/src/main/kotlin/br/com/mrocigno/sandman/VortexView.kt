@@ -1,17 +1,18 @@
 package br.com.mrocigno.sandman
 
 import android.animation.ObjectAnimator
-import android.app.Activity
 import android.content.Context
 import android.graphics.RectF
 import android.os.Build
 import android.util.AttributeSet
+import android.view.ContextThemeWrapper
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.graphics.toRect
 import androidx.core.view.contains
+import androidx.fragment.app.FragmentActivity
 import java.lang.Float.max
 import java.lang.Float.min
 import kotlin.math.roundToLong
@@ -21,15 +22,22 @@ class VortexView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
     private val config: VortexConfig = TheDreaming.config
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(
+    ContextThemeWrapper(context, R.style.Theme_Sandman),
+    attrs,
+    defStyleAttr
+) {
+
+    private val activity: FragmentActivity
+        get() = (context as ContextThemeWrapper).baseContext as FragmentActivity
 
     private val theDreamingView = TheDreamingView(this)
     private val moveDuration = 200L
 
     private var downMillis: Long = 0L
 
-    private val statusBarHeight = (context as Activity).statusBarHeight.toFloat()
-    private val navigationBarHeight = (context as Activity).getNavigationBarHeight().toFloat()
+    private val statusBarHeight = activity.statusBarHeight.toFloat()
+    private val navigationBarHeight = activity.getNavigationBarHeight().toFloat()
     private val parentVG get() = parent as ViewGroup
     private val move: Boolean get() = (System.currentTimeMillis() - downMillis) >= 100L
     private val fadeAnimation =

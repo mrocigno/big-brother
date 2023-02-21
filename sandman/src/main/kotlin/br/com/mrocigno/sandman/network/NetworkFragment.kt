@@ -1,14 +1,14 @@
 package br.com.mrocigno.sandman.network
 
 import android.os.Bundle
+import android.view.ContextThemeWrapper
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import br.com.mrocigno.sandman.R
 import br.com.mrocigno.sandman.disableChangeAnimation
 import com.google.android.material.textfield.TextInputEditText
@@ -22,6 +22,12 @@ class NetworkFragment : Fragment(R.layout.fragment_network) {
     private val clear: AppCompatImageView by lazy { requireView().findViewById(R.id.net_clear) }
 
     private val adapter: NetworkEntryAdapter get() = recycler.adapter as NetworkEntryAdapter
+
+    override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
+        val inflater = super.onGetLayoutInflater(savedInstanceState)
+        val context = ContextThemeWrapper(inflater.context, R.style.Theme_Sandman)
+        return inflater.cloneInContext(context)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
