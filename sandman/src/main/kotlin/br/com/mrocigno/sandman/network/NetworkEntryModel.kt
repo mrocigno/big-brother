@@ -11,7 +11,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import java.lang.StringBuilder
 
 @Parcelize
 class NetworkEntryModel(
@@ -82,7 +81,7 @@ class NetworkPayloadModel(
 
     val formattedBody: CharSequence? get() = if (body.isNullOrBlank()) "empty" else runCatching {
         JSONObject(body!!).toString(2)
-    }.onFailure {
+    }.recoverCatching {
         JSONArray(body).toString(2)
     }.getOrNull()
 
