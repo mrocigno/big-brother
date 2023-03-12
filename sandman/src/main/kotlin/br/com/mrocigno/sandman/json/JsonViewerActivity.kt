@@ -9,14 +9,15 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.mrocigno.sandman.NoVortexAllowed
 import br.com.mrocigno.sandman.R
-import br.com.mrocigno.sandman.Sandman
-import br.com.mrocigno.sandman.disableChangeAnimation
+import br.com.mrocigno.sandman.utils.disableChangeAnimation
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.json.JSONArray
 import org.json.JSONObject
 
+@NoVortexAllowed
 class JsonViewerActivity : AppCompatActivity(R.layout.activity_json_viewer) {
 
     private val searchLayout: TextInputLayout by lazy { findViewById(R.id.json_viewer_search_view_layout) }
@@ -37,7 +38,6 @@ class JsonViewerActivity : AppCompatActivity(R.layout.activity_json_viewer) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Sandman.killVortex(window)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
         searchLayout.setEndIconOnClickListener {
             Toast.makeText(this, "click!", Toast.LENGTH_LONG).show()

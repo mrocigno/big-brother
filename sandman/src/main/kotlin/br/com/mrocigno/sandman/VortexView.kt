@@ -1,6 +1,7 @@
 package br.com.mrocigno.sandman
 
 import android.animation.ObjectAnimator
+import android.app.Activity
 import android.content.Context
 import android.graphics.RectF
 import android.os.Build
@@ -12,7 +13,10 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.graphics.toRect
 import androidx.core.view.contains
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import br.com.mrocigno.sandman.utils.getNavigationBarHeight
+import br.com.mrocigno.sandman.utils.statusBarHeight
 import java.lang.Float.max
 import java.lang.Float.min
 import kotlin.math.roundToLong
@@ -66,6 +70,7 @@ class VortexView @JvmOverloads constructor(
     }
 
     init {
+        id = R.id.vortex
         config.initial(this)
 
         setOnTouchListener { _, event ->
@@ -184,5 +189,20 @@ class VortexView @JvmOverloads constructor(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             systemGestureExclusionRects = listOf(this.bounds.toRect())
         }
+    }
+
+    companion object {
+
+        fun getOrCreate(activity: Activity) =
+            get(activity) ?: VortexView(activity)
+
+        fun getOrCreate(fragment: Fragment) =
+            get(fragment) ?: fragment.activity?.let { VortexView(it) }
+
+        fun get(activity: Activity) =
+            activity.findViewById<VortexView>(R.id.vortex)
+
+        fun get(fragment: Fragment) =
+            fragment.view?.findViewById<VortexView>(R.id.vortex)
     }
 }

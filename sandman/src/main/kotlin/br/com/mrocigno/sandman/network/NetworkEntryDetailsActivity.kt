@@ -14,12 +14,13 @@ import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.updateLayoutParams
+import br.com.mrocigno.sandman.NoVortexAllowed
 import br.com.mrocigno.sandman.R
-import br.com.mrocigno.sandman.Sandman
-import br.com.mrocigno.sandman.getParcelableExtraCompat
 import br.com.mrocigno.sandman.json.JsonViewerActivity
-import br.com.mrocigno.sandman.statusBarHeight
+import br.com.mrocigno.sandman.utils.getParcelableExtraCompat
+import br.com.mrocigno.sandman.utils.statusBarHeight
 
+@NoVortexAllowed
 class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.activity_network_entry) {
 
     private val toolbar: Toolbar by lazy { findViewById(R.id.net_entry_details_toolbar) }
@@ -47,7 +48,6 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.activity_network_
     }
 
     private fun setupToolbar() {
-        Sandman.killVortex(window)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         toolbar.updateLayoutParams<ConstraintLayout.LayoutParams> {
             setMargins(0, statusBarHeight, 0, 0)
@@ -67,8 +67,8 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.activity_network_
             startActivity(JsonViewerActivity.intent(this, requestBody.text.toString()))
         }
 
-        responseHeader.text = model.response.formattedHeaders
-        responseBody.text = model.response.formattedBody
+        responseHeader.text = model.response?.formattedHeaders
+        responseBody.text = model.response?.formattedBody
         responseBody.setOnClickListener {
             startActivity(JsonViewerActivity.intent(this, responseBody.text.toString()))
         }

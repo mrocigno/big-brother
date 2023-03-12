@@ -1,4 +1,4 @@
-package br.com.mrocigno.sandman
+package br.com.mrocigno.sandman.utils
 
 import android.app.Activity
 import android.content.ClipData
@@ -30,6 +30,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import br.com.mrocigno.sandman.R
 
 internal val Activity.statusBarHeight: Int get() {
     val resId = resources.getIdentifier("status_bar_height", "dimen", "android")

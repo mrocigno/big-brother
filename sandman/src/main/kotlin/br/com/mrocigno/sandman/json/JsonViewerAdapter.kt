@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.mrocigno.sandman.R
-import br.com.mrocigno.sandman.copyToClipboard
-import br.com.mrocigno.sandman.highlightQuery
-import br.com.mrocigno.sandman.inflate
+import br.com.mrocigno.sandman.utils.copyToClipboard
+import br.com.mrocigno.sandman.utils.highlightQuery
+import br.com.mrocigno.sandman.utils.inflate
 
 class JsonViewerAdapter(
     private val origin: List<JsonViewerModel>

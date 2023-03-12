@@ -61,5 +61,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 
     implementation 'com.jakewharton.threetenabp:threetenabp:1.4.4'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.21"
 
 }

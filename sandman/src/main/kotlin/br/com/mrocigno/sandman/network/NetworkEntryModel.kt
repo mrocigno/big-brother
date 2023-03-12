@@ -2,6 +2,8 @@ package br.com.mrocigno.sandman.network
 
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
+import br.com.mrocigno.sandman.report.ReportModel
+import br.com.mrocigno.sandman.report.ReportModelType
 import kotlinx.parcelize.Parcelize
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.Request
@@ -16,23 +18,23 @@ import org.threeten.bp.format.DateTimeFormatter
 class NetworkEntryModel(
     val fullUrl: String,
     val url: String,
-    val statusCode: Int,
-    val elapsedTime: String,
+    var statusCode: Int? = null,
+    var elapsedTime: String? = null,
     val hour: String,
     val method: String,
     val request: NetworkPayloadModel,
-    val response: NetworkPayloadModel
-) : Parcelable {
+    var response: NetworkPayloadModel? = null,
+    var isSelected: Boolean = false
+) : ReportModel(
+    type = ReportModelType.NETWORK
+) {
 
-    constructor(response: Response, elapsedTime: String) : this(
-        fullUrl = response.request.url.toString(),
-        url = response.request.url.encodedPath,
-        statusCode = response.code,
-        elapsedTime = elapsedTime,
+    constructor(request: Request) : this(
+        fullUrl = request.url.toString(),
+        url = request.url.encodedPath,
         hour = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME),
-        method = response.request.method,
-        request = NetworkPayloadModel(response.request),
-        response = NetworkPayloadModel(response)
+        method = request.method,
+        request = NetworkPayloadModel(request)
     )
 
     class Differ : DiffUtil.ItemCallback<NetworkEntryModel>() {
@@ -79,11 +81,16 @@ class NetworkPayloadModel(
         }
     )
 
+    constructor(exception: Exception) : this(
+        headers = null,
+        body = exception.stackTraceToString()
+    )
+
     val formattedBody: CharSequence? get() = if (body.isNullOrBlank()) "empty" else runCatching {
         JSONObject(body!!).toString(2)
     }.recoverCatching {
         JSONArray(body).toString(2)
-    }.getOrNull()
+    }.getOrDefault(body)
 
     val formattedHeaders: CharSequence? get() = if (headers.isNullOrEmpty()) "empty" else {
         headers.toHeaders().toString()

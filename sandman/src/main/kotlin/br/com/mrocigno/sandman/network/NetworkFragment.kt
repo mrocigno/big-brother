@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mrocigno.sandman.R
-import br.com.mrocigno.sandman.disableChangeAnimation
+import br.com.mrocigno.sandman.utils.disableChangeAnimation
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -49,7 +49,12 @@ class NetworkFragment : Fragment(R.layout.fragment_network) {
     }
 
     private fun setupSearchView() {
-        clear.setOnClickListener { NetworkHolder.clear() }
+        clear.setOnClickListener {
+            if (adapter.isSelectMode) {
+                NetworkHolder.clearSelected()
+            }
+            adapter.isSelectMode = !adapter.isSelectMode
+        }
         searchViewLayout.setEndIconOnClickListener {
             adapter.filter(searchView.text.toString())
         }

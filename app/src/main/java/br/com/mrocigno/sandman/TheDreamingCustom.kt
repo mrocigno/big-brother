@@ -1,5 +1,6 @@
 package br.com.mrocigno.sandman
 
+import br.com.mrocigno.sandman.log.LogFragment
 import br.com.mrocigno.sandman.network.NetworkFragment
 
 class TheDreamingCustom : TheDreamingProvider() {
@@ -9,7 +10,7 @@ class TheDreamingCustom : TheDreamingProvider() {
             NetworkFragment()
         }
         TheDreaming.addNightmare("Teste2") {
-            ToolsFragment()
+            LogFragment()
         }
         return super.onCreate()
     }

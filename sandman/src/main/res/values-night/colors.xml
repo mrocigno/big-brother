@@ -6,6 +6,7 @@
     <color name="the_dreaming_background_tertiary">#292929</color>
 
     <color name="text_title">#FFFFFFFF</color>
+    <color name="text_title_inverse">#FF000000</color>
     <color name="text_paragraph">#D8D8D8</color>
     <color name="text_hyperlink">#FF00C4FF</color>
     <color name="text_highlight">#FFFFEB3B</color>

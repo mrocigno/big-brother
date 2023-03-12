@@ -1,5 +1,6 @@
 package br.com.mrocigno.sandman
 
+import android.annotation.SuppressLint
 import android.transition.TransitionManager
 import android.view.ContextThemeWrapper
 import android.view.ViewGroup
@@ -11,9 +12,13 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import androidx.fragment.app.FragmentActivity
+import br.com.mrocigno.sandman.utils.afterMeasure
+import br.com.mrocigno.sandman.utils.getNavigationBarHeight
+import br.com.mrocigno.sandman.utils.statusBarHeight
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
+@SuppressLint("ViewConstructor")
 class TheDreamingView(
     private val vortex: VortexView
 ) : FrameLayout(vortex.context) {

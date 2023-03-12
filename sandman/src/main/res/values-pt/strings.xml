@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="generic_search">Pesquisar</string>
 
     <string name="json_viewer_search_hint">Procure pela chave ou valor</string>
     <string name="json_viewer_expand_click">clique para expandir</string>
@@ -10,4 +11,7 @@
     <string name="network_hour_info">Horário:</string>
     <string name="network_elapsed_time_info">Tempo corrido:</string>
     <string name="network_url_info">URL:</string>
+
+    <string name="select_all">Selecionar todos</string>
+    <string name="deselect_all">Desmarcar todos</string>
 </resources>

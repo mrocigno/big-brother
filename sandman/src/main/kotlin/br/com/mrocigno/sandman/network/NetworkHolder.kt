@@ -12,8 +12,25 @@ internal object NetworkHolder {
         networkEntries.postValue(_networkEntries)
     }
 
+    fun updateEntry(entry: NetworkEntryModel) {
+        val index = _networkEntries.indexOf(entry).takeIf { it != -1 } ?: return
+        _networkEntries.removeAt(index)
+        _networkEntries.add(index, entry)
+        networkEntries.postValue(_networkEntries)
+    }
+
     fun clear() {
         _networkEntries.clear()
         networkEntries.postValue(emptyList())
+    }
+
+    fun toggleSelectAll(isChecked: Boolean) {
+        _networkEntries.forEach { it.isSelected = isChecked }
+        networkEntries.postValue(_networkEntries)
+    }
+
+    fun clearSelected() {
+        _networkEntries.removeAll { it.isSelected }
+        networkEntries.postValue(_networkEntries)
     }
 }
