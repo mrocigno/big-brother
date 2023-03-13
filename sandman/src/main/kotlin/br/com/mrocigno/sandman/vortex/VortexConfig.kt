@@ -1,9 +1,9 @@
-package br.com.mrocigno.sandman
+package br.com.mrocigno.sandman.vortex
 
 import android.graphics.PointF
 import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
-import androidx.annotation.StyleRes
+import br.com.mrocigno.sandman.R
 
 class VortexConfig(
     val initialLocation: PointF = PointF(0f, 200f),

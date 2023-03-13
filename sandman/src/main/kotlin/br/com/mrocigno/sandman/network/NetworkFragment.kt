@@ -9,11 +9,13 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.mrocigno.sandman.OutOfDomain
 import br.com.mrocigno.sandman.R
 import br.com.mrocigno.sandman.utils.disableChangeAnimation
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
+@OutOfDomain
 class NetworkFragment : Fragment(R.layout.fragment_network) {
 
     private val recycler: RecyclerView by lazy { requireView().findViewById(R.id.net_recycler) }

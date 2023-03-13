@@ -9,6 +9,7 @@ abstract class ReportModel(
 ) : Parcelable
 
 enum class ReportModelType {
+    TRACK,
     NETWORK,
     LOG;
 }

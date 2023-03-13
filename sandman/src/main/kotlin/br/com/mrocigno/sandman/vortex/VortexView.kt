@@ -1,4 +1,4 @@
-package br.com.mrocigno.sandman
+package br.com.mrocigno.sandman.vortex
 
 import android.animation.ObjectAnimator
 import android.app.Activity
@@ -15,6 +15,7 @@ import androidx.core.graphics.toRect
 import androidx.core.view.contains
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import br.com.mrocigno.sandman.R
 import br.com.mrocigno.sandman.utils.getNavigationBarHeight
 import br.com.mrocigno.sandman.utils.statusBarHeight
 import java.lang.Float.max
@@ -32,13 +33,16 @@ class VortexView @JvmOverloads constructor(
     defStyleAttr
 ) {
 
-    private val activity: FragmentActivity
-        get() = (context as ContextThemeWrapper).baseContext as FragmentActivity
+    val isExpanded: Boolean
+        get() = theDreamingView.isExpanded
+
+    private val activity get() = (context as ContextThemeWrapper).baseContext as FragmentActivity
 
     private val theDreamingView = TheDreamingView(this)
     private val moveDuration = 200L
 
     private var downMillis: Long = 0L
+    private var onVortexKilled: (() -> Unit)? = null
 
     private val statusBarHeight = activity.statusBarHeight.toFloat()
     private val navigationBarHeight = activity.getNavigationBarHeight().toFloat()
@@ -111,9 +115,7 @@ class VortexView @JvmOverloads constructor(
             MotionEvent.ACTION_UP -> {
                 fadeAnimation.start()
                 if (!move) return
-                if (isInRemovableArea(event)) {
-                     Sandman.killVortex(this)
-                }
+                if (isInRemovableArea(event)) onVortexKilled?.invoke()
             }
         }
     }
@@ -165,6 +167,10 @@ class VortexView @JvmOverloads constructor(
             .start()
     }
 
+    fun setOnVortexKilled(action: () -> Unit) {
+        onVortexKilled = action
+    }
+
     private fun isInRemovableArea(event: MotionEvent) = event.bounds.intersects(removableView.bounds)
 
     private val MotionEvent.bounds: RectF get() {
@@ -191,13 +197,22 @@ class VortexView @JvmOverloads constructor(
         }
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        parentVG.removeView(theDreamingView)
+    }
+
     companion object {
 
-        fun getOrCreate(activity: Activity) =
-            get(activity) ?: VortexView(activity)
+        fun getOrCreate(activity: Activity, onVortexKilled: () -> Unit) =
+            get(activity) ?: VortexView(activity).apply {
+                setOnVortexKilled(onVortexKilled)
+            }
 
-        fun getOrCreate(fragment: Fragment) =
-            get(fragment) ?: fragment.activity?.let { VortexView(it) }
+        fun getOrCreate(fragment: Fragment, onVortexKilled: () -> Unit) =
+            get(fragment) ?: fragment.activity?.let { VortexView(it).apply {
+                setOnVortexKilled(onVortexKilled)
+            } }
 
         fun get(activity: Activity) =
             activity.findViewById<VortexView>(R.id.vortex)

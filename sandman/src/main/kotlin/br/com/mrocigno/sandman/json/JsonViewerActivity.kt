@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.com.mrocigno.sandman.NoVortexAllowed
+import br.com.mrocigno.sandman.OutOfDomain
 import br.com.mrocigno.sandman.R
 import br.com.mrocigno.sandman.utils.disableChangeAnimation
 import com.google.android.material.textfield.TextInputEditText
@@ -17,7 +17,7 @@ import com.google.android.material.textfield.TextInputLayout
 import org.json.JSONArray
 import org.json.JSONObject
 
-@NoVortexAllowed
+@OutOfDomain
 class JsonViewerActivity : AppCompatActivity(R.layout.activity_json_viewer) {
 
     private val searchLayout: TextInputLayout by lazy { findViewById(R.id.json_viewer_search_view_layout) }

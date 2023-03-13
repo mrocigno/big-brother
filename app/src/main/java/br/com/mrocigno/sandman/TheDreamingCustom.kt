@@ -2,6 +2,8 @@ package br.com.mrocigno.sandman
 
 import br.com.mrocigno.sandman.log.LogFragment
 import br.com.mrocigno.sandman.network.NetworkFragment
+import br.com.mrocigno.sandman.vortex.TheDreaming
+import br.com.mrocigno.sandman.vortex.TheDreamingProvider
 
 class TheDreamingCustom : TheDreamingProvider() {
 

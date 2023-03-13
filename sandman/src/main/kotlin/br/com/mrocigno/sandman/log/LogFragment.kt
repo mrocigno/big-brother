@@ -10,13 +10,16 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.mrocigno.sandman.OutOfDomain
 import br.com.mrocigno.sandman.R
+import br.com.mrocigno.sandman.utils.disableChangeAnimation
 import br.com.mrocigno.sandman.utils.getColorState
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
+@OutOfDomain
 class LogFragment : Fragment(R.layout.fragment_log) {
 
     private val chipGroup: ChipGroup by lazy { requireView().findViewById(R.id.log_chip_group) }
@@ -42,6 +45,7 @@ class LogFragment : Fragment(R.layout.fragment_log) {
     }
 
     private fun setupRecycler() {
+        recycler.disableChangeAnimation()
         recycler.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         recycler.adapter = LogEntryAdapter()
 

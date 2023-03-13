@@ -14,13 +14,13 @@ import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.updateLayoutParams
-import br.com.mrocigno.sandman.NoVortexAllowed
+import br.com.mrocigno.sandman.OutOfDomain
 import br.com.mrocigno.sandman.R
 import br.com.mrocigno.sandman.json.JsonViewerActivity
 import br.com.mrocigno.sandman.utils.getParcelableExtraCompat
 import br.com.mrocigno.sandman.utils.statusBarHeight
 
-@NoVortexAllowed
+@OutOfDomain
 class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.activity_network_entry) {
 
     private val toolbar: Toolbar by lazy { findViewById(R.id.net_entry_details_toolbar) }

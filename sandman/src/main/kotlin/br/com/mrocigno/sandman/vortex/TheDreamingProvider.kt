@@ -1,4 +1,4 @@
-package br.com.mrocigno.sandman
+package br.com.mrocigno.sandman.vortex
 
 import android.app.Application
 import android.content.ContentProvider
@@ -7,6 +7,8 @@ import android.database.Cursor
 import android.graphics.PointF
 import android.net.Uri
 import androidx.annotation.DrawableRes
+import br.com.mrocigno.sandman.R
+import br.com.mrocigno.sandman.Sandman
 import com.jakewharton.threetenabp.AndroidThreeTen
 
 open class TheDreamingProvider : ContentProvider() {

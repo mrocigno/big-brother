@@ -1,8 +1,10 @@
 package br.com.mrocigno.sandman
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import br.com.mrocigno.sandman.log.SandmanLog.Companion.tag
 import br.com.mrocigno.sandman.network.GithubApi
 import br.com.mrocigno.sandman.network.NetworkConfig.retrofit
 import kotlinx.coroutines.CoroutineScope
@@ -20,13 +22,16 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
             Sandman.tag().w("Teste WARN")
             Sandman.tag().e("Teste ERROR")
             Sandman.tag().v("Teste VERBOSE")
+
+            startActivity(Intent(this, SecondActivity::class.java))
+
             CoroutineScope(Dispatchers.IO).launch {
 
                 try {
                     val teste = retrofit.create(GithubApi::class.java).getRepos(0)
                     val i = 1
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    Sandman.tag().e(e.stackTraceToString())
                 }
             }
         }

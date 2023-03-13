@@ -26,6 +26,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SecondActivity"/>
+
         <provider
             android:authorities="${applicationId}.SANDMAN"
             android:name=".TheDreamingCustom"

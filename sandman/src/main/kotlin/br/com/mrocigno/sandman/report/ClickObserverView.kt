@@ -9,6 +9,8 @@ import android.widget.FrameLayout
 import android.widget.FrameLayout.LayoutParams.MATCH_PARENT
 import androidx.fragment.app.Fragment
 import br.com.mrocigno.sandman.R
+import br.com.mrocigno.sandman.Sandman
+import br.com.mrocigno.sandman.log.SandmanLog.Companion.tag
 
 @SuppressLint("ClickableViewAccessibility")
 class ClickObserverView @JvmOverloads constructor(
@@ -25,6 +27,7 @@ class ClickObserverView @JvmOverloads constructor(
 
         setOnTouchListener { _, event ->
             point = PointF(event.rawX, event.rawY)
+            Sandman.tag().d("$point")
             false
         }
     }

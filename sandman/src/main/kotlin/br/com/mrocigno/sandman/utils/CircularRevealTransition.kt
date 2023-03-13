@@ -1,4 +1,4 @@
-package br.com.mrocigno.sandman
+package br.com.mrocigno.sandman.utils
 
 import android.animation.Animator
 import android.transition.Transition
@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import androidx.core.animation.doOnEnd
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import kotlin.math.roundToInt
 
-class CircularRevealTransition : Transition() {
+internal class CircularRevealTransition : Transition() {
 
     override fun captureStartValues(transitionValues: TransitionValues) {
         transitionValues.values["visibility"] = transitionValues.view.visibility

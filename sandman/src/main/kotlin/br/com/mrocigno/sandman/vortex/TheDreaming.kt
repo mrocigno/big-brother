@@ -1,4 +1,4 @@
-package br.com.mrocigno.sandman
+package br.com.mrocigno.sandman.vortex
 
 import android.app.Activity
 import androidx.fragment.app.Fragment
