@@ -5,6 +5,7 @@ import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import br.com.mrocigno.sandman.Sandman
+import br.com.mrocigno.sandman.crash.CrashTask
 import br.com.mrocigno.sandman.isOutOfDomain
 import br.com.mrocigno.sandman.log.SandmanLog.Companion.tag
 import br.com.mrocigno.sandman.report.ReportTask
@@ -16,7 +17,8 @@ internal class Morpheus : Application.ActivityLifecycleCallbacks {
 
     private val tasks = listOf(
         VortexTask(),
-        ReportTask()
+        ReportTask(),
+        CrashTask()
     )
 
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {

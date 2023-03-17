@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1000">
+       <KeyFrameSet>
+       </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/close_img_avd"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            motion:layout_constraintTop_toTopOf="@id/crash_status_bar_guideline"
+            motion:layout_constraintStart_toStartOf="parent" />
+
+        <Constraint
+            android:id="@+id/crash_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="@id/close_img_avd"
+            motion:layout_constraintBottom_toBottomOf="@id/close_img_avd"
+            motion:layout_constraintStart_toEndOf="@id/close_img_avd" />
+
+        <Constraint
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/crash_thumb_spacing"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/crash_background" />
+
+        <Constraint
+            android:id="@+id/crash_screen_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            motion:layout_constraintBottom_toTopOf="@id/crash_screen_name"
+            android:layout_marginStart="10dp"
+            motion:layout_constraintVertical_chainStyle="packed"
+            motion:layout_constraintTop_toTopOf="@id/crash_thumb"
+            motion:layout_constraintStart_toStartOf="parent" />
+
+        <Constraint
+            android:id="@+id/crash_screen_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@id/crash_thumb"
+            android:visibility="visible"
+            motion:layout_constraintTop_toBottomOf="@id/crash_screen_name_label"
+            motion:layout_constraintVertical_chainStyle="packed"
+            motion:layout_constraintStart_toStartOf="@id/crash_screen_name_label" />
+
+        <Constraint
+            android:id="@+id/crash_thumb"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="visible"
+            android:layout_marginEnd="10dp"
+            motion:layout_constraintTop_toBottomOf="@id/close_img_avd" />
+    </ConstraintSet>
+</MotionScene>

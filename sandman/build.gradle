@@ -12,6 +12,7 @@ android {
     defaultConfig {
         minSdk 23
         targetSdk 33
+        renderscriptTargetApi 24
     }
 
     buildTypes {
