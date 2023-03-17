@@ -18,6 +18,8 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.updateLayoutParams
 import br.com.mrocigno.sandman.OutOfDomain
 import br.com.mrocigno.sandman.R
+import br.com.mrocigno.sandman.utils.getSerializableExtraCompat
+import br.com.mrocigno.sandman.utils.highlightStacktrace
 import br.com.mrocigno.sandman.utils.statusBarHeight
 
 @OutOfDomain
@@ -28,6 +30,7 @@ class CrashActivity : AppCompatActivity(R.layout.activity_crash) {
     private val thumb: AppCompatImageView by lazy { findViewById(R.id.crash_thumb) }
     private val closeAnim: AppCompatImageView by lazy { findViewById(R.id.close_img_avd) }
     private val screenName: AppCompatTextView by lazy { findViewById(R.id.crash_screen_name) }
+    private val stacktrace: AppCompatTextView by lazy { findViewById(R.id.crash_stacktrace) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +54,9 @@ class CrashActivity : AppCompatActivity(R.layout.activity_crash) {
         thumb.clipToOutline = true
 
         screenName.text = intent.getStringExtra(SCREEN_NAME_ARG)
+        stacktrace.text = intent.getSerializableExtraCompat<Throwable>(EXCEPTION_ARG)
+            ?.stackTraceToString()
+            ?.highlightStacktrace(this@CrashActivity)
 
         onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -65,10 +71,10 @@ class CrashActivity : AppCompatActivity(R.layout.activity_crash) {
         private const val SCREEN_NAME_ARG = "sandman.SCREEN_NAME_ARG"
         private const val EXCEPTION_ARG = "sandman.EXCEPTION_ARG"
 
-        fun intent(context: Context, screenName: String, exception: Exception) =
+        fun intent(context: Context, screenName: String, throwable: Throwable) =
             Intent(context, CrashActivity::class.java)
                 .putExtra(SCREEN_NAME_ARG, screenName)
-                .putExtra(EXCEPTION_ARG, exception)
+                .putExtra(EXCEPTION_ARG, throwable)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
     }
 }

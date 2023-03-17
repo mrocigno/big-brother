@@ -14,7 +14,7 @@ class SecondActivity : AppCompatActivity(R.layout.main_activity) {
         findViewById<AppCompatButton>(R.id.test).apply {
             text = "Forçar crash"
         }.setOnClickListener {
-//            startActivity(Intent(this, MainActivity::class.java))
+//            startActivity(CrashActivity.intent(this, "asdsa", Exception("asdasda")))
             throw Exception()
         }
     }

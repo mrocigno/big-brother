@@ -7,6 +7,33 @@
     android:layout_height="match_parent"
     app:layoutDescription="@xml/activity_crash_scene">
 
+    <ScrollView
+        android:id="@+id/crash_scroll_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/crash_background">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/crash_stacktrace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="sahduisah duisahui dhsauidh uisahd uiash"
+                android:textColor="@color/text_title"
+                android:textSize="12sp"
+                app:fontFamily="@font/courier_regular" />
+
+        </HorizontalScrollView>
+
+    </ScrollView>
+
     <View
         android:id="@+id/crash_status_bar_guideline"
         android:layout_width="0dp"
@@ -29,6 +56,7 @@
         android:layout_width="1dp"
         android:layout_height="wrap_content"
         android:maxLines="1"
+        android:textColor="@color/text_title"
         android:text="O App crashou :("
         app:layout_constraintBottom_toBottomOf="@id/close_img_avd"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,9 +105,9 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="10dp"
-        android:scaleType="centerCrop"
         android:layout_marginBottom="10dp"
         android:background="@drawable/background_secondary_radius"
+        android:scaleType="centerCrop"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/close_img_avd" />
