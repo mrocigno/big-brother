@@ -2,12 +2,14 @@ package br.com.mrocigno.sandman.crash
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Animatable2
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -42,7 +44,20 @@ class CrashActivity : AppCompatActivity(R.layout.activity_crash) {
         })
         avd.start()
 
+        val bitmap = runCatching {
+            BitmapFactory.decodeStream(openFileInput("print_crash.png"))
+        }.getOrNull()
+        thumb.setImageBitmap(bitmap)
+        thumb.clipToOutline = true
+
         screenName.text = intent.getStringExtra(SCREEN_NAME_ARG)
+
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (root.currentState == R.id.expanded_img) root.transitionToState(R.id.end)
+                else finish()
+            }
+        })
     }
 
     companion object {
