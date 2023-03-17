@@ -90,6 +90,8 @@ internal class Morpheus : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityResumed(activity: Activity) = Unit
+
     override fun onActivityStopped(activity: Activity) = Unit
+
     override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) = Unit
 }

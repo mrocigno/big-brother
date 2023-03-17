@@ -27,6 +27,8 @@ class ClickObserverView @JvmOverloads constructor(
 
         setOnTouchListener { _, event ->
             point = PointF(event.rawX, event.rawY)
+
+            Sandman.dataLake["lastClick"] = point!!
             Sandman.tag().d("$point")
             false
         }
