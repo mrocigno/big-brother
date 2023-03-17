@@ -1,0 +1,44 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="48dp"
+            android:height="48dp"
+            android:viewportWidth="48"
+            android:viewportHeight="48">
+            <path
+                android:name="path"
+                android:pathData="M 10.453 35.505 L 12.42 37.617 L 12.274 37.544 L 10.526 35.65 L 10.453 35.505 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="path_1"
+                android:pathData="M 10.453 12.344 L 12.527 10.488 L 12.382 10.634 L 10.488 12.236 L 10.453 12.344 Z"
+                android:fillColor="#FFFFFF"/>
+        </vector>
+    </aapt:attr>
+    <target android:name="path">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="pathData"
+                android:duration="390"
+                android:valueFrom="M 10.453 35.505 L 12.42 37.617 L 12.274 37.544 L 10.526 35.65 L 10.453 35.505 Z"
+                android:valueTo="M 10.453 35.505 L 12.42 37.617 L 37.693 12.562 L 35.508 10.377 L 10.453 35.505 Z"
+                android:valueType="pathType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="path_1">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="pathData"
+                android:startOffset="120"
+                android:duration="380"
+                android:valueFrom="M 10.453 12.344 L 12.527 10.488 L 12.382 10.634 L 10.488 12.236 L 10.453 12.344 Z"
+                android:valueTo="M 10.453 12.344 L 12.527 10.488 L 37.582 35.543 L 35.543 37.728 L 10.453 12.344 Z"
+                android:valueType="pathType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+</animated-vector>
