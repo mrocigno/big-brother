@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import br.com.mrocigno.sandman.R
 import br.com.mrocigno.sandman.Sandman
 import br.com.mrocigno.sandman.log.SandmanLog.Companion.tag
+import br.com.mrocigno.sandman.utils.lastClickPosition
 
 @SuppressLint("ClickableViewAccessibility")
 class ClickObserverView @JvmOverloads constructor(
@@ -19,17 +20,13 @@ class ClickObserverView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    var point: PointF? = null
-
     init {
         layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
         id = R.id.click_observer
 
         setOnTouchListener { _, event ->
-            point = PointF(event.rawX, event.rawY)
-
-            Sandman.dataLake["lastClick"] = point!!
-            Sandman.tag().d("$point")
+            lastClickPosition = PointF(event.rawX, event.rawY)
+            Sandman.tag().d("$lastClickPosition")
             false
         }
     }

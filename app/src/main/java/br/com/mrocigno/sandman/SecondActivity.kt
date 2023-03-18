@@ -1,5 +1,6 @@
 package br.com.mrocigno.sandman
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -13,9 +14,13 @@ class SecondActivity : AppCompatActivity(R.layout.main_activity) {
 
         findViewById<AppCompatButton>(R.id.test).apply {
             text = "Forçar crash"
-        }.setOnClickListener {
-//            startActivity(CrashActivity.intent(this, "asdsa", Exception("asdasda")))
-            throw Exception()
+            setOnClickListener {
+                startActivity(Intent(this@SecondActivity, MainActivity::class.java))
+            }
+            setOnLongClickListener {
+                println(listOf("")[1])
+                false
+            }
         }
     }
 }

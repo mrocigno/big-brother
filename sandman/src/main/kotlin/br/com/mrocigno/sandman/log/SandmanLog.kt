@@ -73,7 +73,8 @@ class SandmanLog(private val tag: String) {
             message: String? = null,
             throwable: Throwable? = null
         ) {
-            _logEntries.add(LogEntryModel(lvl, tag, message, throwable))
+            val model = LogEntryModel(lvl, tag, message, throwable)
+            _logEntries.add(model)
             logEntries.postValue(_logEntries)
         }
 

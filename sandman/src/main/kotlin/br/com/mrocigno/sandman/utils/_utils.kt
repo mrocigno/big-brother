@@ -124,3 +124,9 @@ internal fun View.afterMeasure(action: (View) -> Unit) {
         }
     })
 }
+
+internal fun <T> MutableList<T>.update(model: T) {
+    val index = indexOf(model).takeIf { it != -1 } ?: return
+    removeAt(index)
+    add(index, model)
+}

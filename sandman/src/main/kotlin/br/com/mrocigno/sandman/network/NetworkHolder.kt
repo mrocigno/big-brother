@@ -1,6 +1,7 @@
 package br.com.mrocigno.sandman.network
 
 import androidx.lifecycle.MutableLiveData
+import br.com.mrocigno.sandman.utils.update
 
 internal object NetworkHolder {
 
@@ -13,9 +14,7 @@ internal object NetworkHolder {
     }
 
     fun updateEntry(entry: NetworkEntryModel) {
-        val index = _networkEntries.indexOf(entry).takeIf { it != -1 } ?: return
-        _networkEntries.removeAt(index)
-        _networkEntries.add(index, entry)
+        _networkEntries.update(entry)
         networkEntries.postValue(_networkEntries)
     }
 

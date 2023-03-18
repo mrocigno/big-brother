@@ -1,20 +1,20 @@
 package br.com.mrocigno.sandman.utils
 
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.PointF
-import br.com.mrocigno.sandman.Sandman
-import br.com.mrocigno.sandman.log.SandmanLog.Companion.tag
+import br.com.mrocigno.sandman.report.ReportModel
 
-internal val lastClickPosition: PointF? get() =
-    Sandman.dataLake["lastClick"] as? PointF
+private val dataLake = mutableMapOf<String, Any?>()
 
-internal fun Canvas.drawClick(paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-    color = Color.RED
-    style = Paint.Style.STROKE
-    strokeWidth = 10f
-}) {
-    lastClickPosition?.run { drawCircle(x, y, 50f, paint) }
-        ?: Sandman.tag().w("Cannot get last click position - did you implement sandman.report?")
-}
+internal var lastClickPosition: PointF?
+    get() = dataLake["lastClick"] as? PointF
+    set(value) { dataLake["lastClick"] = value }
+
+@Suppress("UNCHECKED_CAST")
+internal var localTracker: MutableList<ReportModel>?
+    get() = dataLake["localTracker"] as? MutableList<ReportModel>
+    set(value) { dataLake["localTracker"] = value }
+
+@Suppress("UNCHECKED_CAST")
+internal val globalTracker: MutableList<ReportModel> get() =
+    dataLake["globalTracker"] as? MutableList<ReportModel>
+        ?: mutableListOf<ReportModel>().also { dataLake["globalTracker"] = it }

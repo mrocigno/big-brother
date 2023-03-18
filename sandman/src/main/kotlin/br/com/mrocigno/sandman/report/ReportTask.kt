@@ -6,25 +6,28 @@ import androidx.fragment.app.Fragment
 import br.com.mrocigno.sandman.isOutOfDomain
 import br.com.mrocigno.sandman.morpheus.MorpheusTask
 import br.com.mrocigno.sandman.utils.decorView
+import br.com.mrocigno.sandman.utils.globalTracker
+import br.com.mrocigno.sandman.utils.localTracker
 import br.com.mrocigno.sandman.utils.rootView
-import kotlinx.parcelize.Parcelize
 
 class ReportTask : MorpheusTask() {
 
-    private val tracker = mutableListOf<ActivityTrack>()
     private var currentRoot: ActivityTrack? = null
+        set(value) {
+            field = value
+            localTracker = value?.reportModels
+        }
 
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
         activity.rootView.addView(ClickObserverView.getOrCreate(activity))
 
-        if (activity.isOutOfDomain) return
         val tracked = ActivityTrack(
             name = activity::class.simpleName.toString(),
             parent = currentRoot,
             screenType = "Activity"
         )
 
-        if (currentRoot == null) tracker.add(tracked) else currentRoot?.tracker?.add(tracked)
+        if (currentRoot == null) globalTracker.add(tracked) else currentRoot?.tracker?.add(tracked)
         currentRoot = tracked
     }
 
@@ -47,11 +50,3 @@ class ReportTask : MorpheusTask() {
         fragment.decorView?.removeView(ClickObserverView.get(fragment))
     }
 }
-
-@Parcelize
-class ActivityTrack(
-    val tracker: MutableList<ActivityTrack> = mutableListOf(),
-    val parent: ActivityTrack? = null,
-    val name: String,
-    val screenType: String // Activity/Fragment
-) : ReportModel(type = ReportModelType.TRACK)
