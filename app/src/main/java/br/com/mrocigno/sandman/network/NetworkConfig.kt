@@ -1,15 +1,12 @@
 package br.com.mrocigno.sandman.network
 
+import br.com.mrocigno.sandman.corinthian.corinthian
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.CallAdapter
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
-import java.lang.reflect.Type
 import java.util.concurrent.TimeUnit
 
 object NetworkConfig {
@@ -24,7 +21,7 @@ object NetworkConfig {
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         })
-        .addInterceptor(SandmanInterceptor())
+        .corinthian()
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
         .build()

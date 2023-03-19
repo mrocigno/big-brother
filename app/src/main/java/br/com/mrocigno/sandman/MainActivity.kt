@@ -4,7 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import br.com.mrocigno.sandman.log.SandmanLog.Companion.tag
+import br.com.mrocigno.sandman.core.Sandman
+import br.com.mrocigno.sandman.matthew.Matthew.Companion.tag
 import br.com.mrocigno.sandman.network.GithubApi
 import br.com.mrocigno.sandman.network.NetworkConfig.retrofit
 import kotlinx.coroutines.CoroutineScope
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
         findViewById<AppCompatButton>(R.id.test).setOnClickListener {
             Sandman.tag().d("Teste DEBUG")
             Sandman.tag().i("Teste INFO")
-            Sandman.tag().w("Teste WARN")
+            tag().w("Teste WARN")
             Sandman.tag().e("Teste ERROR")
             Sandman.tag().v("Teste VERBOSE")
 

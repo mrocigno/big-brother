@@ -1,0 +1,10 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+dependencies {
+
+    implementation project(":sandman:common")
+    implementation project(":sandman:core")
+}

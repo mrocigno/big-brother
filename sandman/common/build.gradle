@@ -1,0 +1,9 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+dependencies {
+
+    api 'com.jakewharton.threetenabp:threetenabp:1.4.4'
+}

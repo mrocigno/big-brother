@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="crash_title">O App crashou :(</string>
+    <string name="crash_screen">Na tela:</string>
+</resources>

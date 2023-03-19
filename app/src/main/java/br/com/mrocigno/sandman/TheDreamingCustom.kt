@@ -1,19 +1,14 @@
 package br.com.mrocigno.sandman
 
-import br.com.mrocigno.sandman.log.LogFragment
-import br.com.mrocigno.sandman.network.NetworkFragment
-import br.com.mrocigno.sandman.vortex.TheDreaming
-import br.com.mrocigno.sandman.vortex.TheDreamingProvider
+import br.com.mrocigno.sandman.core.TheDreamingProvider
+import br.com.mrocigno.sandman.corinthian.addCorinthian
+import br.com.mrocigno.sandman.matthew.addMatthew
+
 
 class TheDreamingCustom : TheDreamingProvider() {
 
-    override fun onCreate(): Boolean {
-        TheDreaming.addNightmare("Teste") {
-            NetworkFragment()
-        }
-        TheDreaming.addNightmare("Teste2") {
-            LogFragment()
-        }
-        return super.onCreate()
+    override fun setupTheDreaming() {
+        addCorinthian()
+        addMatthew()
     }
 }

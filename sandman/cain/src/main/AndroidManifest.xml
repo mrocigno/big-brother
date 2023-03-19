@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+
+        <activity android:name=".CrashActivity"
+            android:theme="@style/Theme.Sandman"/>
+
+        <provider
+            android:authorities="${applicationId}.CAIN"
+            android:name=".CrashTask"
+            android:enabled="true"
+            android:exported="false"/>
+    </application>
+</manifest>
