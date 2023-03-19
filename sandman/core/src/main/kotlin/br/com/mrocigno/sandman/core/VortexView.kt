@@ -197,11 +197,6 @@ class VortexView @JvmOverloads constructor(
         }
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        parentVG.removeView(theDreamingView)
-    }
-
     companion object {
 
         fun getOrCreate(activity: Activity, onVortexKilled: () -> Unit) =

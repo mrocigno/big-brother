@@ -113,6 +113,7 @@ class TheDreamingView(
     }
 
     private fun addFragment(position: Int) {
+        if (position == -1) return
         val data = list[position]
         val fragment = data.creator(vortex)
         activity.supportFragmentManager.apply {
@@ -123,6 +124,7 @@ class TheDreamingView(
     }
 
     private fun clearFragment() {
+        if (tabHeader.selectedTabPosition == -1) return
         activity.supportFragmentManager.apply {
             val data = list[tabHeader.selectedTabPosition]
             val fragment = findFragmentByTag("page ${data.name}") ?: return

@@ -19,7 +19,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import br.com.mrocigno.sandman.common.BuildConfig
 import br.com.mrocigno.sandman.common.R
 import java.io.Serializable
 
@@ -79,7 +78,7 @@ fun String.highlightStacktrace(context: Context): CharSequence {
         )
     }
 
-    findAppClass { start, end ->
+    findAppClass(context) { start, end ->
         result.setSpan(
             ForegroundColorSpan(linkColor),
             start, end,
@@ -96,8 +95,8 @@ private fun String.findCause(each: (Int, Int) -> Unit) {
     }
 }
 
-private fun String.findAppClass(each: (Int, Int) -> Unit) {
-    val packageId = BuildConfig.LIBRARY_PACKAGE_NAME
+private fun String.findAppClass(context: Context, each: (Int, Int) -> Unit) {
+    val packageId = context.packageName
     val matcher = "(at $packageId)(.*)".toPattern().matcher(this)
     while (matcher.find()) {
         val text = matcher.group()
