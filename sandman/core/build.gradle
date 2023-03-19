@@ -6,6 +6,7 @@ plugins {
 dependencies {
 
     implementation project(":sandman:common")
-
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.21"
 }
+
+apply from: file('../../gradle/publish.gradle')

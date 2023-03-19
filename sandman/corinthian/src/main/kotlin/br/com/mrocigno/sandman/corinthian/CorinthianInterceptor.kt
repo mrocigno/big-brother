@@ -13,8 +13,6 @@ class CorinthianInterceptor : Interceptor {
         try {
             val response = chain.proceed(request)
 
-            Thread.sleep(5000)
-
             val endingAt = System.currentTimeMillis()
 
             entry.elapsedTime = "${endingAt - startingAt}ms"

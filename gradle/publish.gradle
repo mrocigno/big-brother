@@ -1,0 +1,16 @@
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+
+        maven(MavenPublication) {
+            groupId = 'br.com.mrocigno'
+            artifactId = "sandman-${project.name}"
+            version = '1.0.1'
+
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+}

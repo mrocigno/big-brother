@@ -7,14 +7,14 @@ plugins {
 
 allprojects {
 
+    def isApp = project.name == 'app'
+    def suffix = (isApp? '' : ".${project.name}")
+
     afterEvaluate {
 
         if (!project.hasProperty("android")) return
 
         android {
-            def suffix = (project.name == 'app'? '' : ".${project.name}")
-            println("br.com.mrocigno.sandman$suffix")
-
             namespace "br.com.mrocigno.sandman$suffix"
             compileSdk 33
 

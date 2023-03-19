@@ -7,3 +7,5 @@ dependencies {
 
     api 'com.jakewharton.threetenabp:threetenabp:1.4.4'
 }
+
+apply from: file('../../gradle/publish.gradle')

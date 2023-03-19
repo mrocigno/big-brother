@@ -6,5 +6,8 @@ plugins {
 dependencies {
 
     implementation project(":sandman:common")
-    implementation project(":sandman:core")
+
+    compileOnly project(":sandman:core")
 }
+
+apply from: file('../../gradle/publish.gradle')

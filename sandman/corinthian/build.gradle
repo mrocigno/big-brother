@@ -4,14 +4,14 @@ plugins {
     id 'kotlin-parcelize'
 }
 
-
-
 dependencies {
 
-    implementation project(":sandman:core")
     implementation project(":sandman:common")
 
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.4.4'
+    compileOnly project(":sandman:core")
+    compileOnly 'com.squareup.retrofit2:retrofit:2.9.0'
+    compileOnly 'com.squareup.okhttp3:okhttp:4.10.0'
+    compileOnly 'com.jakewharton.threetenabp:threetenabp:1.4.4'
 }
+
+apply from: file('../../gradle/publish.gradle')
