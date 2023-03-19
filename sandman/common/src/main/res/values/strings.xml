@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="generic_search">Search</string>
+    <string name="generic_separation" translatable="false">%s - %s</string>
+
+    <string name="select_all">Select all</string>
+    <string name="deselect_all">Deselect all</string>
+</resources>

@@ -25,10 +25,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="sahduisah duisahui dhsauidh uisahd uiash"
                 android:textColor="@color/text_title"
                 android:textSize="12sp"
-                app:fontFamily="@font/courier_regular" />
+                app:fontFamily="@font/courier_regular"
+                tools:text="stacktrace" />
 
         </HorizontalScrollView>
 
@@ -56,8 +56,8 @@
         android:layout_width="1dp"
         android:layout_height="wrap_content"
         android:maxLines="1"
+        android:text="@string/crash_title"
         android:textColor="@color/text_title"
-        android:text="O App crashou :("
         app:layout_constraintBottom_toBottomOf="@id/close_img_avd"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/close_img_avd" />
@@ -79,7 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="Na tela:"
+        android:text="@string/crash_screen"
         android:textColor="@color/text_title"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@id/crash_screen_name"
