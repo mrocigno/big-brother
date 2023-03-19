@@ -31,8 +31,11 @@ class ReportTask : MorpheusTask() {
         currentRoot = tracked
     }
 
-    override fun onActivityDestroyed(activity: Activity) {
-        currentRoot = currentRoot?.parent
+    override fun onActivityStarted(activity: Activity) {
+        val activityName = activity::class.simpleName.toString()
+        if (activityName != currentRoot?.name) {
+            currentRoot = currentRoot?.parent
+        }
     }
 
     override fun onFragmentStarted(fragment: Fragment) {
