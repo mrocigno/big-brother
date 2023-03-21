@@ -6,7 +6,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'br.com.mrocigno'
             artifactId = "sandman-${project.name}"
-            version = '1.0.3'
+            version = '1.0.5'
 
             afterEvaluate {
                 from components.release
