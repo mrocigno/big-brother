@@ -18,8 +18,8 @@
         app:tabTextAppearance="@style/TextAppearance_Tab"
         app:tabTextColor="@color/text_title" />
 
-    <FrameLayout
-        android:id="@+id/td_dreams_container"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/td_dreams_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp" />

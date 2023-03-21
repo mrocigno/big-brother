@@ -3,7 +3,6 @@ package br.com.mrocigno.sandman.core
 import android.annotation.SuppressLint
 import android.transition.TransitionManager
 import android.view.ContextThemeWrapper
-import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
@@ -13,15 +12,14 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import br.com.mrocigno.sandman.common.CircularRevealTransition
 import br.com.mrocigno.sandman.common.utils.afterMeasure
-import br.com.mrocigno.sandman.common.utils.decorView
 import br.com.mrocigno.sandman.common.utils.getNavigationBarHeight
-import br.com.mrocigno.sandman.common.utils.rootView
 import br.com.mrocigno.sandman.common.utils.statusBarHeight
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.google.android.material.tabs.TabLayoutMediator
 import br.com.mrocigno.sandman.common.R as CommonR
 
 @SuppressLint("ViewConstructor")
@@ -29,7 +27,6 @@ class TheDreamingView(
     private val vortex: VortexView
 ) : FrameLayout(vortex.context) {
 
-    private val list: MutableList<DreamData> = mutableListOf()
     private val activity get() = (context as ContextThemeWrapper).baseContext as FragmentActivity
     private val statusBarHeight = activity.statusBarHeight
     private val navigationBarHeight = activity.getNavigationBarHeight()
@@ -38,7 +35,8 @@ class TheDreamingView(
     var isExpanded = false
         private set
 
-    private val tabHeader: TabLayout get() = findViewById(R.id.td_tab_layout)
+    private val tabHeader: TabLayout by lazy { findViewById(R.id.td_tab_layout) }
+    private val pager: ViewPager2 by lazy { findViewById(R.id.td_dreams_pager) }
 
     private val onBackPressed = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -61,15 +59,11 @@ class TheDreamingView(
             )
         }
 
-        TheDreaming.getDream(activity::class)?.let(list::addAll)
-        list.addAll(TheDreaming.getNightmares())
-
-        setupHeader()
+        setupPager()
     }
 
     fun expand() {
         if (isAnimationRunning) return
-        addFragment(tabHeader.selectedTabPosition)
 
         isExpanded = true
         vortex.setBackgroundResource(CommonR.drawable.remove_area_background)
@@ -89,7 +83,6 @@ class TheDreamingView(
         TransitionManager.beginDelayedTransition(parentVG, CircularRevealTransition().apply {
             doOnStart { isAnimationRunning = true }
             doOnEnd {
-                clearFragment()
                 parentVG.removeView(this@TheDreamingView)
                 isAnimationRunning = false
             }
@@ -97,56 +90,24 @@ class TheDreamingView(
         isInvisible = true
     }
 
-    private fun setupHeader() {
-        list.forEach { data ->
-            tabHeader.addTab(tabHeader.newTab().apply {
-                contentDescription = data.name
-                text = data.name
-            })
-        }
+    private fun setupPager() {
+        val list: MutableList<DreamData> = mutableListOf()
+        TheDreaming.getDream(activity::class)?.let(list::addAll)
+        list.addAll(TheDreaming.getNightmares())
 
-        tabHeader.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab ?: return
-                addFragment(tab.position)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
-            override fun onTabReselected(tab: TabLayout.Tab?) = Unit
-        })
+        pager.adapter = TheDreamingAdapter(activity, list, vortex)
+        TabLayoutMediator(tabHeader, pager) { tab, position ->
+            tab.text = list[position].name
+        }.attach()
     }
+}
 
-    private fun addFragment(position: Int) {
-        if (position == -1) return
-        val data = list[position]
-        val fragment = data.creator(vortex)
-        activity.findFragmentManager()?.apply {
-            beginTransaction()
-                .replace(R.id.td_dreams_container, fragment, "page ${data.name}")
-                .commit()
-        }
-    }
+private class TheDreamingAdapter(
+    activity: FragmentActivity,
+    private val data: List<DreamData>,
+    private val vortex: VortexView
+) : FragmentStateAdapter(activity) {
 
-    private fun clearFragment() {
-        if (tabHeader.selectedTabPosition == -1) return
-        activity.findFragmentManager()?.apply {
-            val data = list[tabHeader.selectedTabPosition]
-            val fragment = findFragmentByTag("page ${data.name}") ?: return
-            beginTransaction()
-                .remove(fragment)
-                .commit()
-        }
-    }
-
-    private fun FragmentActivity.findFragmentManager(): FragmentManager? {
-        if (rootView.findViewById<View>(R.id.td_dreams_container) != null) {
-            return supportFragmentManager
-        }
-        supportFragmentManager.fragments.forEach {
-            if (it.decorView?.findViewById<View>(R.id.td_dreams_container) != null) {
-                return it.childFragmentManager
-            }
-        }
-        return null
-    }
+    override fun getItemCount() = data.size
+    override fun createFragment(position: Int) = data[position].creator(vortex)
 }
