@@ -14,7 +14,7 @@ import br.com.mrocigno.sandman.common.utils.highlightQuery
 import br.com.mrocigno.sandman.common.utils.inflate
 import br.com.mrocigno.sandman.common.R as CommonR
 
-class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_network_entry)) {
+class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.corinthian_item_network_entry)) {
 
     private val dot: View by lazy { itemView.findViewById(R.id.net_entry_dot) }
     private val hour: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_hour) }

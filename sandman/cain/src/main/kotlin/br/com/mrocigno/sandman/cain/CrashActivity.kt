@@ -22,7 +22,7 @@ import br.com.mrocigno.sandman.common.utils.statusBarHeight
 import br.com.mrocigno.sandman.core.OutOfDomain
 
 @OutOfDomain
-class CrashActivity : AppCompatActivity(R.layout.activity_crash) {
+class CrashActivity : AppCompatActivity(R.layout.cain_activity_crash) {
 
     private val statusBarGuideline: View by lazy { findViewById(R.id.crash_status_bar_guideline) }
     private val root: MotionLayout by lazy { findViewById(R.id.crash_root) }

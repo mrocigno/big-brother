@@ -25,7 +25,7 @@ import java.io.Serializable
 fun ViewGroup.inflate(@LayoutRes resId: Int) =
     LayoutInflater.from(context).inflate(resId, this, false)
 
-fun Context.copyToClipboard(text: String, toastFeedback: String? = null) {
+fun Context.copyToClipboard(text: String, toastFeedback: String? = "Copied to clipboard") {
     val clipboard = getSystemService(ClipboardManager::class.java)
     clipboard.setPrimaryClip(ClipData.newPlainText("value", text))
     toastFeedback?.run {

@@ -53,5 +53,12 @@
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/net_entry_details_copy_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toTopOf="@id/net_entry_details_toolbar"
+            motion:layout_constraintBottom_toBottomOf="@id/net_entry_details_toolbar"/>
     </ConstraintSet>
 </MotionScene>

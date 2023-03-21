@@ -16,7 +16,7 @@ import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.sandman.common.R as CommonR
 
 @OutOfDomain
-class NetworkFragment : Fragment(R.layout.fragment_network) {
+class NetworkFragment : Fragment(R.layout.corinthian_fragment_network) {
 
     private val recycler: RecyclerView by lazy { requireView().findViewById(R.id.net_recycler) }
     private val searchViewLayout: TextInputLayout by lazy { requireView().findViewById(R.id.net_search_layout) }

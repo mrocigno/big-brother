@@ -20,7 +20,7 @@ import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.sandman.common.R as CommonR
 
 @OutOfDomain
-class LogFragment : Fragment(R.layout.fragment_log) {
+class LogFragment : Fragment(R.layout.matthew_fragment_log) {
 
     private val chipGroup: ChipGroup by lazy { requireView().findViewById(R.id.log_chip_group) }
     private val recycler: RecyclerView by lazy { requireView().findViewById(R.id.log_recycler) }

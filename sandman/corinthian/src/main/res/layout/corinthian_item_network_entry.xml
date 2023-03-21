@@ -12,7 +12,7 @@
         android:layout_width="10dp"
         android:layout_height="10dp"
         android:layout_marginStart="10dp"
-        android:background="@drawable/background_dot"
+        android:background="@drawable/sandman_background_dot"
         android:backgroundTint="@color/icon_positive"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/net_entry_hour"
@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/background_method"
+        android:background="@drawable/sandman_background_method"
         android:gravity="center"
         android:padding="5dp"
         android:textSize="15sp"
@@ -105,7 +105,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_down"
+        app:srcCompat="@drawable/sandman_ic_down"
         tools:visibility="invisible" />
 
     <androidx.appcompat.widget.AppCompatCheckBox

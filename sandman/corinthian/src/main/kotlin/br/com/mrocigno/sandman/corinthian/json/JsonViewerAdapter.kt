@@ -114,7 +114,7 @@ class JsonViewerAdapter(
     }
 }
 
-class JsonViewerViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_json_viewer)) {
+class JsonViewerViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.corinthian_item_json_viewer)) {
 
     private val key: AppCompatTextView by lazy { itemView.findViewById(R.id.json_viewer_item_key) }
     private val value: AppCompatTextView by lazy { itemView.findViewById(R.id.json_viewer_item_value) }

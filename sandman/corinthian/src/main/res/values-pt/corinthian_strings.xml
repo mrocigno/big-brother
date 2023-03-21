@@ -10,4 +10,26 @@
     <string name="network_hour_info">Horário:</string>
     <string name="network_elapsed_time_info">Tempo corrido:</string>
     <string name="network_url_info">URL:</string>
+    <string name="network_copy">Copiar tudo</string>
+    <string name="network_copy_all_template">
+URL: %s\n
+Method: %s\n
+Status code: %s\n
+Hora da requisição: %s\n
+Tempo corrido: %s\n
+\n
+—> REQUEST\n
+=== Headers ===\n
+%s\n
+\n
+=== Body ===\n
+%s\n
+\n\n
+&lt;— RESPONSE\n
+=== Headers ===\n
+%s\n
+\n
+=== Body ===\n
+%s\n
+    </string>
 </resources>

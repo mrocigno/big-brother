@@ -8,7 +8,7 @@ import br.com.mrocigno.sandman.common.utils.highlightQuery
 import br.com.mrocigno.sandman.common.utils.inflate
 import br.com.mrocigno.sandman.common.R as CommonR
 
-class LogEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.item_log_entry)) {
+class LogEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.matthew_item_log_entry)) {
 
     private val icon: AppCompatTextView by lazy { itemView.findViewById(R.id.log_entry_icon) }
     private val message: AppCompatTextView by lazy { itemView.findViewById(R.id.log_entry_message) }

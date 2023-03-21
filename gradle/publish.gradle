@@ -1,5 +1,15 @@
 apply plugin: 'maven-publish'
 
+android {
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+
 publishing {
     publications {
 

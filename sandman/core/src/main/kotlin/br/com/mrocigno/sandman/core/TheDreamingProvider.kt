@@ -15,15 +15,16 @@ import br.com.mrocigno.sandman.common.R as CommonR
 
 abstract class TheDreamingProvider : ContentProvider() {
 
+    protected abstract val isEnabled: Boolean
     @DrawableRes
-    protected open val iconRes = CommonR.drawable.ic_sandman
+    protected open val iconRes = CommonR.drawable.sandman_ic_sandman
     protected open val initialLocation = PointF(0f, 200f)
     protected open val disabledAlpha = .5f
-    protected open val size by lazy {
+    protected open val size get() =
         context?.resources?.getDimensionPixelSize(CommonR.dimen.vortex_size) ?: 0
-    }
 
     final override fun onCreate(): Boolean {
+        if (!isEnabled) return false
         AndroidThreeTen.init(context)
         TheDreaming.config = VortexConfig(
             initialLocation = initialLocation,
