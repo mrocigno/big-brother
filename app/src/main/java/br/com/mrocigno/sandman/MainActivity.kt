@@ -1,6 +1,5 @@
 package br.com.mrocigno.sandman
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -8,6 +7,7 @@ import br.com.mrocigno.sandman.core.Sandman
 import br.com.mrocigno.sandman.matthew.Matthew.Companion.tag
 import br.com.mrocigno.sandman.network.GithubApi
 import br.com.mrocigno.sandman.network.NetworkConfig.retrofit
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,7 +24,11 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
             Sandman.tag().e("Teste ERROR")
             Sandman.tag().v("Teste VERBOSE")
 
-            startActivity(Intent(this, SecondActivity::class.java))
+//            startActivity(Intent(this, SecondActivity::class.java))
+
+            BottomSheetDialogFragment().apply {
+
+            }.show(supportFragmentManager, "teste")
 
             CoroutineScope(Dispatchers.IO).launch {
 

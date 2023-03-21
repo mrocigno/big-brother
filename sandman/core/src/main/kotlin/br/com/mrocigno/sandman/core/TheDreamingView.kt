@@ -3,6 +3,7 @@ package br.com.mrocigno.sandman.core
 import android.annotation.SuppressLint
 import android.transition.TransitionManager
 import android.view.ContextThemeWrapper
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
@@ -12,9 +13,12 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import br.com.mrocigno.sandman.common.CircularRevealTransition
 import br.com.mrocigno.sandman.common.utils.afterMeasure
+import br.com.mrocigno.sandman.common.utils.decorView
 import br.com.mrocigno.sandman.common.utils.getNavigationBarHeight
+import br.com.mrocigno.sandman.common.utils.rootView
 import br.com.mrocigno.sandman.common.utils.statusBarHeight
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -116,7 +120,7 @@ class TheDreamingView(
         if (position == -1) return
         val data = list[position]
         val fragment = data.creator(vortex)
-        activity.supportFragmentManager.apply {
+        activity.findFragmentManager()?.apply {
             beginTransaction()
                 .replace(R.id.td_dreams_container, fragment, "page ${data.name}")
                 .commit()
@@ -125,12 +129,24 @@ class TheDreamingView(
 
     private fun clearFragment() {
         if (tabHeader.selectedTabPosition == -1) return
-        activity.supportFragmentManager.apply {
+        activity.findFragmentManager()?.apply {
             val data = list[tabHeader.selectedTabPosition]
             val fragment = findFragmentByTag("page ${data.name}") ?: return
             beginTransaction()
                 .remove(fragment)
                 .commit()
         }
+    }
+
+    private fun FragmentActivity.findFragmentManager(): FragmentManager? {
+        if (rootView.findViewById<View>(R.id.td_dreams_container) != null) {
+            return supportFragmentManager
+        }
+        supportFragmentManager.fragments.forEach {
+            if (it.decorView?.findViewById<View>(R.id.td_dreams_container) != null) {
+                return it.childFragmentManager
+            }
+        }
+        return null
     }
 }
