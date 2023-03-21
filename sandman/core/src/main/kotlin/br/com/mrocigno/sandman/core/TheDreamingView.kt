@@ -95,6 +95,7 @@ class TheDreamingView(
         TheDreaming.getDream(activity::class)?.let(list::addAll)
         list.addAll(TheDreaming.getNightmares())
 
+        pager.offscreenPageLimit = 1
         pager.adapter = TheDreamingAdapter(activity, list, vortex)
         TabLayoutMediator(tabHeader, pager) { tab, position ->
             tab.text = list[position].name
