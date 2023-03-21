@@ -5,7 +5,7 @@
     android:id="@+id/crash_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/activity_crash_scene">
+    app:layoutDescription="@xml/cain_activity_crash_scene">
 
     <ScrollView
         android:id="@+id/crash_scroll_view"
@@ -72,7 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_close_avd" />
+        app:srcCompat="@drawable/sandman_ic_close_avd" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/crash_screen_name_label"
@@ -106,7 +106,7 @@
         android:layout_height="100dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/background_secondary_radius"
+        android:background="@drawable/sandman_background_secondary_radius"
         android:scaleType="centerCrop"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"

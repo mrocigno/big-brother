@@ -39,7 +39,7 @@
                 android:layout_gravity="center_vertical|end"
                 android:foreground="?selectableItemBackground"
                 android:padding="12dp"
-                app:srcCompat="@drawable/ic_clear"
+                app:srcCompat="@drawable/sandman_ic_clear"
                 app:tint="?colorPrimary" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

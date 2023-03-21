@@ -18,7 +18,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 @OutOfDomain
-class JsonViewerActivity : AppCompatActivity(R.layout.activity_json_viewer) {
+class JsonViewerActivity : AppCompatActivity(R.layout.corinthian_activity_json_viewer) {
 
     private val searchLayout: TextInputLayout by lazy { findViewById(R.id.json_viewer_search_view_layout) }
     private val searchView: TextInputEditText by lazy { findViewById(R.id.json_viewer_search_view) }

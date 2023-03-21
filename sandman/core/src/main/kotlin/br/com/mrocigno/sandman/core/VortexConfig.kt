@@ -9,7 +9,7 @@ class VortexConfig(
     val initialLocation: PointF = PointF(0f, 200f),
     val size: Int = 0,
     val disabledAlpha: Float = .5f,
-    @DrawableRes val iconRes: Int = CommonR.drawable.ic_sandman,
+    @DrawableRes val iconRes: Int = CommonR.drawable.sandman_ic_sandman,
 ) {
 
     fun initial(vortexView: VortexView) = vortexView.apply {

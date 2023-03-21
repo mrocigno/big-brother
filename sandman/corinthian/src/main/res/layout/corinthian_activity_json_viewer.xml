@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/activity_json_viewer_scene">
+    app:layoutDescription="@xml/corinthian_activity_json_viewer_scene">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/json_viewer_toolbar"
@@ -12,7 +12,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIcon="@drawable/sandman_ic_arrow_back"
         app:title="Json Viewer" />
 
     <com.google.android.material.textfield.TextInputLayout

@@ -46,8 +46,8 @@ class TheDreamingView(
     }
 
     init {
-        setBackgroundResource(CommonR.drawable.the_dreaming_background)
-        inflate(context, R.layout.the_dreaming_layout, this)
+        setBackgroundResource(CommonR.drawable.sandman_the_dreaming_background)
+        inflate(context, R.layout.sandman_the_dreaming_layout, this)
         isInvisible = true
         setPadding(resources.getDimensionPixelSize(CommonR.dimen.spacing_stroke))
 
@@ -66,7 +66,7 @@ class TheDreamingView(
         if (isAnimationRunning) return
 
         isExpanded = true
-        vortex.setBackgroundResource(CommonR.drawable.remove_area_background)
+        vortex.setBackgroundResource(CommonR.drawable.sandman_remove_area_background)
 
         TransitionManager.beginDelayedTransition(parentVG, CircularRevealTransition())
         isVisible = true

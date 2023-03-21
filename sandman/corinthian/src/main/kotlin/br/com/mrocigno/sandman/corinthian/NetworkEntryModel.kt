@@ -1,9 +1,11 @@
 package br.com.mrocigno.sandman.corinthian
 
+import android.content.Context
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import br.com.mrocigno.sandman.core.model.ReportModel
 import br.com.mrocigno.sandman.core.model.ReportModelType
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.Request
@@ -53,6 +55,19 @@ class NetworkEntryModel(
         .appendLine(elapsedTime)
         .appendLine(hour)
         .toString()
+
+    fun all(context: Context) =
+        context.getString(R.string.network_copy_all_template,
+            fullUrl,
+            method,
+            (statusCode ?: -1).toString(),
+            hour,
+            elapsedTime,
+            request.formattedHeaders,
+            request.formattedBody,
+            response?.formattedHeaders ?: "empty",
+            response?.formattedBody ?: "empty"
+        )
 }
 
 @Parcelize
@@ -60,6 +75,9 @@ class NetworkPayloadModel(
     val headers: Map<String, String>?,
     val body: String?
 ) : Parcelable {
+
+    @IgnoredOnParcel
+    var isBodyFormatted: Boolean = false
 
     constructor(request: Request) : this(
         headers = request.headers.toMap(),
@@ -86,13 +104,20 @@ class NetworkPayloadModel(
         body = exception.stackTraceToString()
     )
 
-    val formattedBody: CharSequence? get() = if (body.isNullOrBlank()) "empty" else runCatching {
-        JSONObject(body!!).toString(2)
-    }.recoverCatching {
-        JSONArray(body).toString(2)
-    }.getOrDefault(body)
+    val formattedBody: CharSequence? get() =
+        if (body.isNullOrBlank()) "empty" else runCatching {
+            isBodyFormatted = true
+            JSONObject(body!!).toString(2)
+        }.recoverCatching {
+            isBodyFormatted = true
+            JSONArray(body).toString(2)
+        }.getOrElse {
+            isBodyFormatted = false
+            body
+        }
 
-    val formattedHeaders: CharSequence? get() = if (headers.isNullOrEmpty()) "empty" else {
-        headers.toHeaders().toString()
-    }
+    val formattedHeaders: CharSequence? get() =
+        if (headers.isNullOrEmpty()) "empty" else {
+            headers.toHeaders().toString()
+        }
 }

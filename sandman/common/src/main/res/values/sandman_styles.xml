@@ -21,7 +21,7 @@
     <style name="SearchView" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
         <item name="boxBackgroundColor">#33000000</item>
         <item name="endIconCheckable">true</item>
-        <item name="endIconDrawable">@drawable/ic_search</item>
+        <item name="endIconDrawable">@drawable/sandman_ic_search</item>
         <item name="endIconMode">custom</item>
         <item name="endIconTint">?colorPrimary</item>
     </style>

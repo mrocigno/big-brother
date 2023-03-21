@@ -32,6 +32,6 @@
         android:id="@+id/json_viewer_item_ic_down"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_down" />
+        app:srcCompat="@drawable/sandman_ic_down" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

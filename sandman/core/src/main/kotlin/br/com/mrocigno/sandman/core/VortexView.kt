@@ -65,7 +65,7 @@ class VortexView @JvmOverloads constructor(
     private val removableView by lazy {
         val padding = context.resources.getDimensionPixelSize(CommonR.dimen.spacing_s)
         FrameLayout(context).apply {
-            setBackgroundResource(CommonR.drawable.remove_area_background)
+            setBackgroundResource(CommonR.drawable.sandman_remove_area_background)
             layoutParams = LayoutParams(config.size, config.size).apply {
                 x = area.width() / 2
                 y = area.bottom - padding
