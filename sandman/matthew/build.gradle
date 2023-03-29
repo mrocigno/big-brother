@@ -4,10 +4,10 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+apply from: file('../../gradle/publish.gradle')
+
 dependencies {
 
     compileOnly project(":sandman:core")
     implementation project(":sandman:common")
 }
-
-apply from: file('../../gradle/publish.gradle')

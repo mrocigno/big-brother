@@ -1,25 +1,71 @@
-apply plugin: 'maven-publish'
+apply plugin: 'io.github.pedro-bachiega.sonatype-maven-publish'
+
+group = "io.github.mrocigno"
+version = "0.0.1-SNAPSHOT"
 
 android {
 
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
+    task sourcesJar(type: Jar) {
+        from android.sourceSets.main.java.srcDirs
+        classifier = 'sources'
+    }
+
+    task javadoc(type: Javadoc) {
+        excludes = ['**/*.kt']
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
+    }
+
+    artifacts {
+        archives javadocJar, sourcesJar
     }
 }
 
-publishing {
-    publications {
+sonatypePublishing {
+    repositoryUrl = "https://github.com/mrocigno/Sandman"
+    repositoryConnectionUrl = "scm:https://github.com/mrocigno/Sandman.git"
 
-        maven(MavenPublication) {
-            groupId = 'br.com.mrocigno'
-            artifactId = "sandman-${project.name}"
-            version = '1.0.5'
+    licenseName = "The Apache License, Version 2.0"
+    licenseUrl = "http://www.apache.org/licenses/LICENSE-2.0.txt"
 
-            afterEvaluate {
-                from components.release
+    developerId = developer_id
+    developerName = developer_name
+    developerEmail = developer_email
+
+    username = ossrh_username
+    password = ossrh_password
+}
+
+publications {
+
+    sandman {
+        artifactId = "sandman-${project.name}"
+        libName = "Sandman ${project.name}"
+        libDescription = "Topper"
+
+        artifact javadocJar
+        artifact sourcesJar
+    }
+}
+
+afterEvaluate {
+    publishing {
+
+        components.each { comp ->
+            if (!comp.name.containsIgnoreCase("release")) return
+
+            publications.each { publication ->
+                publication.from comp
             }
         }
     }

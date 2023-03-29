@@ -3,11 +3,11 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+apply from: file('../../gradle/publish.gradle')
+
 dependencies {
 
     implementation project(":sandman:common")
 
     compileOnly project(":sandman:core")
 }
-
-apply from: file('../../gradle/publish.gradle')

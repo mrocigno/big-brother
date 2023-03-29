@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+apply from: file('../../gradle/publish.gradle')
+
 dependencies {
 
     implementation project(":sandman:common")
@@ -15,5 +17,3 @@ dependencies {
         api project(":sandman:cain")
     }
 }
-
-apply from: file('../../gradle/publish.gradle')

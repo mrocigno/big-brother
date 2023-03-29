@@ -4,6 +4,8 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+apply from: file('../../gradle/publish.gradle')
+
 dependencies {
 
     implementation project(":sandman:common")
@@ -13,5 +15,3 @@ dependencies {
     compileOnly 'com.squareup.okhttp3:okhttp:4.10.0'
     compileOnly 'com.jakewharton.threetenabp:threetenabp:1.4.4'
 }
-
-apply from: file('../../gradle/publish.gradle')

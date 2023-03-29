@@ -5,14 +5,17 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import br.com.mrocigno.sandman.common.utils.decorView
 import br.com.mrocigno.sandman.common.utils.rootView
+import br.com.mrocigno.sandman.core.MorpheusTask
 import br.com.mrocigno.sandman.core.isOutOfDomain
+import br.com.mrocigno.sandman.core.utils.globalTracker
+import br.com.mrocigno.sandman.core.utils.localTracker
 
-class ReportTask : br.com.mrocigno.sandman.core.MorpheusTask() {
+class ReportTask : MorpheusTask() {
 
     private var currentRoot: ActivityTrack? = null
         set(value) {
             field = value
-            br.com.mrocigno.sandman.core.utils.localTracker = value?.reportModels
+            localTracker = value?.reportModels
         }
 
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
@@ -24,7 +27,8 @@ class ReportTask : br.com.mrocigno.sandman.core.MorpheusTask() {
             screenType = "Activity"
         )
 
-        if (currentRoot == null) br.com.mrocigno.sandman.core.utils.globalTracker.add(tracked) else currentRoot?.tracker?.add(tracked)
+        if (currentRoot == null)
+            globalTracker.add(tracked) else currentRoot?.tracker?.add(tracked)
         currentRoot = tracked
     }
 
@@ -39,13 +43,11 @@ class ReportTask : br.com.mrocigno.sandman.core.MorpheusTask() {
         if (fragment.isOutOfDomain) return
         fragment.decorView?.addView(ClickObserverView.getOrCreate(fragment))
 
-        currentRoot?.tracker?.add(
-            ActivityTrack(
+        currentRoot?.tracker?.add(ActivityTrack(
             name = fragment::class.simpleName.toString(),
             parent = currentRoot,
             screenType = "Fragment"
-        )
-        )
+        ))
     }
 
     override fun onFragmentStopped(fragment: Fragment) {
