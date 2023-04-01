@@ -32,14 +32,14 @@ class ReportGenerator(list: List<ReportModel>) {
         val tempList = mutableListOf<ReportModel>()
         forEach {
             if (it.type == type) tempList.add(it)
-            if (it is ActivityTrack) {
+            if (it is ActivityReport) {
                 tempList.addAll(it.reportModels.filter(type))
             }
         }
         return tempList
     }
 
-    fun generate(context: Context) {
+    fun generate(context: Context): String {
         val teste = StringBuilder().also {
             it.appendLine("O - Inicio")
             it.appendSpace(1)
@@ -58,5 +58,6 @@ class ReportGenerator(list: List<ReportModel>) {
         context.openFileOutput("teste.txt", Context.MODE_PRIVATE).bufferedWriter().use {
             it.append(teste)
         }
+        return teste
     }
 }

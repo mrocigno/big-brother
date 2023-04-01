@@ -3,6 +3,7 @@ package br.com.mrocigno.sandman.matthew
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import br.com.mrocigno.sandman.core.Sandman
+import br.com.mrocigno.sandman.core.utils.track
 
 class Matthew(private val tag: String) {
 
@@ -74,6 +75,7 @@ class Matthew(private val tag: String) {
             throwable: Throwable? = null
         ) {
             val model = LogEntryModel(lvl, tag, message, throwable)
+            model.track()
             _logEntries.add(model)
             logEntries.postValue(_logEntries)
         }

@@ -1,26 +1,20 @@
 package br.com.mrocigno.sandman.core.model
 
-import android.os.Parcelable
-import br.com.mrocigno.sandman.core.utils.localTracker
 import org.threeten.bp.LocalDateTime
+import java.io.Serializable
 
-@Suppress("LeakingThis")
 abstract class ReportModel(
-    val time: LocalDateTime = LocalDateTime.now(),
     val type: ReportModelType,
-    private val trackable: Boolean = true
-) : Parcelable {
+    val time: LocalDateTime = LocalDateTime.now()
+) : Serializable {
 
-    init {
-        if (trackable) localTracker?.add(this)
-    }
-
-    open fun asTxt(): String = "- ${type.name}"
+    open fun asTxt(): String = "> ${type.name}"
 }
 
 enum class ReportModelType {
     TRACK,
     NETWORK,
     LOG,
+    CRASH,
     OTHER;
 }

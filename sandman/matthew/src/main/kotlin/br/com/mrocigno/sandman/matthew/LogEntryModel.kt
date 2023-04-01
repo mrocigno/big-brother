@@ -5,18 +5,14 @@ import androidx.recyclerview.widget.DiffUtil
 import br.com.mrocigno.sandman.common.utils.appendSeparation
 import br.com.mrocigno.sandman.core.model.ReportModel
 import br.com.mrocigno.sandman.core.model.ReportModelType
-import kotlinx.parcelize.Parcelize
 import br.com.mrocigno.sandman.common.R as CommonR
 
-@Parcelize
 class LogEntryModel(
     val lvl: LogEntryType,
     val tag: String,
     val message: String? = null,
     val throwable: Throwable? = null
-) : ReportModel(
-    type = ReportModelType.LOG
-) {
+) : ReportModel(ReportModelType.LOG) {
 
     override fun asTxt() = StringBuilder()
         .append("> ")

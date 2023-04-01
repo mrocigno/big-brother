@@ -21,7 +21,6 @@ rootProject.name = "Sandman"
 include ':app'
 include ':sandman'
 include ':sandman:core'
-include ':sandman:cain'
 include ':sandman:common'
 include ':sandman:corinthian'
 include ':sandman:matthew'

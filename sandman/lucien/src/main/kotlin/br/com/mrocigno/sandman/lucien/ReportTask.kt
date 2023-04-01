@@ -6,14 +6,13 @@ import androidx.fragment.app.Fragment
 import br.com.mrocigno.sandman.common.utils.decorView
 import br.com.mrocigno.sandman.common.utils.rootView
 import br.com.mrocigno.sandman.core.MorpheusTask
-import br.com.mrocigno.sandman.core.utils.globalTracker
 import br.com.mrocigno.sandman.core.utils.localTracker
+import br.com.mrocigno.sandman.core.utils.track
 
 class ReportTask : MorpheusTask() {
 
-    private val yoBro = mutableMapOf<Activity, ActivityTrack>()
-
-    private var currentRoot: ActivityTrack? = null
+    private val mapping = mutableMapOf<Int, ActivityReport>()
+    private var currentRoot: ActivityReport? = null
         set(value) {
             field = value
             localTracker = value?.reportModels
@@ -22,24 +21,21 @@ class ReportTask : MorpheusTask() {
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
         activity.rootView.addView(ClickObserverView.getOrCreate(activity))
 
-        val tracked = ActivityTrack(
+        val activityReport = ActivityReport(
             name = activity::class.simpleName.toString(),
             parent = currentRoot,
             screenType = "Activity"
-        )
+        ).track()
 
-        yoBro[activity] = tracked
-
-        if (currentRoot == null) globalTracker.add(tracked) else currentRoot?.reportModels?.add(tracked)
-        currentRoot = tracked
+        mapping[activity.hashCode()] = activityReport
     }
 
     override fun onActivityResume(activity: Activity) {
-        currentRoot = yoBro[activity]
+        currentRoot = mapping[activity.hashCode()]
     }
 
     override fun onActivityDestroyed(activity: Activity) {
-        yoBro.remove(activity)
+        mapping.remove(activity.hashCode())
         val destroyed = ActivityDestroyedReport(activity::class.simpleName.toString())
         currentRoot?.reportModels?.add(destroyed)
     }
@@ -47,7 +43,7 @@ class ReportTask : MorpheusTask() {
     override fun onFragmentStarted(fragment: Fragment) {
         fragment.decorView?.addView(ClickObserverView.getOrCreate(fragment))
 
-        currentRoot?.reportModels?.add(ActivityTrack(
+        currentRoot?.reportModels?.add(ActivityReport(
             name = fragment::class.simpleName.toString(),
             parent = currentRoot,
             screenType = "Fragment"

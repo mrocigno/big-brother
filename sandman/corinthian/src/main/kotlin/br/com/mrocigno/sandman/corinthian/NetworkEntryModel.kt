@@ -1,13 +1,10 @@
 package br.com.mrocigno.sandman.corinthian
 
 import android.content.Context
-import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import br.com.mrocigno.sandman.common.utils.appendSeparation
 import br.com.mrocigno.sandman.core.model.ReportModel
 import br.com.mrocigno.sandman.core.model.ReportModelType
-import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.Request
 import okhttp3.Response
@@ -16,8 +13,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import java.io.Serializable
 
-@Parcelize
 class NetworkEntryModel(
     val fullUrl: String,
     val url: String,
@@ -27,9 +24,7 @@ class NetworkEntryModel(
     val method: String,
     val request: NetworkPayloadModel,
     var response: NetworkPayloadModel? = null
-) : ReportModel(
-    type = ReportModelType.NETWORK
-) {
+) : ReportModel(ReportModelType.NETWORK) {
 
     constructor(request: Request) : this(
         fullUrl = request.url.toString(),
@@ -81,13 +76,11 @@ class NetworkEntryModel(
         )
 }
 
-@Parcelize
 class NetworkPayloadModel(
     val headers: Map<String, String>?,
     val body: String?
-) : Parcelable {
+) : Serializable {
 
-    @IgnoredOnParcel
     var isBodyFormatted: Boolean = false
 
     constructor(request: Request) : this(

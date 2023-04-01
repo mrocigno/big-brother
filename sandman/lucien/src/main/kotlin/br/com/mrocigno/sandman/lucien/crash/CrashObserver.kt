@@ -1,10 +1,12 @@
-package br.com.mrocigno.sandman.cain
+package br.com.mrocigno.sandman.lucien.crash
 
 import android.app.Activity
 import android.os.Process
 import br.com.mrocigno.sandman.common.utils.printScreen
 import br.com.mrocigno.sandman.common.utils.save
+import br.com.mrocigno.sandman.core.utils.globalTracker
 import br.com.mrocigno.sandman.core.utils.lastClickPosition
+import br.com.mrocigno.sandman.core.utils.track
 import java.lang.ref.WeakReference
 import kotlin.system.exitProcess
 
@@ -14,6 +16,8 @@ class CrashObserver(
 ) : Thread.UncaughtExceptionHandler {
 
     override fun uncaughtException(t: Thread, e: Throwable) {
+        CrashReport(e).track()
+
         val activity = activity.get() ?: run {
             default?.uncaughtException(t, e)
             return
@@ -27,7 +31,8 @@ class CrashObserver(
             CrashActivity.intent(
                 activity,
                 activity::class.simpleName.orEmpty(),
-                Exception(e)
+                ArrayList(globalTracker),
+                e
             )
         )
 

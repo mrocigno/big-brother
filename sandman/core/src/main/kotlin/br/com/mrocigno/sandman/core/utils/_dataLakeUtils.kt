@@ -18,3 +18,7 @@ var localTracker: MutableList<ReportModel>?
 val globalTracker: MutableList<ReportModel> get() =
     dataLake["globalTracker"] as? MutableList<ReportModel>
         ?: mutableListOf<ReportModel>().also { dataLake["globalTracker"] = it }
+
+fun <T : ReportModel> T.track(): T = apply {
+    localTracker?.add(this) ?: globalTracker.add(this)
+}

@@ -3,10 +3,20 @@
 
     <application>
 
+        <activity android:name=".crash.CrashActivity"
+            android:theme="@style/Theme.Sandman"/>
+
         <provider
             android:authorities="${applicationId}.LUCIEN"
             android:name=".ReportTask"
             android:exported="false"
             android:enabled="true"/>
+
+        <provider
+            android:authorities="${applicationId}.LUCIEN_CRASH"
+            android:name=".crash.CrashTask"
+            android:enabled="true"
+            android:exported="false"/>
+
     </application>
 </manifest>

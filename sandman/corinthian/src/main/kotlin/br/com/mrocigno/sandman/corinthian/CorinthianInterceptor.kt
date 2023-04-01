@@ -1,5 +1,6 @@
 package br.com.mrocigno.sandman.corinthian
 
+import br.com.mrocigno.sandman.core.utils.track
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -9,6 +10,7 @@ class CorinthianInterceptor : Interceptor {
         val startingAt = System.currentTimeMillis()
         val request = chain.request()
         val entry = NetworkEntryModel(request)
+        entry.track()
         NetworkHolder.addEntry(entry)
         try {
             val response = chain.proceed(request)

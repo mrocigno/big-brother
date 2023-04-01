@@ -21,7 +21,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
 
     implementation project(":sandman:core")
-    implementation project(":sandman:cain")
     implementation project(":sandman:lucien")
     implementation project(":sandman:corinthian")
     implementation project(":sandman:matthew")
