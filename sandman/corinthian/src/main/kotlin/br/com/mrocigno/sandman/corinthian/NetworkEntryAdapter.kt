@@ -1,12 +1,8 @@
 package br.com.mrocigno.sandman.corinthian
 
-import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView.Adapter
-
-private const val SELECT_ALL = 123
-private const val DEFAULT_VIEW = 321
 
 class NetworkEntryAdapter(
     private val onEntryClick: (NetworkEntryModel) -> Unit
@@ -16,12 +12,6 @@ class NetworkEntryAdapter(
     private val items: List<NetworkEntryModel> get() = differ.currentList
     private var query: String = ""
     private var allItemsHolder: List<NetworkEntryModel> = emptyList()
-
-    var isSelectMode = false
-        @SuppressLint("NotifyDataSetChanged") set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     fun setList(list: List<NetworkEntryModel>) {
         allItemsHolder = list
@@ -33,10 +23,8 @@ class NetworkEntryAdapter(
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: NetworkEntryView, position: Int) {
-        holder.bind(items[position], query, onEntryClick, isSelectMode)
+        holder.bind(items[position], query, onEntryClick)
     }
-
-    override fun getItemViewType(position: Int) = if (isSelectMode && position == 0) SELECT_ALL else DEFAULT_VIEW
 
     fun filter(query: String) {
         this.query = query

@@ -52,10 +52,7 @@ class NetworkFragment : Fragment(R.layout.corinthian_fragment_network) {
 
     private fun setupSearchView() {
         clear.setOnClickListener {
-            if (adapter.isSelectMode) {
-                NetworkHolder.clearSelected()
-            }
-            adapter.isSelectMode = !adapter.isSelectMode
+            NetworkHolder.clear()
         }
         searchViewLayout.setEndIconOnClickListener {
             adapter.filter(searchView.text.toString())

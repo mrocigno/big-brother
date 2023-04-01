@@ -22,14 +22,4 @@ internal object NetworkHolder {
         _networkEntries.clear()
         networkEntries.postValue(emptyList())
     }
-
-    fun toggleSelectAll(isChecked: Boolean) {
-        _networkEntries.forEach { it.isSelected = isChecked }
-        networkEntries.postValue(_networkEntries)
-    }
-
-    fun clearSelected() {
-        _networkEntries.removeAll { it.isSelected }
-        networkEntries.postValue(_networkEntries)
-    }
 }

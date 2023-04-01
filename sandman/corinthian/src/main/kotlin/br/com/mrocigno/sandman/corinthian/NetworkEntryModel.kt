@@ -26,8 +26,7 @@ class NetworkEntryModel(
     val hour: String,
     val method: String,
     val request: NetworkPayloadModel,
-    var response: NetworkPayloadModel? = null,
-    var isSelected: Boolean = false
+    var response: NetworkPayloadModel? = null
 ) : ReportModel(
     type = ReportModelType.NETWORK
 ) {
