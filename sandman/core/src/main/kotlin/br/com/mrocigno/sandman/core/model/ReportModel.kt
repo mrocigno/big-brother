@@ -1,6 +1,7 @@
 package br.com.mrocigno.sandman.core.model
 
 import android.os.Parcelable
+import br.com.mrocigno.sandman.core.utils.localTracker
 import org.threeten.bp.LocalDateTime
 
 @Suppress("LeakingThis")
@@ -11,12 +12,15 @@ abstract class ReportModel(
 ) : Parcelable {
 
     init {
-        if (trackable) br.com.mrocigno.sandman.core.utils.localTracker?.add(this)
+        if (trackable) localTracker?.add(this)
     }
+
+    open fun asTxt(): String = "- ${type.name}"
 }
 
 enum class ReportModelType {
     TRACK,
     NETWORK,
-    LOG;
+    LOG,
+    OTHER;
 }

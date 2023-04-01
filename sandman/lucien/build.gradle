@@ -4,7 +4,7 @@ plugins {
     id 'kotlin-parcelize'
 }
 
-apply from: file('../../gradle/publish.gradle')
+apply from: file('../../gradle/publish-oldschool.gradle')
 
 dependencies {
 

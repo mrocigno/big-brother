@@ -6,11 +6,12 @@ import androidx.fragment.app.Fragment
 import br.com.mrocigno.sandman.common.utils.decorView
 import br.com.mrocigno.sandman.common.utils.rootView
 import br.com.mrocigno.sandman.core.MorpheusTask
-import br.com.mrocigno.sandman.core.isOutOfDomain
 import br.com.mrocigno.sandman.core.utils.globalTracker
 import br.com.mrocigno.sandman.core.utils.localTracker
 
 class ReportTask : MorpheusTask() {
+
+    private val yoBro = mutableMapOf<Activity, ActivityTrack>()
 
     private var currentRoot: ActivityTrack? = null
         set(value) {
@@ -27,23 +28,26 @@ class ReportTask : MorpheusTask() {
             screenType = "Activity"
         )
 
-        if (currentRoot == null)
-            globalTracker.add(tracked) else currentRoot?.tracker?.add(tracked)
+        yoBro[activity] = tracked
+
+        if (currentRoot == null) globalTracker.add(tracked) else currentRoot?.reportModels?.add(tracked)
         currentRoot = tracked
     }
 
-    override fun onActivityStarted(activity: Activity) {
-        val activityName = activity::class.simpleName.toString()
-        if (activityName != currentRoot?.name) {
-            currentRoot = currentRoot?.parent
-        }
+    override fun onActivityResume(activity: Activity) {
+        currentRoot = yoBro[activity]
+    }
+
+    override fun onActivityDestroyed(activity: Activity) {
+        yoBro.remove(activity)
+        val destroyed = ActivityDestroyedReport(activity::class.simpleName.toString())
+        currentRoot?.reportModels?.add(destroyed)
     }
 
     override fun onFragmentStarted(fragment: Fragment) {
-        if (fragment.isOutOfDomain) return
         fragment.decorView?.addView(ClickObserverView.getOrCreate(fragment))
 
-        currentRoot?.tracker?.add(ActivityTrack(
+        currentRoot?.reportModels?.add(ActivityTrack(
             name = fragment::class.simpleName.toString(),
             parent = currentRoot,
             screenType = "Fragment"

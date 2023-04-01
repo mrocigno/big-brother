@@ -15,6 +15,10 @@ abstract class MorpheusTask : ContentProvider() {
 
     open fun onActivityPaused(activity: Activity) = Unit
 
+    open fun onActivityResume(activity: Activity) = Unit
+
+    open fun onActivityStopped(activity: Activity) = Unit
+
     open fun onActivityDestroyed(activity: Activity) = Unit
 
     open fun onFragmentStarted(fragment: Fragment) = Unit

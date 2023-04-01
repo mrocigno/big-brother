@@ -79,9 +79,27 @@ internal class Morpheus : Application.ActivityLifecycleCallbacks {
         }
     }
 
-    override fun onActivityResumed(activity: Activity) = Unit
+    override fun onActivityResumed(activity: Activity) {
+        if (activity.isOutOfDomain) return
+        tasks.forEach {
+            try {
+                it.onActivityResume(activity)
+            } catch (e: Exception) {
+                Log.e("SANDMAN", "${it::class.simpleName} - Error inside onActivityResume task", e)
+            }
+        }
+    }
 
-    override fun onActivityStopped(activity: Activity) = Unit
+    override fun onActivityStopped(activity: Activity) {
+        if (activity.isOutOfDomain) return
+        tasks.forEach {
+            try {
+                it.onActivityStopped(activity)
+            } catch (e: Exception) {
+                Log.e("SANDMAN", "${it::class.simpleName} - Error inside onActivityStopped task", e)
+            }
+        }
+    }
 
     override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) = Unit
 }

@@ -3,6 +3,7 @@ package br.com.mrocigno.sandman.corinthian
 import android.content.Context
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
+import br.com.mrocigno.sandman.common.utils.appendSeparation
 import br.com.mrocigno.sandman.core.model.ReportModel
 import br.com.mrocigno.sandman.core.model.ReportModelType
 import kotlinx.parcelize.IgnoredOnParcel
@@ -47,6 +48,17 @@ class NetworkEntryModel(
         override fun areContentsTheSame(oldItem: NetworkEntryModel, newItem: NetworkEntryModel) = false
 
     }
+
+    override fun asTxt() = StringBuilder()
+        .append("> ")
+        .append(type.name)
+        .appendSeparation()
+        .append(method)
+        .appendSeparation()
+        .append(statusCode)
+        .appendSeparation()
+        .append(url)
+        .toString()
 
     override fun toString() = StringBuilder()
         .appendLine(method)

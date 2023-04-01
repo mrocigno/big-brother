@@ -2,6 +2,7 @@ package br.com.mrocigno.sandman.matthew
 
 import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.DiffUtil
+import br.com.mrocigno.sandman.common.utils.appendSeparation
 import br.com.mrocigno.sandman.core.model.ReportModel
 import br.com.mrocigno.sandman.core.model.ReportModelType
 import kotlinx.parcelize.Parcelize
@@ -16,6 +17,15 @@ class LogEntryModel(
 ) : ReportModel(
     type = ReportModelType.LOG
 ) {
+
+    override fun asTxt() = StringBuilder()
+        .append("> ")
+        .append(type.name)
+        .appendSeparation()
+        .append(lvl.initial)
+        .appendSeparation()
+        .append(message ?: throwable?.message ?: "empty")
+        .toString()
 
     override fun toString() = StringBuilder()
         .appendLine(tag)

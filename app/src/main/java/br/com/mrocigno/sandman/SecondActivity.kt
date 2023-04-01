@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import br.com.mrocigno.sandman.core.utils.globalTracker
+import br.com.mrocigno.sandman.lucien.generateReport
 
 class SecondActivity : AppCompatActivity(R.layout.main_activity) {
 
@@ -18,7 +20,11 @@ class SecondActivity : AppCompatActivity(R.layout.main_activity) {
                 startActivity(Intent(this@SecondActivity, MainActivity::class.java))
             }
             setOnLongClickListener {
-                println(listOf("")[1])
+
+                globalTracker.generateReport()
+//                    .filterByType(ReportModelType.LOG)
+                    .generate(this@SecondActivity)
+
                 false
             }
         }
