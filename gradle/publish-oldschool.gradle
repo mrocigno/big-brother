@@ -2,7 +2,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 def libGroup = "io.github.mrocigno"
-def libVersion = "0.0.2-SNAPSHOT"
+def libVersion = "0.0.3-SNAPSHOT"
 
 android {
 
