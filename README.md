@@ -90,18 +90,28 @@ After creating the class, we will configure it in the manifest:
 ```
 
 > Example of enable/disable with manifestPlaceholder
+> in `build.gradle`
 > ```groovy
-android {
-    defaultConfig {
-        applicationId "example.manifest.app"
-    }
-    buildTypes {
-        debug {
-            manifestPlaceholders.sandman = "true"
-        }
-        release {
-            manifestPlaceholders.sandman = "false"
-        }
-    }
-}
+> android {
+>    defaultConfig {
+>        applicationId "example.manifest.app"
+>    }
+>    buildTypes {
+>        debug {
+>            manifestPlaceholders.sandman = "true"
+>        }
+>        release {
+>            manifestPlaceholders.sandman = "false"
+>        }
+>    }
+> }
+> ```
+>
+> in `AndroidManifest.xml`
+> ```xml
+> <provider
+>    android:authorities="${applicationId}.SANDMAN"
+>    android:name=".TheDreamingCustom"
+>    android:enabled="${sandman}"
+>    android:exported="false"/>
 > ```
