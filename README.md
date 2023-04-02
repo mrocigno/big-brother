@@ -6,6 +6,7 @@ Created to improve the manual testing, the Sandman lib is a tool that allows you
 * Matthew - provide an interface to see the logs
 * Lucien - a report generator. Lucien will record a timeline using data provided by the other nightmares (or custom)
 
+
 ## Getting started
 
 To use Sandman in the app, implements the following dependencies in `build.gradle` on app module:
@@ -32,7 +33,6 @@ dependencies {
 
 Now with de dependencies correctly implemented, we will configure to start using.
 In your `:app` module, create a class that extends `TheDreamingProvider`:
-
 ```kotlin
 /*
 * As a ContentProvider, this class will run before the application class
@@ -69,3 +69,39 @@ class TheDreamingCustom : TheDreamingProvider() {
     }
 }
 ```
+
+After creating the class, we will configure it in the manifest:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+
+        <!-- here in AndroidManifest we also can enable/disable the provider using manifestPlaceholder -->
+        <provider
+            android:authorities="${applicationId}.SANDMAN"
+            android:name=".TheDreamingCustom"
+            android:enabled="true"
+            android:exported="false"/>
+
+    </application>
+
+</manifest>
+```
+
+> Example of enable/disable with manifestPlaceholder
+> ```groovy
+android {
+    defaultConfig {
+        applicationId "example.manifest.app"
+    }
+    buildTypes {
+        debug {
+            manifestPlaceholders.sandman = "true"
+        }
+        release {
+            manifestPlaceholders.sandman = "false"
+        }
+    }
+}
+> ```
