@@ -115,3 +115,17 @@ After creating the class, we will configure it in the manifest:
 >    android:enabled="${sandman}"
 >    android:exported="false"/>
 > ```
+
+### And that's it! You are ready to create and use tools in Sandman
+
+## Corinthian
+
+> TODO: add prints and usage
+
+## Matthew
+
+> TODO: add prints and usage
+
+## Lucien
+
+> TODO: add prints and usage
