@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="oceania_background">#E4E4E4</color>
+    <color name="oceania_background_secondary">#F3F3F3</color>
+    <color name="oceania_background_tertiary">#FFFFFF</color>
+
+    <color name="brand_default">@color/moss_green</color>
+    <color name="brand_secondary">@color/boy_red</color>
+
+    <color name="co_brand_default">#FF242424</color>
+    <color name="co_brand_secondary">#FF000000</color>
+
+    <color name="text_title">#FF000000</color>
+    <color name="text_title_inverse">#FFFFFFFF</color>
+    <color name="text_paragraph">#FF808080</color>
+    <color name="text_hyperlink">#FF007BFF</color>
+    <color name="text_highlight">#EBB901</color>
+
+    <color name="icon_negative">#FF2626</color>
+    <color name="icon_positive">#07B300</color>
+
+    <color name="divider">#22000000</color>
+
+    <color name="net_entry_post">#03A9F4</color>
+    <color name="net_entry_put">#FF5722</color>
+    <color name="net_entry_get">#4CAF50</color>
+    <color name="net_entry_delete">#FF0000</color>
+
+    <!--region BigBrotherPallet-->
+    <color name="beaver">#9C8C73</color>
+    <color name="shadow">#907665</color>
+    <color name="olive_drab">#5E4D3D</color>
+    <color name="moss_green">#929663</color>
+    <color name="boy_red">#6D6944</color>
+    <color name="licorice">#1C1209</color>
+    <!--endregion-->
+</resources>

@@ -17,11 +17,11 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Sandman"
+rootProject.name = "big-brother"
 include ':app'
-include ':sandman'
-include ':sandman:core'
-include ':sandman:common'
-include ':sandman:corinthian'
-include ':sandman:matthew'
-include ':sandman:lucien'
+include ':content'
+include ':content:core'
+include ':content:common'
+include ':content:network'
+include ':content:log'
+include ':content:report'

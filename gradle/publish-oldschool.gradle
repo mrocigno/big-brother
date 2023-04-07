@@ -19,7 +19,7 @@ publishing {
 
         maven(MavenPublication) {
             groupId = libGroup
-            artifactId = "sandman-${project.name}"
+            artifactId = "big-brother-${project.name}"
             version = libVersion
 
             afterEvaluate {
@@ -28,9 +28,9 @@ publishing {
 
             pom {
 
-                name = 'Sandman'
+                name = 'BigBrother'
                 description = 'Think on a better description'
-                url = 'https://github.com/mrocigno/Sandman'
+                url = 'https://github.com/mrocigno/big-brother'
                 licenses {
                     license {
                         name = 'The Apache License, Version 2.0'
@@ -45,9 +45,9 @@ publishing {
                     }
                 }
                 scm {
-                    url = 'https://github.com/mrocigno/Sandman'
-                    connection = "scm:https://github.com/mrocigno/Sandman.git"
-                    developerConnection = 'scm:git@github.com:mrocigno/Sandman.git'
+                    url = 'https://github.com/mrocigno/big-brother'
+                    connection = "scm:https://github.com/mrocigno/big-brother.git"
+                    developerConnection = 'scm:git@github.com:mrocigno/big-brother.git'
                 }
             }
         }

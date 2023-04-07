@@ -1,0 +1,18 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+apply from: file('../../gradle/publish-oldschool.gradle')
+
+dependencies {
+
+    implementation project(":content:common")
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.21"
+
+    constraints {
+        api project(":content:log")
+        api project(":content:network")
+        api project(":content:report")
+    }
+}

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/crash_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/bigbrother_activity_crash_scene">
+
+    <ScrollView
+        android:id="@+id/crash_scroll_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/crash_background">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/crash_stacktrace_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="10dp"
+                android:text="Stacktrace"
+                android:textColor="@color/text_hyperlink"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/crash_timeline_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="10dp"
+                android:text="Timeline"
+                android:textColor="@color/text_hyperlink"
+                app:layout_constraintStart_toEndOf="@id/crash_stacktrace_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <HorizontalScrollView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/crash_stacktrace_button">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/crash_stacktrace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textColor="@color/text_title"
+                        android:textSize="12sp"
+                        android:visibility="visible"
+                        app:fontFamily="@font/courier_regular"
+                        tools:text="stacktrace" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/crash_timeline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textColor="@color/text_title"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:fontFamily="@font/courier_regular"
+                        tools:text="timeline" />
+
+                </FrameLayout>
+
+            </HorizontalScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <View
+        android:id="@+id/crash_status_bar_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/crash_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/icon_negative"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/crash_title"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="@string/crash_title"
+        android:textColor="@color/text_title"
+        app:layout_constraintBottom_toBottomOf="@id/close_img_avd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/close_img_avd" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/close_img_avd"
+        android:layout_width="0dp"
+        android:layout_height="500dp"
+        android:layout_margin="20dp"
+        android:padding="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bigbrother_ic_close_avd" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/crash_screen_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/crash_screen"
+        android:textColor="@color/text_title"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/crash_screen_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/crash_thumb"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/crash_screen_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_title"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/crash_thumb"
+        app:layout_constraintStart_toStartOf="@id/crash_screen_name_label"
+        app:layout_constraintTop_toBottomOf="@id/crash_screen_name_label"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="MainActivity" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/crash_thumb"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bigbrother_background_secondary_radius"
+        android:scaleType="centerCrop"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/close_img_avd" />
+
+    <View
+        android:id="@+id/crash_thumb_spacing"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        app:layout_constraintEnd_toEndOf="@id/crash_thumb"
+        app:layout_constraintTop_toBottomOf="@id/crash_thumb" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

@@ -16,7 +16,7 @@ allprojects {
         if (!project.hasProperty("android")) return
 
         android {
-            namespace "br.com.mrocigno.sandman$suffix"
+            namespace "br.com.mrocigno.bigbrother$suffix"
             compileSdk 33
 
             defaultConfig {

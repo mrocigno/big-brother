@@ -12,12 +12,12 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/sandman" />
-            <option value="$PROJECT_DIR$/sandman/common" />
-            <option value="$PROJECT_DIR$/sandman/core" />
-            <option value="$PROJECT_DIR$/sandman/corinthian" />
-            <option value="$PROJECT_DIR$/sandman/lucien" />
-            <option value="$PROJECT_DIR$/sandman/matthew" />
+            <option value="$PROJECT_DIR$/content" />
+            <option value="$PROJECT_DIR$/content/common" />
+            <option value="$PROJECT_DIR$/content/core" />
+            <option value="$PROJECT_DIR$/content/log" />
+            <option value="$PROJECT_DIR$/content/network" />
+            <option value="$PROJECT_DIR$/content/report" />
           </set>
         </option>
       </GradleProjectSettings>

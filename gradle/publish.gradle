@@ -32,8 +32,8 @@ android {
 }
 
 sonatypePublishing {
-    repositoryUrl = "https://github.com/mrocigno/Sandman"
-    repositoryConnectionUrl = "scm:https://github.com/mrocigno/Sandman.git"
+    repositoryUrl = "https://github.com/mrocigno/big-brother"
+    repositoryConnectionUrl = "scm:https://github.com/mrocigno/big-brother.git"
 
     licenseName = "The Apache License, Version 2.0"
     licenseUrl = "http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -48,9 +48,9 @@ sonatypePublishing {
 
 publications {
 
-    sandman {
-        artifactId = "sandman-${project.name}"
-        libName = "Sandman ${project.name}"
+    bigbrother {
+        artifactId = "big-brother-${project.name}"
+        libName = "BigBrother ${project.name}"
         libDescription = "Topper"
 
         artifact javadocJar
