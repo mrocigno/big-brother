@@ -12,7 +12,7 @@ Created to improve the manual testing, the BigBrother lib is a tool that allows 
 To use BigBrother in the app, implements the following dependencies in `build.gradle` on app module:
 ```groovy
 dependencies {
-    def bigbrother_last_release = '0.0.2-SNAPSHOT'
+    def bigbrother_last_release = '0.0.1'
     
     // The version definition is required only on core implementation
     implementation "io.github.mrocigno:big-brother-core:$bigbrother_last_release"
