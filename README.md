@@ -98,10 +98,10 @@ After creating the class, we will configure it in the manifest:
 >    }
 >    buildTypes {
 >        debug {
->            manifestPlaceholders.bighbrother = "true"
+>            manifestPlaceholders.bigbrother = "true"
 >        }
 >        release {
->            manifestPlaceholders.bighbrother = "false"
+>            manifestPlaceholders.bigbrother = "false"
 >        }
 >    }
 > }
@@ -112,7 +112,7 @@ After creating the class, we will configure it in the manifest:
 > <provider
 >    android:authorities="${applicationId}.BIGBROTHER"
 >    android:name=".BigBrotherCustom"
->    android:enabled="${bighbrother}"
+>    android:enabled="${bigbrother}"
 >    android:exported="false"/>
 > ```
 
