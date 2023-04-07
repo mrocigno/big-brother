@@ -1,4 +1,4 @@
-# Sandman library
+# BigBrother library
 
 Created to improve the manual testing, the Sandman lib is a tool that allows you to create another tools or use the provided by default.
 
