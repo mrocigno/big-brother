@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/group_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/group_background"
+        android:foreground="@drawable/group_foreground"
+        android:paddingStart="2dp"
+        android:paddingTop="20sp"
+        android:paddingEnd="2dp"
+        android:paddingBottom="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/group_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/group_background"
+        android:backgroundTint="@color/oceania_background_tertiary"
+        android:foreground="@drawable/group_foreground"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="5dp"
+        android:textColor="@color/text_title"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/group_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/group_container"
+        tools:text="Title" />
+
+</merge>

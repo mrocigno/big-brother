@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BigBrother</string>
+
+    <string name="success_load_list">Carregar lista com sucesso</string>
+    <string name="actions_title">Ações</string>
+    <string name="error_load_list">Carregar lista com erro</string>
+    <string name="slow_load_list">Carregar lista lentamente</string>
+</resources>

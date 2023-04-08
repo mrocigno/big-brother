@@ -1,7 +1,6 @@
 package br.com.mrocigno.bigbrother.core
 
 import android.app.Activity
-import android.app.Application
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
@@ -9,7 +8,6 @@ import android.graphics.PointF
 import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
-import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlin.reflect.KClass
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
@@ -25,7 +23,6 @@ abstract class BigBrotherProvider : ContentProvider() {
 
     final override fun onCreate(): Boolean {
         if (!isEnabled) return false
-        AndroidThreeTen.init(context)
         Oceania.config = BigBrotherConfig(
             initialLocation = initialLocation,
             size = size,
@@ -33,7 +30,6 @@ abstract class BigBrotherProvider : ContentProvider() {
             iconRes = iconRes
         )
         setupPages()
-        BigBrother.watch(context as Application)
         return true
     }
 

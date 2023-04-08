@@ -3,31 +3,33 @@ package br.com.mrocigno.bigbrother.network
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object NetworkConfig {
 
-    const val baseUrl = "https://api.github.com/"
+    private const val BASE_URL = "https://api.github.com/"
 
-    val gson = GsonBuilder().apply {
-        setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
-    }.create()
-
-    val okHttpClient : OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        })
+    private val okHttpClient : OkHttpClient = OkHttpClient.Builder()
         .bigBrotherIntercept()
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
+        .addInterceptor {
+            if (it.request().headers["slowly"] == "true") Thread.sleep(5000L)
+            it.proceed(it.request())
+        }
         .build()
 
     val retrofit : Retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create(gson))
-        .baseUrl(baseUrl)
+        .addConverterFactory(
+            GsonConverterFactory.create(
+                GsonBuilder().apply {
+                    setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                }.create()
+            )
+        )
+        .baseUrl(BASE_URL)
         .client(okHttpClient)
         .build()
 

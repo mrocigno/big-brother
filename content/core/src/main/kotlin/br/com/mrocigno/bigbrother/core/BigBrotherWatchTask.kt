@@ -21,17 +21,17 @@ class BigBrotherWatchTask : BigBrotherTask() {
     }
 
     override fun onActivityPaused(activity: Activity) {
-        val vortex = BigBrotherView.get(activity) ?: return
-        lastPoint.set(vortex.x, vortex.y)
+        val bigBrotherView = BigBrotherView.get(activity) ?: return
+        lastPoint.set(bigBrotherView.x, bigBrotherView.y)
     }
 
     override fun onActivityStarted(activity: Activity) {
-        val vortex = BigBrotherView.get(activity) ?: return
+        val bigBrotherView = BigBrotherView.get(activity) ?: return
         if (!alive) {
             kill(activity.rootView)
-        } else if (!vortex.isExpanded) {
-            vortex.x = lastPoint.x
-            vortex.y = lastPoint.y
+        } else if (!bigBrotherView.isExpanded) {
+            bigBrotherView.x = lastPoint.x
+            bigBrotherView.y = lastPoint.y
         }
     }
 

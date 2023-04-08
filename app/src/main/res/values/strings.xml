@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BigBrother</string>
+
+    <string name="success_load_list">Success</string>
+    <string name="actions_title">Actions</string>
+    <string name="error_load_list">Load list with error</string>
+    <string name="slow_load_list">Load list slowly</string>
+    <string name="list_title" translatable="false">Github repositories</string>
 </resources>
