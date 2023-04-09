@@ -15,5 +15,8 @@ class NetworkViewModel(
     val list: ResponseFlow<ApiBase> get() = _list
 
     fun fetchList() = _list.sync(githubRepository.getList())
+
     fun fetchListSlowly() = _list.sync(githubRepository.getListSlowly())
+
+    fun fetchError() = _list.sync(githubRepository.getError())
 }

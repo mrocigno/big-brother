@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
         android:background="@drawable/group_background"
-        android:foreground="@drawable/group_foreground"
         android:paddingStart="2dp"
         android:paddingTop="20sp"
         android:paddingEnd="2dp"

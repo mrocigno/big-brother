@@ -14,4 +14,8 @@ class GithubRepository(
     fun getListSlowly() = flow {
         emit(githubApi.getRepos(1, true))
     }
+
+    fun getError() = flow {
+        emit(githubApi.getError())
+    }
 }

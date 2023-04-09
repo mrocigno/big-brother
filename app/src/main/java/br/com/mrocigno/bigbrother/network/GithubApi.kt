@@ -12,4 +12,7 @@ interface GithubApi {
         @Query("page") page : Int,
         @Header("slowly") slowly: Boolean = false
     ): ApiBase
+
+    @GET("this/will/give/a/404")
+    suspend fun getError(): ApiBase
 }

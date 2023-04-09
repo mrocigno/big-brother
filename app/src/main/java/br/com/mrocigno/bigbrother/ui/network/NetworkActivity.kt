@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import br.com.mrocigno.bigbrother.R
+import br.com.mrocigno.bigbrother.core.utils.openBigBrotherBubble
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 class NetworkActivity : AppCompatActivity(R.layout.network_activity) {
@@ -17,6 +18,7 @@ class NetworkActivity : AppCompatActivity(R.layout.network_activity) {
     private val root: MotionLayout by lazy { findViewById(R.id.root) }
     private val successLoadList: AppCompatButton by lazy { findViewById(R.id.success_load_list) }
     private val slowLoadList: AppCompatButton by lazy { findViewById(R.id.slow_load_list) }
+    private val errorLoadList: AppCompatButton by lazy { findViewById(R.id.error_load_list) }
     private val progressBar: LinearProgressIndicator by lazy { findViewById(R.id.progress_bar) }
     private val toolbar: Toolbar by lazy { findViewById(R.id.toolbar) }
 
@@ -39,7 +41,19 @@ class NetworkActivity : AppCompatActivity(R.layout.network_activity) {
 
     private fun setupViews() {
         toolbar.setNavigationOnClickListener { root.transitionToStart() }
-        successLoadList.setOnClickListener { viewModel.fetchList() }
-        slowLoadList.setOnClickListener { viewModel.fetchListSlowly() }
+        successLoadList.setOnClickListener {
+            openBigBrotherBubble()
+            viewModel.fetchList()
+        }
+
+        slowLoadList.setOnClickListener {
+            openBigBrotherBubble()
+            viewModel.fetchListSlowly()
+        }
+
+        errorLoadList.setOnClickListener {
+            openBigBrotherBubble()
+            viewModel.fetchError()
+        }
     }
 }

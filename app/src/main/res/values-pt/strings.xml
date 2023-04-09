@@ -6,4 +6,12 @@
     <string name="actions_title">Ações</string>
     <string name="error_load_list">Carregar lista com erro</string>
     <string name="slow_load_list">Carregar lista lentamente</string>
+    <string name="settings_group">Configurações</string>
+    <string name="app_theme">Tema do app</string>
+    <string name="enabled">Habilitado</string>
+    <string name="disabled">Desabilitado</string>
+    <string name="network_sample">Abrir exemplo de network</string>
+    <string name="generate_report">Gerar relatório</string>
+    <string name="force_crash">Forçar crash</string>
+    <string name="report_sample">Abrir exemplo de report</string>
 </resources>

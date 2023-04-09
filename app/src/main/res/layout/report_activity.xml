@@ -5,7 +5,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/network_activity_scene">
+    app:layoutDescription="@xml/report_activity_scene">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/actions_container"
@@ -29,39 +29,29 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/success_load_list"
+            android:id="@+id/make_report"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="5dp"
-            android:text="@string/success_load_list"
+            android:text="@string/generate_report"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/actions_title" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/slow_load_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="5dp"
-            android:text="@string/slow_load_list"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/success_load_list" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/error_load_list"
+            android:id="@+id/crash_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="20dp"
-            android:text="@string/error_load_list"
+            android:text="@string/force_crash"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/slow_load_list" />
+            app:layout_constraintTop_toBottomOf="@id/make_report" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/progress_bar"
@@ -85,9 +75,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/actions_container"
         app:navigationIcon="@drawable/bigbrother_ic_arrow_back"
-        app:title="@string/list_title" />
+        app:title="Report" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/list_item"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -95,6 +85,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/report_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_s"
+                android:textColor="@color/text_title"
+                android:textSize="15sp"
+                app:fontFamily="@font/courier_regular"
+                tools:text="report" />
+
+        </HorizontalScrollView>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

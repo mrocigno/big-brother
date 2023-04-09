@@ -1,40 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BigBrother sample"
-        android:textColor="@color/text_title"
-        android:textSize="30sp"
-        android:padding="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/main_title"
-        />
-
-    <br.com.mrocigno.bigbrother.ui.GroupLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Network"
-        app:layout_constraintTop_toBottomOf="@id/main_title">
+        android:paddingBottom="100dp"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/open_network_button"
-            android:layout_width="0dp"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/main_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="BigBrother sample"
+            android:textColor="@color/text_title"
+            android:textSize="30sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:text="v0.0.1"
+            android:textColor="@color/text_title"
+            android:textSize="15sp" />
+
+        <br.com.mrocigno.bigbrother.ui.GroupLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Abrir exemplo de network"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/settings_group">
 
-    </br.com.mrocigno.bigbrother.ui.GroupLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/app_theme_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_m"
+                android:layout_marginTop="@dimen/spacing_m"
+                android:text="@string/app_theme"
+                android:textColor="@color/text_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/dark_mode_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_s"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:buttonTint="@color/moss_green"
+                android:text="@string/dark_mode"
+                app:layout_constraintEnd_toStartOf="@id/light_mode_radio"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/app_theme_subtitle" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/light_mode_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_s"
+                android:buttonTint="@color/moss_green"
+                android:text="@string/light_mode"
+                app:layout_constraintStart_toEndOf="@id/dark_mode_radio"
+                app:layout_constraintTop_toTopOf="@id/dark_mode_radio" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/logcat_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_m"
+                android:layout_marginTop="@dimen/spacing_m"
+                android:text="@string/logcat_logs"
+                android:textColor="@color/text_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dark_mode_radio" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/logcat_enabled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_s"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:buttonTint="@color/moss_green"
+                android:text="@string/enabled"
+                app:layout_constraintEnd_toStartOf="@id/logcat_disabled"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logcat_subtitle" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/logcat_disabled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_s"
+                android:buttonTint="@color/moss_green"
+                android:text="@string/disabled"
+                app:layout_constraintStart_toEndOf="@id/logcat_enabled"
+                app:layout_constraintTop_toTopOf="@id/logcat_enabled" />
+
+        </br.com.mrocigno.bigbrother.ui.GroupLayout>
+
+        <br.com.mrocigno.bigbrother.ui.GroupLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Network">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/open_network_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/network_sample"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </br.com.mrocigno.bigbrother.ui.GroupLayout>
+
+        <br.com.mrocigno.bigbrother.ui.GroupLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Report">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/open_report_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/report_sample"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </br.com.mrocigno.bigbrother.ui.GroupLayout>
+
+        <br.com.mrocigno.bigbrother.ui.GroupLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logs"
+            android:layout_margin="10dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/log_debug"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="@color/boy_red"
+                android:text="Log debug example"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/log_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="@color/icon_negative"
+                android:text="Log error example"
+                app:layout_constraintTop_toBottomOf="@id/log_debug"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/log_warn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="@color/text_highlight"
+                android:text="Log warn example"
+                app:layout_constraintTop_toBottomOf="@id/log_error"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/log_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="@color/text_hyperlink"
+                android:text="Log info example"
+                app:layout_constraintTop_toBottomOf="@id/log_warn"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/log_verbose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Log verbose example"
+                app:layout_constraintTop_toBottomOf="@id/log_info"/>
+
+        </br.com.mrocigno.bigbrother.ui.GroupLayout>
+
+    </LinearLayout>
+
+</ScrollView>

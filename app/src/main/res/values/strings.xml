@@ -6,4 +6,15 @@
     <string name="error_load_list">Load list with error</string>
     <string name="slow_load_list">Load list slowly</string>
     <string name="list_title" translatable="false">Github repositories</string>
+    <string name="settings_group">Settings</string>
+    <string name="app_theme">App theme</string>
+    <string name="dark_mode" translatable="false">Dark mode</string>
+    <string name="light_mode" translatable="false">Light mode</string>
+    <string name="logcat_logs" translatable="false">Logcat logs</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
+    <string name="network_sample">Open network sample</string>
+    <string name="generate_report">Generate report</string>
+    <string name="force_crash">Force crash</string>
+    <string name="report_sample">Open report sample</string>
 </resources>
