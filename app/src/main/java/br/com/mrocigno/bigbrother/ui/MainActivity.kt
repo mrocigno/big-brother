@@ -13,6 +13,8 @@ import br.com.mrocigno.bigbrother.R
 import br.com.mrocigno.bigbrother.core.BigBrother
 import br.com.mrocigno.bigbrother.log.BBLog
 import br.com.mrocigno.bigbrother.log.BBLog.Companion.tag
+import br.com.mrocigno.bigbrother.ui.general.CustomPageActivity
+import br.com.mrocigno.bigbrother.ui.general.OutOfDomainActivity
 import br.com.mrocigno.bigbrother.ui.network.NetworkActivity
 import br.com.mrocigno.bigbrother.ui.report.ReportActivity
 
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
         setupNetworkGroup()
         setupReportGroup()
         setupLogGroup()
+        setupGeneralGroup()
     }
 
     override fun onResume() {
@@ -106,6 +109,16 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
         }
         findViewById<View>(R.id.log_verbose).setOnClickListener {
             BigBrother.tag("custom tag name").v("This a verbose log example", Exception("custom exception for verbose"))
+        }
+    }
+
+    private fun setupGeneralGroup() {
+        findViewById<View>(R.id.out_of_domain).setOnClickListener {
+            startActivity(Intent(this, OutOfDomainActivity::class.java))
+        }
+
+        findViewById<View>(R.id.custom_page).setOnClickListener {
+            startActivity(Intent(this, CustomPageActivity::class.java))
         }
     }
 }

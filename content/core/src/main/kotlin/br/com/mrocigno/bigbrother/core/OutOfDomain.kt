@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 annotation class OutOfDomain
 
 val Activity.isOutOfDomain: Boolean get() =
-    this::class.annotations.find { it is OutOfDomain } != null
+    this::class.java.isAnnotationPresent(OutOfDomain::class.java)
 
 val Fragment.isOutOfDomain: Boolean get() =
-    this::class.annotations.find { it is OutOfDomain } != null
+    this::class.java.isAnnotationPresent(OutOfDomain::class.java)

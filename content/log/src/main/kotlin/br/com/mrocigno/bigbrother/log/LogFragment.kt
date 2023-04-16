@@ -61,7 +61,7 @@ class LogFragment : Fragment(R.layout.bigbrother_log_fragment_log) {
                 id = it.ordinal
                 this.text = it.name
                 isCheckable = true
-                chipBackgroundColor = getColorState(CommonR.color.oceania_background_tertiary)
+                chipBackgroundColor = getColorState(CommonR.color.background_tertiary)
             })
         }
         chipGroup.isSingleSelection = true

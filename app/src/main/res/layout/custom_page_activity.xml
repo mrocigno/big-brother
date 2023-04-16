@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/bigbrother_ic_arrow_back"
+        app:title="@string/custom_page_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_m"
+        android:text="@string/custom_page_description"
+        android:textColor="@color/text_title"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_m"
+        android:background="@drawable/group_background"
+        android:padding="@dimen/spacing_s"
+        app:layout_constraintTop_toBottomOf="@id/description">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/comment1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_page_comment"
+            android:textSize="11sp"
+            app:fontFamily="@font/courier_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="override fun "
+            android:textColor="@color/net_entry_put"
+            android:textSize="11sp"
+            app:fontFamily="@font/courier_regular"
+            app:layout_constraintStart_toStartOf="@id/comment1"
+            app:layout_constraintTop_toBottomOf="@id/comment1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fun_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="setupPages"
+            android:textColor="@color/text_highlight"
+            android:textSize="11sp"
+            app:fontFamily="@font/courier_regular"
+            app:layout_constraintStart_toEndOf="@id/fun"
+            app:layout_constraintTop_toBottomOf="@id/comment1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fun_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="() {"
+            android:textColor="@color/text_title"
+            android:textSize="11sp"
+            app:fontFamily="@font/courier_regular"
+            app:layout_constraintStart_toEndOf="@id/fun_name"
+            app:layout_constraintTop_toBottomOf="@id/comment1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fun_body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="addPage(CustomPageActivity::class) {"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:textColor="@color/text_title"
+            android:textSize="11sp"
+            app:fontFamily="@font/courier_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fun" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fun_body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_page_code_body"
+            android:layout_marginStart="@dimen/spacing_l"
+            android:textColor="@color/text_title"
+            android:textSize="11sp"
+            app:fontFamily="@font/courier_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fun_body1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fun_body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ToolsFragment()"
+            android:paddingStart="@dimen/spacing_s"
+            android:layout_marginStart="@dimen/spacing_l"
+            android:textColor="@color/text_title"
+            android:textSize="11sp"
+            app:fontFamily="@font/courier_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fun_body2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fun_body4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="}"
+            android:layout_marginStart="@dimen/spacing_l"
+            android:textColor="@color/text_title"
+            android:textSize="11sp"
+            app:fontFamily="@font/courier_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fun_body3" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fun_body5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="}"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:textColor="@color/text_title"
+            android:textSize="11sp"
+            app:fontFamily="@font/courier_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fun_body4" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fun_body6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="}"
+            android:textColor="@color/text_title"
+            android:textSize="11sp"
+            app:fontFamily="@font/courier_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fun_body5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

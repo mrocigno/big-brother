@@ -196,6 +196,30 @@
 
         </br.com.mrocigno.bigbrother.ui.GroupLayout>
 
+        <br.com.mrocigno.bigbrother.ui.GroupLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:text="General">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/out_of_domain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/out_of_domain_button"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/custom_page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/custom_page_activity_button"
+                app:layout_constraintTop_toBottomOf="@id/out_of_domain"/>
+
+        </br.com.mrocigno.bigbrother.ui.GroupLayout>
+
     </LinearLayout>
 
 </ScrollView>

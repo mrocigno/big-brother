@@ -6,13 +6,13 @@ import androidx.annotation.DrawableRes
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
 class BigBrotherConfig(
-    val initialLocation: PointF = PointF(0f, 200f),
-    val size: Int = 0,
-    val disabledAlpha: Float = .5f,
-    @DrawableRes val iconRes: Int = CommonR.drawable.bigbrother_ic_main,
+    var initialLocation: PointF = PointF(0f, 200f),
+    var size: Int = 90,
+    var disabledAlpha: Float = .5f,
+    @DrawableRes var iconRes: Int = CommonR.drawable.bigbrother_ic_main,
 ) {
 
-    fun initial(bigBrotherView: BigBrotherView) = bigBrotherView.apply {
+    internal fun initial(bigBrotherView: BigBrotherView) = bigBrotherView.apply {
         layoutParams = FrameLayout.LayoutParams(size, size).apply {
             x = initialLocation.x
             y = initialLocation.y

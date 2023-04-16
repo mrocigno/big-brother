@@ -14,4 +14,10 @@
     <string name="generate_report">Gerar relatório</string>
     <string name="force_crash">Forçar crash</string>
     <string name="report_sample">Abrir exemplo de report</string>
+    <string name="out_of_domain_description">Nesta Activity a bubble não está sendo exibida por que a classe contém a annotation @OutOfDomain</string>
+    <string name="out_of_domain_button">Abrir activity fora do domínio</string>
+    <string name="custom_page_activity_button">Abrir Activity com pagina customizada</string>
+    <string name="custom_page_description">Essa activity tem uma pagina customizada, sempre que expandir a bubble vai ter uma pagina que só aparece nessa activity.\n\nPara criar uma pagina especificamente para uma activity, basta fazer:</string>
+    <string name="custom_page_comment">// Dentro de BigBrotherProvider</string>
+    <string name="custom_page_title">Pagina customizada</string>
 </resources>

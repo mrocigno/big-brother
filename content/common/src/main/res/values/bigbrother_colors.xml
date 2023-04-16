@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="oceania_background">#E4E4E4</color>
-    <color name="oceania_background_secondary">#F3F3F3</color>
-    <color name="oceania_background_tertiary">#FFFFFF</color>
+    <color name="background">#E4E4E4</color>
+    <color name="background_secondary">#F3F3F3</color>
+    <color name="background_tertiary">#FFFFFF</color>
 
     <color name="brand_default">@color/moss_green</color>
     <color name="brand_secondary">@color/boy_red</color>

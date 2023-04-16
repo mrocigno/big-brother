@@ -55,8 +55,8 @@ class BigBrotherCustom : BigBrotherProvider() {
         }
 
         // To add a page that will be displayed in a specific activity
-        addLocation(MainActivity::class) {
-            city("Tool name") {
+        addPage(MainActivity::class) {
+            page("Tool name") {
                 MyToolFragment()
             }
         }
@@ -115,6 +115,27 @@ After creating the class, we will configure it in the manifest:
 >    android:enabled="${bigbrother}"
 >    android:exported="false"/>
 > ```
+
+Then finally we start the watch in Application class
+```kotlin
+class SampleApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        
+        // Optional configuration to bubble
+        BigBrother.config {
+            iconRes = R.drawable.bigbrother_ic_main
+            size = 200
+            disabledAlpha = .3f
+            initialLocation = PointF(500f, 500f)
+        }
+        
+        // Start the watch
+        BigBrother.watch(this, isBubbleEnabled = true)
+    }
+}
+```
 
 ### And that's it! You are ready to create and use tools in BigBrother
 

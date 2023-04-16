@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/oceania_background"
+    android:background="@color/background"
     android:fitsSystemWindows="false"
     app:layoutDescription="@xml/bigbrother_activity_network_entry_scene">
 

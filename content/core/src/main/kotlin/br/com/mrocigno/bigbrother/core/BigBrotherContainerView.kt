@@ -23,7 +23,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
 @SuppressLint("ViewConstructor")
-class OceaniaView(
+class BigBrotherContainerView(
     private val vortex: BigBrotherView
 ) : FrameLayout(vortex.context) {
 
@@ -46,8 +46,8 @@ class OceaniaView(
     }
 
     init {
-        setBackgroundResource(CommonR.drawable.bigbrother_oceania_background)
-        inflate(context, R.layout.bigbrother_oceania_layout, this)
+        setBackgroundResource(CommonR.drawable.bigbrother_content_background)
+        inflate(context, R.layout.bigbrother_content_layout, this)
         isInvisible = true
         setPadding(resources.getDimensionPixelSize(CommonR.dimen.spacing_stroke))
 
@@ -78,12 +78,12 @@ class OceaniaView(
         if (isAnimationRunning) return
         onBackPressed.remove()
         isExpanded = false
-        vortex.setBackgroundResource(Oceania.config.iconRes)
+        vortex.setBackgroundResource(BigBrother.config.iconRes)
 
         TransitionManager.beginDelayedTransition(parentVG, CircularRevealTransition().apply {
             doOnStart { isAnimationRunning = true }
             doOnEnd {
-                parentVG.removeView(this@OceaniaView)
+                parentVG.removeView(this@BigBrotherContainerView)
                 isAnimationRunning = false
             }
         })
@@ -91,9 +91,9 @@ class OceaniaView(
     }
 
     private fun setupPager() {
-        val list: MutableList<CityData> = mutableListOf()
-        Oceania.getDream(activity::class)?.let(list::addAll)
-        list.addAll(Oceania.getNightmares())
+        val list: MutableList<PageData> = mutableListOf()
+        BigBrother.getPages(activity::class)?.let(list::addAll)
+        list.addAll(BigBrother.getPages())
 
         pager.offscreenPageLimit = 1
         pager.adapter = TheDreamingAdapter(activity, list, vortex)
@@ -105,7 +105,7 @@ class OceaniaView(
 
 private class TheDreamingAdapter(
     activity: FragmentActivity,
-    private val data: List<CityData>,
+    private val data: List<PageData>,
     private val vortex: BigBrotherView
 ) : FragmentStateAdapter(activity) {
 

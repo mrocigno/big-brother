@@ -30,6 +30,10 @@
 
         <activity android:name=".ui.report.ReportActivity" />
 
+        <activity android:name=".ui.general.OutOfDomainActivity" />
+
+        <activity android:name=".ui.general.CustomPageActivity" />
+
         <provider
             android:authorities="${applicationId}.SAMPLE"
             android:name=".BigBrotherCustom"

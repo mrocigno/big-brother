@@ -2,16 +2,16 @@ package br.com.mrocigno.bigbrother.core
 
 import androidx.fragment.app.Fragment
 
-class CityData(
+class PageData(
     val name: String,
     val creator: (BigBrotherView) -> Fragment
 )
 
-class CityWrapper {
+class ActivityPageWrapper {
 
-    internal val pages: MutableList<CityData> = mutableListOf()
+    internal val pages: MutableList<PageData> = mutableListOf()
 
-    fun city(name: String, creator: (BigBrotherView) -> Fragment) {
-        pages.add(CityData(name, creator))
+    fun page(name: String, creator: (BigBrotherView) -> Fragment) {
+        pages.add(PageData(name, creator))
     }
 }

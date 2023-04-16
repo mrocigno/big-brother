@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="oceania_background">#FF121212</color>
-    <color name="oceania_background_secondary">#1E1E1E</color>
-    <color name="oceania_background_tertiary">#292929</color>
+    <color name="background">#FF121212</color>
+    <color name="background_secondary">#1E1E1E</color>
+    <color name="background_tertiary">#292929</color>
 
     <color name="text_title">#FFFFFFFF</color>
     <color name="text_title_inverse">#FF000000</color>

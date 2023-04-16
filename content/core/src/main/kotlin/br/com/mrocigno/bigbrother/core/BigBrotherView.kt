@@ -26,7 +26,7 @@ class BigBrotherView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    private val config: BigBrotherConfig = Oceania.config
+    private val config: BigBrotherConfig = BigBrother.config
 ) : FrameLayout(
     ContextThemeWrapper(context, CommonR.style.Theme_BigBrother),
     attrs,
@@ -34,11 +34,11 @@ class BigBrotherView @JvmOverloads constructor(
 ) {
 
     val isExpanded: Boolean
-        get() = oceaniaView.isExpanded
+        get() = bigBrotherContainerView.isExpanded
 
     private val activity get() = (context as ContextThemeWrapper).baseContext as FragmentActivity
 
-    private val oceaniaView = OceaniaView(this)
+    private val bigBrotherContainerView = BigBrotherContainerView(this)
     private val moveDuration = 200L
 
     private var downMillis: Long = 0L
@@ -87,7 +87,7 @@ class BigBrotherView @JvmOverloads constructor(
 
         setOnClickListener {
             fadeAnimation.cancel()
-            if (oceaniaView.isExpanded) {
+            if (bigBrotherContainerView.isExpanded) {
                 animateBack()
             } else {
                 animateToCenter()
@@ -110,7 +110,7 @@ class BigBrotherView @JvmOverloads constructor(
                     x = max(area.left, min(event.rawX - width / 2, area.right))
                     y = max(area.top, min(event.rawY - height / 2, area.bottom))
                 }
-                if (parentVG.contains(oceaniaView)) oceaniaView.collapse()
+                if (parentVG.contains(bigBrotherContainerView)) bigBrotherContainerView.collapse()
             }
             MotionEvent.ACTION_UP -> {
                 fadeAnimation.start()
@@ -143,21 +143,21 @@ class BigBrotherView @JvmOverloads constructor(
 
     fun animateToCenter() {
         config.initialLocation.set(x, y)
-        if (parentVG.contains(oceaniaView)) return
+        if (parentVG.contains(bigBrotherContainerView)) return
         animate()
             .x(parentVG.width / 2f - width / 2)
             .y(statusBarHeight)
             .setDuration(moveDuration)
             .withEndAction {
-                parentVG.addView(oceaniaView)
-                oceaniaView.expand()
+                parentVG.addView(bigBrotherContainerView)
+                bigBrotherContainerView.expand()
             }
             .start()
     }
 
     fun animateBack() {
-        if (!parentVG.contains(oceaniaView)) return
-        oceaniaView.collapse()
+        if (!parentVG.contains(bigBrotherContainerView)) return
+        bigBrotherContainerView.collapse()
         animate()
             .x(config.initialLocation.x)
             .y(config.initialLocation.y)
@@ -200,7 +200,8 @@ class BigBrotherView @JvmOverloads constructor(
     companion object {
 
         fun getOrCreate(activity: Activity, onVortexKilled: () -> Unit) =
-            get(activity) ?: BigBrotherView(activity).apply {
+            get(activity) ?:
+            BigBrotherView(activity).apply {
                 setOnVortexKilled(onVortexKilled)
             }
 
