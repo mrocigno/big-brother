@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     app:layoutDescription="@xml/bigbrother_activity_crash_scene">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/crash_scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -81,7 +81,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <View
         android:id="@+id/crash_status_bar_guideline"
