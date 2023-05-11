@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.report.crash
+package br.com.mrocigno.bigbrother.crash
 
 import android.content.Context
 import android.content.Intent
@@ -22,7 +22,6 @@ import br.com.mrocigno.bigbrother.common.utils.highlightStacktrace
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.core.model.ReportModel
-import br.com.mrocigno.bigbrother.report.R
 import br.com.mrocigno.bigbrother.report.generateReport
 
 @OutOfDomain

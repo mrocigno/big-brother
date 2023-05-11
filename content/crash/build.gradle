@@ -1,0 +1,14 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
+}
+
+apply from: file('../../gradle/publish-oldschool.gradle')
+
+dependencies {
+
+    compileOnly project(":content:core")
+    compileOnly project(":content:report")
+    implementation project(":content:common")
+}

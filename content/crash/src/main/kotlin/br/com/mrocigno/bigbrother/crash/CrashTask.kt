@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.report.crash
+package br.com.mrocigno.bigbrother.crash
 
 import android.app.Activity
 import br.com.mrocigno.bigbrother.core.BigBrotherTask
@@ -15,9 +15,11 @@ class CrashTask : BigBrotherTask() {
             currentObserver
         }
 
-        Thread.setDefaultUncaughtExceptionHandler(CrashObserver(
+        Thread.setDefaultUncaughtExceptionHandler(
+            CrashObserver(
             WeakReference(activity),
             default
-        ))
+        )
+        )
     }
 }
