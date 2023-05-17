@@ -3,20 +3,10 @@
 
     <application>
 
-        <activity android:name=".crash.CrashActivity"
-            android:theme="@style/Theme.BigBrother"/>
-
         <provider
-            android:authorities="${applicationId}.MINITRUE"
             android:name=".ReportTask"
-            android:exported="false"
-            android:enabled="true"/>
-
-        <provider
-            android:authorities="${applicationId}.MINIPAX"
-            android:name=".crash.CrashTask"
+            android:authorities="${applicationId}.MINITRUE"
             android:enabled="true"
-            android:exported="false"/>
-
+            android:exported="false" />
     </application>
 </manifest>

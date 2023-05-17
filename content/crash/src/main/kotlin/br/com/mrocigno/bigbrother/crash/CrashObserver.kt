@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.report.crash
+package br.com.mrocigno.bigbrother.crash
 
 import android.app.Activity
 import android.os.Process

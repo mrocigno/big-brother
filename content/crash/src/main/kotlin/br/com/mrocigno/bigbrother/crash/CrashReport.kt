@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.report.crash
+package br.com.mrocigno.bigbrother.crash
 
 import br.com.mrocigno.bigbrother.core.model.ReportModel
 import br.com.mrocigno.bigbrother.core.model.ReportModelType

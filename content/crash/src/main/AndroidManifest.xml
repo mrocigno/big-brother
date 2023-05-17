@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+
+        <activity
+            android:name="br.com.mrocigno.bigbrother.crash.CrashActivity"
+            android:theme="@style/Theme.BigBrother" />
+
+        <provider
+            android:name="br.com.mrocigno.bigbrother.crash.CrashTask"
+            android:authorities="${applicationId}.MINIPAX"
+            android:enabled="true"
+            android:exported="false" />
+    </application>
+</manifest>
