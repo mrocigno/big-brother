@@ -45,6 +45,7 @@
             <HorizontalScrollView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/crash_stacktrace_button">
@@ -62,7 +63,8 @@
                         android:textSize="12sp"
                         android:visibility="visible"
                         app:fontFamily="@font/courier_regular"
-                        tools:text="stacktrace" />
+                        tools:layout_width="400dp"
+                        tools:text="@tools:sample/lorem/random" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/crash_timeline"
@@ -73,7 +75,8 @@
                         android:textSize="12sp"
                         android:visibility="gone"
                         app:fontFamily="@font/courier_regular"
-                        tools:text="timeline" />
+                        tools:layout_width="400dp"
+                        tools:text="@tools:sample/lorem/random" />
 
                 </FrameLayout>
 
