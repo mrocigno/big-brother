@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <public />
     <style name="Theme.BigBrother" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/brand_default</item>
@@ -9,6 +10,8 @@
         <item name="colorSecondary">@color/co_brand_default</item>
         <item name="colorSecondaryVariant">@color/co_brand_secondary</item>
         <item name="colorOnSecondary">@android:color/black</item>
+
+        <item name="android:colorAccent">@color/moss_green</item>
 
         <item name="android:windowBackground">@color/background</item>
 

@@ -156,6 +156,7 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:textColor="@color/text_paragraph"
+                        android:textIsSelectable="true"
                         app:fontFamily="@font/courier_regular"
                         tools:text="headers" />
 
@@ -214,6 +215,7 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:textColor="@color/text_paragraph"
+                        android:textIsSelectable="true"
                         app:fontFamily="@font/courier_regular"
                         tools:text="body" />
 
@@ -286,6 +288,7 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:textColor="@color/text_paragraph"
+                        android:textIsSelectable="true"
                         app:fontFamily="@font/courier_regular"
                         tools:text="headers" />
 
@@ -344,6 +347,7 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:textColor="@color/text_paragraph"
+                        android:textIsSelectable="true"
                         app:fontFamily="@font/courier_regular"
                         tools:text="body" />
 

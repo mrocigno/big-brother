@@ -19,5 +19,5 @@ fun BigBrotherProvider.addNetworkPage(customName: String = "Network") {
     addPage(customName) { NetworkFragment() }
 }
 
-fun OkHttpClient.Builder.bigBrotherIntercept() =
-    addInterceptor(BigBrotherInterceptor())
+fun OkHttpClient.Builder.bigBrotherIntercept(vararg blockList: String) =
+    addInterceptor(BigBrotherInterceptor(*blockList))

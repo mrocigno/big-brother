@@ -1,11 +1,12 @@
 package br.com.mrocigno.bigbrother.network
 
 import android.content.Context
+import android.text.SpannableStringBuilder
+import androidx.core.text.bold
 import androidx.recyclerview.widget.DiffUtil
 import br.com.mrocigno.bigbrother.common.utils.appendSeparation
 import br.com.mrocigno.bigbrother.core.model.ReportModel
 import br.com.mrocigno.bigbrother.core.model.ReportModelType
-import okhttp3.Headers.Companion.toHeaders
 import okhttp3.Request
 import okhttp3.Response
 import okio.Buffer
@@ -77,14 +78,14 @@ class NetworkEntryModel(
 }
 
 class NetworkPayloadModel(
-    val headers: Map<String, String>?,
+    val headers: Map<String, List<String>>?,
     val body: String?
 ) : Serializable {
 
     var isBodyFormatted: Boolean = false
 
     constructor(request: Request) : this(
-        headers = request.headers.toMap(),
+        headers = request.headers.toMultimap(),
         body = request.let {
             val buffer = Buffer()
             it.body
@@ -94,7 +95,7 @@ class NetworkPayloadModel(
     )
 
     constructor(response: Response) : this(
-        headers = response.headers.toMap(),
+        headers = response.headers.toMultimap(),
         body = response.let {
             val source = it.body?.source()
             source?.request(Long.MAX_VALUE)
@@ -120,8 +121,19 @@ class NetworkPayloadModel(
             body
         }
 
-    val formattedHeaders: CharSequence? get() =
+    val formattedHeaders: CharSequence get() =
         if (headers.isNullOrEmpty()) "empty" else {
-            headers.toHeaders().toString()
+            headers.toReadable()
         }
+
+    private fun Map<String, List<String>>?.toReadable(): CharSequence {
+        this ?: return "null"
+
+        val spannable = SpannableStringBuilder()
+        keys.forEach {
+            spannable.bold { append(it) }
+            spannable.append(": ${this[it]?.joinToString(", ")}\n")
+        }
+        return spannable
+    }
 }

@@ -2,13 +2,17 @@ package br.com.mrocigno.bigbrother.network
 
 import br.com.mrocigno.bigbrother.core.utils.track
 import okhttp3.Interceptor
+import okhttp3.Request
 import okhttp3.Response
 
-class BigBrotherInterceptor : Interceptor {
+class BigBrotherInterceptor(private vararg val blockList: String) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val startingAt = System.currentTimeMillis()
         val request = chain.request()
+
+        if (request.isBlocked()) return chain.proceed(request)
+
         val entry = NetworkEntryModel(request)
         entry.track()
         NetworkHolder.addEntry(entry)
@@ -35,5 +39,10 @@ class BigBrotherInterceptor : Interceptor {
 
             throw exception
         }
+    }
+
+    private fun Request.isBlocked(): Boolean {
+        val strUrl = url.toString()
+        return blockList.any { strUrl.contains(it, true) }
     }
 }
