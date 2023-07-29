@@ -19,6 +19,10 @@ val globalTracker: MutableList<ReportModel> get() =
     dataLake["globalTracker"] as? MutableList<ReportModel>
         ?: mutableListOf<ReportModel>().also { dataLake["globalTracker"] = it }
 
+var bbSessionId: Long?
+    get() = dataLake["sessionId"] as? Long
+    set(value) { dataLake["sessionId"] = value }
+
 fun <T : ReportModel> T.track(): T = apply {
     localTracker?.add(this) ?: globalTracker.add(this)
 }
