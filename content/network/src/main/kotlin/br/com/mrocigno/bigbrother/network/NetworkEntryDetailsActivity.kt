@@ -17,7 +17,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import br.com.mrocigno.bigbrother.common.utils.copyToClipboard
-import br.com.mrocigno.bigbrother.common.utils.getParcelableExtraCompat
+import br.com.mrocigno.bigbrother.common.utils.getSerializableExtraCompat
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.network.json.JsonViewerActivity
@@ -45,7 +45,7 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activi
     private val responseBody: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_response_body) }
 
     private val model: NetworkEntryModel by lazy {
-        intent.getParcelableExtraCompat(MODEL_ARG)
+        intent.getSerializableExtraCompat(MODEL_ARG)
             ?: throw IllegalArgumentException("404 NetworkEntryModel not found")
     }
 

@@ -19,7 +19,7 @@ class ActivityReport(
 
     override fun asTxt() = StringBuilder()
         .append("----> $name")
-        .appendReports()
+//        .appendReports()
         .toString()
 
     private fun StringBuilder.appendReports() = apply {

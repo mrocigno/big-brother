@@ -2,7 +2,9 @@ package br.com.mrocigno.bigbrother.report
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
+import br.com.mrocigno.bigbrother.common.BBTAG
 import br.com.mrocigno.bigbrother.common.utils.decorView
 import br.com.mrocigno.bigbrother.common.utils.rootView
 import br.com.mrocigno.bigbrother.core.BigBrotherTask
@@ -31,10 +33,12 @@ class ReportTask : BigBrotherTask() {
     }
 
     override fun onActivityResume(activity: Activity) {
+        Log.d(BBTAG, "report task resumed")
         currentRoot = mapping[activity.hashCode()]
     }
 
     override fun onActivityDestroyed(activity: Activity) {
+        Log.d(BBTAG, "report task destroyed")
         mapping.remove(activity.hashCode())
         val destroyed = ActivityDestroyedReport(activity::class.simpleName.toString())
         currentRoot?.reportModels?.add(destroyed)
