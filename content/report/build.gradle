@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.android.library
+    alias libs.plugins.android.kotlin
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
 }
@@ -9,14 +9,10 @@ apply from: file('../../gradle/publish-oldschool.gradle')
 
 dependencies {
 
-    def room_version = "2.5.2"
-
     compileOnly project(":content:core")
-
     implementation project(":content:common")
 
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1"
-    implementation "androidx.room:room-runtime:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    implementation libs.androidx.room.runtime
+    implementation libs.androidx.room.ktx
+    kapt libs.androidx.room.compiler
 }

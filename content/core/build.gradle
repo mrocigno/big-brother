@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.android.library
+    alias libs.plugins.android.kotlin
 }
 
 apply from: file('../../gradle/publish-oldschool.gradle')
@@ -8,7 +8,7 @@ apply from: file('../../gradle/publish-oldschool.gradle')
 dependencies {
 
     implementation project(":content:common")
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.21"
+    implementation libs.kotlin.reflection
 
     constraints {
         api project(":content:log")

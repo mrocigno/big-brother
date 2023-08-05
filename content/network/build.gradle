@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.android.library
+    alias libs.plugins.android.kotlin
     id 'kotlin-parcelize'
 }
 
@@ -10,10 +10,7 @@ dependencies {
 
     compileOnly project(":content:core")
     compileOnly project(":content:report")
-
-    compileOnly 'com.squareup.retrofit2:retrofit:2.9.0'
-    compileOnly 'com.squareup.okhttp3:okhttp:4.10.0'
-    compileOnly 'com.jakewharton.threetenabp:threetenabp:1.4.4'
-
     implementation project(":content:common")
+
+    compileOnly libs.squareup.okhttp3
 }

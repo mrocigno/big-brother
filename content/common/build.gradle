@@ -1,10 +1,11 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.android.library
+    alias libs.plugins.android.kotlin
 }
 
 apply from: file('../../gradle/publish-oldschool.gradle')
 
 dependencies {
-    api 'com.jakewharton.threetenabp:threetenabp:1.4.4'
+
+    api libs.jakewharton.threetenabp
 }

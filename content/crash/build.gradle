@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.android.library
+    alias libs.plugins.android.kotlin
     id 'kotlin-parcelize'
 }
 
@@ -10,8 +10,7 @@ dependencies {
 
     compileOnly project(":content:core")
     compileOnly project(":content:report")
-
     implementation project(":content:common")
 
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
+    implementation libs.androidx.lifecycle.runtime
 }
