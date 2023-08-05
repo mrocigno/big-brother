@@ -23,30 +23,34 @@ object BigBrotherReport {
 
     internal var nestedLevel = 0
 
-    fun track(type: ReportType, content: String) = scope.launch {
-        _track(type, content)
+    fun track(type: ReportType, content: String, nestedLevel: Int) = scope.launch {
+        _track(type, content, nestedLevel)
     }.let { }
 
-    private suspend fun _track(type: ReportType, content: String) {
-        db.reportLogDao().add(ReportLogEntity(
+    private suspend fun _track(
+        type: ReportType,
+        content: String,
+        nestedLevel: Int = this.nestedLevel
+    ) {
+        val entity = ReportLogEntity(
             type = type.name,
             txtContent = content,
             nestedLevel = nestedLevel
-        ))
+        )
+        db.reportLogDao().add(entity)
     }
 
     fun trackCrash(e: Throwable) = scope.launch {
         db.sessionDao().sessionCrashed(bbSessionId)
-        bbTrack(ReportType.CRASH) {
-            "X CRASH - ${e.message ?: "without message"}"
-        }
+        _track(ReportType.CRASH, "X CRASH - ${e.message ?: "without message"}")
     }.let { }
 
     fun getSessionTimeline(sessionId: Long) = flow {
-        val reports = db.reportLogDao().getSession(sessionId)
-        emit(reports.joinToString("\n") {
-            it.txtContent
-        })
+        val report = db.reportLogDao().getSession(sessionId)
+            .buildReport()
+            .generate()
+
+        emit(report)
     }.flowOn(Dispatchers.IO)
 
     fun deleteCurrentSession() = scope.launch {
@@ -63,8 +67,14 @@ object BigBrotherReport {
     }
 }
 
-fun bbTrack(type: ReportType, content: () -> String) =
-    bbTrack(type, content.invoke())
+fun bbTrack(
+    type: ReportType,
+    nestedLevel: Int = BigBrotherReport.nestedLevel,
+    content: () -> String
+) = bbTrack(type, content.invoke(), nestedLevel)
 
-fun bbTrack(type: ReportType, content: String) =
-    BigBrotherReport.track(type, content)
+fun bbTrack(
+    type: ReportType,
+    content: String,
+    nestedLevel: Int = BigBrotherReport.nestedLevel
+) = BigBrotherReport.track(type, content, nestedLevel)

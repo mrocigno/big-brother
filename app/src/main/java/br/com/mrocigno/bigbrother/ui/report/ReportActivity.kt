@@ -6,7 +6,11 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.lifecycle.lifecycleScope
 import br.com.mrocigno.bigbrother.R
+import br.com.mrocigno.bigbrother.core.utils.bbSessionId
+import br.com.mrocigno.bigbrother.report.BigBrotherReport
+import kotlinx.coroutines.flow.collectLatest
 
 class ReportActivity : AppCompatActivity(R.layout.report_activity) {
 
@@ -24,7 +28,11 @@ class ReportActivity : AppCompatActivity(R.layout.report_activity) {
         }
 
         makeReport.setOnClickListener {
-//            reportView.text = globalTracker.generateReport().generate(this)
+            lifecycleScope.launchWhenCreated {
+                BigBrotherReport.getSessionTimeline(bbSessionId).collectLatest {
+                    reportView.text = it
+                }
+            }
         }
 
         forceCrash.setOnClickListener {

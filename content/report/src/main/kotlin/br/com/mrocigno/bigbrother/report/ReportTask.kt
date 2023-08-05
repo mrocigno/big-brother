@@ -42,8 +42,10 @@ class ReportTask : BigBrotherTask() {
     }
 
     override fun onActivityDestroyed(activity: Activity) {
+        val lvl = mapping[activity.hashCode()] ?: nestedLevel
         mapping.remove(activity.hashCode())
-        bbTrack(ReportType.TRACK) {
+
+        bbTrack(ReportType.TRACK, lvl) {
             "---x ${activity::class.simpleName}"
         }
     }
