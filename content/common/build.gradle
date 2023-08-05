@@ -3,7 +3,7 @@ plugins {
     alias libs.plugins.android.kotlin
 }
 
-apply from: file('../../gradle/publish-oldschool.gradle')
+apply from: file('../../gradle/publish.gradle')
 
 dependencies {
 
