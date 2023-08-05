@@ -9,5 +9,7 @@ apply from: file('../../gradle/publish-oldschool.gradle')
 dependencies {
 
     compileOnly project(":content:core")
+    compileOnly project(":content:report")
+
     implementation project(":content:common")
 }

@@ -8,50 +8,48 @@ import br.com.mrocigno.bigbrother.common.BBTAG
 import br.com.mrocigno.bigbrother.common.utils.decorView
 import br.com.mrocigno.bigbrother.common.utils.rootView
 import br.com.mrocigno.bigbrother.core.BigBrotherTask
-import br.com.mrocigno.bigbrother.core.utils.localTracker
-import br.com.mrocigno.bigbrother.core.utils.track
+import br.com.mrocigno.bigbrother.report.BigBrotherReport.nestedLevel
+import br.com.mrocigno.bigbrother.report.model.ReportType
+import com.jakewharton.threetenabp.AndroidThreeTen
 
 class ReportTask : BigBrotherTask() {
 
-    private val mapping = mutableMapOf<Int, ActivityReport>()
-    private var currentRoot: ActivityReport? = null
-        set(value) {
-            field = value
-            localTracker = value?.reportModels
+    private val mapping = mutableMapOf<Int, Int>()
+
+    override fun onCreate(): Boolean {
+        try {
+            val context = context ?: throw IllegalStateException("context is null")
+            AndroidThreeTen.init(context)
+            BigBrotherReport.createSession(context)
+        } catch (e: Exception) {
+            Log.e(BBTAG, "failed to initialize big brother report task", e)
+            return false
         }
 
+        return super.onCreate()
+    }
+
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
+        mapping[activity.hashCode()] = ++nestedLevel
         activity.rootView.addView(ClickObserverView.getOrCreate(activity))
-
-        val activityReport = ActivityReport(
-            name = activity::class.simpleName.toString(),
-            parent = currentRoot,
-            screenType = "Activity"
-        ).track()
-
-        mapping[activity.hashCode()] = activityReport
+        bbTrack(ReportType.TRACK) {
+            "---> ${activity::class.simpleName}"
+        }
     }
 
     override fun onActivityResume(activity: Activity) {
-        Log.d(BBTAG, "report task resumed")
-        currentRoot = mapping[activity.hashCode()]
+        nestedLevel = mapping[activity.hashCode()] ?: 0
     }
 
     override fun onActivityDestroyed(activity: Activity) {
-        Log.d(BBTAG, "report task destroyed")
         mapping.remove(activity.hashCode())
-        val destroyed = ActivityDestroyedReport(activity::class.simpleName.toString())
-        currentRoot?.reportModels?.add(destroyed)
+        bbTrack(ReportType.TRACK) {
+            "---x ${activity::class.simpleName}"
+        }
     }
 
     override fun onFragmentStarted(fragment: Fragment) {
         fragment.decorView?.addView(ClickObserverView.getOrCreate(fragment))
-
-        currentRoot?.reportModels?.add(ActivityReport(
-            name = fragment::class.simpleName.toString(),
-            parent = currentRoot,
-            screenType = "Fragment"
-        ))
     }
 
     override fun onFragmentStopped(fragment: Fragment) {

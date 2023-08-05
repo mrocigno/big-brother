@@ -4,9 +4,9 @@ import android.app.Activity
 import android.os.Process
 import br.com.mrocigno.bigbrother.common.utils.printScreen
 import br.com.mrocigno.bigbrother.common.utils.save
-import br.com.mrocigno.bigbrother.core.utils.globalTracker
+import br.com.mrocigno.bigbrother.core.utils.bbSessionId
 import br.com.mrocigno.bigbrother.core.utils.lastClickPosition
-import br.com.mrocigno.bigbrother.core.utils.track
+import br.com.mrocigno.bigbrother.report.BigBrotherReport
 import java.lang.ref.WeakReference
 import kotlin.system.exitProcess
 
@@ -16,7 +16,9 @@ class CrashObserver(
 ) : Thread.UncaughtExceptionHandler {
 
     override fun uncaughtException(t: Thread, e: Throwable) {
-        CrashReport(e).track()
+        runCatching {
+            BigBrotherReport.trackCrash(e)
+        }
 
         val activity = activity.get() ?: run {
             default?.uncaughtException(t, e)
@@ -25,13 +27,13 @@ class CrashObserver(
 
         activity
             .printScreen(lastClickPosition)
-            .save(activity, "print_crash.png")
+            .save(activity, "print_crash_session_$bbSessionId.png")
 
         activity.startActivity(
             CrashActivity.intent(
                 activity,
                 activity::class.simpleName.orEmpty(),
-                ArrayList(globalTracker),
+                bbSessionId,
                 e
             )
         )

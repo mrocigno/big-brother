@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.session.coverter
+package br.com.mrocigno.bigbrother.report.coverter
 
 import androidx.room.TypeConverter
 import org.threeten.bp.LocalDateTime

@@ -17,7 +17,6 @@
             <option value="$PROJECT_DIR$/content/log" />
             <option value="$PROJECT_DIR$/content/network" />
             <option value="$PROJECT_DIR$/content/report" />
-            <option value="$PROJECT_DIR$/content/session" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

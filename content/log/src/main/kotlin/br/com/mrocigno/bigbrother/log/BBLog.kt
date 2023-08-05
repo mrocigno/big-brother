@@ -3,7 +3,6 @@ package br.com.mrocigno.bigbrother.log
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import br.com.mrocigno.bigbrother.core.BigBrother
-import br.com.mrocigno.bigbrother.core.utils.track
 
 class BBLog(private val tag: String) {
 

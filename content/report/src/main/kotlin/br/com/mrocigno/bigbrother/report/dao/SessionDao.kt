@@ -1,9 +1,9 @@
-package br.com.mrocigno.bigbrother.session.dao
+package br.com.mrocigno.bigbrother.report.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import br.com.mrocigno.bigbrother.session.entity.SessionEntity
+import br.com.mrocigno.bigbrother.report.entity.SessionEntity
 import org.threeten.bp.LocalDateTime
 
 @Dao
@@ -18,6 +18,12 @@ internal interface SessionDao {
         )
     ): Long
 
+    @Query("DELETE FROM tblSessions WHERE id = :id")
+    suspend fun deleteSession(id: Long)
+
     @Query("UPDATE tblSessions SET status = 'FINISHED' WHERE status = 'RUNNING'")
     suspend fun closePreviousSession()
+
+    @Query("UPDATE tblSessions SET status = 'CRASHED' WHERE id = :sessionId")
+    suspend fun sessionCrashed(sessionId: Long)
 }

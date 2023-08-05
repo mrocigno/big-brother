@@ -4,9 +4,8 @@ import android.content.Context
 import android.text.SpannableStringBuilder
 import androidx.core.text.bold
 import androidx.recyclerview.widget.DiffUtil
-import br.com.mrocigno.bigbrother.common.utils.appendSeparation
-import br.com.mrocigno.bigbrother.core.model.ReportModel
-import br.com.mrocigno.bigbrother.core.model.ReportModelType
+import br.com.mrocigno.bigbrother.report.bbTrack
+import br.com.mrocigno.bigbrother.report.model.ReportType
 import okhttp3.Request
 import okhttp3.Response
 import okio.Buffer
@@ -25,7 +24,7 @@ class NetworkEntryModel(
     val method: String,
     val request: NetworkPayloadModel,
     var response: NetworkPayloadModel? = null
-) : ReportModel(ReportModelType.NETWORK) {
+) : Serializable {
 
     constructor(request: Request) : this(
         fullUrl = request.url.toString(),
@@ -44,16 +43,11 @@ class NetworkEntryModel(
 
     }
 
-    override fun asTxt() = StringBuilder()
-        .append("> ")
-        .append(type.name)
-        .appendSeparation()
-        .append(method)
-        .appendSeparation()
-        .append(statusCode)
-        .appendSeparation()
-        .append(url)
-        .toString()
+    fun track() = runCatching {
+        bbTrack(ReportType.NETWORK) {
+            "> NETWORK - $method - $statusCode - $url"
+        }
+    }
 
     override fun toString() = StringBuilder()
         .appendLine(method)

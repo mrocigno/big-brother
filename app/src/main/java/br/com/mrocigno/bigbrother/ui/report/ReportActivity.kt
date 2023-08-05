@@ -7,8 +7,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.motion.widget.MotionLayout
 import br.com.mrocigno.bigbrother.R
-import br.com.mrocigno.bigbrother.core.utils.globalTracker
-import br.com.mrocigno.bigbrother.report.generateReport
 
 class ReportActivity : AppCompatActivity(R.layout.report_activity) {
 
@@ -26,7 +24,7 @@ class ReportActivity : AppCompatActivity(R.layout.report_activity) {
         }
 
         makeReport.setOnClickListener {
-            reportView.text = globalTracker.generateReport().generate(this)
+//            reportView.text = globalTracker.generateReport().generate(this)
         }
 
         forceCrash.setOnClickListener {

@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.session.entity
+package br.com.mrocigno.bigbrother.report.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

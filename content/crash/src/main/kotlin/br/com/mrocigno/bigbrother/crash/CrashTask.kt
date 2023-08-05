@@ -17,9 +17,9 @@ class CrashTask : BigBrotherTask() {
 
         Thread.setDefaultUncaughtExceptionHandler(
             CrashObserver(
-            WeakReference(activity),
-            default
-        )
+                WeakReference(activity),
+                default
+            )
         )
     }
 }
