@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import br.com.mrocigno.bigbrother.report.entity.SessionEntity
+import br.com.mrocigno.bigbrother.report.model.SessionStatus
+import kotlinx.coroutines.flow.Flow
 import org.threeten.bp.LocalDateTime
 
 @Dao
@@ -14,7 +16,7 @@ internal interface SessionDao {
         entity: SessionEntity = SessionEntity(
             id = 0,
             dateTime = LocalDateTime.now(),
-            status = "RUNNING"
+            status = SessionStatus.RUNNING
         )
     ): Long
 
@@ -26,4 +28,7 @@ internal interface SessionDao {
 
     @Query("UPDATE tblSessions SET status = 'CRASHED' WHERE id = :sessionId")
     suspend fun sessionCrashed(sessionId: Long)
+
+    @Query("SELECT * FROM tblSessions ORDER BY id DESC")
+    fun getAllSessions(): Flow<List<SessionEntity>>
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/session_details_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    app:layoutDescription="@xml/bigbrother_activity_session_details_scene">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/session_details_print_guide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="250dp" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/session_details_print"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/session_details_print_guide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <View
+        android:id="@+id/session_details_print_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/text_title"
+        app:layout_constraintBottom_toBottomOf="@id/session_details_print_guide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/session_details_status_bar_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/session_details_toolbar_color"
+        app:layout_constraintBottom_toBottomOf="@id/session_details_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/session_details_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/bigbrother_ic_arrow_back_white"
+        app:title="Session 1"
+        app:titleTextColor="@android:color/white" />
+
+    <ScrollView
+        android:id="@+id/session_details_vertical_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/session_details_print_guide">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/session_details_timeline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="100dp"
+                android:padding="@dimen/spacing_m"
+                android:textColor="@color/text_title"
+                app:fontFamily="@font/courier_regular"
+                tools:text="@tools:sample/lorem[5]" />
+
+        </HorizontalScrollView>
+
+    </ScrollView>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

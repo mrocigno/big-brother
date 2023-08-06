@@ -3,6 +3,12 @@
 
     <application>
 
+        <activity
+            android:name=".ui.SessionDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.BigBrother" />
+
         <provider
             android:name=".ReportTask"
             android:authorities="${applicationId}.MINITRUE"

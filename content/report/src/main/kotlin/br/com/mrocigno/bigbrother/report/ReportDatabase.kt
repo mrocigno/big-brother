@@ -4,6 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import br.com.mrocigno.bigbrother.report.coverter.LocalDateTimeConverter
+import br.com.mrocigno.bigbrother.report.coverter.ReportTypeConverter
+import br.com.mrocigno.bigbrother.report.coverter.SessionStatusConverter
 import br.com.mrocigno.bigbrother.report.dao.ReportLogDao
 import br.com.mrocigno.bigbrother.report.dao.SessionDao
 import br.com.mrocigno.bigbrother.report.entity.ReportLogEntity
@@ -13,7 +15,11 @@ import br.com.mrocigno.bigbrother.report.entity.SessionEntity
     SessionEntity::class,
     ReportLogEntity::class
 ], version = 1)
-@TypeConverters(LocalDateTimeConverter::class)
+@TypeConverters(
+    LocalDateTimeConverter::class,
+    SessionStatusConverter::class,
+    ReportTypeConverter::class
+)
 internal abstract class ReportDatabase : RoomDatabase() {
 
     abstract fun sessionDao(): SessionDao

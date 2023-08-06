@@ -10,9 +10,10 @@ import br.com.mrocigno.bigbrother.common.utils.rootView
 import br.com.mrocigno.bigbrother.core.BigBrotherTask
 import br.com.mrocigno.bigbrother.report.BigBrotherReport.nestedLevel
 import br.com.mrocigno.bigbrother.report.model.ReportType
+import br.com.mrocigno.bigbrother.report.ui.ClickObserverView
 import com.jakewharton.threetenabp.AndroidThreeTen
 
-class ReportTask : BigBrotherTask() {
+internal class ReportTask : BigBrotherTask() {
 
     private val mapping = mutableMapOf<Int, Int>()
 

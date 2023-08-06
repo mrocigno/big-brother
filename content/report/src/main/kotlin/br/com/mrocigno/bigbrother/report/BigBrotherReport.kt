@@ -33,7 +33,7 @@ object BigBrotherReport {
         nestedLevel: Int = this.nestedLevel
     ) {
         val entity = ReportLogEntity(
-            type = type.name,
+            type = type,
             txtContent = content,
             nestedLevel = nestedLevel
         )
@@ -57,6 +57,8 @@ object BigBrotherReport {
         Log.d(BBTAG, "Deleting session $bbSessionId")
         db.sessionDao().deleteSession(bbSessionId)
     }
+
+    internal fun listSessions() = db.sessionDao().getAllSessions()
 
     internal fun createSession(context: Context) {
         db = Room.databaseBuilder(context, ReportDatabase::class.java, "bb-report-db").build()

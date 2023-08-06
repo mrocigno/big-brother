@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.report
+package br.com.mrocigno.bigbrother.report.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.FrameLayout.LayoutParams.MATCH_PARENT
 import androidx.fragment.app.Fragment
 import br.com.mrocigno.bigbrother.core.utils.lastClickPosition
+import br.com.mrocigno.bigbrother.report.R
 
 @SuppressLint("ClickableViewAccessibility")
 class ClickObserverView @JvmOverloads constructor(

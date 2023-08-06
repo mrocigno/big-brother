@@ -4,9 +4,9 @@ import br.com.mrocigno.bigbrother.common.utils.appendSpace
 import br.com.mrocigno.bigbrother.report.entity.ReportLogEntity
 import br.com.mrocigno.bigbrother.report.model.ReportType
 
-fun List<ReportLogEntity>.buildReport() = ReportGenerator(this)
+internal fun List<ReportLogEntity>.buildReport() = ReportGenerator(this)
 
-class ReportGenerator(list: List<ReportLogEntity>) {
+internal class ReportGenerator(list: List<ReportLogEntity>) {
 
     private var finalList: List<ReportLogEntity> = list
 
@@ -22,7 +22,7 @@ class ReportGenerator(list: List<ReportLogEntity>) {
             it.append(report.txtContent)
             lastNestedLvl = report.nestedLevel
         }
-        if (finalList.lastOrNull()?.type != ReportType.CRASH.name) {
+        if (finalList.lastOrNull()?.type != ReportType.CRASH) {
             it.appendLine()
             it.appendSpace(lastNestedLvl)
             it.appendLine()
