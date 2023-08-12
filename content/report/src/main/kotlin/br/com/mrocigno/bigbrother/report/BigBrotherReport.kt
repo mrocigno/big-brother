@@ -13,6 +13,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 
 object BigBrotherReport {
 
@@ -58,7 +60,13 @@ object BigBrotherReport {
         db.sessionDao().deleteSession(bbSessionId)
     }
 
-    internal fun listSessions() = db.sessionDao().getAllSessions()
+    internal fun listSessions(dateFilter: LocalDate?) = if (dateFilter != null) {
+        val startDate = dateFilter.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T00:00:00"
+        val endDate = dateFilter.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T23:59:59"
+        db.sessionDao().getSessionByRange(startDate, endDate)
+    } else {
+        db.sessionDao().getAllSessions()
+    }
 
     internal fun createSession(context: Context) {
         db = Room.databaseBuilder(context, ReportDatabase::class.java, "bb-report-db").build()

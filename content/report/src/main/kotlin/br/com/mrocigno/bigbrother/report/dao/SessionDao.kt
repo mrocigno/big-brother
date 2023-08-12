@@ -31,4 +31,11 @@ internal interface SessionDao {
 
     @Query("SELECT * FROM tblSessions ORDER BY id DESC")
     fun getAllSessions(): Flow<List<SessionEntity>>
+
+    @Query("""
+        SELECT * FROM tblSessions
+        WHERE date_time >= :startDate AND date_time <= :endDate
+        ORDER BY id DESC 
+    """)
+    fun getSessionByRange(startDate: String, endDate: String): Flow<List<SessionEntity>>
 }
