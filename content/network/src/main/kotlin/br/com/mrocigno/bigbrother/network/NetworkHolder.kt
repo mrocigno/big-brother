@@ -16,6 +16,7 @@ internal object NetworkHolder {
     fun updateEntry(entry: NetworkEntryModel) {
         _networkEntries.update(entry)
         networkEntries.postValue(_networkEntries)
+        entry.track()
     }
 
     fun clear() {

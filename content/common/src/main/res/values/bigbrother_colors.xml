@@ -12,7 +12,7 @@
 
     <color name="text_title">#FF000000</color>
     <color name="text_title_inverse">#FFFFFFFF</color>
-    <color name="text_paragraph">#FF808080</color>
+    <color name="text_paragraph">#636363</color>
     <color name="text_hyperlink">#FF007BFF</color>
     <color name="text_highlight">#EBB901</color>
 

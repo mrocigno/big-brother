@@ -1,9 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id 'com.android.application' version '8.1.0-alpha11' apply false
-    id 'com.android.library' version '8.1.0-alpha11' apply false
-    id 'org.jetbrains.kotlin.android' version '1.7.21' apply false
-    id 'io.github.pedro-bachiega.sonatype-maven-publish' version '0.0.2' apply false
+    alias libs.plugins.android.application apply false
+    alias libs.plugins.android.library apply false
+    alias libs.plugins.android.kotlin apply false
 }
 
 allprojects {
@@ -27,6 +26,12 @@ allprojects {
                 resConfigs "en", "pt"
 
                 testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+                javaCompileOptions {
+                    annotationProcessorOptions {
+                        arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+                    }
+                }
             }
 
             buildTypes {
@@ -46,12 +51,9 @@ allprojects {
 
         dependencies {
 
-            implementation 'androidx.core:core-ktx:1.8.0'
-            implementation 'androidx.appcompat:appcompat:1.4.1'
-            implementation 'com.google.android.material:material:1.5.0'
-            testImplementation 'junit:junit:4.13.2'
-            androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-            androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+            implementation libs.androidx.core
+            implementation libs.androidx.appcompat
+            implementation libs.material
         }
     }
 }

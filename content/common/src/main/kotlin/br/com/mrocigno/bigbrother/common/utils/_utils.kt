@@ -57,7 +57,7 @@ fun String.highlightQuery(query: String, @ColorInt color: Int = Color.YELLOW): C
     val index = indexOf(query, ignoreCase = true)
     return if (index < 0) this
     else SpannableStringBuilder(this).apply {
-        setSpan(
+        if (index + query.length > 0) setSpan(
             ForegroundColorSpan(color),
             index, index + query.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

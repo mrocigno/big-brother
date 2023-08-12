@@ -9,7 +9,6 @@ import android.view.ViewConfiguration
 import android.widget.FrameLayout
 import br.com.mrocigno.bigbrother.common.R
 
-
 val Activity.rootView: FrameLayout get() = window.decorView as FrameLayout
 
 val Activity.statusBarHeight: Int

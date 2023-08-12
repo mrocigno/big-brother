@@ -2,9 +2,8 @@ package br.com.mrocigno.bigbrother.log
 
 import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.DiffUtil
-import br.com.mrocigno.bigbrother.common.utils.appendSeparation
-import br.com.mrocigno.bigbrother.core.model.ReportModel
-import br.com.mrocigno.bigbrother.core.model.ReportModelType
+import br.com.mrocigno.bigbrother.report.bbTrack
+import br.com.mrocigno.bigbrother.report.model.ReportType
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
 class LogEntryModel(
@@ -12,16 +11,13 @@ class LogEntryModel(
     val tag: String,
     val message: String? = null,
     val throwable: Throwable? = null
-) : ReportModel(ReportModelType.LOG) {
+) {
 
-    override fun asTxt() = StringBuilder()
-        .append("> ")
-        .append(type.name)
-        .appendSeparation()
-        .append(lvl.initial)
-        .appendSeparation()
-        .append(message ?: throwable?.message ?: "empty")
-        .toString()
+    fun track() = runCatching {
+        bbTrack(ReportType.LOG) {
+            "> LOG - ${lvl.initial} - ${message ?: throwable?.message ?: "empty"}"
+        }
+    }
 
     override fun toString() = StringBuilder()
         .appendLine(tag)
