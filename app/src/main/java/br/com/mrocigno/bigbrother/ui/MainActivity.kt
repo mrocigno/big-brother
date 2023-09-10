@@ -13,6 +13,7 @@ import br.com.mrocigno.bigbrother.R
 import br.com.mrocigno.bigbrother.core.BigBrother
 import br.com.mrocigno.bigbrother.log.BBLog
 import br.com.mrocigno.bigbrother.log.BBLog.Companion.tag
+import br.com.mrocigno.bigbrother.ui.compose.ComposableActivity
 import br.com.mrocigno.bigbrother.ui.general.CustomPageActivity
 import br.com.mrocigno.bigbrother.ui.general.OutOfDomainActivity
 import br.com.mrocigno.bigbrother.ui.network.NetworkActivity
@@ -119,6 +120,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
 
         findViewById<View>(R.id.custom_page).setOnClickListener {
             startActivity(Intent(this, CustomPageActivity::class.java))
+        }
+
+        findViewById<View>(R.id.compose_activity).setOnClickListener {
+            startActivity(Intent(this, ComposableActivity::class.java))
         }
     }
 }

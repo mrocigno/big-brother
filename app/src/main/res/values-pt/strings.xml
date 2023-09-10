@@ -20,4 +20,5 @@
     <string name="custom_page_description">Essa activity tem uma pagina customizada, sempre que expandir a bubble vai ter uma pagina que só aparece nessa activity.\n\nPara criar uma pagina especificamente para uma activity, basta fazer:</string>
     <string name="custom_page_comment">// Dentro de BigBrotherProvider</string>
     <string name="custom_page_title">Pagina customizada</string>
+    <string name="compose_activity_button">Compose activity</string>
 </resources>
