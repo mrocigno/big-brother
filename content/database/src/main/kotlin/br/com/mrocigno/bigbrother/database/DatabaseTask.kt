@@ -11,7 +11,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.io.File
 
-internal class DatabaseFinder : BigBrotherTask() {
+internal class DatabaseTask : BigBrotherTask() {
 
     val databases: MutableList<DatabaseHelper> = mutableListOf()
 
