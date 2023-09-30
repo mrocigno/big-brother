@@ -1,0 +1,16 @@
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.android.kotlin
+    id 'kotlin-parcelize'
+}
+
+apply from: file('../../gradle/publish.gradle')
+
+dependencies {
+
+    compileOnly project(":content:core")
+    compileOnly project(":content:report")
+    implementation project(":content:common")
+
+    implementation libs.androidx.lifecycle.runtime
+}
