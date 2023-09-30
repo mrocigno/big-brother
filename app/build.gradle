@@ -33,4 +33,5 @@ dependencies {
     implementation project(":content:crash")
     implementation project(":content:network")
     implementation project(":content:log")
+    implementation project(":content:database")
 }

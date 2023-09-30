@@ -1,0 +1,18 @@
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.android.kotlin
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+}
+
+apply from: file('../../gradle/publish.gradle')
+
+dependencies {
+
+    compileOnly project(":content:core")
+    implementation project(":content:common")
+
+    implementation libs.androidx.room.runtime
+    implementation libs.androidx.room.ktx
+    kapt libs.androidx.room.compiler
+}
