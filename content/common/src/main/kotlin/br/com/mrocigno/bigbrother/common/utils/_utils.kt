@@ -20,6 +20,8 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import br.com.mrocigno.bigbrother.common.R
+import java.io.ObjectOutputStream
+import java.io.PrintStream
 import java.io.Serializable
 
 fun ViewGroup.inflate(@LayoutRes resId: Int) =
@@ -129,3 +131,8 @@ fun <T> MutableList<T>.update(model: T) {
     removeAt(index)
     add(index, model)
 }
+
+fun Any?.canBeSerialized(): Boolean = runCatching {
+    if (this !is Serializable) return false
+    ObjectOutputStream(PrintStream("")).writeObject(this).let { true }
+}.getOrElse { false }
