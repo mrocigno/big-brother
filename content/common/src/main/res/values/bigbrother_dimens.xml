@@ -6,5 +6,6 @@
     <dimen name="spacing_s">12dp</dimen>
     <dimen name="spacing_m">16dp</dimen>
     <dimen name="spacing_l">24dp</dimen>
+    <dimen name="spacing_xl">34dp</dimen>
     <dimen name="spacing_td_top">48dp</dimen>
 </resources>

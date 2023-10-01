@@ -14,7 +14,9 @@ import br.com.mrocigno.bigbrother.database.R
 import br.com.mrocigno.bigbrother.database.model.DatabaseListItem
 import br.com.mrocigno.bigbrother.common.R as CR
 
-class DatabaseAdapter : RecyclerView.Adapter<DatabaseListItemViewHolder>() {
+internal class DatabaseAdapter(
+    private val onClick: (DatabaseListItem) -> Unit
+) : RecyclerView.Adapter<DatabaseListItemViewHolder>() {
 
     private val differ = DatabaseListItem.Differ(this)
     var list: List<DatabaseListItem>
@@ -26,18 +28,21 @@ class DatabaseAdapter : RecyclerView.Adapter<DatabaseListItemViewHolder>() {
     init {
         list = getTask(DatabaseTask::class)
             ?.databases
-            ?.map {
+            ?.values
+            ?.map { db ->
                 DatabaseListItem(
                     nodeLvl = 0,
                     type = DatabaseListItem.DATABASE,
                     icon = R.drawable.bigbrother_ic_database,
-                    title = it.name,
-                    children = it.tablesName.map { tableName ->
+                    title = db.name,
+                    databaseHelper = db,
+                    children = db.tablesName.map { tableName ->
                         DatabaseListItem(
                             nodeLvl = 1,
                             type = DatabaseListItem.TABLE,
                             icon = R.drawable.bigbrother_ic_table,
-                            title = tableName
+                            title = tableName,
+                            databaseHelper = db
                         )
                     }
                 )
@@ -56,6 +61,7 @@ class DatabaseAdapter : RecyclerView.Adapter<DatabaseListItemViewHolder>() {
         val model = list[position]
         holder.bind(model) {
             toggle(model)
+            onClick(model)
         }
     }
 
@@ -71,17 +77,17 @@ class DatabaseAdapter : RecyclerView.Adapter<DatabaseListItemViewHolder>() {
     }
 }
 
-class DatabaseListItemViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_database)) {
+internal class DatabaseListItemViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_database)) {
 
     private val icon: AppCompatImageView by lazy { itemView.findViewById(R.id.database_item_icon) }
     private val title: AppCompatTextView by lazy { itemView.findViewById(R.id.database_item_title) }
 
     private val context get() = itemView.context
 
-    fun bind(model: DatabaseListItem, onClick: (Int) -> Unit) {
+    fun bind(model: DatabaseListItem, onClick: () -> Unit) {
         if (model.type == DatabaseListItem.DATABASE) itemView.setBackgroundColor(context.getColor(CR.color.background))
         itemView.updateLayoutParams<RecyclerView.LayoutParams> {
-            val spacing = context.resources.getDimensionPixelOffset(CR.dimen.spacing_l)
+            val spacing = context.resources.getDimensionPixelOffset(CR.dimen.spacing_xl)
             leftMargin = spacing * model.nodeLvl
         }
 
@@ -89,7 +95,7 @@ class DatabaseListItemViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(
         title.text = model.title
 
         itemView.setOnClickListener {
-            onClick(model.type)
+            onClick()
         }
     }
 }

@@ -4,13 +4,15 @@ import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.RecyclerView
+import br.com.mrocigno.bigbrother.database.DatabaseHelper
 
-class DatabaseListItem(
+internal class DatabaseListItem(
     val nodeLvl: Int,
     val type: Int,
     @DrawableRes val icon: Int,
     val title: String,
-    val children: List<DatabaseListItem>? = null
+    val children: List<DatabaseListItem>? = null,
+    val databaseHelper: DatabaseHelper
 ) {
 
     class Differ(

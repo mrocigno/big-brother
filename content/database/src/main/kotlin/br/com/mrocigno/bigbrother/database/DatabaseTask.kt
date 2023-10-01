@@ -13,7 +13,7 @@ import java.io.File
 
 internal class DatabaseTask : BigBrotherTask() {
 
-    val databases: MutableList<DatabaseHelper> = mutableListOf()
+    val databases: HashMap<String, DatabaseHelper> = hashMapOf()
 
     private val supervisor = SupervisorJob()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + supervisor)
@@ -29,7 +29,7 @@ internal class DatabaseTask : BigBrotherTask() {
     } else false
 
     private fun list(databaseDir: File) = databaseDir.forEachDatabase {
-        databases.add(this)
+        databases[name] = this
     }
 
     private fun File.forEachDatabase(block: suspend DatabaseHelper.() -> Unit) =

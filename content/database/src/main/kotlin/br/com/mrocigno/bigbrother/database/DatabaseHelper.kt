@@ -1,13 +1,12 @@
 package br.com.mrocigno.bigbrother.database
 
 import android.database.sqlite.SQLiteDatabase
+import br.com.mrocigno.bigbrother.database.model.TableDump
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
 
-internal class DatabaseHelper
-    @Throws(IllegalStateException::class)
-    constructor(file: File) {
+internal class DatabaseHelper(file: File) {
 
     val name: String = file.name
 
@@ -32,7 +31,7 @@ internal class DatabaseHelper
         BufferedReader(FileReader(file)).use {
             val identification = it.readLine().take(15)
             if (identification != "SQLite format 3")
-                error("the file is not a database")
+                error("the file ${file.name} is not a database")
         }
 
     private fun listTablesName(): List<String> {
@@ -40,11 +39,35 @@ internal class DatabaseHelper
         val db = readableDatabase ?: return result
         db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null).use {
             it.moveToFirst()
-            while (it.moveToNext()) {
+            do {
                 result.add(it.getString(0))
-            }
+            } while (it.moveToNext())
         }
 
         return result
+    }
+
+    fun listAll(tableName: String): TableDump? {
+        val data = mutableListOf<Map<String, String>>()
+        val db = readableDatabase ?: return null
+        val sql = "SELECT * FROM $tableName"
+        var rowCount = 0
+        db.rawQuery(sql, null).use {
+            if (it.moveToFirst()) do {
+                rowCount++
+                val rowContent = mutableMapOf<String, String>()
+                it.columnNames.forEach { columnName ->
+                    val columnIndex = it.getColumnIndex(columnName)
+                    rowContent[columnName] = it.getString(columnIndex)
+                }
+                data.add(rowContent)
+            } while (it.moveToNext())
+        }
+        return TableDump(
+            data = data,
+            executedSql = sql,
+            rowCount = rowCount,
+            page = 0
+        )
     }
 }
