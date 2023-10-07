@@ -47,7 +47,7 @@ internal class DatabaseHelper(file: File) {
         return result
     }
 
-    fun listAll(tableName: String): TableDump? {
+    fun listAll(tableName: String) = runCatching {
         val data = mutableListOf<Map<String, String>>()
         val db = readableDatabase ?: return null
         val sql = "SELECT * FROM $tableName"
@@ -63,11 +63,35 @@ internal class DatabaseHelper(file: File) {
                 data.add(rowContent)
             } while (it.moveToNext())
         }
-        return TableDump(
+        TableDump(
             data = data,
             executedSql = sql,
             rowCount = rowCount,
             page = 0
         )
-    }
+    }.getOrNull()
+
+    fun execSQL(sql: String) = runCatching {
+        val data = mutableListOf<Map<String, String>>()
+        val db = readableDatabase ?: return null
+        var rowCount = 0
+        db.rawQuery(sql, null).use {
+            if (it.moveToFirst()) do {
+                rowCount++
+                val rowContent = mutableMapOf<String, String>()
+                it.columnNames.forEach { columnName ->
+                    val columnIndex = it.getColumnIndex(columnName)
+                    rowContent[columnName] = it.getString(columnIndex)
+                }
+                data.add(rowContent)
+            } while (it.moveToNext())
+        }
+
+        TableDump(
+            data = data,
+            executedSql = sql,
+            rowCount = rowCount,
+            page = 0
+        )
+    }.getOrNull()
 }

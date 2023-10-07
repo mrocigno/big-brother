@@ -1,70 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/table_inspector_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        app:layout_collapseMode="pin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/bigbrother_ic_arrow_back"
+        tools:title="table name" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/table_inspector_sql_layout"
+        style="@style/SQL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:elevation="0dp"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$Behavior">
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/table_inspector_toolbar">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/table_inspector_sql"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="@color/background"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleEnabled="false"
-            app:toolbarId="@+id/table_inspector_toolbar">
+            android:layout_height="wrap_content"
+            android:hint="SQL"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:scrollbars="none"
+            android:scrollHorizontally="false"
+            app:fontFamily="@font/courier_regular" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="?actionBarSize"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+    </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/table_inspector_sql_layout"
-                    style="@style/SQL"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+    <FrameLayout
+        android:id="@+id/table_inspector_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/table_inspector_sql_layout" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/table_inspector_sql"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="SQL"
-                        android:inputType="textMultiLine"
-                        android:maxLines="10"
-                        android:scrollbars="none"
-                        android:scrollHorizontally="false"
-                        app:fontFamily="@font/courier_regular" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/table_inspector_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:background="@color/background"
-                app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/bigbrother_ic_arrow_back"
-                tools:title="table name" />
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
