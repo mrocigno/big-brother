@@ -10,15 +10,11 @@ import android.view.ViewGroup
 interface AdaptiveTableAdapter<VH : ViewHolder?> : AdaptiveTableDataSetObserver {
     /**
      * Set new item click listener
-     *
-     * @param onItemClickListener new item click listener
      */
     var onItemClickListener: OnItemClickListener?
 
     /**
      * Set new item long click listener
-     *
-     * @param onItemLongClickListener new item long click listener
      */
     var onItemLongClickListener: OnItemLongClickListener?
 

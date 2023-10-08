@@ -11,7 +11,7 @@ package br.com.mrocigno.bigbrother.common.table
  *
  * In case changing full width or count of rows or columns, you need to re-init manager.(steps 2 - 4)
  */
-internal open class AdaptiveTableManager() {
+internal open class AdaptiveTableManager {
     /**
      * Contains full width (columns widths)
      */
