@@ -1,3 +1,7 @@
+/*
+* A copy/past from https://github.com/Cleveroad/AdaptiveTableLayout
+*/
+
 package br.com.mrocigno.bigbrother.common.table
 
 import android.annotation.SuppressLint
@@ -14,6 +18,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.collection.SparseArrayCompat
 import androidx.core.content.withStyledAttributes
+import androidx.core.view.NestedScrollingChild2
+import androidx.core.view.NestedScrollingChildHelper
 import androidx.core.view.ViewCompat
 import br.com.mrocigno.bigbrother.common.R
 import br.com.mrocigno.bigbrother.common.table.AdaptiveTableState.Companion.NO_DRAGGING_POSITION
@@ -24,12 +30,16 @@ import br.com.mrocigno.bigbrother.common.table.ViewHolderType.Companion.FIRST_HE
 import br.com.mrocigno.bigbrother.common.table.ViewHolderType.Companion.ITEM
 import br.com.mrocigno.bigbrother.common.table.ViewHolderType.Companion.ROW_HEADER
 import br.com.mrocigno.bigbrother.common.utils.getParcelableCompat
+import kotlin.math.roundToInt
 
 class AdaptiveTableLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ViewGroup(context, attrs, defStyleAttr), ScrollHelper.ScrollHelperListener, AdaptiveTableDataSetObserver {
+) : ViewGroup(context, attrs, defStyleAttr),
+    ScrollHelper.ScrollHelperListener,
+    AdaptiveTableDataSetObserver,
+    NestedScrollingChild2 {
 
     private val viewHolders: SparseMatrix<ViewHolder> = SparseMatrix()
     private val headerColumnViewHolders = SparseArrayCompat<ViewHolder>()
@@ -47,9 +57,7 @@ class AdaptiveTableLayout @JvmOverloads constructor(
     private var adapter: DataAdaptiveTableLayoutAdapter<ViewHolder>? = null
     private val recycler = Recycler()
     private val settings = AdaptiveTableLayoutSettings()
-    private val scrollHelper = ScrollHelper(context).apply {
-        setListener(this@AdaptiveTableLayout)
-    }
+    private val scrollHelper = ScrollHelper(context).setListener(this)
     private val scrollerRunnable = SmoothScrollRunnable(this)
     private val scrollerDragAndDropRunnable = DragAndDropScrollRunnable(this)
     private val shadowHelper = ShadowHelper(layoutDirectionHelper)
@@ -237,39 +245,57 @@ class AdaptiveTableLayout @JvmOverloads constructor(
         val shadowShiftY = manager.rowCount * settings.cellMargin
         val maxX = manager.fullWidth + shadowShiftX
         val maxY = manager.fullHeight + shadowShiftY
-        if (state.scrollX + tempX <= 0) {
-            // scroll over view to the left
-            diffX = state.scrollX
-            state.scrollX = 0
-        } else if (settings.layoutWidth > maxX) {
-            // few items and we have free space.
-            diffX = 0
-            state.scrollX = 0
-        } else if (state.scrollX + settings.layoutWidth + tempX > maxX) {
-            // scroll over view to the right
-            diffX = (maxX - state.scrollX - settings.layoutWidth).toInt()
-            state.scrollX = state.scrollX + diffX
-        } else {
-            state.scrollX = state.scrollX + tempX
+
+        when {
+            state.scrollX + tempX <= 0 -> {
+                // scroll over view to the left
+                diffX = state.scrollX
+                state.scrollX = 0
+            }
+
+            settings.layoutWidth > maxX -> {
+                // few items and we have free space.
+                diffX = 0
+                state.scrollX = 0
+            }
+
+            state.scrollX + settings.layoutWidth + tempX > maxX -> {
+                // scroll over view to the right
+                diffX = (maxX - state.scrollX - settings.layoutWidth).toInt()
+                state.scrollX = state.scrollX + diffX
+            }
+
+            else -> {
+                state.scrollX = state.scrollX + tempX
+            }
         }
-        if (state.scrollY + tempY <= 0) {
-            // scroll over view to the top
-            diffY = state.scrollY
-            state.scrollY = 0
-        } else if (settings.layoutHeight > maxY) {
-            // few items and we have free space.
-            diffY = 0
-            state.scrollY = 0
-        } else if (state.scrollY + settings.layoutHeight + tempY > maxY) {
-            // scroll over view to the bottom
-            diffY = (maxY - state.scrollY - settings.layoutHeight).toInt()
-            state.scrollY = state.scrollY + diffY
-        } else {
-            state.scrollY = state.scrollY + tempY
+
+        when {
+            state.scrollY + tempY <= 0 -> {
+                // scroll over view to the top
+                diffY = state.scrollY
+                state.scrollY = 0
+            }
+
+            settings.layoutHeight > maxY -> {
+                // few items and we have free space.
+                diffY = 0
+                state.scrollY = 0
+            }
+
+            state.scrollY + settings.layoutHeight + tempY > maxY -> {
+                // scroll over view to the bottom
+                diffY = (maxY - state.scrollY - settings.layoutHeight).toInt()
+                state.scrollY = state.scrollY + diffY
+            }
+
+            else -> {
+                state.scrollY = state.scrollY + tempY
+            }
         }
-        if (diffX == 0 && diffY == 0) {
-            return
-        }
+
+        if (diffX == 0 && diffY == 0) return
+
         if (adapter != null) {
             // refresh views
             recycleViewHolders()
@@ -1110,6 +1136,7 @@ class AdaptiveTableLayout @JvmOverloads constructor(
     }
 
     override fun onDown(e: MotionEvent?): Boolean {
+        startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL, ViewCompat.TYPE_TOUCH)
         // stop smooth scrolling
         if (!scrollerRunnable.isFinished) {
             scrollerRunnable.forceFinished()
@@ -1218,6 +1245,7 @@ class AdaptiveTableLayout @JvmOverloads constructor(
     }
 
     override fun onActionUp(e: MotionEvent?): Boolean {
+        stopNestedScroll(ViewCompat.TYPE_TOUCH)
         if (state.isDragging) {
             // remove shadows from dragging views
             shadowHelper.removeAllDragAndDropShadows(this)
@@ -1320,7 +1348,8 @@ class AdaptiveTableLayout @JvmOverloads constructor(
         distanceY: Float
     ): Boolean {
         if (!state.isDragging) {
-            // simple scroll....
+            val diff = ((e1?.y ?: 0f) - (e2?.y ?: 0f)).roundToInt()
+            dispatchNestedPreScroll(0, diff, null, null, ViewCompat.TYPE_TOUCH)
             if (!scrollerRunnable.isFinished) {
                 scrollerRunnable.forceFinished()
             }
@@ -1477,5 +1506,39 @@ class AdaptiveTableLayout @JvmOverloads constructor(
         private const val EXTRA_STATE_VIEW_GROUP = "EXTRA_STATE_VIEW_GROUP"
         private const val SHADOW_THICK = 20
         private const val SHADOW_HEADERS_THICK = 10
+    }
+
+    private val childHelper = NestedScrollingChildHelper(this).apply {
+        isNestedScrollingEnabled = true
+    }
+
+    // NestedScrollingChild2
+    override fun startNestedScroll(axes: Int, type: Int): Boolean {
+        return childHelper.startNestedScroll(axes, type)
+    }
+
+    override fun stopNestedScroll(type: Int) {
+        childHelper.stopNestedScroll(type)
+    }
+
+    override fun hasNestedScrollingParent(type: Int): Boolean {
+        return childHelper.hasNestedScrollingParent(type)
+    }
+
+    override fun dispatchNestedScroll(
+        dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int,
+        dyUnconsumed: Int, offsetInWindow: IntArray?, type: Int
+    ): Boolean {
+        return childHelper.dispatchNestedScroll(
+            dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed,
+            offsetInWindow, type
+        )
+    }
+
+    override fun dispatchNestedPreScroll(
+        dx: Int, dy: Int, consumed: IntArray?,
+        offsetInWindow: IntArray?, type: Int
+    ): Boolean {
+        return childHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow, type)
     }
 }

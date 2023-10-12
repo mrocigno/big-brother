@@ -1,3 +1,7 @@
+/*
+* A copy/past from https://github.com/Cleveroad/AdaptiveTableLayout
+*/
+
 package br.com.mrocigno.bigbrother.common.table
 
 import android.view.View
@@ -16,13 +20,9 @@ internal class SmoothScrollRunnable(
     /**
      * Need to calculate offset.
      */
-    private val mScroller: Scroller
+    private val mScroller: Scroller = Scroller(mView.context)
     private var mLastX: Int = 0
     private var mLastY: Int = 0
-
-    init {
-        mScroller = Scroller(mView.getContext())
-    }
 
     fun start(
         initX: Int,
@@ -43,14 +43,14 @@ internal class SmoothScrollRunnable(
         mView.post(this)
     }
 
-    public override fun run() {
-        if (mScroller.isFinished()) {
+    override fun run() {
+        if (mScroller.isFinished) {
             return
         }
         // calculate offset
         val more: Boolean = mScroller.computeScrollOffset()
-        val x: Int = mScroller.getCurrX()
-        val y: Int = mScroller.getCurrY()
+        val x: Int = mScroller.currX
+        val y: Int = mScroller.currY
         val diffX: Int = mLastX - x
         val diffY: Int = mLastY - y
         if (diffX != 0 || diffY != 0) {
@@ -64,13 +64,10 @@ internal class SmoothScrollRunnable(
         }
     }
 
-    val isFinished: Boolean
-        get() {
-            return mScroller.isFinished()
-        }
+    val isFinished: Boolean get() = mScroller.isFinished
 
     fun forceFinished() {
-        if (!mScroller.isFinished()) {
+        if (!mScroller.isFinished) {
             mScroller.forceFinished(true)
         }
     }

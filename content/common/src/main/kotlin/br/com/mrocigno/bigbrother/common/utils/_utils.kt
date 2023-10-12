@@ -20,8 +20,8 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import br.com.mrocigno.bigbrother.common.R
+import java.io.ByteArrayOutputStream
 import java.io.ObjectOutputStream
-import java.io.PrintStream
 import java.io.Serializable
 
 fun ViewGroup.inflate(@LayoutRes resId: Int) =
@@ -50,7 +50,7 @@ inline fun <reified T : Serializable> Intent.getSerializableExtraCompat(key: Str
     else -> @Suppress("DEPRECATION") getSerializableExtra(key) as? T?
 }
 
-inline fun <reified T : Serializable> Bundle.getSerializableExtraCompat(key: String): T? = when {
+inline fun <reified T : Serializable> Bundle.getSerializableCompat(key: String): T? = when {
     Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializable(key, T::class.java)
     else -> @Suppress("DEPRECATION") getSerializable(key) as? T?
 }
@@ -134,5 +134,7 @@ fun <T> MutableList<T>.update(model: T) {
 
 fun Any?.canBeSerialized(): Boolean = runCatching {
     if (this !is Serializable) return false
-    ObjectOutputStream(PrintStream("")).writeObject(this).let { true }
+    ObjectOutputStream(ByteArrayOutputStream())
+        .use { it.writeObject(this) }
+        .let { true }
 }.getOrElse { false }

@@ -1,3 +1,7 @@
+/*
+* A copy/past from https://github.com/Cleveroad/AdaptiveTableLayout
+*/
+
 package br.com.mrocigno.bigbrother.common.table
 
 abstract class BaseDataAdaptiveTableLayoutAdapter<VH : ViewHolder>() :

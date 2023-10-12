@@ -1,3 +1,7 @@
+/*
+* A copy/past from https://github.com/Cleveroad/AdaptiveTableLayout
+*/
+
 package br.com.mrocigno.bigbrother.common.table
 
 import android.content.Context
@@ -6,38 +10,25 @@ import android.view.MotionEvent
 import androidx.core.view.GestureDetectorCompat
 
 internal class ScrollHelper(context: Context) : GestureDetector.OnGestureListener {
-    /**
-     * Gesture detector -> Scroll, Fling, Tap, LongPress, ...
-     * Using when user need to scroll table
-     */
-    private val mGestureDetectorCompat: GestureDetectorCompat
 
     private var mListener: ScrollHelperListener? = null
-
-    init {
-        mGestureDetectorCompat = GestureDetectorCompat(context, this)
-        mGestureDetectorCompat.setIsLongpressEnabled(true)
+    private val mGestureDetectorCompat = GestureDetectorCompat(context, this).apply {
+        setIsLongpressEnabled(true)
     }
 
-    fun setListener(listener: ScrollHelperListener?) {
+    fun setListener(listener: ScrollHelperListener?) = apply {
         mListener = listener
     }
 
-    public override fun onDown(e: MotionEvent): Boolean {
-        // catch down action
-        return mListener == null || mListener!!.onDown(e)
-    }
+    override fun onDown(e: MotionEvent) =
+        mListener == null || mListener!!.onDown(e)
 
-    public override fun onShowPress(e: MotionEvent) {
-        // nothing to do
-    }
+    override fun onShowPress(e: MotionEvent) = Unit
 
-    public override fun onSingleTapUp(e: MotionEvent): Boolean {
-        // catch click action
-        return mListener != null && mListener!!.onSingleTapUp(e)
-    }
+    override fun onSingleTapUp(e: MotionEvent) =
+        mListener != null && mListener!!.onSingleTapUp(e)
 
-    public override fun onScroll(
+    override fun onScroll(
         e1: MotionEvent,
         e2: MotionEvent,
         distanceX: Float,
@@ -47,14 +38,11 @@ internal class ScrollHelper(context: Context) : GestureDetector.OnGestureListene
         return mListener != null && mListener!!.onScroll(e1, e2, distanceX, distanceY)
     }
 
-    public override fun onLongPress(e: MotionEvent) {
-        // catch long click action
-        if (mListener != null) {
-            mListener!!.onLongPress(e)
-        }
+    override fun onLongPress(e: MotionEvent) {
+        mListener?.onLongPress(e)
     }
 
-    public override fun onFling(
+    override fun onFling(
         e1: MotionEvent,
         e2: MotionEvent,
         velocityX: Float,
@@ -65,7 +53,7 @@ internal class ScrollHelper(context: Context) : GestureDetector.OnGestureListene
     }
 
     fun onTouch(event: MotionEvent): Boolean {
-        if (event.getAction() == MotionEvent.ACTION_UP && mListener != null) {
+        if (event.action == MotionEvent.ACTION_UP && mListener != null) {
             // stop drag and drop mode
             mListener!!.onActionUp(event)
         }
@@ -73,7 +61,7 @@ internal class ScrollHelper(context: Context) : GestureDetector.OnGestureListene
         return mGestureDetectorCompat.onTouchEvent(event)
     }
 
-    internal open interface ScrollHelperListener {
+    internal interface ScrollHelperListener {
         fun onDown(e: MotionEvent?): Boolean
         fun onSingleTapUp(e: MotionEvent): Boolean
         fun onLongPress(e: MotionEvent)

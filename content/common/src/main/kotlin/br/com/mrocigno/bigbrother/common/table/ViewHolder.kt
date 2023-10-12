@@ -1,38 +1,48 @@
+/*
+* A copy/past from https://github.com/Cleveroad/AdaptiveTableLayout
+*/
+
 package br.com.mrocigno.bigbrother.common.table
 
 import android.view.View
 
 /**
- * A [ViewHolder] describes an item view and metadata about its place within the [AdaptiveTableLayout].
+ * {@inheritDoc}
  */
-open interface ViewHolder {
-    val itemView: View
+abstract class ViewHolder(val itemView: View) {
+
     /**
-     * @return the type of the View
+     * ViewHolder's table row index
      */
+    var rowIndex: Int = 0
+
     /**
-     * @param itemType is the type of the View
+     * ViewHolder's table column index
      */
-    var itemType: Int
+    var columnIndex: Int = 0
+
     /**
-     * @return the row index.
+     * ViewHolder's table item type param
      */
+    var itemType: Int = 0
+
     /**
-     * @param rowIndex the row index.
+     * ViewHolder's dragging flag
      */
-    var rowIndex: Int
-    /**
-     * @return the column index.
-     */
-    /**
-     * @param columnIndex the column index.
-     */
-    var columnIndex: Int
-    /**
-     * @return dragging flag
-     */
-    /**
-     * @param isDragging dragging param
-     */
-    var isDragging: Boolean
+    var isDragging: Boolean = false
+
+    override fun hashCode(): Int {
+        var result: Int = itemView.hashCode()
+        result = 31 * result + rowIndex
+        result = 31 * result + columnIndex
+        result = 31 * result + itemType
+        result = 31 * result + (if (isDragging) 1 else 0)
+        return result
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is ViewHolder) return false
+        val vh: ViewHolder = other
+        return vh.columnIndex == columnIndex && vh.rowIndex == rowIndex
+    }
 }

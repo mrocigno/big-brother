@@ -1,8 +1,13 @@
+/*
+* A copy/past from https://github.com/Cleveroad/AdaptiveTableLayout
+*/
+
 package br.com.mrocigno.bigbrother.common.table
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.ViewGroup
+import br.com.mrocigno.bigbrother.common.utils.getSerializableCompat
 
 /**
  * This is AdaptiveTableAdapter decorator (wrapper).
@@ -26,39 +31,25 @@ internal class LinkedAdaptiveTableAdapterImpl<VH : ViewHolder> @SuppressLint("Us
     /**
      * Redirect column's ids
      */
-    private var mColumnIndexToId: HashMap<Int, Int>?
-    private var mColumnIdToIndex: HashMap<Int, Int>?
+    private var mColumnIndexToId = HashMap<Int, Int>()
+    private var mColumnIdToIndex = HashMap<Int, Int>()
 
     /**
      * Redirect row's ids
      */
-    private var mRowIndexToId: HashMap<Int, Int>?
-    private var mRowIdToIndex: HashMap<Int, Int>?
+    private var mRowIndexToId = HashMap<Int, Int>()
+    private var mRowIdToIndex = HashMap<Int, Int>()
 
-    init {
-
-        // init data
-        mColumnIndexToId = HashMap()
-        mColumnIdToIndex = HashMap()
-        mRowIndexToId = HashMap()
-        mRowIdToIndex = HashMap()
-    }
-
-    public override fun onItemLongClick(row: Int, column: Int) {
+    override fun onItemLongClick(row: Int, column: Int) {
         val innerListener: OnItemLongClickListener? = mInner.onItemLongClickListener
-        if (innerListener != null) {
-            innerListener.onItemLongClick(rowIndexToId(row), columnIndexToId(column))
-        }
+        innerListener?.onItemLongClick(rowIndexToId(row), columnIndexToId(column))
     }
 
-    public override fun onLeftTopHeaderLongClick() {
-        val innerListener: OnItemLongClickListener? = mInner.onItemLongClickListener
-        if (innerListener != null) {
-            innerListener.onLeftTopHeaderLongClick()
-        }
+    override fun onLeftTopHeaderLongClick() {
+        mInner.onItemLongClickListener?.onLeftTopHeaderLongClick()
     }
 
-    public override fun onItemClick(row: Int, column: Int) {
+    override fun onItemClick(row: Int, column: Int) {
         val innerListener: OnItemClickListener? = mInner.onItemClickListener
         if (innerListener != null) {
             val tempRow: Int = row + 1 // need to merge matrix with table headers and without.
@@ -67,7 +58,7 @@ internal class LinkedAdaptiveTableAdapterImpl<VH : ViewHolder> @SuppressLint("Us
         }
     }
 
-    public override fun onRowHeaderClick(row: Int) {
+    override fun onRowHeaderClick(row: Int) {
         val innerListener: OnItemClickListener? = mInner.onItemClickListener
         if (innerListener != null) {
             val tempRow: Int = row + 1 // need to merge matrix with table headers and without.
@@ -75,7 +66,7 @@ internal class LinkedAdaptiveTableAdapterImpl<VH : ViewHolder> @SuppressLint("Us
         }
     }
 
-    public override fun onColumnHeaderClick(column: Int) {
+    override fun onColumnHeaderClick(column: Int) {
         val innerListener: OnItemClickListener? = mInner.onItemClickListener
         if (innerListener != null) {
             val tempColumn: Int = column + 1 // need to merge matrix with table headers and without.
@@ -83,14 +74,11 @@ internal class LinkedAdaptiveTableAdapterImpl<VH : ViewHolder> @SuppressLint("Us
         }
     }
 
-    public override fun onLeftTopHeaderClick() {
-        val innerListener: OnItemClickListener? = mInner.onItemClickListener
-        if (innerListener != null) {
-            innerListener.onLeftTopHeaderClick()
-        }
+    override fun onLeftTopHeaderClick() {
+        mInner.onItemClickListener?.onLeftTopHeaderClick()
     }
 
-    public override fun changeColumns(columnIndex: Int, columnToIndex: Int) {
+    override fun changeColumns(columnIndex: Int, columnToIndex: Int) {
         val tempColumnIndex: Int =
             columnIndex + 1 // need to merge matrix with table headers and without.
         val tempColumnToIndex: Int =
@@ -98,24 +86,24 @@ internal class LinkedAdaptiveTableAdapterImpl<VH : ViewHolder> @SuppressLint("Us
         val fromId: Int = columnIndexToId(tempColumnIndex)
         val toId: Int = columnIndexToId(tempColumnToIndex)
         if (tempColumnIndex != toId) {
-            mColumnIndexToId!!.put(tempColumnIndex, toId)
-            mColumnIdToIndex!!.put(toId, tempColumnIndex)
+            mColumnIndexToId[tempColumnIndex] = toId
+            mColumnIdToIndex[toId] = tempColumnIndex
         } else {
             //remove excess modifications
-            mColumnIndexToId!!.remove(tempColumnIndex)
-            mColumnIdToIndex!!.remove(toId)
+            mColumnIndexToId.remove(tempColumnIndex)
+            mColumnIdToIndex.remove(toId)
         }
         if (tempColumnToIndex != fromId) {
-            mColumnIndexToId!!.put(tempColumnToIndex, fromId)
-            mColumnIdToIndex!!.put(fromId, tempColumnToIndex)
+            mColumnIndexToId[tempColumnToIndex] = fromId
+            mColumnIdToIndex[fromId] = tempColumnToIndex
         } else {
             //remove excess modifications
-            mColumnIndexToId!!.remove(tempColumnToIndex)
-            mColumnIdToIndex!!.remove(fromId)
+            mColumnIndexToId.remove(tempColumnToIndex)
+            mColumnIdToIndex.remove(fromId)
         }
     }
 
-    public override fun changeRows(rowIndex: Int, rowToIndex: Int, solidRowHeader: Boolean) {
+    override fun changeRows(rowIndex: Int, rowToIndex: Int, solidRowHeader: Boolean) {
         val tempRowIndex: Int = rowIndex + 1 // need to merge matrix with table headers and without.
         val tempRowToIndex: Int =
             rowToIndex + 1 // need to merge matrix with table headers and without.
@@ -123,18 +111,18 @@ internal class LinkedAdaptiveTableAdapterImpl<VH : ViewHolder> @SuppressLint("Us
         val fromId: Int = rowIndexToId(tempRowIndex)
         val toId: Int = rowIndexToId(tempRowToIndex)
         if (tempRowIndex != toId) {
-            mRowIndexToId!!.put(tempRowIndex, toId)
-            mRowIdToIndex!!.put(toId, tempRowIndex)
+            mRowIndexToId[tempRowIndex] = toId
+            mRowIdToIndex[toId] = tempRowIndex
         } else {
-            mRowIndexToId!!.remove(tempRowIndex)
-            mRowIdToIndex!!.remove(toId)
+            mRowIndexToId.remove(tempRowIndex)
+            mRowIdToIndex.remove(toId)
         }
         if (tempRowToIndex != fromId) {
-            mRowIndexToId!!.put(tempRowToIndex, fromId)
-            mRowIdToIndex!!.put(fromId, tempRowToIndex)
+            mRowIndexToId[tempRowToIndex] = fromId
+            mRowIdToIndex[fromId] = tempRowToIndex
         } else {
-            mRowIndexToId!!.remove(tempRowToIndex)
-            mRowIdToIndex!!.remove(fromId)
+            mRowIndexToId.remove(tempRowToIndex)
+            mRowIdToIndex.remove(fromId)
         }
     }
 
@@ -147,34 +135,34 @@ internal class LinkedAdaptiveTableAdapterImpl<VH : ViewHolder> @SuppressLint("Us
             return mInner.columnCount
         }
 
-    public override fun onCreateItemViewHolder(parent: ViewGroup): VH {
+    override fun onCreateItemViewHolder(parent: ViewGroup): VH {
         return mInner.onCreateItemViewHolder(parent)
     }
 
-    public override fun onCreateColumnHeaderViewHolder(parent: ViewGroup): VH {
+    override fun onCreateColumnHeaderViewHolder(parent: ViewGroup): VH {
         return mInner.onCreateColumnHeaderViewHolder(parent)
     }
 
-    public override fun onCreateRowHeaderViewHolder(parent: ViewGroup): VH {
+    override fun onCreateRowHeaderViewHolder(parent: ViewGroup): VH {
         return mInner.onCreateRowHeaderViewHolder(parent)
     }
 
-    public override fun onCreateLeftTopHeaderViewHolder(parent: ViewGroup): VH {
+    override fun onCreateLeftTopHeaderViewHolder(parent: ViewGroup): VH {
         return mInner.onCreateLeftTopHeaderViewHolder(parent)
     }
 
-    public override fun onBindViewHolder(viewHolder: VH, row: Int, column: Int) {
+    override fun onBindViewHolder(viewHolder: VH, row: Int, column: Int) {
         val tempRow: Int = row + 1 // need to merge matrix with table headers and without.
         val tempColumn: Int = column + 1 // need to merge matrix with table headers and without.
         mInner.onBindViewHolder(viewHolder, rowIndexToId(tempRow), columnIndexToId(tempColumn))
     }
 
-    public override fun onBindHeaderColumnViewHolder(viewHolder: VH, column: Int) {
+    override fun onBindHeaderColumnViewHolder(viewHolder: VH, column: Int) {
         val tempColumn: Int = column + 1 // need to merge matrix with table headers and without.
         mInner.onBindHeaderColumnViewHolder(viewHolder, columnIndexToId(tempColumn))
     }
 
-    public override fun onBindHeaderRowViewHolder(viewHolder: VH, row: Int) {
+    override fun onBindHeaderRowViewHolder(viewHolder: VH, row: Int) {
         val tempRow: Int = row + 1 // need to merge matrix with table headers and without.
         mInner.onBindHeaderRowViewHolder(
             viewHolder,
@@ -182,11 +170,11 @@ internal class LinkedAdaptiveTableAdapterImpl<VH : ViewHolder> @SuppressLint("Us
         )
     }
 
-    public override fun onBindLeftTopHeaderViewHolder(viewHolder: VH) {
+    override fun onBindLeftTopHeaderViewHolder(viewHolder: VH) {
         mInner.onBindLeftTopHeaderViewHolder(viewHolder)
     }
 
-    public override fun getColumnWidth(column: Int): Int {
+    override fun getColumnWidth(column: Int): Int {
         val tempColumn: Int = column + 1 // need to merge matrix with table headers and without.
         return mInner.getColumnWidth(columnIndexToId(tempColumn))
     }
@@ -196,7 +184,7 @@ internal class LinkedAdaptiveTableAdapterImpl<VH : ViewHolder> @SuppressLint("Us
             return mInner.headerColumnHeight
         }
 
-    public override fun getRowHeight(row: Int): Int {
+    override fun getRowHeight(row: Int): Int {
         val tempRow: Int = row + 1 // need to merge matrix with table headers and without.
         return mInner.getRowHeight(rowIndexToId(tempRow))
     }
@@ -222,75 +210,66 @@ internal class LinkedAdaptiveTableAdapterImpl<VH : ViewHolder> @SuppressLint("Us
             super.onItemLongClickListener = onItemLongClickListener
         }
 
-    public override fun onViewHolderRecycled(viewHolder: VH) {
+    override fun onViewHolderRecycled(viewHolder: VH) {
         mInner.onViewHolderRecycled(viewHolder)
     }
 
-    public override fun onSaveInstanceState(bundle: Bundle) {
+    override fun onSaveInstanceState(bundle: Bundle) {
         bundle.putSerializable(EXTRA_SAVE_STATE_COLUMN_INDEX_TO_ID, mColumnIndexToId)
         bundle.putSerializable(EXTRA_SAVE_STATE_COLUMN_ID_TO_INDEX, mColumnIdToIndex)
         bundle.putSerializable(EXTRA_SAVE_STATE_ROW_INDEX_TO_ID, mRowIndexToId)
         bundle.putSerializable(EXTRA_SAVE_STATE_ROW_ID_TO_INDEX, mRowIdToIndex)
     }
 
-    public override fun onRestoreInstanceState(bundle: Bundle) {
+    override fun onRestoreInstanceState(bundle: Bundle) {
         mColumnIndexToId =
-            bundle.getSerializable(EXTRA_SAVE_STATE_COLUMN_INDEX_TO_ID) as HashMap<Int, Int>?
+            bundle.getSerializableCompat<HashMap<Int, Int>>(EXTRA_SAVE_STATE_COLUMN_INDEX_TO_ID)!!
         mColumnIdToIndex =
-            bundle.getSerializable(EXTRA_SAVE_STATE_COLUMN_ID_TO_INDEX) as HashMap<Int, Int>?
+            bundle.getSerializableCompat<HashMap<Int, Int>>(EXTRA_SAVE_STATE_COLUMN_ID_TO_INDEX)!!
         mRowIndexToId =
-            bundle.getSerializable(EXTRA_SAVE_STATE_ROW_INDEX_TO_ID) as HashMap<Int, Int>?
+            bundle.getSerializableCompat<HashMap<Int, Int>>(EXTRA_SAVE_STATE_ROW_INDEX_TO_ID)!!
         mRowIdToIndex =
-            bundle.getSerializable(EXTRA_SAVE_STATE_ROW_ID_TO_INDEX) as HashMap<Int, Int>?
+            bundle.getSerializableCompat<HashMap<Int, Int>>(EXTRA_SAVE_STATE_ROW_ID_TO_INDEX)!!
     }
 
-    public override fun notifyItemChanged(rowIndex: Int, columnIndex: Int) {
+    override fun notifyItemChanged(rowIndex: Int, columnIndex: Int) {
         super.notifyItemChanged(rowIdToIndex(rowIndex), columnIdToIndex(columnIndex))
     }
 
-    public override fun notifyRowChanged(rowIndex: Int) {
+    override fun notifyRowChanged(rowIndex: Int) {
         super.notifyRowChanged(rowIdToIndex(rowIndex))
     }
 
-    public override fun notifyColumnChanged(columnIndex: Int) {
+    override fun notifyColumnChanged(columnIndex: Int) {
         super.notifyColumnChanged(columnIdToIndex(columnIndex))
     }
 
-    val rowsModifications: Map<Int, Int>?
-        get() {
-            return mRowIndexToId
-        }
-    val columnsModifications: Map<Int, Int>?
-        get() {
-            return mColumnIndexToId
-        }
+    val rowsModifications: Map<Int, Int>
+        get() = mRowIndexToId
+
+    val columnsModifications: Map<Int, Int>
+        get() = mColumnIndexToId
 
     private fun columnIndexToId(columnIndex: Int): Int {
-        val id: Int? = mColumnIndexToId!!.get(columnIndex)
-        return if (id != null) id else columnIndex
+        return mColumnIndexToId[columnIndex] ?: columnIndex
     }
 
     private fun columnIdToIndex(columnId: Int): Int {
-        val index: Int? = mColumnIdToIndex!!.get(columnId)
-        return if (index != null) index else columnId
+        return mColumnIdToIndex[columnId] ?: columnId
     }
 
     private fun rowIndexToId(rowIndex: Int): Int {
-        val id: Int? = mRowIndexToId!!.get(rowIndex)
-        return if (id != null) id else rowIndex
+        return mRowIndexToId[rowIndex] ?: rowIndex
     }
 
     private fun rowIdToIndex(rowId: Int): Int {
-        val index: Int? = mRowIdToIndex!!.get(rowId)
-        return if (index != null) index else rowId
+        return mRowIdToIndex[rowId] ?: rowId
     }
 
     companion object {
-        private val EXTRA_SAVE_STATE_COLUMN_INDEX_TO_ID: String =
-            "EXTRA_SAVE_STATE_COLUMN_INDEX_TO_ID"
-        private val EXTRA_SAVE_STATE_COLUMN_ID_TO_INDEX: String =
-            "EXTRA_SAVE_STATE_COLUMN_ID_TO_INDEX"
-        private val EXTRA_SAVE_STATE_ROW_INDEX_TO_ID: String = "EXTRA_SAVE_STATE_ROW_INDEX_TO_ID"
-        private val EXTRA_SAVE_STATE_ROW_ID_TO_INDEX: String = "EXTRA_SAVE_STATE_ROW_ID_TO_INDEX"
+        private const val EXTRA_SAVE_STATE_COLUMN_INDEX_TO_ID = "EXTRA_SAVE_STATE_COLUMN_INDEX_TO_ID"
+        private const val EXTRA_SAVE_STATE_COLUMN_ID_TO_INDEX = "EXTRA_SAVE_STATE_COLUMN_ID_TO_INDEX"
+        private const val EXTRA_SAVE_STATE_ROW_INDEX_TO_ID = "EXTRA_SAVE_STATE_ROW_INDEX_TO_ID"
+        private const val EXTRA_SAVE_STATE_ROW_ID_TO_INDEX = "EXTRA_SAVE_STATE_ROW_ID_TO_INDEX"
     }
 }
