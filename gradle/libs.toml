@@ -1,6 +1,7 @@
 [versions]
 kotlin = "1.8.0"
 appcompat = "1.4.1"
+activity = "1.6.1"
 lifecycle-runtime = "2.5.1"
 room = "2.5.2"
 material = "1.5.0"
@@ -18,6 +19,7 @@ kotlin-coroutines = "1.6.1"
 # AndroidX
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "kotlin" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }

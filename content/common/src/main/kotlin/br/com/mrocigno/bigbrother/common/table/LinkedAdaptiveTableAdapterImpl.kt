@@ -66,11 +66,11 @@ internal class LinkedAdaptiveTableAdapterImpl<VH : ViewHolder> @SuppressLint("Us
         }
     }
 
-    override fun onColumnHeaderClick(column: Int) {
+    override fun onColumnHeaderClick(viewHolder: ViewHolder, column: Int) {
         val innerListener: OnItemClickListener? = mInner.onItemClickListener
         if (innerListener != null) {
             val tempColumn: Int = column + 1 // need to merge matrix with table headers and without.
-            innerListener.onColumnHeaderClick(columnIndexToId(tempColumn))
+            innerListener.onColumnHeaderClick(viewHolder, columnIndexToId(tempColumn))
         }
     }
 

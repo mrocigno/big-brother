@@ -9,7 +9,6 @@ import java.io.FileReader
 internal class DatabaseHelper(file: File) {
 
     val name: String = file.name
-
     var tablesName: List<String> = emptyList()
         private set
 
@@ -35,7 +34,7 @@ internal class DatabaseHelper(file: File) {
         }
 
     private fun listTablesName(): List<String> {
-        val result = mutableListOf<String>()
+        val result = mutableListOf("sqlite_master")
         val db = readableDatabase ?: return result
         db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null).use {
             it.moveToFirst()
@@ -47,51 +46,22 @@ internal class DatabaseHelper(file: File) {
         return result
     }
 
-    fun listAll(tableName: String) = runCatching {
-        val data = mutableListOf<Map<String, String>>()
-        val db = readableDatabase ?: return null
-        val sql = "SELECT * FROM $tableName"
-        var rowCount = 0
-        db.rawQuery(sql, null).use {
-            if (it.moveToFirst()) do {
-                rowCount++
+    fun listAll(tableName: String) =
+        execSQL("SELECT * FROM $tableName")
+
+    fun getColumnData(tableName: String, columnName: String) =
+        execSQL("SELECT $columnName FROM $tableName GROUP BY $columnName LIMIT 10 ")
+
+    fun execSQL(sql: String) =
+        TableDump.Builder {
+            val db = readableDatabase ?: error("readableDatabase cannot be reached")
+            db.runQuery(sql) {
                 val rowContent = mutableMapOf<String, String>()
-                it.columnNames.forEach { columnName ->
-                    val columnIndex = it.getColumnIndex(columnName)
-                    rowContent[columnName] = it.getString(columnIndex)
+                columnNames.forEach { columnName ->
+                    val columnIndex = getColumnIndex(columnName)
+                    rowContent[columnName] = getString(columnIndex)
                 }
                 data.add(rowContent)
-            } while (it.moveToNext())
-        }
-        TableDump(
-            data = data,
-            executedSql = sql,
-            rowCount = rowCount,
-            page = 0
-        )
-    }.getOrNull()
-
-    fun execSQL(sql: String) = runCatching {
-        val data = mutableListOf<Map<String, String>>()
-        val db = readableDatabase ?: return null
-        var rowCount = 0
-        db.rawQuery(sql, null).use {
-            if (it.moveToFirst()) do {
-                rowCount++
-                val rowContent = mutableMapOf<String, String>()
-                it.columnNames.forEach { columnName ->
-                    val columnIndex = it.getColumnIndex(columnName)
-                    rowContent[columnName] = it.getString(columnIndex)
-                }
-                data.add(rowContent)
-            } while (it.moveToNext())
-        }
-
-        TableDump(
-            data = data,
-            executedSql = sql,
-            rowCount = rowCount,
-            page = 0
-        )
-    }.getOrNull()
+            }
+        }.build()
 }

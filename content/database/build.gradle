@@ -13,4 +13,5 @@ dependencies {
     implementation project(":content:common")
 
     implementation libs.kotlin.coroutines
+    implementation libs.androidx.activity
 }

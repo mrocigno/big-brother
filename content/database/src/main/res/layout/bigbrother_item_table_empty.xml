@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:text="@string/bigbrother_table_empty_state"
+    app:fontFamily="@font/lato"
+    android:textSize="20sp"
+    android:padding="10dp"
+    android:gravity="center_horizontal"
+    android:textColor="@color/text_title"/>

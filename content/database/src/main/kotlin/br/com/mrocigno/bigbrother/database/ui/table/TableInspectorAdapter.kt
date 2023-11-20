@@ -12,9 +12,11 @@ import br.com.mrocigno.bigbrother.database.model.TableDump
 import br.com.mrocigno.bigbrother.common.R as CR
 
 class TableInspectorAdapter(
-    private val tableDump: TableDump,
-    private val columnWidths: List<Int>
+    context: Context,
+    private val tableDump: TableDump
 ) : LinkedAdaptiveTableAdapter<ViewHolder>() {
+
+    private val columnWidths = tableDump.measureColumnSize(context)
 
     override val rowCount: Int
         get() = tableDump.rowCount + 1
@@ -70,7 +72,6 @@ class HeaderViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.b
 class ContentViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_cell_content)) {
 
     private val textView: AppCompatTextView get() = itemView as AppCompatTextView
-    private val context: Context get() = itemView.context
 
     fun bind(data: String) {
         textView.text = data

@@ -23,9 +23,15 @@ import br.com.mrocigno.bigbrother.common.R
 import java.io.ByteArrayOutputStream
 import java.io.ObjectOutputStream
 import java.io.Serializable
+import kotlin.reflect.KClass
+import kotlin.reflect.cast
 
-fun ViewGroup.inflate(@LayoutRes resId: Int) =
-    LayoutInflater.from(context).inflate(resId, this, false)
+fun ViewGroup.inflate(@LayoutRes resId: Int, attachToRoot: Boolean = false) =
+    LayoutInflater.from(context).inflate(resId, this, attachToRoot)
+
+fun <T : Any> Any.cast(clazz: KClass<T>): T {
+    return clazz.cast(this)
+}
 
 fun Context.copyToClipboard(text: String, toastFeedback: String? = "Copied to clipboard") {
     val clipboard = getSystemService(ClipboardManager::class.java)

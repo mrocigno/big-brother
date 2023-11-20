@@ -1152,7 +1152,7 @@ class AdaptiveTableLayout @JvmOverloads constructor(
                 when (viewHolder.itemType) {
                     ITEM -> onItemClick(viewHolder.rowIndex, getBindColumn(viewHolder.columnIndex))
                     ROW_HEADER -> onRowHeaderClick(viewHolder.rowIndex)
-                    COLUMN_HEADER -> onColumnHeaderClick(getBindColumn(viewHolder.columnIndex))
+                    COLUMN_HEADER -> onColumnHeaderClick(viewHolder, getBindColumn(viewHolder.columnIndex))
                     else -> onLeftTopHeaderClick()
                 }
             }

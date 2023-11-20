@@ -6,25 +6,30 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.WindowCompat
+import androidx.core.view.isVisible
 import br.com.mrocigno.bigbrother.common.table.AdaptiveTableLayout
+import br.com.mrocigno.bigbrother.common.table.OnItemClickListener
+import br.com.mrocigno.bigbrother.common.table.ViewHolder
+import br.com.mrocigno.bigbrother.common.utils.cast
+import br.com.mrocigno.bigbrother.common.utils.inflate
 import br.com.mrocigno.bigbrother.core.OutOfDomain
-import br.com.mrocigno.bigbrother.core.utils.getTask
-import br.com.mrocigno.bigbrother.database.DatabaseHelper
-import br.com.mrocigno.bigbrother.database.DatabaseTask
 import br.com.mrocigno.bigbrother.database.R
 import br.com.mrocigno.bigbrother.database.model.TableDump
-import com.google.android.material.appbar.AppBarLayout
+import br.com.mrocigno.bigbrother.database.model.TableDumpStatus
+import br.com.mrocigno.bigbrother.database.ui.table.filter.FilterView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-
 @OutOfDomain
-class TableInspectorActivity : AppCompatActivity(R.layout.bigbrother_activity_table_inspector) {
+class TableInspectorActivity :
+    AppCompatActivity(R.layout.bigbrother_activity_table_inspector), OnItemClickListener {
 
-    private val appBar: AppBarLayout by lazy { findViewById(R.id.table_inspector_app_bar) }
+    private val loading: ViewGroup by lazy { findViewById(R.id.table_inspector_loading_container) }
     private val toolbar: Toolbar by lazy { findViewById(R.id.table_inspector_toolbar) }
     private val sqlLayout: TextInputLayout by lazy { findViewById(R.id.table_inspector_sql_layout) }
     private val sql: TextInputEditText by lazy { findViewById(R.id.table_inspector_sql) }
@@ -32,8 +37,9 @@ class TableInspectorActivity : AppCompatActivity(R.layout.bigbrother_activity_ta
 
     private val tableName: String get() = checkNotNull(intent.getStringExtra(TABLE_NAME_ARG))
     private val dbName: String get() = checkNotNull(intent.getStringExtra(DB_NAME_ARG))
-    private val dbHelper: DatabaseHelper by lazy {
-        checkNotNull(getTask(DatabaseTask::class)?.databases?.get(dbName))
+
+    private val viewModel: TableInspectorViewModel by viewModels {
+        TableInspectorViewModel.Factory(tableName, dbName)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,40 +47,68 @@ class TableInspectorActivity : AppCompatActivity(R.layout.bigbrother_activity_ta
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
         toolbar.setNavigationOnClickListener { onBackPressed() }
-        dbHelper.listAll(tableName)?.run(::setupTable)
-        sqlLayout.setEndIconOnClickListener {
-            dbHelper.execSQL(sql.text.toString().trim())?.run(::setupTable)
-        }
 
-        appBar.offsetTopAndBottom(-500)
+        setupObservables()
+        viewModel.listAll()
+
+        sqlLayout.setEndIconOnClickListener {
+            viewModel.executeSQL(sql.text.toString().trim())
+        }
+    }
+
+    private fun setupObservables() {
+        viewModel.tableDump.observe(this, ::setupData)
+        viewModel.isLoading.observe(this) {
+            loading.isVisible = it
+        }
+    }
+
+    private fun setupData(dump: TableDump) {
+        sql.setText(dump.sql)
+        toolbar.title = tableName
+        tableContainer.removeAllViews()
+        when (dump.status) {
+            TableDumpStatus.SUCCESS -> setupTable(dump)
+            TableDumpStatus.EMPTY -> setupEmpty()
+            TableDumpStatus.ERROR -> setupError(dump)
+        }
     }
 
     private fun setupTable(dump: TableDump) {
-        sql.setText(dump.executedSql)
-        toolbar.title = tableName
-        tableContainer.removeAllViews()
-//        tableContainer.addView(NestedScrollView(this).apply {
-//            layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
-//            addView(LinearLayout(this@TableInspectorActivity).apply {
-//                layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-//                orientation = LinearLayout.VERTICAL
-//                addView(View(this@TableInspectorActivity).apply {
-//                    layoutParams = FrameLayout.LayoutParams(500, 500)
-//                    setBackgroundColor(getColor(br.com.mrocigno.bigbrother.common.R.color.boy_red))
-//                })
-//            })
-//        })
-        tableContainer.addView(AdaptiveTableLayout(this).apply {
-            layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
-            isHeaderFixed = true
-            isSolidRowHeader = true
-            setAdapter(
-                TableInspectorAdapter(
-                    dump,
-                    dump.measureColumnSize(this@TableInspectorActivity)
-                )
-            )
+        tableContainer.addView(AdaptiveTableLayout(this).also { table ->
+            table.layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+            table.isHeaderFixed = true
+            table.isSolidRowHeader = true
+            table.setAdapter(TableInspectorAdapter(this, dump).apply {
+                onItemClickListener = this@TableInspectorActivity
+            })
         })
+    }
+
+    override fun onColumnHeaderClick(viewHolder: ViewHolder, column: Int) {
+        viewModel.filterColumn(column)
+        val headerView = viewHolder.itemView
+
+        tableContainer.addView(FilterView(context = this, refView = headerView))
+    }
+
+    override fun onItemClick(row: Int, column: Int) = Unit
+
+    override fun onRowHeaderClick(row: Int) = Unit
+
+    override fun onLeftTopHeaderClick() = Unit
+
+    private fun setupEmpty() {
+        tableContainer.inflate(R.layout.bigbrother_item_table_empty, true)
+    }
+
+    private fun setupError(dump: TableDump) {
+        val textView = tableContainer
+            .inflate(R.layout.bigbrother_item_table_error, false)
+            .cast(AppCompatTextView::class)
+
+        textView.text = dump.exception?.message
+        tableContainer.addView(textView)
     }
 
     companion object {

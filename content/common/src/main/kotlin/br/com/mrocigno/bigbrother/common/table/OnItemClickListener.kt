@@ -25,7 +25,7 @@ open interface OnItemClickListener {
      *
      * @param column clicked column header
      */
-    fun onColumnHeaderClick(column: Int)
+    fun onColumnHeaderClick(viewHolder: ViewHolder, column: Int)
 
     /**
      * Click left top item callback

@@ -33,14 +33,13 @@ internal class DatabaseTask : BigBrotherTask() {
     }
 
     private fun File.forEachDatabase(block: suspend DatabaseHelper.() -> Unit) =
-        listFiles { file -> file.canWrite() }
-            ?.forEach { file ->
-                coroutineScope.launch {
-                    runCatching { DatabaseHelper(file) }
-                        .getOrNull()
-                        ?.block()
-                }
+        listFiles { file -> file.canWrite() }?.forEach { file ->
+            coroutineScope.launch {
+                runCatching { DatabaseHelper(file) }
+                    .getOrNull()
+                    ?.block()
             }
+        }
 
     private val Context?.databasesDir: File?
         @RequiresApi(Build.VERSION_CODES.N)
