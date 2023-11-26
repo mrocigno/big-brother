@@ -45,3 +45,4 @@ jobs:
           publish
           -Psigning.keyId=${{ secrets.KEY_ID }}
           -Psigning.password=${{ secrets.SIGNING_PASSWORD }}
+          -Psigning.secretKeyRingFile=/home/runner/work/big-brother/big-brother/sandman.gpg
