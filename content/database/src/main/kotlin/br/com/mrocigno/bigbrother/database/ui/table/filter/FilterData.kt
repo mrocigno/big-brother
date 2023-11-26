@@ -12,7 +12,7 @@ data class FilterData(
     val columnName: String = dump.columnNames.firstOrNull().orEmpty()
 
     val whereStatement get() =
-        "$columnName = ${if (search.orEmpty().isDigitsOnly()) search else "'search'"}"
+        "$columnName = ${if (search.orEmpty().isDigitsOnly()) search else "'$search'"}"
             .takeIf { !search.isNullOrBlank() }
 
     val sortStatement get() = "ORDER BY $columnName ${sort?.name}".takeIf { sort != null }
