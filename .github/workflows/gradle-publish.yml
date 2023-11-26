@@ -46,6 +46,6 @@ jobs:
       env:
         ossrh_username: ${{ secrets.OSSRH_USERNAME }}
         ossrh_password: ${{ secrets.OSSRH_TOKEN }}
-        signing.keyId: ${{ secrets.KEY_ID }}
-        signing.password: ${{ secrets.SIGNING_PASSWORD }}
-        signing.secretKeyRingFile: ./sandman.gpg
+        ORG_GRADLE_PROJECT_signingKeyId: ${{ secrets.KEY_ID }}
+        ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
+        ORG_GRADLE_PROJECT_signingSecretKeyRingFile: ./sandman.gpg
