@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,8 +8,8 @@
     android:ellipsize="end"
     android:gravity="center_vertical"
     android:maxLines="1"
-    android:fontFamily="@font/lato"
     android:paddingHorizontal="@dimen/spacing_xs"
     android:textColor="@color/text_paragraph"
     android:textSize="@dimen/text_m"
+    app:fontFamily="@font/lato"
     tools:text="test" />

@@ -86,10 +86,15 @@ class TableInspectorActivity :
     }
 
     override fun onColumnHeaderClick(viewHolder: ViewHolder, column: Int) {
-        viewModel.filterColumn(column)
-        val headerView = viewHolder.itemView
+        val filter = viewModel.getColumnData(column)
+        if (!filter.isNotEmpty()) return
 
-        tableContainer.addView(FilterView(context = this, refView = headerView))
+        val headerView = viewHolder.itemView
+        val filterView = FilterView(context = this, refView = headerView, filterData = filter)
+        tableContainer.addView(filterView)
+        filterView.setOnConfirm {
+            viewModel.filterColumn(column, it)
+        }
     }
 
     override fun onItemClick(row: Int, column: Int) = Unit

@@ -32,13 +32,5 @@
         android:height="16dp"
         android:drawable="@drawable/bigbrother_ic_arrow_drop_down"
         android:gravity="end|center_vertical"
-        android:right="4dp"
-        android:top="6dp" />
-    <item
-        android:width="16dp"
-        android:height="16dp"
-        android:bottom="6dp"
-        android:drawable="@drawable/bigbrother_ic_arrow_drop_up"
-        android:gravity="end|center_vertical"
         android:right="4dp" />
 </layer-list>

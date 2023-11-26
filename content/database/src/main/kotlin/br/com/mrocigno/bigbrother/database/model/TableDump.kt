@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import br.com.mrocigno.bigbrother.common.utils.cast
 import br.com.mrocigno.bigbrother.database.R
 import kotlin.math.roundToInt
+import br.com.mrocigno.bigbrother.common.R as CR
 
 class TableDump(
     val data: List<Map<String, String>> = emptyList(),
@@ -29,6 +30,8 @@ class TableDump(
         else -> TableDumpStatus.EMPTY
     }
 
+    val isEmpty get() = status == TableDumpStatus.EMPTY
+
     @Suppress("DEPRECATION", "InflateParams")
     fun measureColumnSize(context: Context): List<Int> {
         val view = LayoutInflater.from(context)
@@ -37,6 +40,7 @@ class TableDump(
 
         val paint = view.paint
         val padding = view.paddingStart + view.paddingEnd
+        val headerPadding = context.resources.getDimensionPixelSize(CR.dimen.spacing_l)
 
         val manager = context.getSystemService(WindowManager::class.java)
         val fullWidth = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -49,7 +53,7 @@ class TableDump(
 
         val result = mutableListOf(0)
         columnNames.forEach { column ->
-            var currentSize = paint.measureText(column)
+            var currentSize = paint.measureText(column) + headerPadding
             data.forEach { row ->
                 val dataSize = paint.measureText(row[column])
                 if (dataSize > currentSize) currentSize = dataSize
