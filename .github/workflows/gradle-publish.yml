@@ -45,3 +45,6 @@ jobs:
         signing.keyId: ${{ secrets.KEY_ID }}
         signing.password: ${{ secrets.SIGNING_PASSWORD }}
         signing.secretKeyRingFile: ./sandman.gpg
+        developer_id: mrocigno
+        developer_name: Matheus Medeiros
+        developer_email: rocignom@gmail.com
