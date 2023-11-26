@@ -32,6 +32,10 @@ jobs:
       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
       with:
         arguments: build
+      env:
+        developer_id: mrocigno
+        developer_name: Matheus Medeiros
+        developer_email: rocignom@gmail.com
 
     # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # the publishing section of your build.gradle
@@ -45,6 +49,3 @@ jobs:
         signing.keyId: ${{ secrets.KEY_ID }}
         signing.password: ${{ secrets.SIGNING_PASSWORD }}
         signing.secretKeyRingFile: ./sandman.gpg
-        developer_id: mrocigno
-        developer_name: Matheus Medeiros
-        developer_email: rocignom@gmail.com
