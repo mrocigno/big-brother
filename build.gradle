@@ -5,6 +5,11 @@ plugins {
     alias libs.plugins.android.kotlin apply false
 }
 
+tasks.register("teste") {
+    println(System.getenv("testeArg"))
+    println(System.getenv("TESTE_ARG"))
+}
+
 allprojects {
 
     def isApp = project.name == 'app'

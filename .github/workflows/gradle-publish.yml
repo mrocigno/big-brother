@@ -28,24 +28,37 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Build with Gradle
+    - name: Teste1
       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
       with:
-        arguments: assemble
+        arguments: teste
       env:
-        ossrh_username: ${{ secrets.OSSRH_USERNAME }}
-        ossrh_password: ${{ secrets.OSSRH_TOKEN }}
+        testeArg: top1
+        TESTE_ARG: top2
 
-    # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
-    # the publishing section of your build.gradle
-    - name: Publish to Maven
+    - name: Teste2
       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
       with:
-        arguments: |
-          publish
-          -Psigning.keyId=${{ secrets.KEY_ID }}
-          -Psigning.password=${{ secrets.SIGNING_PASSWORD }}
-          -Psigning.secretKeyRingFile=/home/runner/work/big-brother/big-brother/sandman.gpg
-      env:
-        ossrh_username: ${{ secrets.OSSRH_USERNAME }}
-        ossrh_password: ${{ secrets.OSSRH_TOKEN }}
+        arguments: teste
+
+#    - name: Build with Gradle
+#      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+#      with:
+#        arguments: assemble
+#      env:
+#        ossrh_username: ${{ secrets.OSSRH_USERNAME }}
+#        ossrh_password: ${{ secrets.OSSRH_PASSWORD }}
+#
+#    # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
+#    # the publishing section of your build.gradle
+#    - name: Publish to Maven
+#      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+#      with:
+#        arguments: |
+#          publish
+#          -Psigning.keyId=${{ secrets.KEY_ID }}
+#          -Psigning.password=${{ secrets.SIGNING_PASSWORD }}
+#          -Psigning.secretKeyRingFile=/home/runner/work/big-brother/big-brother/sandman.gpg
+#      env:
+#        ossrh_username: ${{ secrets.OSSRH_USERNAME }}
+#        ossrh_password: ${{ secrets.OSSRH_PASSWORD }}
