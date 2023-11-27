@@ -10,7 +10,9 @@ import androidx.core.animation.doOnEnd
 import androidx.core.view.isVisible
 import kotlin.math.roundToInt
 
-class CircularRevealTransition : Transition() {
+class CircularRevealTransition(
+    private val epicenter: Float? = null
+) : Transition() {
 
     override fun captureStartValues(transitionValues: TransitionValues) {
         transitionValues.values["visibility"] = transitionValues.view.visibility
@@ -43,7 +45,7 @@ class CircularRevealTransition : Transition() {
     }
 
     private fun View.circularReveal(isExpanding: Boolean): Animator {
-        val centerX = (x + width / 2).roundToInt()
+        val centerX = (epicenter ?: (x + width / 2)).roundToInt()
         val centerY = top
         val expandedRadius = (height - centerY).toFloat()
         val (startRadius, endRadius) =

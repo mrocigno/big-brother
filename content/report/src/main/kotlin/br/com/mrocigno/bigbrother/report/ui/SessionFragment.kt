@@ -3,6 +3,8 @@ package br.com.mrocigno.bigbrother.report.ui
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
+import android.view.ContextThemeWrapper
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
@@ -22,6 +24,7 @@ import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.concurrent.CancellationException
+import br.com.mrocigno.bigbrother.common.R as CR
 
 class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) {
 
@@ -34,6 +37,12 @@ class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) {
     private val scope = CoroutineScope(Dispatchers.Main + job)
     private val dateFilter = MutableLiveData(LocalDate.now())
     private val adapter: SessionAdapter get() = recycler.adapter as SessionAdapter
+
+    override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
+        val inflater = super.onGetLayoutInflater(savedInstanceState)
+        val context = ContextThemeWrapper(inflater.context, CR.style.Theme_BigBrother)
+        return inflater.cloneInContext(context)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

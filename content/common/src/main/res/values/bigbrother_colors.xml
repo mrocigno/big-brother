@@ -4,6 +4,8 @@
     <color name="background_secondary">#F3F3F3</color>
     <color name="background_tertiary">#FFFFFF</color>
 
+    <color name="themed_transparent">#99FFFFFF</color>
+
     <color name="brand_default">@color/moss_green</color>
     <color name="brand_secondary">@color/boy_red</color>
 

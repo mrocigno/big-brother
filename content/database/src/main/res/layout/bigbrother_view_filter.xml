@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/filter_view_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#73000000"
+    android:paddingHorizontal="10dp"
+    android:paddingBottom="10dp"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/filter_view_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bigbrother_content_background"
+            android:paddingHorizontal="1dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="1dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/filter_view_sort_az"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/bigbrother_ic_sort_az"
+                android:drawablePadding="10dp"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="Ordenar A - Z"
+                android:textColor="@color/text_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/filter_view_sort_za"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/bigbrother_ic_sort_za"
+                android:drawablePadding="10dp"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="Ordenar Z - A"
+                android:textColor="@color/text_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filter_view_sort_az" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="1dp"
+                android:background="@color/divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filter_view_sort_za" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/filter_view_clear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/bigbrother_ic_clear_filter"
+                android:drawablePadding="10dp"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="Limpar filtros"
+                android:textColor="@color/text_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filter_view_sort_za" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="1dp"
+                android:background="@color/divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filter_view_clear" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filter_view_search_layout"
+                style="@style/SQL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filter_view_clear">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/filter_view_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Buscar" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/filter_view_filter_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="filter_view_search_layout" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/filter_view_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:foreground="?selectableItemBackground"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
+                android:text="OK"
+                android:textColor="@color/text_title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/filter_view_filter_barrier" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/filter_view_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
+                android:text="CANCELAR"
+                android:textColor="@color/text_title"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@id/filter_view_confirm"
+                app:layout_constraintTop_toTopOf="@id/filter_view_confirm" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</merge>

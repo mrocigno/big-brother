@@ -15,5 +15,6 @@ dependencies {
         api project(":content:network")
         api project(":content:report")
         api project(":content:crash")
+        api project(":content:database")
     }
 }
