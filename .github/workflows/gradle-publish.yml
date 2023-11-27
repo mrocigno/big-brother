@@ -5,6 +5,25 @@ on:
     types: [synchronize]
 
 jobs:
+  generate-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate next tag
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@users.noreply.github.com"
+
+      - name: Get next version name
+        id: new-version
+        uses: proudust/gh-describe@v1.5.3
+
+      - name: Write version into build file
+        shell: bash
+        run: |
+          echo "${{ steps.new-version.outputs.describe }}"
+
   build:
 
     runs-on: ubuntu-latest
@@ -21,15 +40,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: gradle
-
-    - name: Get next version name
-      id: new-version
-      uses: proudust/gh-describe@v1.5.3
-
-    - name: Write version into build file
-      shell: bash
-      run: |
-        echo "${{ steps.new-version.outputs.describe }}"
 
 #    - name: Assemble and publish
 #      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
