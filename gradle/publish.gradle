@@ -63,8 +63,6 @@ publishing {
             credentials {
                 username = System.getenv("ossrh_username") ?: project.properties["ossrh_username"]
                 password = System.getenv("ossrh_password") ?: project.properties["ossrh_password"]
-                println(username)
-                println(password)
             }
         }
     }
