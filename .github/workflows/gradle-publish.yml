@@ -46,3 +46,6 @@ jobs:
           -Psigning.keyId=${{ secrets.KEY_ID }}
           -Psigning.password=${{ secrets.SIGNING_PASSWORD }}
           -Psigning.secretKeyRingFile=/home/runner/work/big-brother/big-brother/sandman.gpg
+      env:
+        ossrh_username: ${{ secrets.OSSRH_USERNAME }}
+        ossrh_password: ${{ secrets.OSSRH_TOKEN }}
