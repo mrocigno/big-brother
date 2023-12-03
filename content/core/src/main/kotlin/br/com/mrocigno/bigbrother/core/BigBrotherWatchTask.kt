@@ -13,11 +13,15 @@ class BigBrotherWatchTask : BigBrotherTask() {
     private val lastPoint = PointF(0f, 200f)
     private var alive = true
 
+    fun kill(parent: ViewGroup?) {
+        val vortex = parent?.findViewById<BBView>(R.id.bigbrother) ?: return
+        alive = false
+        parent.removeView(vortex)
+    }
+
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
         if (!alive) return
-        activity.rootView.addView(BigBrotherView.getOrCreate(activity) {
-            kill(activity.rootView)
-        })
+        activity.rootView.addView(BBView(activity))
     }
 
     override fun onActivityPaused(activity: Activity) {
@@ -44,11 +48,5 @@ class BigBrotherWatchTask : BigBrotherTask() {
 
     override fun onFragmentStopped(fragment: Fragment) {
         fragment.decorView?.removeView(BigBrotherView.get(fragment))
-    }
-
-    private fun kill(parent: ViewGroup?) {
-        val vortex = parent?.findViewById<BigBrotherView>(R.id.bigbrother) ?: return
-        alive = false
-        parent.removeView(vortex)
     }
 }
