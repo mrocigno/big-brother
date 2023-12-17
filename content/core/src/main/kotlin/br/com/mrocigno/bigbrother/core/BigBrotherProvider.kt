@@ -20,7 +20,7 @@ abstract class BigBrotherProvider : ContentProvider() {
 
     abstract fun setupPages()
 
-    fun addPage(name: String, creator: (BigBrotherView) -> Fragment) =
+    fun addPage(name: String, creator: () -> Fragment) =
         BigBrother.addPage(name, creator)
 
     fun addPage(location: KClass<out Activity>, wrapper: ActivityPageWrapper.() -> Unit) =

@@ -96,19 +96,18 @@ class BigBrotherContainerView(
         list.addAll(BigBrother.getPages())
 
         pager.offscreenPageLimit = 1
-        pager.adapter = TheDreamingAdapter(activity, list, vortex)
+        pager.adapter = TheDreamingAdapter(activity, list)
         TabLayoutMediator(tabHeader, pager) { tab, position ->
             tab.text = list[position].name
         }.attach()
     }
 }
 
-private class TheDreamingAdapter(
+class TheDreamingAdapter(
     activity: FragmentActivity,
-    private val data: List<PageData>,
-    private val vortex: BigBrotherView
+    private val data: List<PageData>
 ) : FragmentStateAdapter(activity) {
 
     override fun getItemCount() = data.size
-    override fun createFragment(position: Int) = data[position].creator(vortex)
+    override fun createFragment(position: Int) = data[position].creator()
 }

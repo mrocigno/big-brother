@@ -25,18 +25,24 @@ import androidx.core.graphics.toPoint
 import androidx.core.graphics.toRectF
 import androidx.core.graphics.withSave
 import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.widget.ViewPager2
 import br.com.mrocigno.bigbrother.common.utils.afterMeasure
 import br.com.mrocigno.bigbrother.common.utils.centerAsPoint
 import br.com.mrocigno.bigbrother.common.utils.cleaner
 import br.com.mrocigno.bigbrother.common.utils.getNavigationBarHeight
+import br.com.mrocigno.bigbrother.common.utils.gone
 import br.com.mrocigno.bigbrother.common.utils.point
 import br.com.mrocigno.bigbrother.common.utils.pointAnimator
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
+import br.com.mrocigno.bigbrother.common.utils.visible
 import br.com.mrocigno.bigbrother.core.BigBrother.config
 import br.com.mrocigno.bigbrother.core.utils.getTask
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
+import kotlin.math.roundToInt
 import kotlin.math.sqrt
 import br.com.mrocigno.bigbrother.common.R as CR
 
@@ -47,7 +53,11 @@ class BBView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private val bubble = BBIconData(context)
+    var isExpanded = false
+    val pager: ViewPager2 get() = findViewById(R.id.td_dreams_pager)
+    val tabHeader: TabLayout get() = findViewById(R.id.td_tab_layout)
+
+    private var bubble = BBIconData(context)
     private val removeIcon = BBIconData(
         context,
         CR.drawable.bigbrother_remove_area_background,
@@ -62,6 +72,8 @@ class BBView @JvmOverloads constructor(
     private val isBubbleOnRemoveArea
         get() = removeIcon.isOnThreshold(bubble.iconBounds.toRectF().centerAsPoint())
 
+    private val contentAreaStart get() = drawArea.top + config.size + pathSpace
+    private val lastBubblePosition = PointF(bubble.position.x, bubble.position.y)
     private var isContentVisible = false
     private val pathSpace = 10f * density
     private val drawArea = RectF()
@@ -82,11 +94,13 @@ class BBView @JvmOverloads constructor(
         id = R.id.bigbrother
         layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
         setWillNotDraw(false)
-
         setLayerType(LAYER_TYPE_HARDWARE, null)
 
         setOnTouchListener { _, event ->
             when (event.action) {
+                MotionEvent.ACTION_MOVE -> {
+                    if (bubble.isMoving && isExpanded) collapse()
+                }
                 MotionEvent.ACTION_UP -> {
                     if (!bubble.isMoving) onIconClick()
                     if (isBubbleOnRemoveArea) onRemoveBubble()
@@ -117,7 +131,24 @@ class BBView @JvmOverloads constructor(
                 right - strokeCompensation,
                 bottom - strokeCompensation
             )
+
+            setupView()
         }
+    }
+
+    private fun setupView() {
+        inflate(context, R.layout.bigbrother_content_layout, this)
+        setPadding(0, contentAreaStart.roundToInt(), 0, 0)
+
+        val list: MutableList<PageData> = mutableListOf()
+        BigBrother.getPages(activity::class)?.let(list::addAll)
+        list.addAll(BigBrother.getPages())
+
+        pager.offscreenPageLimit = 1
+        pager.adapter = TheDreamingAdapter(activity, list)
+        TabLayoutMediator(tabHeader, pager) { tab, position ->
+            tab.text = list[position].name
+        }.attach()
     }
 
     private fun createPathBackground(left: Float, top: Float, right: Float, bottom: Float) = Path().apply {
@@ -170,17 +201,45 @@ class BBView @JvmOverloads constructor(
     }
 
     private fun onIconClick() {
+        if (isExpanded) collapse()
+        else expand()
+    }
+
+    private fun expand() {
         val set = AnimatorSet()
+        val bubbleAnimation = bubbleAnimation(PointF(center.x - config.size / 2, drawArea.top))
+        val contentAnimation = contentAnimation(false)
+
+        bubbleAnimation.doOnEnd { bubble.setDrawable(context, CR.drawable.bigbrother_remove_area_background) }
+        contentAnimation.doOnStart { tabHeader.visible(); pager.visible() }
+        isExpanded = true
+        lastBubblePosition.set(bubble.position)
+
         set.playSequentially(
-            bubbleAnimation(),
-            contentAnimation()
+            bubbleAnimation,
+            contentAnimation
         )
         set.start()
     }
 
-    private fun bubbleAnimation(): ValueAnimator {
-        val centerTop = PointF(center.x - config.size / 2, drawArea.top)
-        val pointAnimator = pointAnimator(bubble.position, centerTop)
+    private fun collapse() {
+        val set = AnimatorSet()
+        val contentAnimator = contentAnimation(true)
+
+        contentAnimator.doOnEnd { tabHeader.gone(); pager.gone() }
+        isExpanded = false
+
+        set.doOnStart { bubble.setDrawable(context, config.iconRes) }
+        set.playSequentially(
+            contentAnimator,
+            bubbleAnimation(lastBubblePosition)
+        )
+        set.start()
+    }
+
+    private fun bubbleAnimation(target: PointF): ValueAnimator {
+        if (bubble.isMoving) return ValueAnimator.ofFloat(0f, 0f)
+        val pointAnimator = pointAnimator(bubble.position, target)
         pointAnimator.addUpdateListener {
             val newPosition = it.animatedValue as PointF
             bubble.position.set(newPosition)
@@ -189,20 +248,24 @@ class BBView @JvmOverloads constructor(
         return pointAnimator
     }
 
-    private fun contentAnimation(): ValueAnimator {
-        val init = drawArea.top + config.size + pathSpace
-        val animator = ValueAnimator.ofFloat(init, drawArea.bottom)
+    private fun contentAnimation(collapse: Boolean): ValueAnimator {
+        val animator =
+            if (!collapse) ValueAnimator.ofFloat(contentAreaStart, drawArea.bottom)
+            else ValueAnimator.ofFloat(drawArea.bottom, contentAreaStart)
+
         animator.doOnStart { isContentVisible = true }
         animator.addUpdateListener {
             cleanerPosition = it.animatedValue as Float
             invalidate()
         }
-        animator.doOnEnd { cleanerPosition = -1f }
+        animator.doOnEnd {
+            cleanerPosition = -1f
+            isContentVisible = !collapse
+        }
         return animator
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
+    override fun dispatchDraw(canvas: Canvas?) {
         canvas ?: return
 
         canvas.withSave {
@@ -224,6 +287,8 @@ class BBView @JvmOverloads constructor(
                 canvas.drawPath(this, strokePaint)
             }
         }
+
+        super.dispatchDraw(canvas)
 
         if (cleanerPosition != -1f) {
             canvas.drawRect(0f, cleanerPosition, drawArea.right, drawArea.bottom, cleanerPaint)
@@ -250,6 +315,7 @@ class BBIconData(
             point.y + config.size
         )
     }
+
     val icon: Drawable get() = drawable.apply {
         bounds = iconBounds
     }
@@ -257,8 +323,13 @@ class BBIconData(
     // To increase click area
     var threshold: Float = 20f
     val totalThreshold: Float get() = config.size / 2f + threshold
-    private val drawable = ContextCompat.getDrawable(context, iconRes)
-        ?: ColorDrawable(Color.RED)
+    private lateinit var drawable: Drawable
+
+    init { setDrawable(context, iconRes) }
+
+    fun setDrawable(context: Context, iconRes: Int) {
+        drawable = ContextCompat.getDrawable(context, iconRes) ?: ColorDrawable(Color.RED)
+    }
 
     fun isOnThreshold(event: PointF): Boolean {
         val point = iconBounds.toRectF().centerAsPoint()

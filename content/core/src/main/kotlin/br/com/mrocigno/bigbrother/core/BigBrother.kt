@@ -18,7 +18,7 @@ object BigBrother {
         activityPages[location] = ActivityPageWrapper().apply(wrapper).pages
     }
 
-    fun addPage(name: String, creator: (BigBrotherView) -> Fragment) {
+    fun addPage(name: String, creator: () -> Fragment) {
         pages.add(PageData(name, creator))
     }
 
