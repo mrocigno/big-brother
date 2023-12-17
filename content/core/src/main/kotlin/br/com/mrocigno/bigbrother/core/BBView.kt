@@ -4,6 +4,7 @@ import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -13,8 +14,10 @@ import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.hardware.display.DisplayManager
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.Surface
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
@@ -22,6 +25,7 @@ import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toPoint
+import androidx.core.graphics.toRect
 import androidx.core.graphics.toRectF
 import androidx.core.graphics.withSave
 import androidx.fragment.app.FragmentActivity
@@ -72,11 +76,11 @@ class BBView @JvmOverloads constructor(
     private val isBubbleOnRemoveArea
         get() = removeIcon.isOnThreshold(bubble.iconBounds.toRectF().centerAsPoint())
 
-    private val contentAreaStart get() = drawArea.top + config.size + pathSpace
+    private val contentInsets: RectF = RectF()
     private val lastBubblePosition = PointF(bubble.position.x, bubble.position.y)
     private var isContentVisible = false
     private val pathSpace = 10f * density
-    private val drawArea = RectF()
+    private val drawArea: RectF = RectF()
     private var contentPath: Path? = null
     private var cleanerPosition = -1f
     private val cleanerPaint = Paint().cleaner()
@@ -114,11 +118,12 @@ class BBView @JvmOverloads constructor(
         }
 
         afterMeasure {
+            setupInsets()
             val strokeCompensation = strokePaint.strokeWidth / 2
-            val left = 0f
+            val left = 0f + contentInsets.left
             val top = statusBarHeight
-            val right = width.toFloat()
-            val bottom = height - navigationBarHeight
+            val right = width - contentInsets.right
+            val bottom = height - contentInsets.bottom
 
             drawArea.set(left, top, right, bottom)
             bubble.drawArea.set(drawArea)
@@ -137,8 +142,15 @@ class BBView @JvmOverloads constructor(
     }
 
     private fun setupView() {
+        val padding = strokePaint.strokeWidth.roundToInt()
+        val paddings = contentInsets.toRect()
         inflate(context, R.layout.bigbrother_content_layout, this)
-        setPadding(0, contentAreaStart.roundToInt(), 0, 0)
+        setPadding(
+            paddings.left + padding,
+            paddings.top,
+            paddings.right + padding,
+            paddings.bottom + padding
+        )
 
         val list: MutableList<PageData> = mutableListOf()
         BigBrother.getPages(activity::class)?.let(list::addAll)
@@ -149,6 +161,36 @@ class BBView @JvmOverloads constructor(
         TabLayoutMediator(tabHeader, pager) { tab, position ->
             tab.text = list[position].name
         }.attach()
+    }
+
+    private fun setupInsets() {
+        val display = context
+            .getSystemService(DisplayManager::class.java)
+            .displays
+            .firstOrNull() ?: return
+
+        contentInsets.top = statusBarHeight + config.size + pathSpace
+        val rotation =
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 0
+            else display.rotation
+
+        when (rotation) {
+            Surface.ROTATION_90 -> {
+                contentInsets.left = 0f
+                contentInsets.right = navigationBarHeight
+                contentInsets.bottom = 0f
+            }
+            Surface.ROTATION_270 -> {
+                contentInsets.left = navigationBarHeight
+                contentInsets.right = 0f
+                contentInsets.bottom = 0f
+            }
+            else -> {
+                contentInsets.left = 0f
+                contentInsets.right = 0f
+                contentInsets.bottom = navigationBarHeight
+            }
+        }
     }
 
     private fun createPathBackground(left: Float, top: Float, right: Float, bottom: Float) = Path().apply {
@@ -250,8 +292,8 @@ class BBView @JvmOverloads constructor(
 
     private fun contentAnimation(collapse: Boolean): ValueAnimator {
         val animator =
-            if (!collapse) ValueAnimator.ofFloat(contentAreaStart, drawArea.bottom)
-            else ValueAnimator.ofFloat(drawArea.bottom, contentAreaStart)
+            if (!collapse) ValueAnimator.ofFloat(contentInsets.top, drawArea.bottom)
+            else ValueAnimator.ofFloat(drawArea.bottom, contentInsets.top)
 
         animator.doOnStart { isContentVisible = true }
         animator.addUpdateListener {
@@ -281,16 +323,13 @@ class BBView @JvmOverloads constructor(
             draw(canvas)
         }
 
-        if (isContentVisible) {
-            contentPath?.run {
-                canvas.drawPath(this, backgroundPaint)
-                canvas.drawPath(this, strokePaint)
-            }
-        }
-
+        if (isContentVisible) contentPath?.run { canvas.drawPath(this, backgroundPaint) }
         super.dispatchDraw(canvas)
+        if (isContentVisible) contentPath?.run { canvas.drawPath(this, strokePaint) }
+
 
         if (cleanerPosition != -1f) {
+            canvas.drawLine(drawArea.left, cleanerPosition, drawArea.right, cleanerPosition, strokePaint)
             canvas.drawRect(0f, cleanerPosition, drawArea.right, drawArea.bottom, cleanerPaint)
         }
     }
