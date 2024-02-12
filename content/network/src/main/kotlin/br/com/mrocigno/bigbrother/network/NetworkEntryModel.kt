@@ -64,11 +64,30 @@ class NetworkEntryModel(
             (statusCode ?: -1).toString(),
             hour,
             elapsedTime,
-            request.formattedHeaders,
+            request.headers,
             request.formattedBody,
-            response?.formattedHeaders ?: "empty",
+            response?.headers ?: "empty",
             response?.formattedBody ?: "empty"
         )
+
+    fun toCURL() = StringBuilder("curl --location --request $method '$fullUrl'").apply {
+        request.headers?.takeIf { it.isNotEmpty() }
+            ?.map {
+                "${it.key}: ${it.value.joinToString(", ")}"
+            }
+            ?.joinToString(" \\\n") { "--header '$it'" }
+            ?.let { headers ->
+                append(" \\")
+                appendLine()
+                append(headers)
+            }
+
+        if (!request.body.isNullOrBlank()) {
+            append(" \\")
+            appendLine()
+            append("--data '${request.body}'")
+        }
+    }.toString()
 }
 
 class NetworkPayloadModel(
@@ -121,7 +140,7 @@ class NetworkPayloadModel(
         }
 
     private fun Map<String, List<String>>?.toReadable(): CharSequence {
-        this ?: return "null"
+        if (this.isNullOrEmpty()) return "empty"
 
         val spannable = SpannableStringBuilder()
         keys.forEach {

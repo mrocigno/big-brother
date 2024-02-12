@@ -69,7 +69,7 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activi
         statusCode.text = model.statusCode.toString()
         method.text = model.method
         generalInfo.text = model.formatInfo()
-        copyAll.setOnClickListener { copyToClipboard(model.all(this)) }
+        copyAll.setOnClickListener { copyToClipboard(model.toCURL()) }
 
         requestHeader.text = model.request.formattedHeaders
         requestBody.text = model.request.formattedBody
