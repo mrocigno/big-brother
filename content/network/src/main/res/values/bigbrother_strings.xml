@@ -10,7 +10,7 @@
     <string name="network_hour_info">Hour:</string>
     <string name="network_elapsed_time_info">Elapsed time:</string>
     <string name="network_url_info">URL:</string>
-    <string name="network_copy">Copy all</string>
+    <string name="network_copy">Copy as cURL</string>
     <string name="network_copy_all_template">
 URL: %s\n
 Method: %s\n

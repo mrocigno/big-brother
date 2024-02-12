@@ -6,6 +6,7 @@ import br.com.mrocigno.bigbrother.network.MutableResponseFlow
 import br.com.mrocigno.bigbrother.network.ResponseFlow
 import br.com.mrocigno.bigbrother.repository.GithubRepository
 import br.com.mrocigno.bigbrother.repository.model.ApiBase
+import kotlinx.coroutines.flow.map
 
 class NetworkViewModel(
     private val githubRepository: GithubRepository = DI.githubRepository
@@ -19,4 +20,8 @@ class NetworkViewModel(
     fun fetchListSlowly() = _list.sync(githubRepository.getListSlowly())
 
     fun fetchError() = _list.sync(githubRepository.getError())
+
+    fun fetchPost() = _list.sync(githubRepository.simulatePost().map {
+        ApiBase(0, false, emptyList())
+    })
 }

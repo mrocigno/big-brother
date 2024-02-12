@@ -18,4 +18,11 @@ class GithubRepository(
     fun getError() = flow {
         emit(githubApi.getError())
     }
+
+    fun simulatePost() = flow {
+        emit(githubApi.simulatePost(mapOf(
+            "test1" to "value1",
+            "test2" to "value2"
+        )))
+    }
 }
