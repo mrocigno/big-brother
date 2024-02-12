@@ -1,8 +1,9 @@
-package br.com.mrocigno.bigbrother.core
+package br.com.mrocigno.bigbrother.core.ui
 
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Canvas
@@ -10,10 +11,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PointF
-import android.graphics.Rect
 import android.graphics.RectF
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.hardware.display.DisplayManager
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -21,13 +19,13 @@ import android.view.Surface
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.toPoint
 import androidx.core.graphics.toRect
 import androidx.core.graphics.toRectF
 import androidx.core.graphics.withSave
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import br.com.mrocigno.bigbrother.common.utils.afterMeasure
@@ -35,23 +33,22 @@ import br.com.mrocigno.bigbrother.common.utils.centerAsPoint
 import br.com.mrocigno.bigbrother.common.utils.cleaner
 import br.com.mrocigno.bigbrother.common.utils.getNavigationBarHeight
 import br.com.mrocigno.bigbrother.common.utils.gone
-import br.com.mrocigno.bigbrother.common.utils.point
 import br.com.mrocigno.bigbrother.common.utils.pointAnimator
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
 import br.com.mrocigno.bigbrother.common.utils.visible
+import br.com.mrocigno.bigbrother.core.BigBrother
 import br.com.mrocigno.bigbrother.core.BigBrother.config
+import br.com.mrocigno.bigbrother.core.BigBrotherWatchTask
+import br.com.mrocigno.bigbrother.core.PageData
+import br.com.mrocigno.bigbrother.core.R
 import br.com.mrocigno.bigbrother.core.utils.getTask
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.pow
 import kotlin.math.roundToInt
-import kotlin.math.sqrt
 import br.com.mrocigno.bigbrother.common.R as CR
 
 @SuppressLint("ClickableViewAccessibility")
-class BBView @JvmOverloads constructor(
+class BigBrotherView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -61,8 +58,8 @@ class BBView @JvmOverloads constructor(
     val pager: ViewPager2 get() = findViewById(R.id.td_dreams_pager)
     val tabHeader: TabLayout get() = findViewById(R.id.td_tab_layout)
 
-    private var bubble = BBIconData(context)
-    private val removeIcon = BBIconData(
+    private var bubble = BigBrotherIconData(context)
+    private val removeIcon = BigBrotherIconData(
         context,
         CR.drawable.bigbrother_remove_area_background,
         PointF()
@@ -92,6 +89,12 @@ class BBView @JvmOverloads constructor(
     private val backgroundPaint = Paint().apply {
         color = context.getColor(CR.color.background)
         style = Paint.Style.FILL
+    }
+    private val onBackPressed = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            collapse()
+            remove()
+        }
     }
 
     init {
@@ -157,7 +160,7 @@ class BBView @JvmOverloads constructor(
         list.addAll(BigBrother.getPages())
 
         pager.offscreenPageLimit = 1
-        pager.adapter = TheDreamingAdapter(activity, list)
+        pager.adapter = BigBrotherFragmentAdapter(activity, list)
         TabLayoutMediator(tabHeader, pager) { tab, position ->
             tab.text = list[position].name
         }.attach()
@@ -247,7 +250,7 @@ class BBView @JvmOverloads constructor(
         else expand()
     }
 
-    private fun expand() {
+    internal fun expand() {
         val set = AnimatorSet()
         val bubbleAnimation = bubbleAnimation(PointF(center.x - config.size / 2, drawArea.top))
         val contentAnimation = contentAnimation(false)
@@ -262,9 +265,10 @@ class BBView @JvmOverloads constructor(
             contentAnimation
         )
         set.start()
+        activity.onBackPressedDispatcher.addCallback(onBackPressed)
     }
 
-    private fun collapse() {
+    internal fun collapse() {
         val set = AnimatorSet()
         val contentAnimator = contentAnimation(true)
 
@@ -277,6 +281,7 @@ class BBView @JvmOverloads constructor(
             bubbleAnimation(lastBubblePosition)
         )
         set.start()
+        onBackPressed.remove()
     }
 
     private fun bubbleAnimation(target: PointF): ValueAnimator {
@@ -333,70 +338,20 @@ class BBView @JvmOverloads constructor(
             canvas.drawRect(0f, cleanerPosition, drawArea.right, drawArea.bottom, cleanerPaint)
         }
     }
-}
 
-class BBIconData(
-    context: Context,
-    iconRes: Int = config.iconRes,
-    initialPosition: PointF = config.initialLocation
-) {
+    companion object {
 
-    private var downMillis: Long = 0
-    var isMoving: Boolean = false
-    val position = initialPosition
-    val drawArea: RectF = RectF()
-    val iconBounds: Rect get() {
-        val point = position.toPoint()
-        return Rect(
-            point.x,
-            point.y,
-            point.x + config.size,
-            point.y + config.size
-        )
-    }
+        fun getOrCreate(activity: Activity) =
+            get(activity) ?: BigBrotherView(activity)
 
-    val icon: Drawable get() = drawable.apply {
-        bounds = iconBounds
-    }
+        fun getOrCreate(fragment: Fragment) =
+            get(fragment) ?: fragment.activity?.let { BigBrotherView(it) }
 
-    // To increase click area
-    var threshold: Float = 20f
-    val totalThreshold: Float get() = config.size / 2f + threshold
-    private lateinit var drawable: Drawable
+        fun get(activity: Activity) =
+            activity.findViewById<BigBrotherView>(R.id.bigbrother)
 
-    init { setDrawable(context, iconRes) }
-
-    fun setDrawable(context: Context, iconRes: Int) {
-        drawable = ContextCompat.getDrawable(context, iconRes) ?: ColorDrawable(Color.RED)
-    }
-
-    fun isOnThreshold(event: PointF): Boolean {
-        val point = iconBounds.toRectF().centerAsPoint()
-        val distance = sqrt(
-            (event.x - point.x).toDouble().pow(2) + (event.y - point.y).toDouble().pow(2)
-        ).toFloat()
-        return distance <= totalThreshold
-    }
-
-    fun computeTouch(event: MotionEvent, onMove: () -> Unit): Boolean {
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                if (!isOnThreshold(event.point())) return false
-                downMillis = System.currentTimeMillis()
-            }
-            MotionEvent.ACTION_MOVE -> {
-                isMoving = downMillis != 0L && (System.currentTimeMillis() - downMillis) >= 100L
-                if (isMoving) {
-                    position.x = max(drawArea.left, min(event.rawX - config.size / 2, drawArea.right))
-                    position.y = max(drawArea.top, min(event.rawY - config.size / 2, drawArea.bottom - config.size))
-                    onMove()
-                }
-            }
-            MotionEvent.ACTION_UP -> {
-                downMillis = 0L
-                isMoving = false
-            }
-        }
-        return downMillis != 0L
+        fun get(fragment: Fragment) =
+            fragment.view?.findViewById<BigBrotherView>(R.id.bigbrother)
     }
 }
+

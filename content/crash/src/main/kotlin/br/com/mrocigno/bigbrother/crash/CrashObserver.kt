@@ -30,7 +30,12 @@ class CrashObserver(
 
         // Normalize serializable exception, cause CoroutinesInternalError cannot be serialized
         val throwable = if (e.canBeSerialized()) e else {
-            Exception(e.message, e.cause)
+            default?.uncaughtException(t, e)
+            IllegalStateException("""
+                Default exception cannot be serialized, check the logcat
+                
+                Original message: ${e.message}
+            """.trimIndent())
         }
 
         activity.startActivity(

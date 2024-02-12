@@ -1,49 +1,38 @@
 package br.com.mrocigno.bigbrother.core
 
 import android.app.Activity
-import android.graphics.PointF
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import br.com.mrocigno.bigbrother.common.utils.decorView
 import br.com.mrocigno.bigbrother.common.utils.rootView
+import br.com.mrocigno.bigbrother.core.BigBrother.config
+import br.com.mrocigno.bigbrother.core.ui.BigBrotherView
 
 class BigBrotherWatchTask : BigBrotherTask() {
 
-    private val lastPoint = PointF(0f, 200f)
-    private var alive = true
-
     fun kill(parent: ViewGroup?) {
-        val vortex = parent?.findViewById<BBView>(R.id.bigbrother) ?: return
-        alive = false
-        parent.removeView(vortex)
+        val view = parent?.findViewById<BigBrotherView>(R.id.bigbrother) ?: return
+        parent.removeView(view)
+        config.isAlive = false
     }
 
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
-        if (!alive) return
-        activity.rootView.addView(BBView(activity))
-    }
-
-    override fun onActivityPaused(activity: Activity) {
-        val bigBrotherView = BigBrotherView.get(activity) ?: return
-        lastPoint.set(bigBrotherView.x, bigBrotherView.y)
+        if (!config.isAlive) return
+        activity.rootView.addView(BigBrotherView(activity))
     }
 
     override fun onActivityStarted(activity: Activity) {
-        val bigBrotherView = BigBrotherView.get(activity) ?: return
-        if (!alive) {
-            kill(activity.rootView)
-        } else if (!bigBrotherView.isExpanded) {
-            bigBrotherView.x = lastPoint.x
-            bigBrotherView.y = lastPoint.y
-        }
+        if (!config.isAlive) kill(activity.rootView)
+    }
+
+    override fun onActivityPaused(activity: Activity) {
+        activity.rootView.removeView(BigBrotherView.get(activity))
     }
 
     override fun onFragmentStarted(fragment: Fragment) {
-        if (!alive) return
-        fragment.decorView?.addView(BigBrotherView.getOrCreate(fragment) {
-            kill(fragment.decorView)
-        })
+        if (!config.isAlive) return
+        fragment.decorView?.addView(BigBrotherView.getOrCreate(fragment))
     }
 
     override fun onFragmentStopped(fragment: Fragment) {

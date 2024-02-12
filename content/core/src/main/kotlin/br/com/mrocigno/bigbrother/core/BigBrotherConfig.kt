@@ -3,6 +3,7 @@ package br.com.mrocigno.bigbrother.core
 import android.graphics.PointF
 import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
+import br.com.mrocigno.bigbrother.core.ui.BigBrotherView
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
 class BigBrotherConfig(
@@ -10,6 +11,7 @@ class BigBrotherConfig(
     var size: Int = 90,
     var disabledAlpha: Float = .5f,
     @DrawableRes var iconRes: Int = CommonR.drawable.bigbrother_ic_main,
+    var isAlive: Boolean = true
 ) {
 
     internal fun initial(bigBrotherView: BigBrotherView) = bigBrotherView.apply {

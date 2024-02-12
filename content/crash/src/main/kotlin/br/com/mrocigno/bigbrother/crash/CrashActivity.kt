@@ -62,6 +62,7 @@ class CrashActivity : AppCompatActivity(R.layout.bigbrother_activity_crash) {
     private fun setupWindow() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         statusBarGuideline.updateLayoutParams<MarginLayoutParams> { topMargin = statusBarHeight }
+        closeAnim.setOnClickListener { finish() }
     }
 
     private fun setupThumb() {
@@ -78,9 +79,14 @@ class CrashActivity : AppCompatActivity(R.layout.bigbrother_activity_crash) {
             stacktrace.isVisible = true
             timeline.isVisible = false
         }
-        stacktrace.text = intent.getSerializableExtraCompat<Throwable>(THROWABLE_ARG)
-            ?.stackTraceToString()
-            ?.highlightStacktrace(this@CrashActivity)
+        val throwable = intent.getSerializableExtraCompat<Throwable>(THROWABLE_ARG)
+        stacktrace.text = runCatching {
+            throwable
+                ?.stackTraceToString()
+                ?.highlightStacktrace(this@CrashActivity)
+        }.getOrElse {
+            throwable?.message.orEmpty()
+        }
     }
 
     private fun setupTimeline() {

@@ -21,6 +21,7 @@ dependencies {
     implementation libs.kotlin.coroutines
     implementation libs.androidx.lifecycle.runtime
     implementation libs.gson
+    debugImplementation libs.squareup.leakcanary
 
     implementation libs.compose.material3
     implementation libs.compose.runtime

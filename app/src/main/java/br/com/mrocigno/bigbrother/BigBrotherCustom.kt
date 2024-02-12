@@ -12,8 +12,8 @@ class BigBrotherCustom : BigBrotherProvider() {
     override val isEnabled = true
 
     override fun setupPages() {
-        addDatabasePage()
         addNetworkPage()
+        addDatabasePage()
         addLogPage()
         addSessionPage()
         addPage(CustomPageActivity::class) {
