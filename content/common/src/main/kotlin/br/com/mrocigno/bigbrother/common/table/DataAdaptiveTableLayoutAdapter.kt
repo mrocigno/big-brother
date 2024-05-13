@@ -6,7 +6,7 @@ package br.com.mrocigno.bigbrother.common.table
 
 import android.os.Bundle
 
-open interface DataAdaptiveTableLayoutAdapter<VH : ViewHolder> : AdaptiveTableAdapter<VH> {
+interface DataAdaptiveTableLayoutAdapter<VH : ViewHolder> : AdaptiveTableAdapter<VH> {
     /**
      * Method calls when need to need to switch 2 columns with each other in the data matrix
      *

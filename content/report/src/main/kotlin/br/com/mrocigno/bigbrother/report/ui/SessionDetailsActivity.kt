@@ -56,11 +56,11 @@ class SessionDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_se
             BitmapFactory.decodeStream(openFileInput("print_crash_session_$sessionId.png"))
         }.getOrNull()
             ?.run(print::setImageBitmap)
-            ?.run(::setupWithPrint)
+            ?.run { setupWithPrint() }
             ?: setupWithoutPrint()
     }
 
-    private fun setupWithPrint(unit: Unit) {
+    private fun setupWithPrint() {
         WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = false
         root.setState(R.id.with_print, root.width, root.height)
     }

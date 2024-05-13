@@ -7,6 +7,10 @@ plugins {
 
 apply from: file('../../gradle/publish.gradle')
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
 
     compileOnly project(":content:core")
