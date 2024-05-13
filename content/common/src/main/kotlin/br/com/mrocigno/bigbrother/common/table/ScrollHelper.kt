@@ -29,7 +29,7 @@ internal class ScrollHelper(context: Context) : GestureDetector.OnGestureListene
         mListener != null && mListener!!.onSingleTapUp(e)
 
     override fun onScroll(
-        e1: MotionEvent,
+        e1: MotionEvent?,
         e2: MotionEvent,
         distanceX: Float,
         distanceY: Float
@@ -43,7 +43,7 @@ internal class ScrollHelper(context: Context) : GestureDetector.OnGestureListene
     }
 
     override fun onFling(
-        e1: MotionEvent,
+        e1: MotionEvent?,
         e2: MotionEvent,
         velocityX: Float,
         velocityY: Float

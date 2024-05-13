@@ -4,7 +4,7 @@
 
 package br.com.mrocigno.bigbrother.common.table
 
-open interface OnItemClickListener {
+interface OnItemClickListener {
     /**
      * Click item callback.
      *

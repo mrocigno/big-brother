@@ -4,7 +4,7 @@
 
 package br.com.mrocigno.bigbrother.common.table
 
-open interface OnItemLongClickListener {
+interface OnItemLongClickListener {
     /**
      * Long click item callback.
      *
