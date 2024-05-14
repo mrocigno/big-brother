@@ -1,5 +1,7 @@
 package br.com.mrocigno.bigbrother.network
 
+import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
+import br.com.mrocigno.bigbrother.network.model.NetworkPayloadModel
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

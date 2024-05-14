@@ -3,6 +3,7 @@ plugins {
     alias libs.plugins.android.application apply false
     alias libs.plugins.android.library apply false
     alias libs.plugins.android.kotlin apply false
+    alias libs.plugins.ksp apply false
 }
 
 allprojects {
@@ -27,9 +28,9 @@ allprojects {
 
                 testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-                javaCompileOptions {
-                    annotationProcessorOptions {
-                        arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+                if (project.hasProperty("ksp")) {
+                    ksp {
+                        arg("room.schemaLocation", "$projectDir/schemas")
                     }
                 }
             }

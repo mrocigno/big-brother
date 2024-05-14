@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.network
+package br.com.mrocigno.bigbrother.network.ui
 
 import android.content.Context
 import android.content.Intent
@@ -20,7 +20,10 @@ import br.com.mrocigno.bigbrother.common.utils.copyToClipboard
 import br.com.mrocigno.bigbrother.common.utils.getSerializableExtraCompat
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
 import br.com.mrocigno.bigbrother.core.OutOfDomain
+import br.com.mrocigno.bigbrother.network.R
+import br.com.mrocigno.bigbrother.network.byStatusCode
 import br.com.mrocigno.bigbrother.network.json.JsonViewerActivity
+import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 
 @OutOfDomain
 class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_network_entry) {

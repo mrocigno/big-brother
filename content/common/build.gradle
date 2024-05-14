@@ -8,4 +8,6 @@ apply from: file('../../gradle/publish.gradle')
 dependencies {
 
     api libs.jakewharton.threetenabp
+
+    compileOnly libs.androidx.room.ktx
 }

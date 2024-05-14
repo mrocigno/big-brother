@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.network
+package br.com.mrocigno.bigbrother.network.ui
 
 import android.os.Bundle
 import android.view.ContextThemeWrapper
@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mrocigno.bigbrother.common.utils.disableChangeAnimation
 import br.com.mrocigno.bigbrother.core.OutOfDomain
+import br.com.mrocigno.bigbrother.network.NetworkHolder
+import br.com.mrocigno.bigbrother.network.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.bigbrother.common.R as CommonR

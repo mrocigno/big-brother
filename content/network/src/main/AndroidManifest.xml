@@ -9,7 +9,7 @@
             android:theme="@style/Theme.BigBrother"/>
 
         <activity
-            android:name=".NetworkEntryDetailsActivity"
+            android:name=".ui.NetworkEntryDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.BigBrother"/>
     </application>

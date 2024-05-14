@@ -2,14 +2,10 @@ plugins {
     alias libs.plugins.android.library
     alias libs.plugins.android.kotlin
     id 'kotlin-parcelize'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
 }
 
 apply from: file('../../gradle/publish.gradle')
-
-kapt {
-    correctErrorTypes = true
-}
 
 dependencies {
 
@@ -18,5 +14,5 @@ dependencies {
 
     implementation libs.androidx.room.runtime
     implementation libs.androidx.room.ktx
-    kapt libs.androidx.room.compiler
+    ksp libs.androidx.room.compiler
 }

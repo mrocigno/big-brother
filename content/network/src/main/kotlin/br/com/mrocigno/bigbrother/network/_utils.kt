@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.view.View
 import br.com.mrocigno.bigbrother.common.R
 import br.com.mrocigno.bigbrother.core.BigBrotherProvider
+import br.com.mrocigno.bigbrother.network.ui.NetworkFragment
 import okhttp3.OkHttpClient
 
 internal fun View.byStatusCode(statusCode: Int?) {

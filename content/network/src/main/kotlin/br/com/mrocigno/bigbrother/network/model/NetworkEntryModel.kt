@@ -1,9 +1,10 @@
-package br.com.mrocigno.bigbrother.network
+package br.com.mrocigno.bigbrother.network.model
 
 import android.content.Context
 import android.text.SpannableStringBuilder
 import androidx.core.text.bold
 import androidx.recyclerview.widget.DiffUtil
+import br.com.mrocigno.bigbrother.network.R
 import br.com.mrocigno.bigbrother.report.bbTrack
 import br.com.mrocigno.bigbrother.report.model.ReportType
 import okhttp3.Request
@@ -58,7 +59,8 @@ class NetworkEntryModel(
         .toString()
 
     fun all(context: Context) =
-        context.getString(R.string.network_copy_all_template,
+        context.getString(
+            R.string.network_copy_all_template,
             fullUrl,
             method,
             (statusCode ?: -1).toString(),

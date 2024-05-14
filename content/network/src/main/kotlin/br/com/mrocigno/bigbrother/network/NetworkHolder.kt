@@ -2,6 +2,7 @@ package br.com.mrocigno.bigbrother.network
 
 import androidx.lifecycle.MutableLiveData
 import br.com.mrocigno.bigbrother.common.utils.update
+import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 
 internal object NetworkHolder {
 
