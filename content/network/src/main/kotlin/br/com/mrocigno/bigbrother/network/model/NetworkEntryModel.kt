@@ -17,7 +17,8 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import java.io.Serializable
 
-class NetworkEntryModel(
+data class NetworkEntryModel(
+    val id: Long = 0,
     val fullUrl: String,
     val url: String,
     var statusCode: Int? = null,
@@ -28,8 +29,6 @@ class NetworkEntryModel(
     var response: NetworkPayloadModel? = null
 ) : Serializable {
 
-    internal var generatedId: Long = 0
-
     constructor(request: Request) : this(
         fullUrl = request.url.toString(),
         url = request.url.encodedPath,
@@ -39,6 +38,7 @@ class NetworkEntryModel(
     )
 
     constructor(entry: NetworkEntry) : this(
+        id = entry.id,
         fullUrl = entry.fullUrl,
         url = entry.url,
         statusCode = entry.statusCode,
@@ -46,7 +46,7 @@ class NetworkEntryModel(
         hour = entry.hour,
         method = entry.method,
         request = NetworkPayloadModel.fromString(entry.requestHeader, entry.requestBody)!!,
-        response = NetworkPayloadModel.fromString(entry.responseHeader, entry.responseHeader)
+        response = NetworkPayloadModel.fromString(entry.responseHeader, entry.responseBody)
     )
 
     class Differ : DiffUtil.ItemCallback<NetworkEntryModel>() {

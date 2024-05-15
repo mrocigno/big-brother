@@ -20,6 +20,8 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import br.com.mrocigno.bigbrother.common.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.ObjectOutputStream
 import java.io.Serializable
@@ -140,7 +142,15 @@ fun <T> MutableList<T>.update(model: T) {
 
 fun Any?.canBeSerialized(): Boolean = runCatching {
     if (this !is Serializable) return false
+    "".apply {  }
     ObjectOutputStream(ByteArrayOutputStream())
         .use { it.writeObject(this) }
         .let { true }
 }.getOrElse { false }
+
+inline fun <T> T.applyScoped(scope: CoroutineScope, crossinline block: suspend T.() -> Unit): T {
+    scope.launch {
+        block()
+    }
+    return this
+}

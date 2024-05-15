@@ -8,6 +8,7 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -17,7 +18,6 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import br.com.mrocigno.bigbrother.common.utils.copyToClipboard
-import br.com.mrocigno.bigbrother.common.utils.getSerializableExtraCompat
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.network.R
@@ -47,13 +47,13 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activi
     private val searchResponseBody: AppCompatImageView by lazy { findViewById(R.id.net_entry_details_response_search_body) }
     private val responseBody: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_response_body) }
 
-    private val model: NetworkEntryModel by lazy {
-        intent.getSerializableExtraCompat(MODEL_ARG)
-            ?: throw IllegalArgumentException("404 NetworkEntryModel not found")
-    }
+    private val entryId: Long by lazy { intent.getLongExtra(ENTRY_ID_ARG, -1) }
+    private val viewModel: NetworkEntryDetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (entryId == -1L) { finish(); return }
 
         setupToolbar()
         setupContent()
@@ -68,31 +68,33 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activi
     }
 
     private fun setupContent() {
-        background.byStatusCode(model.statusCode)
-        statusCode.text = model.statusCode.toString()
-        method.text = model.method
-        generalInfo.text = model.formatInfo()
-        copyAll.setOnClickListener { copyToClipboard(model.toCURL()) }
+        viewModel.getNetworkEntry(entryId).observe(this) { model ->
+            background.byStatusCode(model.statusCode)
+            statusCode.text = model.statusCode.toString()
+            method.text = model.method
+            generalInfo.text = model.formatInfo()
+            copyAll.setOnClickListener { copyToClipboard(model.toCURL()) }
 
-        requestHeader.text = model.request.formattedHeaders
-        requestBody.text = model.request.formattedBody
-        copyRequestHeader.setOnClickListener { copyToClipboard(requestHeader.text.toString()) }
-        copyRequestBody.setOnClickListener { copyToClipboard(requestBody.text.toString()) }
-        if (model.request.isBodyFormatted) {
-            searchRequestBody.isVisible = true
-            searchRequestBody.setOnClickListener {
-                startActivity(JsonViewerActivity.intent(this, requestBody.text.toString()))
+            requestHeader.text = model.request.formattedHeaders
+            requestBody.text = model.request.formattedBody
+            copyRequestHeader.setOnClickListener { copyToClipboard(requestHeader.text.toString()) }
+            copyRequestBody.setOnClickListener { copyToClipboard(requestBody.text.toString()) }
+            if (model.request.isBodyFormatted) {
+                searchRequestBody.isVisible = true
+                searchRequestBody.setOnClickListener {
+                    startActivity(JsonViewerActivity.intent(this, requestBody.text.toString()))
+                }
             }
-        }
 
-        responseHeader.text = model.response?.formattedHeaders
-        responseBody.text = model.response?.formattedBody
-        copyResponseHeader.setOnClickListener { copyToClipboard(responseHeader.text.toString()) }
-        copyResponseBody.setOnClickListener { copyToClipboard(responseBody.text.toString()) }
-        if (model.response?.isBodyFormatted == true) {
-            searchResponseBody.isVisible = true
-            searchResponseBody.setOnClickListener {
-                startActivity(JsonViewerActivity.intent(this, responseBody.text.toString()))
+            responseHeader.text = model.response?.formattedHeaders
+            responseBody.text = model.response?.formattedBody
+            copyResponseHeader.setOnClickListener { copyToClipboard(responseHeader.text.toString()) }
+            copyResponseBody.setOnClickListener { copyToClipboard(responseBody.text.toString()) }
+            if (model.response?.isBodyFormatted == true) {
+                searchResponseBody.isVisible = true
+                searchResponseBody.setOnClickListener {
+                    startActivity(JsonViewerActivity.intent(this, responseBody.text.toString()))
+                }
             }
         }
     }
@@ -113,10 +115,10 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activi
 
     companion object {
 
-        private const val MODEL_ARG = "br.com.mrocigno.MODEL_ARG"
+        private const val ENTRY_ID_ARG = "br.com.mrocigno.ENTRY_ID_ARG"
 
-        fun intent(context: Context, model: NetworkEntryModel) =
+        fun intent(context: Context, entryId: Long) =
             Intent(context, NetworkEntryDetailsActivity::class.java)
-                .putExtra(MODEL_ARG, model)
+                .putExtra(ENTRY_ID_ARG, entryId)
     }
 }

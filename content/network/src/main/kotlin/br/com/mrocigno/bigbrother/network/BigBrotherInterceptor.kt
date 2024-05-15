@@ -14,8 +14,8 @@ class BigBrotherInterceptor(private vararg val blockList: String) : Interceptor 
 
         if (request.isBlocked()) return chain.proceed(request)
 
-        val entry = NetworkEntryModel(request)
-        entry.generatedId = NetworkHolder.addEntry(entry)
+        val requestModel = NetworkEntryModel(request)
+        val entry = requestModel.copy(id = NetworkHolder.addEntry(requestModel))
         try {
             val response = chain.proceed(request)
 

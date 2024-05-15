@@ -6,7 +6,10 @@ import br.com.mrocigno.bigbrother.core.utils.bbSessionId
 import br.com.mrocigno.bigbrother.network.dao.NetworkDao
 import br.com.mrocigno.bigbrother.network.entity.NetworkEntry
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 internal object NetworkHolder {
 
@@ -19,7 +22,9 @@ internal object NetworkHolder {
     }
 
     val networkEntries by lazy {
-        dao.getBySession(bbSessionId).map { it.map(::NetworkEntryModel) }
+        dao.getBySession(bbSessionId).map {
+            it.map(::NetworkEntryModel)
+        }
     }
 
     fun addEntry(entry: NetworkEntryModel) =
@@ -30,7 +35,10 @@ internal object NetworkHolder {
         dao.insert(NetworkEntry(entry))
     }
 
-    fun clear() {
-
+    fun clear() = CoroutineScope(Dispatchers.IO).launch {
+        dao.clearSession(bbSessionId)
     }
+
+    fun getById(entryId: Long) = dao.getById(entryId)
+        .map(::NetworkEntryModel)
 }

@@ -15,4 +15,10 @@ interface NetworkDao {
 
     @Query("SELECT * FROM tblNetwork WHERE session_id = :sessionId ORDER BY hour DESC")
     fun getBySession(sessionId: Long): Flow<List<NetworkEntry>>
+
+    @Query("DELETE FROM tblNetwork WHERE session_id = :sessionId")
+    suspend fun clearSession(sessionId: Long)
+
+    @Query("SELECT * FROM tblNetwork WHERE id = :id")
+    fun getById(id: Long): Flow<NetworkEntry>
 }

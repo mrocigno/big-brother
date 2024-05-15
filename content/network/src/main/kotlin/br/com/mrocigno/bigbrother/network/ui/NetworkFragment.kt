@@ -45,7 +45,7 @@ class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) {
         recycler.disableChangeAnimation()
         recycler.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         recycler.adapter = NetworkEntryAdapter {
-            startActivity(NetworkEntryDetailsActivity.intent(requireContext(), it))
+            startActivity(NetworkEntryDetailsActivity.intent(requireContext(), it.id))
         }
 
         lifecycleScope.launchWhenCreated {

@@ -24,7 +24,7 @@ class NetworkEntry(
 ) {
 
     constructor(model: NetworkEntryModel) : this(
-        id = model.generatedId,
+        id = model.id,
         sessionId = bbSessionId,
         fullUrl = model.fullUrl,
         url = model.url,
