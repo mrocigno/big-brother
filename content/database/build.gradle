@@ -10,6 +10,7 @@ apply from: file('../../gradle/publish.gradle')
 dependencies {
 
     compileOnly project(":content:core")
+    compileOnly project(":content:network")
     implementation project(":content:common")
 
     implementation libs.kotlin.coroutines

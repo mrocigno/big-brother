@@ -22,6 +22,7 @@ import br.com.mrocigno.bigbrother.database.R
 import br.com.mrocigno.bigbrother.database.model.TableDump
 import br.com.mrocigno.bigbrother.database.model.TableDumpStatus
 import br.com.mrocigno.bigbrother.database.ui.table.filter.FilterView
+import br.com.mrocigno.bigbrother.network.json.JsonViewerActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -97,7 +98,24 @@ class TableInspectorActivity :
         }
     }
 
-    override fun onItemClick(row: Int, column: Int) = Unit
+    override fun onItemClick(row: Int, column: Int) {
+        val dump = viewModel.tableDump.value ?: return
+        val columnName = dump.columnNames[column - 1]
+        val columnContent = dump.data[row - 1][columnName]
+
+        if (columnContent?.shouldExpand != true || columnContent.sqlExpand == null) return
+
+        viewModel.getColumnContent(columnContent.sqlExpand).observe(this) {
+            // Check if network module was implemented in current project
+            val jsonViewer = runCatching { JsonViewerActivity::class.java }.getOrNull()
+            val expandedData = it.data.first()[columnName] ?: return@observe
+
+            // TODO: Add support to expand plain text
+            if (expandedData.isJson && jsonViewer != null) {
+                startActivity(JsonViewerActivity.intent(this, expandedData.data))
+            }
+        }
+    }
 
     override fun onRowHeaderClick(row: Int) = Unit
 

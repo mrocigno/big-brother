@@ -1,27 +1,36 @@
 package br.com.mrocigno.bigbrother.network
 
-import androidx.lifecycle.MutableLiveData
-import br.com.mrocigno.bigbrother.common.utils.update
+import android.content.Context
+import androidx.room.Room
+import br.com.mrocigno.bigbrother.core.utils.bbSessionId
+import br.com.mrocigno.bigbrother.network.dao.NetworkDao
+import br.com.mrocigno.bigbrother.network.entity.NetworkEntry
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
+import kotlinx.coroutines.flow.map
 
 internal object NetworkHolder {
 
-    private val _networkEntries = mutableListOf<NetworkEntryModel>()
-    val networkEntries = MutableLiveData<List<NetworkEntryModel>>()
+    private lateinit var db: NetworkDatabase
+    private val dao: NetworkDao
+        get() = db.networkDao()
 
-    fun addEntry(entry: NetworkEntryModel) {
-        _networkEntries.add(0, entry)
-        networkEntries.postValue(_networkEntries)
+    fun init(context: Context) {
+        db = Room.databaseBuilder(context, NetworkDatabase::class.java, "bb-network-db").build()
     }
 
+    val networkEntries by lazy {
+        dao.getBySession(bbSessionId).map { it.map(::NetworkEntryModel) }
+    }
+
+    fun addEntry(entry: NetworkEntryModel) =
+        dao.insert(NetworkEntry(entry))
+
     fun updateEntry(entry: NetworkEntryModel) {
-        _networkEntries.update(entry)
-        networkEntries.postValue(_networkEntries)
         entry.track()
+        dao.insert(NetworkEntry(entry))
     }
 
     fun clear() {
-        _networkEntries.clear()
-        networkEntries.postValue(emptyList())
+
     }
 }

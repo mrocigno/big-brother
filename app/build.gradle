@@ -29,7 +29,7 @@ dependencies {
     implementation libs.compose.tooling
 
     implementation project(":content:core")
-    implementation project(":content:report")
+//    implementation project(":content:report")
     implementation project(":content:crash")
     implementation project(":content:network")
     implementation project(":content:log")

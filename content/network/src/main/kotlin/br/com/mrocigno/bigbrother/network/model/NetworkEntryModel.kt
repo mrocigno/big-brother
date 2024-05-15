@@ -5,6 +5,7 @@ import android.text.SpannableStringBuilder
 import androidx.core.text.bold
 import androidx.recyclerview.widget.DiffUtil
 import br.com.mrocigno.bigbrother.network.R
+import br.com.mrocigno.bigbrother.network.entity.NetworkEntry
 import br.com.mrocigno.bigbrother.report.bbTrack
 import br.com.mrocigno.bigbrother.report.model.ReportType
 import okhttp3.Request
@@ -27,12 +28,25 @@ class NetworkEntryModel(
     var response: NetworkPayloadModel? = null
 ) : Serializable {
 
+    internal var generatedId: Long = 0
+
     constructor(request: Request) : this(
         fullUrl = request.url.toString(),
         url = request.url.encodedPath,
         hour = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME),
         method = request.method,
         request = NetworkPayloadModel(request)
+    )
+
+    constructor(entry: NetworkEntry) : this(
+        fullUrl = entry.fullUrl,
+        url = entry.url,
+        statusCode = entry.statusCode,
+        elapsedTime = entry.elapsedTime,
+        hour = entry.hour,
+        method = entry.method,
+        request = NetworkPayloadModel.fromString(entry.requestHeader, entry.requestBody)!!,
+        response = NetworkPayloadModel.fromString(entry.responseHeader, entry.responseHeader)
     )
 
     class Differ : DiffUtil.ItemCallback<NetworkEntryModel>() {
@@ -150,5 +164,20 @@ class NetworkPayloadModel(
             spannable.append(": ${this[it]?.joinToString(", ")}\n")
         }
         return spannable
+    }
+
+    companion object {
+
+        fun fromString(header: String?, body: String?): NetworkPayloadModel? {
+            if (header == null && body == null) return null
+            val headerMap = header?.trim()?.split("\n")?.mapNotNull {
+                runCatching {
+                    val (key, value) = it.split(": ")
+                    key to value.split(", ")
+                }.getOrNull()
+            }?.toMap()
+
+            return NetworkPayloadModel(headerMap, body)
+        }
     }
 }

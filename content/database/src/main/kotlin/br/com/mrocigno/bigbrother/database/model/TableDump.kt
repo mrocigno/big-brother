@@ -14,7 +14,7 @@ import kotlin.math.roundToInt
 import br.com.mrocigno.bigbrother.common.R as CR
 
 class TableDump(
-    val data: List<Map<String, String>> = emptyList(),
+    val data: List<Map<String, ColumnContent>> = emptyList(),
     val sql: String = "",
     val rowCount: Int = 0,
     val page: Int = 0,
@@ -55,7 +55,7 @@ class TableDump(
         columnNames.forEach { column ->
             var currentSize = paint.measureText(column) + headerPadding
             data.forEach { row ->
-                val dataSize = paint.measureText(row[column])
+                val dataSize = paint.measureText(row[column]?.data)
                 if (dataSize > currentSize) currentSize = dataSize
             }
             result.add((currentSize + padding).roundToInt())
@@ -72,7 +72,7 @@ class TableDump(
 
     class Builder(block: Builder.() -> Unit) {
 
-        val data: MutableList<Map<String, String>> = mutableListOf()
+        val data: MutableList<Map<String, ColumnContent>> = mutableListOf()
         var rowCount: Int = 0
         var sql: String = ""
         var executionTime: String = "0ms"
@@ -85,13 +85,31 @@ class TableDump(
             executionTime = "${end - start}ms"
         }
 
-        fun SQLiteDatabase.runQuery(sql: String, eachLine: Cursor.() -> Unit) {
+        fun SQLiteDatabase.runQuery(sql: String, eachLine: Cursor.() -> Boolean) {
             this@Builder.sql = sql
+            rowCount = 0
             rawQuery(sql, null).use {
                 if (it.moveToFirst()) do {
                     rowCount++
-                    eachLine(it)
+                    if (!eachLine(it)) break
                 } while (it.moveToNext())
+            }
+        }
+
+        fun SQLiteDatabase.getPrimaryKeyColumnName(tableName: String?): String? {
+            tableName ?: return null
+            return rawQuery("PRAGMA table_info($tableName)", null).use {
+                val pkIndex = it.getColumnIndex("pk")
+                val nameIndex = it.getColumnIndex("name")
+                var result: String? = null
+
+                if (it.moveToFirst()) do {
+                    if (it.getInt(pkIndex) == 1){
+                        result = it.getString(nameIndex)
+                        break
+                    }
+                } while (it.moveToNext())
+                result
             }
         }
 

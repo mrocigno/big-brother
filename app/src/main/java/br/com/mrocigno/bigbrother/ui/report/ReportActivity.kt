@@ -1,5 +1,6 @@
 package br.com.mrocigno.bigbrother.ui.report
 
+//import br.com.mrocigno.bigbrother.report.BigBrotherReport
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -8,9 +9,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.lifecycle.lifecycleScope
 import br.com.mrocigno.bigbrother.R
-import br.com.mrocigno.bigbrother.core.utils.bbSessionId
-import br.com.mrocigno.bigbrother.report.BigBrotherReport
-import kotlinx.coroutines.flow.collectLatest
 
 class ReportActivity : AppCompatActivity(R.layout.report_activity) {
 
@@ -29,9 +27,9 @@ class ReportActivity : AppCompatActivity(R.layout.report_activity) {
 
         makeReport.setOnClickListener {
             lifecycleScope.launchWhenCreated {
-                BigBrotherReport.getSessionTimeline(bbSessionId).collectLatest {
-                    reportView.text = it
-                }
+//                BigBrotherReport.getSessionTimeline(bbSessionId).collectLatest {
+//                    reportView.text = it
+//                }
             }
         }
 

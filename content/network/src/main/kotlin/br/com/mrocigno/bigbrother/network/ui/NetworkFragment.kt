@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mrocigno.bigbrother.common.utils.disableChangeAnimation
@@ -47,8 +48,10 @@ class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) {
             startActivity(NetworkEntryDetailsActivity.intent(requireContext(), it))
         }
 
-        NetworkHolder.networkEntries.observe(viewLifecycleOwner) {
-            adapter.setList(it.toList())
+        lifecycleScope.launchWhenCreated {
+            NetworkHolder.networkEntries.collect {
+                adapter.setList(it.toList())
+            }
         }
     }
 
