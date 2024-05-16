@@ -1,0 +1,93 @@
+<html lang="pt">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>network entry</title>
+        <style>
+            @font-face {
+                font-family: 'courier';
+                src: url('file:///android_res/font/courier_regular.ttf') format('truetype');
+            }
+            @font-face {
+                font-family: 'courier-bold';
+                src: url('file:///android_res/font/courier_bold.ttf') format('truetype');
+            }
+            @font-face {
+                font-family: 'lato';
+                src: url('file:///android_res/font/courier_bold.ttf') format('truetype');
+            }
+
+            body {
+                color: BBtextColor;
+                font-family: 'lato';
+                margin: 0px;
+                background-color: BBbackgroundColor;
+            }
+
+            .container {
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+                border-radius: 16px;
+                background-color: BBbackgroundSecondaryColor;
+            }
+
+            .container .head {
+                display: flex;
+                padding: 10px;
+                font-size: 15px; 
+                background-color: BBbackgroundTertiaryColor;
+                border-top-left-radius: 16px;
+                border-top-right-radius: 16px;
+            }
+
+            .container .content {
+                padding: 10px;
+            }
+
+            .container h1 {
+                font-family: 'lato';
+                padding: 0px;
+                margin: 0px;
+                font-size: 15px;
+            }
+
+            .container p {
+                padding: 10px 0px;
+                margin: 0px;
+                white-space: nowrap;
+                overflow-x: auto;
+                font-family: 'courier';
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="head">
+                REQUEST
+            </div>
+            <div class="content">
+                <h1>Headers</h1>
+                <p>%request_headers%</p>
+            </div>
+            <div class="content">
+                <h1>Body</h1>
+                <p>%request_body%</p>
+            </div>
+        </div>
+        <br/>
+        <div class="container">
+            <div class="head">
+                RESPONSE
+            </div>
+            <div class="content">
+                <h1>Headers</h1>
+                <p>%response_headers%</p>
+            </div>
+            <div class="content">
+                <h1>Body</h1>
+                <p>%response_body%</p>
+            </div>
+        </div>
+    </body>
+</html>

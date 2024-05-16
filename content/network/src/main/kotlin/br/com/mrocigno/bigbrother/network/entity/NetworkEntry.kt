@@ -32,8 +32,8 @@ class NetworkEntry(
         elapsedTime = model.elapsedTime,
         hour = model.hour,
         method = model.method,
-        requestHeader = model.request.formattedHeaders.toString(),
-        requestBody = model.request.formattedBody.toString(),
+        requestHeader = model.request.formattedHeaders,
+        requestBody = model.request.formattedBody,
         responseHeader = model.response?.formattedHeaders.toString(),
         responseBody = model.response?.formattedBody.toString()
     )

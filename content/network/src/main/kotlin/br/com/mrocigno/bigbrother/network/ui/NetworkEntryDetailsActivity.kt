@@ -8,11 +8,12 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import android.view.View
+import android.webkit.WebView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
@@ -22,30 +23,21 @@ import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.network.R
 import br.com.mrocigno.bigbrother.network.byStatusCode
-import br.com.mrocigno.bigbrother.network.json.JsonViewerActivity
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 
 @OutOfDomain
 class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_network_entry) {
 
+    private val root: MotionLayout by lazy { findViewById(R.id.net_entry_details_root) }
     private val toolbar: Toolbar by lazy { findViewById(R.id.net_entry_details_toolbar) }
     private val background: View by lazy { findViewById(R.id.net_entry_details_background) }
     private val statusCode: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_status_code) }
     private val method: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_method) }
     private val generalInfo: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_general_info) }
     private val copyAll: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_copy_all) }
+    private val loading: View by lazy { findViewById(R.id.net_entry_details_loading_container) }
 
-    private val copyRequestHeader: AppCompatImageView by lazy { findViewById(R.id.net_entry_details_request_copy_headers) }
-    private val requestHeader: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_request_headers) }
-    private val copyRequestBody: AppCompatImageView by lazy { findViewById(R.id.net_entry_details_request_copy_body) }
-    private val searchRequestBody: AppCompatImageView by lazy { findViewById(R.id.net_entry_details_request_search_body) }
-    private val requestBody: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_request_body) }
-
-    private val copyResponseHeader: AppCompatImageView by lazy { findViewById(R.id.net_entry_details_response_copy_headers) }
-    private val responseHeader: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_response_headers) }
-    private val copyResponseBody: AppCompatImageView by lazy { findViewById(R.id.net_entry_details_response_copy_body) }
-    private val searchResponseBody: AppCompatImageView by lazy { findViewById(R.id.net_entry_details_response_search_body) }
-    private val responseBody: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_response_body) }
+    private val webView: WebView by lazy { findViewById(R.id.net_entry_details_web) }
 
     private val entryId: Long by lazy { intent.getLongExtra(ENTRY_ID_ARG, -1) }
     private val viewModel: NetworkEntryDetailsViewModel by viewModels()
@@ -68,6 +60,7 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activi
     }
 
     private fun setupContent() {
+        loading.isVisible = true
         viewModel.getNetworkEntry(entryId).observe(this) { model ->
             background.byStatusCode(model.statusCode)
             statusCode.text = model.statusCode.toString()
@@ -75,27 +68,15 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activi
             generalInfo.text = model.formatInfo()
             copyAll.setOnClickListener { copyToClipboard(model.toCURL()) }
 
-            requestHeader.text = model.request.formattedHeaders
-            requestBody.text = model.request.formattedBody
-            copyRequestHeader.setOnClickListener { copyToClipboard(requestHeader.text.toString()) }
-            copyRequestBody.setOnClickListener { copyToClipboard(requestBody.text.toString()) }
-            if (model.request.isBodyFormatted) {
-                searchRequestBody.isVisible = true
-                searchRequestBody.setOnClickListener {
-                    startActivity(JsonViewerActivity.intent(this, requestBody.text.toString()))
-                }
-            }
+            NetworkEntryTemplate(model).load(webView)
+            loading.isVisible = false
+        }
 
-            responseHeader.text = model.response?.formattedHeaders
-            responseBody.text = model.response?.formattedBody
-            copyResponseHeader.setOnClickListener { copyToClipboard(responseHeader.text.toString()) }
-            copyResponseBody.setOnClickListener { copyToClipboard(responseBody.text.toString()) }
-            if (model.response?.isBodyFormatted == true) {
-                searchResponseBody.isVisible = true
-                searchResponseBody.setOnClickListener {
-                    startActivity(JsonViewerActivity.intent(this, responseBody.text.toString()))
-                }
-            }
+        webView.setOnScrollChangeListener { _, _, currentY, _, prevY ->
+
+
+            val newProgress = currentY.toFloat() / webView.height
+            root.progress = newProgress
         }
     }
 
