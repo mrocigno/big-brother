@@ -9,6 +9,7 @@ import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import android.view.View
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
@@ -62,19 +63,21 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activi
     private fun setupContent() {
         loading.isVisible = true
         viewModel.getNetworkEntry(entryId).observe(this) { model ->
-            background.byStatusCode(model.statusCode)
             statusCode.text = model.statusCode.toString()
             method.text = model.method
             generalInfo.text = model.formatInfo()
             copyAll.setOnClickListener { copyToClipboard(model.toCURL()) }
 
             NetworkEntryTemplate(model).load(webView)
-            loading.isVisible = false
+            webView.webViewClient = object : WebViewClient() {
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    loading.isVisible = false
+                    background.byStatusCode(model.statusCode)
+                }
+            }
         }
 
-        webView.setOnScrollChangeListener { _, _, currentY, _, prevY ->
-
-
+        webView.setOnScrollChangeListener { _, _, currentY, _, _ ->
             val newProgress = currentY.toFloat() / webView.height
             root.progress = newProgress
         }
