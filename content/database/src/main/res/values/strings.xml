@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="bigbrother_table_empty_state">Nothing found in current query</string>
+    <string name="bigbrother_expanded_plain_text">Expanded data</string>
 </resources>

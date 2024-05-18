@@ -60,7 +60,7 @@
         android:id="@+id/session_details_vertical_scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/session_details_network_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/session_details_print_guide">
@@ -82,5 +82,24 @@
         </HorizontalScrollView>
 
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/session_details_network_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/session_details_network_data"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/report_session_requests" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

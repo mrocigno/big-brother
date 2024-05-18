@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
@@ -25,6 +26,7 @@ import br.com.mrocigno.bigbrother.database.ui.table.filter.FilterView
 import br.com.mrocigno.bigbrother.network.json.JsonViewerActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import br.com.mrocigno.bigbrother.common.R as CR
 
 @OutOfDomain
 class TableInspectorActivity :
@@ -110,9 +112,17 @@ class TableInspectorActivity :
             val jsonViewer = runCatching { JsonViewerActivity::class.java }.getOrNull()
             val expandedData = it.data.first()[columnName] ?: return@observe
 
-            // TODO: Add support to expand plain text
             if (expandedData.isJson && jsonViewer != null) {
                 startActivity(JsonViewerActivity.intent(this, expandedData.data))
+            } else {
+                AlertDialog.Builder(this)
+                    .setTitle(R.string.bigbrother_expanded_plain_text)
+                    .setMessage(expandedData.data)
+                    .setPositiveButton(CR.string.close) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .create()
+                    .show()
             }
         }
     }

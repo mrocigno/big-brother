@@ -12,6 +12,7 @@ dependencies {
     compileOnly project(":content:core")
     implementation project(":content:common")
 
+    implementation libs.androidx.activity
     implementation libs.androidx.room.runtime
     implementation libs.androidx.room.ktx
     ksp libs.androidx.room.compiler

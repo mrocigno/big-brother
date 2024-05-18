@@ -6,21 +6,22 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.WindowCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.lifecycleScope
+import br.com.mrocigno.bigbrother.common.route.checkIntent
+import br.com.mrocigno.bigbrother.common.route.intentToNetworkList
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.report.BigBrotherReport
 import br.com.mrocigno.bigbrother.report.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import br.com.mrocigno.bigbrother.common.R as CR
 
 @OutOfDomain
@@ -28,9 +29,9 @@ class SessionDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_se
 
     private val root: MotionLayout by lazy { findViewById(R.id.session_details_root) }
     private val toolbar: Toolbar by lazy { findViewById(R.id.session_details_toolbar) }
-    private val statusBarGuideline: View by lazy { findViewById(R.id.session_details_status_bar_guideline) }
     private val print: AppCompatImageView by lazy { findViewById(R.id.session_details_print) }
     private val timeline: AppCompatTextView by lazy { findViewById(R.id.session_details_timeline) }
+    private val networkData: View by lazy { findViewById(R.id.session_details_network_data) }
 
     private val sessionId: Long by lazy { intent.getLongExtra(SESSION_ID_ARG, -1) }
 
@@ -41,6 +42,13 @@ class SessionDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_se
         setupView()
         setupWindow()
         setupTimeline()
+
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (root.currentState == R.id.print_expanded) root.transitionToState(R.id.with_print)
+                else finish()
+            }
+        })
     }
 
     private fun setupWindow() {
@@ -58,6 +66,13 @@ class SessionDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_se
             ?.run(print::setImageBitmap)
             ?.run { setupWithPrint() }
             ?: setupWithoutPrint()
+
+        val networkSessionIntent = intentToNetworkList(sessionId)
+        if (checkIntent(networkSessionIntent)) {
+            networkData.setOnClickListener { startActivity(networkSessionIntent) }
+        } else {
+            networkData.isVisible = false
+        }
     }
 
     private fun setupWithPrint() {
@@ -71,8 +86,8 @@ class SessionDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_se
     }
 
     private fun setupTimeline() {
-        CoroutineScope(Dispatchers.Main).launch {
-            BigBrotherReport.getSessionTimeline(sessionId).collectLatest {
+        lifecycleScope.launchWhenResumed {
+            BigBrotherReport.getSessionTimeline(sessionId).collect {
                 timeline.text = it
             }
         }

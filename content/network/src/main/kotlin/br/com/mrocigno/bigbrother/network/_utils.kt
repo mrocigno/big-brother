@@ -3,6 +3,7 @@ package br.com.mrocigno.bigbrother.network
 import android.content.res.ColorStateList
 import android.view.View
 import br.com.mrocigno.bigbrother.common.R
+import br.com.mrocigno.bigbrother.core.BigBrother
 import br.com.mrocigno.bigbrother.core.BigBrotherProvider
 import br.com.mrocigno.bigbrother.network.ui.NetworkFragment
 import okhttp3.OkHttpClient
@@ -17,6 +18,10 @@ internal fun View.byStatusCode(statusCode: Int?) {
 }
 
 fun BigBrotherProvider.addNetworkPage(customName: String = "Network") {
+    addPage(customName) { NetworkFragment() }
+}
+
+fun BigBrother.addNetworkPage(customName: String = "Network") {
     addPage(customName) { NetworkFragment() }
 }
 

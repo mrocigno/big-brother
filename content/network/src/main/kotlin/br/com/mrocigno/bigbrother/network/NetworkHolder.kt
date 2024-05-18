@@ -2,7 +2,6 @@ package br.com.mrocigno.bigbrother.network
 
 import android.content.Context
 import androidx.room.Room
-import br.com.mrocigno.bigbrother.core.utils.bbSessionId
 import br.com.mrocigno.bigbrother.network.dao.NetworkDao
 import br.com.mrocigno.bigbrother.network.entity.NetworkEntry
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
@@ -21,12 +20,6 @@ internal object NetworkHolder {
         db = Room.databaseBuilder(context, NetworkDatabase::class.java, "bb-network-db").build()
     }
 
-    val networkEntries by lazy {
-        dao.getBySession(bbSessionId).map {
-            it.map(::NetworkEntryModel)
-        }
-    }
-
     fun addEntry(entry: NetworkEntryModel) =
         dao.insert(NetworkEntry(entry))
 
@@ -35,10 +28,13 @@ internal object NetworkHolder {
         dao.insert(NetworkEntry(entry))
     }
 
-    fun clear() = CoroutineScope(Dispatchers.IO).launch {
-        dao.clearSession(bbSessionId)
+    fun clear(sessionId: Long) = CoroutineScope(Dispatchers.IO).launch {
+        dao.clearSession(sessionId)
     }
 
     fun getById(entryId: Long) = dao.getById(entryId)
         .map(::NetworkEntryModel)
+
+    fun getBySessionId(sessionId: Long) = dao.getBySession(sessionId)
+        .map { it.map(::NetworkEntryModel) }
 }
