@@ -1,9 +1,9 @@
-package br.com.mrocigno.bigbrother.report.coverter
+package br.com.mrocigno.bigbrother.common.converter
 
 import androidx.room.TypeConverter
 import org.threeten.bp.LocalDateTime
 
-internal class LocalDateTimeConverter {
+class LocalDateTimeConverter {
 
     @TypeConverter
     fun toDate(date: String): LocalDateTime = LocalDateTime.parse(date)

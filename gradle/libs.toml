@@ -1,5 +1,7 @@
 [versions]
-kotlin = "1.8.0"
+kotlin = "1.8.10"
+ksp = "1.8.10-1.0.9"
+androidx-core = "1.8.0"
 appcompat = "1.4.1"
 activity = "1.6.1"
 lifecycle-runtime = "2.5.1"
@@ -9,7 +11,7 @@ agp = "8.4.0"
 threetenabp = "1.4.4"
 retrofit = "2.9.0"
 okhttp3 = "4.10.0"
-compose-compiler = "1.4.0-alpha02"
+compose-compiler = "1.4.2"
 compose-runtime = "1.3.3"
 # confirm
 kotlin-reflection = "1.7.21"
@@ -17,7 +19,7 @@ kotlin-coroutines = "1.6.1"
 
 [libraries]
 # AndroidX
-androidx-core = { module = "androidx.core:core-ktx", version.ref = "kotlin" }
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime" }
@@ -49,4 +51,5 @@ gson = { module = "com.google.code.gson:gson", version = "2.10.1" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-android-kotlin = { id = "org.jetbrains.kotlin.android", version = "1.7.21" }
+android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

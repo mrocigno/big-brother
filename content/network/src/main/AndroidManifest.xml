@@ -6,11 +6,28 @@
         <activity
             android:name=".json.JsonViewerActivity"
             android:exported="false"
-            android:theme="@style/Theme.BigBrother"/>
+            android:theme="@style/Theme.BigBrother" />
 
         <activity
-            android:name=".NetworkEntryDetailsActivity"
+            android:name=".ui.NetworkEntryDetailsActivity"
             android:exported="false"
-            android:theme="@style/Theme.BigBrother"/>
+            android:theme="@style/Theme.BigBrother" />
+
+        <activity
+            android:name=".ui.NetworkListActivity"
+            android:exported="true"
+            android:theme="@style/Theme.BigBrother">
+
+            <intent-filter>
+                <action android:name="${applicationId}.LIST_NETWORK_SESSION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name=".NetworkTask"
+            android:authorities="${applicationId}.NETWORK"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 </manifest>

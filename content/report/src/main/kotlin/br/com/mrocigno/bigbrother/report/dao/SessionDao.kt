@@ -12,7 +12,7 @@ import org.threeten.bp.LocalDateTime
 internal interface SessionDao {
 
     @Insert
-    suspend fun create(
+    fun create(
         entity: SessionEntity = SessionEntity(
             id = 0,
             dateTime = LocalDateTime.now(),
@@ -24,7 +24,7 @@ internal interface SessionDao {
     suspend fun deleteSession(id: Long)
 
     @Query("UPDATE tblSessions SET status = 'FINISHED' WHERE status = 'RUNNING'")
-    suspend fun closePreviousSession()
+    fun closePreviousSession()
 
     @Query("UPDATE tblSessions SET status = 'CRASHED' WHERE id = :sessionId")
     suspend fun sessionCrashed(sessionId: Long)

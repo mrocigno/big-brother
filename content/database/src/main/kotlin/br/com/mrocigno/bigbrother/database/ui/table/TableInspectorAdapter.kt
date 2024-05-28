@@ -1,7 +1,11 @@
 package br.com.mrocigno.bigbrother.database.ui.table
 
 import android.content.Context
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.UnderlineSpan
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import br.com.mrocigno.bigbrother.common.helpers.SQLBuilder
@@ -9,6 +13,7 @@ import br.com.mrocigno.bigbrother.common.table.LinkedAdaptiveTableAdapter
 import br.com.mrocigno.bigbrother.common.table.ViewHolder
 import br.com.mrocigno.bigbrother.common.utils.inflate
 import br.com.mrocigno.bigbrother.database.R
+import br.com.mrocigno.bigbrother.database.model.ColumnContent
 import br.com.mrocigno.bigbrother.database.model.TableDump
 import br.com.mrocigno.bigbrother.database.ui.table.filter.FilterSort
 import br.com.mrocigno.bigbrother.common.R as CR
@@ -42,11 +47,11 @@ class TableInspectorAdapter(
     override val headerRowWidth: Int = 0
 
     override fun onBindLeftTopHeaderViewHolder(viewHolder: ViewHolder) {
-        (viewHolder as ContentViewHolder).bind("")
+        (viewHolder as ContentViewHolder).bind(null)
     }
 
     override fun onBindHeaderRowViewHolder(viewHolder: ViewHolder, row: Int) {
-        (viewHolder as ContentViewHolder).bind("")
+        (viewHolder as ContentViewHolder).bind(null)
     }
 
     override fun onBindHeaderColumnViewHolder(viewHolder: ViewHolder, column: Int) {
@@ -60,7 +65,7 @@ class TableInspectorAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, row: Int, column: Int) {
         val columnName = tableDump.columnNames[column - 1]
-        (viewHolder as ContentViewHolder).bind(tableDump.data[row - 1][columnName].orEmpty())
+        (viewHolder as ContentViewHolder).bind(tableDump.data[row - 1][columnName])
     }
 }
 
@@ -83,8 +88,19 @@ class HeaderViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.b
 class ContentViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_cell_content)) {
 
     private val textView: AppCompatTextView get() = itemView as AppCompatTextView
+    private val context: Context get() = itemView.context
 
-    fun bind(data: String) {
-        textView.text = data
+    fun bind(content: ColumnContent?) {
+        if (content?.shouldExpand == true) {
+            textView.setTextColor(context.getColor(CR.color.text_hyperlink))
+            textView.text = SpannableStringBuilder(content.data).apply {
+                this.setSpan(UnderlineSpan(), 0, this.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+            textView.setOnClickListener { Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show() }
+        } else {
+            textView.text = content?.data.orEmpty()
+            textView.setOnClickListener(null)
+            textView.setTextColor(context.getColor(CR.color.text_paragraph))
+        }
     }
 }

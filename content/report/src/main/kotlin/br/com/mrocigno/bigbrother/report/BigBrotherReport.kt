@@ -69,11 +69,13 @@ object BigBrotherReport {
     }
 
     internal fun createSession(context: Context) {
-        db = Room.databaseBuilder(context, ReportDatabase::class.java, "bb-report-db").build()
-        scope.launch {
-            db.sessionDao().closePreviousSession()
-            bbSessionId = db.sessionDao().create()
-        }
+        // Allowed in main thread, to prevent session -1
+        db = Room.databaseBuilder(context, ReportDatabase::class.java, "bb-report-db")
+            .allowMainThreadQueries()
+            .build()
+
+        db.sessionDao().closePreviousSession()
+        bbSessionId = db.sessionDao().create()
     }
 }
 

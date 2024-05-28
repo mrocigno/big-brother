@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.network
+package br.com.mrocigno.bigbrother.network.ui
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -11,6 +11,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.mrocigno.bigbrother.common.utils.highlightQuery
 import br.com.mrocigno.bigbrother.common.utils.inflate
+import br.com.mrocigno.bigbrother.network.R
+import br.com.mrocigno.bigbrother.network.byStatusCode
+import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
 class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_network_entry)) {

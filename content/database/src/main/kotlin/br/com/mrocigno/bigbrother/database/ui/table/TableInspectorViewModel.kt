@@ -44,6 +44,15 @@ class TableInspectorViewModel(
         isLoading.postValue(false)
     }
 
+    fun getColumnContent(sql: String): LiveData<TableDump> =
+        MutableLiveData<TableDump>().apply {
+            viewModelScope.launch {
+                isLoading.value = true
+                postValue(dbHelper.execSQL(sql))
+                isLoading.value = false
+            }
+        }
+
     fun getColumnData(columnIndex: Int) = filters[columnIndex] ?: run {
         val columnName = tableDump.value!!.columnNames[columnIndex - 1]
         FilterData(dump = dbHelper.getColumnData(tableName, columnName))

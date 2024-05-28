@@ -1,5 +1,7 @@
 package br.com.mrocigno.bigbrother.network
 
+import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
+import br.com.mrocigno.bigbrother.network.model.NetworkPayloadModel
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -12,8 +14,8 @@ class BigBrotherInterceptor(private vararg val blockList: String) : Interceptor 
 
         if (request.isBlocked()) return chain.proceed(request)
 
-        val entry = NetworkEntryModel(request)
-        NetworkHolder.addEntry(entry)
+        val requestModel = NetworkEntryModel(request)
+        val entry = requestModel.copy(id = NetworkHolder.addEntry(requestModel))
         try {
             val response = chain.proceed(request)
 

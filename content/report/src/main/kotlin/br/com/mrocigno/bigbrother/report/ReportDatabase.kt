@@ -3,7 +3,7 @@ package br.com.mrocigno.bigbrother.report
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import br.com.mrocigno.bigbrother.report.coverter.LocalDateTimeConverter
+import br.com.mrocigno.bigbrother.common.converter.LocalDateTimeConverter
 import br.com.mrocigno.bigbrother.report.coverter.ReportTypeConverter
 import br.com.mrocigno.bigbrother.report.coverter.SessionStatusConverter
 import br.com.mrocigno.bigbrother.report.dao.ReportLogDao

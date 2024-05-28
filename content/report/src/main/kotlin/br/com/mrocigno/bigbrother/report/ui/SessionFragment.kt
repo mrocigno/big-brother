@@ -68,10 +68,10 @@ class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) {
         editDate.setOnClickListener {
             DatePickerDialog(requireContext()).apply {
                 setOnDateSetListener { _, year, month, dayOfMonth ->
-                    dateFilter.postValue(LocalDate.of(year, month, dayOfMonth))
+                    dateFilter.postValue(LocalDate.of(year, month + 1, dayOfMonth))
                 }
                 val date = dateFilter.value ?: LocalDate.now()
-                updateDate(date.year, date.monthValue, date.dayOfMonth)
+                updateDate(date.year, date.monthValue.minus(1), date.dayOfMonth)
             }.show()
         }
     }

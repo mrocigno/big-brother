@@ -1,9 +1,9 @@
-package br.com.mrocigno.bigbrother.network
+package br.com.mrocigno.bigbrother.network.model
 
 import android.content.Context
-import android.text.SpannableStringBuilder
-import androidx.core.text.bold
 import androidx.recyclerview.widget.DiffUtil
+import br.com.mrocigno.bigbrother.network.R
+import br.com.mrocigno.bigbrother.network.entity.NetworkEntry
 import br.com.mrocigno.bigbrother.report.bbTrack
 import br.com.mrocigno.bigbrother.report.model.ReportType
 import okhttp3.Request
@@ -15,7 +15,8 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import java.io.Serializable
 
-class NetworkEntryModel(
+data class NetworkEntryModel(
+    val id: Long = 0,
     val fullUrl: String,
     val url: String,
     var statusCode: Int? = null,
@@ -32,6 +33,18 @@ class NetworkEntryModel(
         hour = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME),
         method = request.method,
         request = NetworkPayloadModel(request)
+    )
+
+    constructor(entry: NetworkEntry) : this(
+        id = entry.id,
+        fullUrl = entry.fullUrl,
+        url = entry.url,
+        statusCode = entry.statusCode,
+        elapsedTime = entry.elapsedTime,
+        hour = entry.hour,
+        method = entry.method,
+        request = NetworkPayloadModel.fromString(entry.requestHeader, entry.requestBody)!!,
+        response = NetworkPayloadModel.fromString(entry.responseHeader, entry.responseBody)
     )
 
     class Differ : DiffUtil.ItemCallback<NetworkEntryModel>() {
@@ -58,7 +71,8 @@ class NetworkEntryModel(
         .toString()
 
     fun all(context: Context) =
-        context.getString(R.string.network_copy_all_template,
+        context.getString(
+            R.string.network_copy_all_template,
             fullUrl,
             method,
             (statusCode ?: -1).toString(),
@@ -95,8 +109,6 @@ class NetworkPayloadModel(
     val body: String?
 ) : Serializable {
 
-    var isBodyFormatted: Boolean = false
-
     constructor(request: Request) : this(
         headers = request.headers.toMultimap(),
         body = request.let {
@@ -122,31 +134,45 @@ class NetworkPayloadModel(
         body = exception.stackTraceToString()
     )
 
-    val formattedBody: CharSequence? get() =
+    val formattedBody: String get() =
         if (body.isNullOrBlank()) "empty" else runCatching {
-            isBodyFormatted = true
             JSONObject(body!!).toString(2)
         }.recoverCatching {
-            isBodyFormatted = true
             JSONArray(body).toString(2)
         }.getOrElse {
-            isBodyFormatted = false
             body
         }
 
-    val formattedHeaders: CharSequence get() =
+    val formattedHeaders: String get() =
         if (headers.isNullOrEmpty()) "empty" else {
             headers.toReadable()
         }
 
-    private fun Map<String, List<String>>?.toReadable(): CharSequence {
+    private fun Map<String, List<String>>?.toReadable(): String {
         if (this.isNullOrEmpty()) return "empty"
 
-        val spannable = SpannableStringBuilder()
+        val builder = StringBuilder()
         keys.forEach {
-            spannable.bold { append(it) }
-            spannable.append(": ${this[it]?.joinToString(", ")}\n")
+            builder.append(it)
+            builder.append(": ")
+            builder.append(this[it]?.joinToString(", "))
+            builder.append("\n")
         }
-        return spannable
+        return builder.toString()
+    }
+
+    companion object {
+
+        fun fromString(header: String?, body: String?): NetworkPayloadModel? {
+            if (header == null && body == null) return null
+            val headerMap = header?.trim()?.split("\n")?.mapNotNull {
+                runCatching {
+                    val (key, value) = it.split(": ")
+                    key to value.split(", ")
+                }.getOrNull()
+            }?.toMap()
+
+            return NetworkPayloadModel(headerMap, body)
+        }
     }
 }

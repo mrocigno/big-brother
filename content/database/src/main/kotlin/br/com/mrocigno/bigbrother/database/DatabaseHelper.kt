@@ -1,10 +1,13 @@
 package br.com.mrocigno.bigbrother.database
 
 import android.database.sqlite.SQLiteDatabase
+import br.com.mrocigno.bigbrother.common.helpers.SQLBuilder
+import br.com.mrocigno.bigbrother.database.model.ColumnContent
 import br.com.mrocigno.bigbrother.database.model.TableDump
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
+import kotlin.math.min
 
 internal class DatabaseHelper(file: File) {
 
@@ -55,11 +58,34 @@ internal class DatabaseHelper(file: File) {
     fun execSQL(sql: String) =
         TableDump.Builder {
             val db = readableDatabase ?: error("readableDatabase cannot be reached")
+            val tableName = runCatching {
+                checkNotNull(SQLBuilder(sql).tableName.takeIf { it.isNotBlank() })
+            }.getOrNull()
+            val pkColumn = db.getPrimaryKeyColumnName(tableName)
+
             db.runQuery(sql) {
-                val rowContent = mutableMapOf<String, String>()
+                val rowContent = mutableMapOf<String, ColumnContent>()
                 columnNames.forEach { columnName ->
-                    val columnIndex = getColumnIndex(columnName)
-                    rowContent[columnName] = getString(columnIndex)
+                    val data = getColumnIndex(columnName).run(::getString) ?: "null"
+                    val lines = data.split("\n")
+
+                    rowContent[columnName] = runCatching {
+                        check(lines.size > 1)
+                        checkNotNull(pkColumn)
+
+                        val id = getColumnIndex(pkColumn).run(::getInt)
+                        val content = lines
+                            .subList(0, min(lines.size, 3))
+                            .joinToString("  ")
+
+                        ColumnContent(
+                            "$content...",
+                            true,
+                            "SELECT $columnName FROM $tableName WHERE $pkColumn = $id"
+                        )
+                    }.getOrElse {
+                        ColumnContent(data)
+                    }
                 }
                 data.add(rowContent)
             }

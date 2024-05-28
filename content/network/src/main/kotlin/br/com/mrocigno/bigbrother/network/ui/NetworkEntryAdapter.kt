@@ -1,8 +1,9 @@
-package br.com.mrocigno.bigbrother.network
+package br.com.mrocigno.bigbrother.network.ui
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 
 class NetworkEntryAdapter(
     private val onEntryClick: (NetworkEntryModel) -> Unit

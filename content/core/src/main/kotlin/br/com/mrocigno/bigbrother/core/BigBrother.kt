@@ -3,7 +3,6 @@ package br.com.mrocigno.bigbrother.core
 import android.app.Activity
 import android.app.Application
 import androidx.fragment.app.Fragment
-import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlin.reflect.KClass
 
 object BigBrother {
@@ -32,7 +31,6 @@ object BigBrother {
 
     fun watch(context: Application, isBubbleEnabled: Boolean = true) {
         if (!isBubbleEnabled) tasks.removeAll { it is BigBrotherWatchTask }
-        AndroidThreeTen.init(context)
         context.registerActivityLifecycleCallbacks(BigBrotherObserver())
     }
 }
