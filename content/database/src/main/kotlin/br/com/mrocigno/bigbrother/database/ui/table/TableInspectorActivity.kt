@@ -3,6 +3,7 @@ package br.com.mrocigno.bigbrother.database.ui.table
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
@@ -115,9 +116,13 @@ class TableInspectorActivity :
             if (expandedData.isJson && jsonViewer != null) {
                 startActivity(JsonViewerActivity.intent(this, expandedData.data))
             } else {
+                val content = LayoutInflater.from(this).inflate(R.layout.bigbrother_dialog_content, null).apply {
+                    findViewById<AppCompatTextView>(R.id.dialog_message).text = expandedData.data
+                }
+
                 AlertDialog.Builder(this)
                     .setTitle(R.string.bigbrother_expanded_plain_text)
-                    .setMessage(expandedData.data)
+                    .setView(content)
                     .setPositiveButton(CR.string.close) { dialog, _ ->
                         dialog.dismiss()
                     }

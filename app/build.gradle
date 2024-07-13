@@ -21,6 +21,7 @@ dependencies {
     implementation libs.kotlin.coroutines
     implementation libs.androidx.lifecycle.runtime
     implementation libs.gson
+    implementation libs.timber
 
     implementation libs.compose.material3
     implementation libs.compose.runtime

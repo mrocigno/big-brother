@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <application>
+
+        <activity
+            android:name=".LogListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.BigBrother">
+
+            <intent-filter>
+                <action android:name="${applicationId}.LOG_LIST_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name=".LogTask"
+            android:authorities="${applicationId}.LOG"
+            android:enabled="true"
+            android:exported="false" />
+    </application>
 </manifest>

@@ -2,6 +2,9 @@ package br.com.mrocigno.bigbrother
 
 import android.app.Application
 import br.com.mrocigno.bigbrother.core.BigBrother
+import br.com.mrocigno.bigbrother.log.BigBrotherLogTree
+import timber.log.Timber
+import timber.log.Timber.DebugTree
 
 class SampleApplication : Application() {
 
@@ -9,5 +12,7 @@ class SampleApplication : Application() {
         super.onCreate()
 
         BigBrother.watch(this, isBubbleEnabled = true)
+        Timber.plant(DebugTree())
+        Timber.plant(BigBrotherLogTree())
     }
 }

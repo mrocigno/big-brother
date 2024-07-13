@@ -5,7 +5,14 @@
 
         <activity
             android:name="br.com.mrocigno.bigbrother.crash.CrashActivity"
-            android:theme="@style/Theme.BigBrother" />
+            android:exported="false"
+            android:theme="@style/Theme.BigBrother">
+
+            <intent-filter>
+                <action android:name="${applicationId}.CRASH_ACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
         <provider
             android:name="br.com.mrocigno.bigbrother.crash.CrashTask"

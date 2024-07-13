@@ -1,7 +1,5 @@
 package br.com.mrocigno.bigbrother.crash
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Animatable2
 import android.graphics.drawable.AnimatedVectorDrawable
@@ -18,12 +16,16 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
-import br.com.mrocigno.bigbrother.common.utils.getSerializableExtraCompat
+import br.com.mrocigno.bigbrother.common.route.ANIMATE_ARG
+import br.com.mrocigno.bigbrother.common.route.SCREEN_NAME_ARG
+import br.com.mrocigno.bigbrother.common.route.SESSION_ID_ARG
+import br.com.mrocigno.bigbrother.common.route.STACKTRACE_ARG
 import br.com.mrocigno.bigbrother.common.utils.highlightStacktrace
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.report.BigBrotherReport
 import kotlinx.coroutines.flow.collectLatest
+import kotlin.system.exitProcess
 
 @OutOfDomain
 class CrashActivity : AppCompatActivity(R.layout.bigbrother_activity_crash) {
@@ -40,9 +42,12 @@ class CrashActivity : AppCompatActivity(R.layout.bigbrother_activity_crash) {
     private val timeline: AppCompatTextView by lazy { findViewById(R.id.crash_timeline) }
 
     private val sessionId: Long by lazy { intent.getLongExtra(SESSION_ID_ARG, -1) }
+    private val animate: Boolean by lazy { intent.getBooleanExtra(ANIMATE_ARG, true) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (animate) BigBrotherReport.deleteCurrentSession()
 
         setupWindow()
         setupThumb()
@@ -73,20 +78,22 @@ class CrashActivity : AppCompatActivity(R.layout.bigbrother_activity_crash) {
         thumb.clipToOutline = true
     }
 
+    override fun finish() {
+        super.finish()
+        if (animate) exitProcess(0)
+    }
+
     private fun setupStackTrace() {
         btnStacktrace.setOnClickListener {
             stacktrace.isVisible = true
             timeline.isVisible = false
         }
-        stacktrace.text = intent.getSerializableExtraCompat<Throwable>(THROWABLE_ARG)
-            ?.stackTraceToString()
+        stacktrace.text = intent.getStringExtra(STACKTRACE_ARG)
             ?.highlightStacktrace(this@CrashActivity)
     }
 
     private fun setupTimeline() {
         runCatching {
-            BigBrotherReport.deleteCurrentSession()
-
             btnTimeline.setOnClickListener {
                 timeline.isVisible = true
                 stacktrace.isVisible = false
@@ -106,30 +113,16 @@ class CrashActivity : AppCompatActivity(R.layout.bigbrother_activity_crash) {
 
     private fun startAnimation() {
         val avd = closeAnim.drawable as AnimatedVectorDrawable
-        avd.registerAnimationCallback(object : Animatable2.AnimationCallback() {
-            override fun onAnimationEnd(drawable: Drawable?) {
-                root.transitionToEnd()
-            }
-        })
+        if (!animate) {
+            root.setState(R.id.end, 0, 0)
+        } else {
+            avd.registerAnimationCallback(object : Animatable2.AnimationCallback() {
+                override fun onAnimationEnd(drawable: Drawable?) {
+                    root.transitionToEnd()
+                }
+            })
+        }
         avd.start()
-    }
-
-    companion object {
-
-        private const val SCREEN_NAME_ARG = "bigbrother.SCREEN_NAME_ARG"
-        private const val THROWABLE_ARG = "bigbrother.THROWABLE_ARG"
-        private const val SESSION_ID_ARG = "bigbrother.SESSION_ID_ARG"
-
-        fun intent(
-            context: Context,
-            screenName: String,
-            sessionId: Long,
-            throwable: Throwable
-        ) =
-            Intent(context, CrashActivity::class.java)
-                .putExtra(SCREEN_NAME_ARG, screenName)
-                .putExtra(THROWABLE_ARG, throwable)
-                .putExtra(SESSION_ID_ARG, sessionId)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        closeAnim.setOnClickListener { finish() }
     }
 }

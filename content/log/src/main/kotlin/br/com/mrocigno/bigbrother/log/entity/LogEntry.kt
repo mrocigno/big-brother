@@ -1,36 +1,47 @@
-package br.com.mrocigno.bigbrother.log
+package br.com.mrocigno.bigbrother.log.entity
 
 import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.DiffUtil
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import br.com.mrocigno.bigbrother.core.utils.bbSessionId
 import br.com.mrocigno.bigbrother.report.bbTrack
 import br.com.mrocigno.bigbrother.report.model.ReportType
+import org.threeten.bp.LocalDateTime
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
-class LogEntryModel(
-    val lvl: LogEntryType,
-    val tag: String,
-    val message: String? = null,
-    val throwable: Throwable? = null
+@Entity(tableName = "tblLog")
+class LogEntry(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") val id: Long = 0,
+    @ColumnInfo(name = "session_id") val sessionId: Long = bbSessionId,
+    @ColumnInfo(name = "lvl") val lvl: LogEntryType,
+    @ColumnInfo(name = "tag") val tag: String,
+    @ColumnInfo(name = "message") val message: String? = null,
+    @ColumnInfo(name = "error_message") val errorMessage: String? = null,
+    @ColumnInfo(name = "error_stacktrace") val errorStacktrace: String? = null,
+    @ColumnInfo(name = "time") val time: LocalDateTime = LocalDateTime.now()
 ) {
 
     fun track() = runCatching {
         bbTrack(ReportType.LOG) {
-            "> LOG - ${lvl.initial} - ${message ?: throwable?.message ?: "empty"}"
+            "> LOG - ${lvl.initial} - ${message ?: errorMessage ?: "empty"}"
         }
     }
 
     override fun toString() = StringBuilder()
         .appendLine(tag)
         .appendLine(message)
-        .appendLine(throwable?.message.toString())
+        .appendLine(errorMessage.toString())
         .toString()
 
-    class Differ : DiffUtil.ItemCallback<LogEntryModel>() {
-        override fun areItemsTheSame(oldItem: LogEntryModel, newItem: LogEntryModel) =
+    class Differ : DiffUtil.ItemCallback<LogEntry>() {
+        override fun areItemsTheSame(oldItem: LogEntry, newItem: LogEntry) =
             newItem.tag == oldItem.tag
                 && newItem.message == oldItem.message
 
-        override fun areContentsTheSame(oldItem: LogEntryModel, newItem: LogEntryModel) = false
+        override fun areContentsTheSame(oldItem: LogEntry, newItem: LogEntry) = false
     }
 }
 
@@ -69,5 +80,11 @@ enum class LogEntryType(
         CommonR.color.text_hyperlink,
         android.R.color.white,
         CommonR.color.text_title
+    ),
+    ASSERT(
+        "WTF",
+        CommonR.color.icon_negative,
+        android.R.color.white,
+        CommonR.color.icon_negative
     )
 }

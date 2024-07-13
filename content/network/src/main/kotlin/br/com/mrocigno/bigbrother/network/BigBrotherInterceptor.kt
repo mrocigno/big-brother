@@ -15,7 +15,7 @@ class BigBrotherInterceptor(private vararg val blockList: String) : Interceptor 
         if (request.isBlocked()) return chain.proceed(request)
 
         val requestModel = NetworkEntryModel(request)
-        val entry = requestModel.copy(id = NetworkHolder.addEntry(requestModel))
+        val entry = requestModel.copy(id = BigBrotherNetworkHolder.addEntry(requestModel))
         try {
             val response = chain.proceed(request)
 
@@ -25,7 +25,7 @@ class BigBrotherInterceptor(private vararg val blockList: String) : Interceptor 
             entry.statusCode = response.code
             entry.response = NetworkPayloadModel(response)
 
-            NetworkHolder.updateEntry(entry)
+            BigBrotherNetworkHolder.updateEntry(entry)
 
             return response
         } catch (exception: Exception) {
@@ -35,7 +35,7 @@ class BigBrotherInterceptor(private vararg val blockList: String) : Interceptor 
             entry.statusCode = -1
             entry.response = NetworkPayloadModel(exception)
 
-            NetworkHolder.updateEntry(entry)
+            BigBrotherNetworkHolder.updateEntry(entry)
 
             throw exception
         }

@@ -1,5 +1,6 @@
 package br.com.mrocigno.bigbrother.report.ui
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
@@ -7,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import br.com.mrocigno.bigbrother.report.entity.SessionEntity
 
 internal class SessionAdapter(
-    private val onViewClick: (SessionEntity) -> Unit
+    private val onViewClick: (SessionEntity, View) -> Unit
 ) : Adapter<SessionItemViewHolder>() {
 
     var list: List<SessionEntity>
@@ -32,7 +33,7 @@ internal class SessionAdapter(
         val model = list[position]
         holder.bind(model)
         holder.itemView.setOnClickListener {
-            onViewClick(model)
+            onViewClick(model, holder.title)
         }
     }
 }

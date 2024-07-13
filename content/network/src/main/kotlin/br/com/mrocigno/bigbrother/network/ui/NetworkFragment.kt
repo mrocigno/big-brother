@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.mrocigno.bigbrother.common.utils.disableChangeAnimation
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.core.utils.bbSessionId
-import br.com.mrocigno.bigbrother.network.NetworkHolder
+import br.com.mrocigno.bigbrother.network.BigBrotherNetworkHolder
 import br.com.mrocigno.bigbrother.network.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -53,7 +53,7 @@ class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) {
         }
 
         lifecycleScope.launchWhenCreated {
-            NetworkHolder.getBySessionId(sessionId).collect {
+            BigBrotherNetworkHolder.getBySessionId(sessionId).collect {
                 emptyState.isVisible = it.isEmpty()
                 adapter.setList(it.toList())
             }
@@ -62,7 +62,7 @@ class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) {
 
     private fun setupSearchView() {
         clear.setOnClickListener {
-            NetworkHolder.clear(sessionId)
+            BigBrotherNetworkHolder.clear(sessionId)
         }
         searchViewLayout.setEndIconOnClickListener {
             adapter.filter(searchView.text.toString())

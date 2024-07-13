@@ -15,7 +15,7 @@
 
         <activity
             android:name=".ui.NetworkListActivity"
-            android:exported="true"
+            android:exported="false"
             android:theme="@style/Theme.BigBrother">
 
             <intent-filter>

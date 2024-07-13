@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_message"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/lato"
+        android:padding="@dimen/spacing_l"
+        android:textColor="@color/text_title"
+        android:textIsSelectable="true"
+        android:textSize="16sp"
+        tools:text="@tools:sample/lorem/random" />
+
+</HorizontalScrollView>
