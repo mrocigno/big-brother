@@ -4,16 +4,23 @@ import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.ContextThemeWrapper
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.mrocigno.bigbrother.common.route.checkIntent
+import br.com.mrocigno.bigbrother.common.route.intentToCrash
+import br.com.mrocigno.bigbrother.common.route.intentToLogList
+import br.com.mrocigno.bigbrother.common.route.intentToNetworkList
 import br.com.mrocigno.bigbrother.report.BigBrotherReport
 import br.com.mrocigno.bigbrother.report.R
 import br.com.mrocigno.bigbrother.report.entity.SessionEntity
+import br.com.mrocigno.bigbrother.report.model.SessionStatus
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
@@ -76,8 +83,37 @@ class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) {
         }
     }
 
-    private fun onViewClick(session: SessionEntity) {
-        startActivity(SessionDetailsActivity.intent(requireContext(), session.id))
+    private fun onViewClick(session: SessionEntity, view: View) {
+        PopupMenu(requireContext(), view, Gravity.CENTER_HORIZONTAL).apply {
+            inflate(R.menu.bigbrother_session_menu)
+
+            val sessionIntent = SessionDetailsActivity.intent(requireContext(), session.id)
+            val networkSessionIntent = requireContext().intentToNetworkList(session.id)
+            val logSessionIntent = requireContext().intentToLogList(session.id)
+            val crashIntent = requireContext().intentToCrash("unknown", session.id, "unknown", false)
+
+            val isCrashed = session.status == SessionStatus.CRASHED
+            val hasNetwork = requireContext().checkIntent(networkSessionIntent)
+            val hasLog = requireContext().checkIntent(logSessionIntent)
+
+            menu.findItem(R.id.menu_session_crash).isVisible = isCrashed
+            menu.findItem(R.id.menu_session_network).isVisible = hasNetwork
+            menu.findItem(R.id.menu_session_logs).isVisible = hasLog
+
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_session_crash -> if (requireContext().checkIntent(crashIntent)) {
+                        startActivity(crashIntent)
+                    } else {
+                        startActivity(sessionIntent)
+                    }
+                    R.id.menu_session_report -> startActivity(sessionIntent)
+                    R.id.menu_session_network -> startActivity(networkSessionIntent)
+                    R.id.menu_session_logs -> startActivity(logSessionIntent)
+                }
+                true
+            }
+        }.show()
     }
 
     override fun onDestroy() {

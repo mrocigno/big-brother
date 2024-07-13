@@ -14,7 +14,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
@@ -29,7 +28,6 @@ import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 @OutOfDomain
 class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_network_entry) {
 
-    private val root: MotionLayout by lazy { findViewById(R.id.net_entry_details_root) }
     private val toolbar: Toolbar by lazy { findViewById(R.id.net_entry_details_toolbar) }
     private val background: View by lazy { findViewById(R.id.net_entry_details_background) }
     private val statusCode: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_status_code) }
@@ -75,11 +73,6 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activi
                     background.byStatusCode(model.statusCode)
                 }
             }
-        }
-
-        webView.setOnScrollChangeListener { _, _, currentY, _, _ ->
-            val newProgress = currentY.toFloat() / webView.height
-            root.progress = newProgress
         }
     }
 

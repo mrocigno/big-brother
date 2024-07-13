@@ -3,14 +3,16 @@ package br.com.mrocigno.bigbrother.log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import br.com.mrocigno.bigbrother.log.entity.LogEntry
+import br.com.mrocigno.bigbrother.log.entity.LogEntryType
 
 class LogEntryAdapter : Adapter<LogEntryView>() {
 
-    private val differ = AsyncListDiffer(this, LogEntryModel.Differ())
-    private val items: List<LogEntryModel> get() = differ.currentList
+    private val differ = AsyncListDiffer(this, LogEntry.Differ())
+    private val items: List<LogEntry> get() = differ.currentList
     private var query: String = ""
     private var typeFilter: LogEntryType? = null
-    private var allItemsHolder: List<LogEntryModel> = emptyList()
+    private var allItemsHolder: List<LogEntry> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LogEntryView(parent)
 
@@ -20,7 +22,7 @@ class LogEntryAdapter : Adapter<LogEntryView>() {
         holder.bind(items[position], query) { /*TODO*/ }
     }
 
-    fun setList(list: List<LogEntryModel>) {
+    fun setList(list: List<LogEntry>) {
         allItemsHolder = list
         filter(query, typeFilter)
     }

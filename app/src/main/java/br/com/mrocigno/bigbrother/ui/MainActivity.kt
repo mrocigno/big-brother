@@ -10,14 +10,13 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.AppCompatRadioButton
 import br.com.mrocigno.bigbrother.R
-import br.com.mrocigno.bigbrother.core.BigBrother
 import br.com.mrocigno.bigbrother.log.BBLog
-import br.com.mrocigno.bigbrother.log.BBLog.Companion.tag
 import br.com.mrocigno.bigbrother.ui.compose.ComposableActivity
 import br.com.mrocigno.bigbrother.ui.general.CustomPageActivity
 import br.com.mrocigno.bigbrother.ui.general.OutOfDomainActivity
 import br.com.mrocigno.bigbrother.ui.network.NetworkActivity
 import br.com.mrocigno.bigbrother.ui.report.ReportActivity
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity(R.layout.main_activity) {
 
@@ -97,19 +96,22 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
 
     private fun setupLogGroup() {
         findViewById<View>(R.id.log_debug).setOnClickListener {
-            BigBrother.tag("custom tag name").d("This a debug log example", Exception("custom exception for debug"))
+            Timber.tag("custom tag name").d(Exception("custom exception for debug"), "This a debug log example")
         }
         findViewById<View>(R.id.log_error).setOnClickListener {
-            BigBrother.tag("custom tag name").e("This a error log example", Exception("custom exception for error"))
+            Timber.tag("custom tag name").e(Exception("custom exception for error"), "This a error log example")
         }
         findViewById<View>(R.id.log_info).setOnClickListener {
-            BigBrother.tag("custom tag name").i("This a info log example", Exception("custom exception for info"))
+            Timber.tag("custom tag name").i(Exception("custom exception for info"), "This a info log example")
         }
         findViewById<View>(R.id.log_warn).setOnClickListener {
-            BigBrother.tag("custom tag name").w("This a warn log example", Exception("custom exception for warn"))
+            Timber.tag("custom tag name").w(Exception("custom exception for warn"), "This a warn log example")
         }
         findViewById<View>(R.id.log_verbose).setOnClickListener {
-            BigBrother.tag("custom tag name").v("This a verbose log example", Exception("custom exception for verbose"))
+            Timber.tag("custom tag name").v(Exception("custom exception for verbose"), "This a verbose log example")
+        }
+        findViewById<View>(R.id.log_assert).setOnClickListener {
+            Timber.tag("custom tag name").wtf(Exception("custom exception for assert"), "This a assert log example")
         }
     }
 

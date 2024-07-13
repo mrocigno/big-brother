@@ -5,14 +5,21 @@ import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.mrocigno.bigbrother.common.route.SESSION_ID_ARG
 import br.com.mrocigno.bigbrother.common.utils.disableChangeAnimation
 import br.com.mrocigno.bigbrother.common.utils.getColorState
 import br.com.mrocigno.bigbrother.core.OutOfDomain
+import br.com.mrocigno.bigbrother.core.utils.bbSessionId
+import br.com.mrocigno.bigbrother.log.entity.LogEntryType
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
@@ -20,14 +27,16 @@ import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
 @OutOfDomain
-class LogFragment : Fragment(R.layout.bigbrother_log_fragment_log) {
+class LogFragment : Fragment(R.layout.bigbrother_fragment_log) {
 
     private val chipGroup: ChipGroup by lazy { requireView().findViewById(R.id.log_chip_group) }
     private val recycler: RecyclerView by lazy { requireView().findViewById(R.id.log_recycler) }
     private val searchViewLayout: TextInputLayout by lazy { requireView().findViewById(R.id.log_search_layout) }
     private val searchView: TextInputEditText by lazy { requireView().findViewById(R.id.log_search_view) }
     private val clear: AppCompatImageView by lazy { requireView().findViewById(R.id.log_clear) }
+    private val emptyState: ViewGroup by lazy { requireView().findViewById(R.id.log_empty_state) }
 
+    private val sessionId: Long by lazy { arguments?.getLong(SESSION_ID_ARG) ?: bbSessionId }
     private val adapter: LogEntryAdapter get() = recycler.adapter as LogEntryAdapter
 
     override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
@@ -49,9 +58,12 @@ class LogFragment : Fragment(R.layout.bigbrother_log_fragment_log) {
         recycler.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         recycler.adapter = LogEntryAdapter()
 
-        BBLog.logEntries.observe(viewLifecycleOwner) {
-            adapter.setList(it)
-            recycler.scrollToPosition(it.size - 1)
+        lifecycleScope.launchWhenCreated {
+            BBLog.getBySession(sessionId).collect {
+                adapter.setList(it)
+                recycler.scrollToPosition(it.size - 1)
+                emptyState.isVisible = it.isEmpty()
+            }
         }
     }
 
@@ -89,5 +101,12 @@ class LogFragment : Fragment(R.layout.bigbrother_log_fragment_log) {
 
     override fun getContext(): Context {
         return ContextThemeWrapper(super.getContext(), CommonR.style.Theme_BigBrother)
+    }
+
+    companion object {
+
+        fun newInstance(sessionId: Long = bbSessionId) = LogFragment().apply {
+            arguments = bundleOf(SESSION_ID_ARG to sessionId)
+        }
     }
 }

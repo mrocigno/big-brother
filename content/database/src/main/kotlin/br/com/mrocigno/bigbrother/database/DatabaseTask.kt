@@ -18,15 +18,19 @@ internal class DatabaseTask : BigBrotherTask() {
     private val supervisor = SupervisorJob()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + supervisor)
 
-    override fun onCreate() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    override fun onCreate(): Boolean {
+        listDefaultDatabases()
+        return super.onCreate()
+    }
+
+    fun listDefaultDatabases() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         val databaseDir = context.databasesDir ?: run {
             Log.w("BIGBROTHER", "DatabaseDir not found")
-            return false
+            return null
         }
 
         list(databaseDir)
-        super.onCreate()
-    } else false
+    } else Unit
 
     private fun list(databaseDir: File) = databaseDir.forEachDatabase {
         databases[name] = this

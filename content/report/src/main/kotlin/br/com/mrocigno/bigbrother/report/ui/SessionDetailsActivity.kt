@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -13,11 +12,8 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.WindowCompat
-import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
-import br.com.mrocigno.bigbrother.common.route.checkIntent
-import br.com.mrocigno.bigbrother.common.route.intentToNetworkList
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.report.BigBrotherReport
@@ -31,7 +27,6 @@ class SessionDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_se
     private val toolbar: Toolbar by lazy { findViewById(R.id.session_details_toolbar) }
     private val print: AppCompatImageView by lazy { findViewById(R.id.session_details_print) }
     private val timeline: AppCompatTextView by lazy { findViewById(R.id.session_details_timeline) }
-    private val networkData: View by lazy { findViewById(R.id.session_details_network_data) }
 
     private val sessionId: Long by lazy { intent.getLongExtra(SESSION_ID_ARG, -1) }
 
@@ -66,13 +61,6 @@ class SessionDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_se
             ?.run(print::setImageBitmap)
             ?.run { setupWithPrint() }
             ?: setupWithoutPrint()
-
-        val networkSessionIntent = intentToNetworkList(sessionId)
-        if (checkIntent(networkSessionIntent)) {
-            networkData.setOnClickListener { startActivity(networkSessionIntent) }
-        } else {
-            networkData.isVisible = false
-        }
     }
 
     private fun setupWithPrint() {

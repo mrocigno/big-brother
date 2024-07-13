@@ -12,7 +12,7 @@ import org.threeten.bp.format.DateTimeFormatter
 
 internal class SessionItemViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_session)) {
 
-    private val title: AppCompatTextView by lazy { itemView.findViewById(R.id.session_item_title) }
+    val title: AppCompatTextView by lazy { itemView.findViewById(R.id.session_item_title) }
     private val date: AppCompatTextView by lazy { itemView.findViewById(R.id.session_item_date) }
     private val status: AppCompatTextView by lazy { itemView.findViewById(R.id.session_item_status) }
     private val imgCount: AppCompatTextView by lazy { itemView.findViewById(R.id.session_item_img_count) }

@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-internal object NetworkHolder {
+object BigBrotherNetworkHolder {
 
     private lateinit var db: NetworkDatabase
     private val dao: NetworkDao

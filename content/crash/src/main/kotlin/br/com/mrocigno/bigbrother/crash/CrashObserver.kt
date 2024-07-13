@@ -1,8 +1,9 @@
 package br.com.mrocigno.bigbrother.crash
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Process
-import br.com.mrocigno.bigbrother.common.utils.canBeSerialized
+import br.com.mrocigno.bigbrother.common.route.intentToCrash
 import br.com.mrocigno.bigbrother.common.utils.printScreen
 import br.com.mrocigno.bigbrother.common.utils.save
 import br.com.mrocigno.bigbrother.core.utils.bbSessionId
@@ -28,19 +29,9 @@ class CrashObserver(
             .printScreen(lastClickPosition)
             .save(activity, "print_crash_session_$bbSessionId.png")
 
-        // Normalize serializable exception, cause CoroutinesInternalError cannot be serialized
-        val throwable = if (e.canBeSerialized()) e else {
-            Exception(e.message, e.cause)
-        }
-
-        activity.startActivity(
-            CrashActivity.intent(
-                activity,
-                activity::class.simpleName.orEmpty(),
-                bbSessionId,
-                throwable
-            )
-        )
+        activity.intentToCrash(activity::class.simpleName.orEmpty(), bbSessionId, e.stackTraceToString())
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            .run(activity::startActivity)
 
         Process.killProcess(Process.myPid())
         exitProcess(0)
