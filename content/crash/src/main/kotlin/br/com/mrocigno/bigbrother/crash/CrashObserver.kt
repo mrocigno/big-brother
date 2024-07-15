@@ -6,9 +6,12 @@ import android.os.Process
 import br.com.mrocigno.bigbrother.common.route.intentToCrash
 import br.com.mrocigno.bigbrother.common.utils.printScreen
 import br.com.mrocigno.bigbrother.common.utils.save
+import br.com.mrocigno.bigbrother.core.BigBrotherDatabaseTask.Companion.bbdb
+import br.com.mrocigno.bigbrother.core.entity.CrashEntity
 import br.com.mrocigno.bigbrother.core.utils.bbSessionId
 import br.com.mrocigno.bigbrother.core.utils.lastClickPosition
 import br.com.mrocigno.bigbrother.report.BigBrotherReport
+import kotlinx.coroutines.runBlocking
 import java.lang.ref.WeakReference
 import kotlin.system.exitProcess
 
@@ -25,11 +28,20 @@ class CrashObserver(
             return
         }
 
+        runBlocking {
+            bbdb?.crashDao()?.insert(
+                CrashEntity(
+                    activityName = activity::class.simpleName.orEmpty(),
+                    stackTrace = e.stackTraceToString()
+                )
+            )
+        }
+
         activity
             .printScreen(lastClickPosition)
             .save(activity, "print_crash_session_$bbSessionId.png")
 
-        activity.intentToCrash(activity::class.simpleName.orEmpty(), bbSessionId, e.stackTraceToString())
+        activity.intentToCrash(bbSessionId)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             .run(activity::startActivity)
 

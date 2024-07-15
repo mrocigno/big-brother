@@ -96,19 +96,19 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
 
     private fun setupLogGroup() {
         findViewById<View>(R.id.log_debug).setOnClickListener {
-            Timber.tag("custom tag name").d(Exception("custom exception for debug"), "This a debug log example")
+            Timber.tag("custom tag name").d("This a debug log example")
         }
         findViewById<View>(R.id.log_error).setOnClickListener {
             Timber.tag("custom tag name").e(Exception("custom exception for error"), "This a error log example")
         }
         findViewById<View>(R.id.log_info).setOnClickListener {
-            Timber.tag("custom tag name").i(Exception("custom exception for info"), "This a info log example")
+            Timber.tag("custom tag name").i("This a info log example")
         }
         findViewById<View>(R.id.log_warn).setOnClickListener {
             Timber.tag("custom tag name").w(Exception("custom exception for warn"), "This a warn log example")
         }
         findViewById<View>(R.id.log_verbose).setOnClickListener {
-            Timber.tag("custom tag name").v(Exception("custom exception for verbose"), "This a verbose log example")
+            Timber.tag("custom tag name").v("This a verbose log example")
         }
         findViewById<View>(R.id.log_assert).setOnClickListener {
             Timber.tag("custom tag name").wtf(Exception("custom exception for assert"), "This a assert log example")

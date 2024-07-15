@@ -4,7 +4,6 @@ import android.util.Log
 import br.com.mrocigno.bigbrother.core.BigBrother
 import br.com.mrocigno.bigbrother.core.BigBrotherDatabaseTask.Companion.bbdb
 import br.com.mrocigno.bigbrother.core.dao.LogDao
-import br.com.mrocigno.bigbrother.core.utils.bbSessionId
 import br.com.mrocigno.bigbrother.log.model.LogEntry
 import br.com.mrocigno.bigbrother.log.model.LogEntryType
 import kotlinx.coroutines.CoroutineScope
@@ -112,8 +111,8 @@ class BBLog(private val tag: String) {
             dao?.insert(model.toEntity())
         }
 
-        fun clear() = scope.launch {
-            dao?.clearSession(bbSessionId)
+        fun clear(sessionId: Long) = scope.launch {
+            dao?.clearSession(sessionId)
         }
 
         internal fun getBySession(sessionId: Long) =

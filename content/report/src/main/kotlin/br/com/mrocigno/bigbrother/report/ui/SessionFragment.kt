@@ -90,7 +90,7 @@ class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) {
             val sessionIntent = SessionDetailsActivity.intent(requireContext(), session.id)
             val networkSessionIntent = requireContext().intentToNetworkList(session.id)
             val logSessionIntent = requireContext().intentToLogList(session.id)
-            val crashIntent = requireContext().intentToCrash("unknown", session.id, "unknown", false)
+            val crashIntent = requireContext().intentToCrash(session.id,false)
 
             val isCrashed = session.status == SessionStatus.CRASHED
             val hasNetwork = requireContext().checkIntent(networkSessionIntent)
