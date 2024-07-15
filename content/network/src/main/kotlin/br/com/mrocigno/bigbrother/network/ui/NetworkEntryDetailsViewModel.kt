@@ -12,7 +12,7 @@ class NetworkEntryDetailsViewModel : ViewModel() {
 
     fun getNetworkEntry(entryId: Long): LiveData<NetworkEntryModel> =
         MutableLiveData<NetworkEntryModel>().applyScoped(viewModelScope) {
-            BigBrotherNetworkHolder.getById(entryId).collect {
+            BigBrotherNetworkHolder.getById(entryId)?.collect {
                 postValue(it)
             }
         }

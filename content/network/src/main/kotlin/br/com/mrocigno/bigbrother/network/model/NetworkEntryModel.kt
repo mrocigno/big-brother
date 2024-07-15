@@ -2,8 +2,9 @@ package br.com.mrocigno.bigbrother.network.model
 
 import android.content.Context
 import androidx.recyclerview.widget.DiffUtil
+import br.com.mrocigno.bigbrother.core.entity.NetworkEntity
+import br.com.mrocigno.bigbrother.core.utils.bbSessionId
 import br.com.mrocigno.bigbrother.network.R
-import br.com.mrocigno.bigbrother.network.entity.NetworkEntry
 import br.com.mrocigno.bigbrother.report.bbTrack
 import br.com.mrocigno.bigbrother.report.model.ReportType
 import okhttp3.Request
@@ -35,7 +36,7 @@ data class NetworkEntryModel(
         request = NetworkPayloadModel(request)
     )
 
-    constructor(entry: NetworkEntry) : this(
+    constructor(entry: NetworkEntity) : this(
         id = entry.id,
         fullUrl = entry.fullUrl,
         url = entry.url,
@@ -102,6 +103,21 @@ data class NetworkEntryModel(
             append("--data '${request.body}'")
         }
     }.toString()
+
+    fun toEntity(): NetworkEntity = NetworkEntity(
+        id = id,
+        sessionId = bbSessionId,
+        fullUrl = fullUrl,
+        url = url,
+        statusCode = statusCode,
+        elapsedTime = elapsedTime,
+        hour = hour,
+        method = method,
+        requestHeader = request.formattedHeaders,
+        requestBody = request.formattedBody,
+        responseHeader = response?.formattedHeaders.toString(),
+        responseBody = response?.formattedBody.toString()
+    )
 }
 
 class NetworkPayloadModel(

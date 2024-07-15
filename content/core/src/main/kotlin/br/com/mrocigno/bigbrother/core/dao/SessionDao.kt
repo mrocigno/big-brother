@@ -1,24 +1,16 @@
-package br.com.mrocigno.bigbrother.report.dao
+package br.com.mrocigno.bigbrother.core.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import br.com.mrocigno.bigbrother.report.entity.SessionEntity
-import br.com.mrocigno.bigbrother.report.model.SessionStatus
+import br.com.mrocigno.bigbrother.core.entity.SessionEntity
 import kotlinx.coroutines.flow.Flow
-import org.threeten.bp.LocalDateTime
 
 @Dao
-internal interface SessionDao {
+interface SessionDao {
 
     @Insert
-    fun create(
-        entity: SessionEntity = SessionEntity(
-            id = 0,
-            dateTime = LocalDateTime.now(),
-            status = SessionStatus.RUNNING
-        )
-    ): Long
+    fun create(entity: SessionEntity): Long
 
     @Query("DELETE FROM tblSessions WHERE id = :id")
     suspend fun deleteSession(id: Long)

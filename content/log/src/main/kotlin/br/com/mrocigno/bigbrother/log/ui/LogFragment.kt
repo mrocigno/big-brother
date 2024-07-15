@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.log
+package br.com.mrocigno.bigbrother.log.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -19,7 +19,9 @@ import br.com.mrocigno.bigbrother.common.utils.disableChangeAnimation
 import br.com.mrocigno.bigbrother.common.utils.getColorState
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.core.utils.bbSessionId
-import br.com.mrocigno.bigbrother.log.entity.LogEntryType
+import br.com.mrocigno.bigbrother.log.BBLog
+import br.com.mrocigno.bigbrother.log.R
+import br.com.mrocigno.bigbrother.log.model.LogEntryType
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
@@ -59,7 +61,7 @@ class LogFragment : Fragment(R.layout.bigbrother_fragment_log) {
         recycler.adapter = LogEntryAdapter()
 
         lifecycleScope.launchWhenCreated {
-            BBLog.getBySession(sessionId).collect {
+            BBLog.getBySession(sessionId)?.collect {
                 adapter.setList(it)
                 recycler.scrollToPosition(it.size - 1)
                 emptyState.isVisible = it.isEmpty()

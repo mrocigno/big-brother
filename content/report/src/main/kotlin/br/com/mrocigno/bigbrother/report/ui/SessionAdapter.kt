@@ -5,21 +5,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import br.com.mrocigno.bigbrother.report.entity.SessionEntity
+import br.com.mrocigno.bigbrother.report.model.SessionEntry
 
 internal class SessionAdapter(
-    private val onViewClick: (SessionEntity, View) -> Unit
+    private val onViewClick: (SessionEntry, View) -> Unit
 ) : Adapter<SessionItemViewHolder>() {
 
-    var list: List<SessionEntity>
+    var list: List<SessionEntry>
         set(value) = differ.submitList(value)
         get() = differ.currentList
 
-    private val differ = AsyncListDiffer(this, object : ItemCallback<SessionEntity>() {
-        override fun areItemsTheSame(oldItem: SessionEntity, newItem: SessionEntity) =
+    private val differ = AsyncListDiffer(this, object : ItemCallback<SessionEntry>() {
+        override fun areItemsTheSame(oldItem: SessionEntry, newItem: SessionEntry) =
             oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: SessionEntity, newItem: SessionEntity) =
+        override fun areContentsTheSame(oldItem: SessionEntry, newItem: SessionEntry) =
             oldItem.status == newItem.status
                     && oldItem.dateTime == newItem.dateTime
     })

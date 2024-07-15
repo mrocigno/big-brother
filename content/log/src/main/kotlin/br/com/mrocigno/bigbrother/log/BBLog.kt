@@ -1,16 +1,16 @@
 package br.com.mrocigno.bigbrother.log
 
-import android.content.Context
 import android.util.Log
-import androidx.room.Room
 import br.com.mrocigno.bigbrother.core.BigBrother
+import br.com.mrocigno.bigbrother.core.BigBrotherDatabaseTask.Companion.bbdb
+import br.com.mrocigno.bigbrother.core.dao.LogDao
 import br.com.mrocigno.bigbrother.core.utils.bbSessionId
-import br.com.mrocigno.bigbrother.log.dao.LogDao
-import br.com.mrocigno.bigbrother.log.entity.LogEntry
-import br.com.mrocigno.bigbrother.log.entity.LogEntryType
+import br.com.mrocigno.bigbrother.log.model.LogEntry
+import br.com.mrocigno.bigbrother.log.model.LogEntryType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class BBLog(private val tag: String) {
@@ -93,13 +93,7 @@ class BBLog(private val tag: String) {
 
         private val job: Job = Job()
         private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job)
-        private lateinit var db: LogDatabase
-        private val dao: LogDao
-            get() = db.logDao()
-
-        fun init(context: Context) {
-            db = Room.databaseBuilder(context, LogDatabase::class.java, "bb-log-db").build()
-        }
+        private val dao: LogDao? get() = bbdb?.logDao()
 
         fun addEntry(
             lvl: LogEntryType,
@@ -115,14 +109,17 @@ class BBLog(private val tag: String) {
                 errorStacktrace = throwable?.stackTraceToString()
             )
             model.track()
-            dao.insert(model)
+            dao?.insert(model.toEntity())
         }
 
         fun clear() = scope.launch {
-            dao.clearSession(bbSessionId)
+            dao?.clearSession(bbSessionId)
         }
 
-        internal fun getBySession(sessionId: Long) = dao.getBySession(sessionId)
+        internal fun getBySession(sessionId: Long) =
+            dao?.getBySession(sessionId)?.map { data ->
+                data.map { LogEntry(it) }
+            }
 
         fun BigBrother.tag(tag: String = DEFAULT_TAG) = BBLog(tag)
 

@@ -1,6 +1,7 @@
 plugins {
     alias libs.plugins.android.library
     alias libs.plugins.android.kotlin
+    id 'com.google.devtools.ksp'
 }
 
 apply from: file('../../gradle/publish.gradle')
@@ -9,6 +10,10 @@ dependencies {
 
     implementation project(":content:common")
     implementation libs.kotlin.reflection
+
+    api libs.androidx.room.runtime
+    implementation libs.androidx.room.ktx
+    ksp libs.androidx.room.compiler
 
     constraints {
         api project(":content:log")

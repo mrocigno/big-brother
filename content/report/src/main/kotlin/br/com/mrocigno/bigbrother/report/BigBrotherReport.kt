@@ -1,27 +1,30 @@
 package br.com.mrocigno.bigbrother.report
 
-import android.content.Context
 import android.util.Log
-import androidx.room.Room
 import br.com.mrocigno.bigbrother.common.BBTAG
+import br.com.mrocigno.bigbrother.core.BigBrotherDatabaseTask.Companion.bbdb
+import br.com.mrocigno.bigbrother.core.dao.ReportLogDao
+import br.com.mrocigno.bigbrother.core.dao.SessionDao
 import br.com.mrocigno.bigbrother.core.utils.bbSessionId
-import br.com.mrocigno.bigbrother.report.entity.ReportLogEntity
+import br.com.mrocigno.bigbrother.report.model.ReportLogEntry
 import br.com.mrocigno.bigbrother.report.model.ReportType
+import br.com.mrocigno.bigbrother.report.model.SessionEntry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
 object BigBrotherReport {
 
-    private lateinit var db: ReportDatabase
-
     private val job: Job = Job()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + job)
+    private val sessionDao: SessionDao? get() = bbdb?.sessionDao()
+    private val reportDao: ReportLogDao? get() = bbdb?.reportLogDao()
 
     internal var nestedLevel = 0
 
@@ -34,48 +37,48 @@ object BigBrotherReport {
         content: String,
         nestedLevel: Int = this.nestedLevel
     ) {
-        val entity = ReportLogEntity(
+        val entity = ReportLogEntry(
             type = type,
             txtContent = content,
             nestedLevel = nestedLevel
         )
-        db.reportLogDao().add(entity)
+        reportDao?.add(entity.toEntity())
     }
 
     fun trackCrash(e: Throwable) = scope.launch {
-        db.sessionDao().sessionCrashed(bbSessionId)
+        sessionDao?.sessionCrashed(bbSessionId)
         _track(ReportType.CRASH, "X CRASH - ${e.message ?: "without message"}")
     }.let { }
 
     fun getSessionTimeline(sessionId: Long) = flow {
-        val report = db.reportLogDao().getSession(sessionId)
-            .buildReport()
-            .generate()
+        val report = reportDao?.getSession(sessionId)
+            ?.map(::ReportLogEntry)
+            ?.buildReport()
+            ?.generate()
 
         emit(report)
     }.flowOn(Dispatchers.IO)
 
     fun deleteCurrentSession() = scope.launch {
         Log.d(BBTAG, "Deleting session $bbSessionId")
-        db.sessionDao().deleteSession(bbSessionId)
+        sessionDao?.deleteSession(bbSessionId)
     }
 
     internal fun listSessions(dateFilter: LocalDate?) = if (dateFilter != null) {
         val startDate = dateFilter.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T00:00:00"
         val endDate = dateFilter.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T23:59:59"
-        db.sessionDao().getSessionByRange(startDate, endDate)
+        sessionDao?.getSessionByRange(startDate, endDate)
     } else {
-        db.sessionDao().getAllSessions()
+        sessionDao?.getAllSessions()
+    }?.map { data ->
+        data.map(::SessionEntry)
     }
 
-    internal fun createSession(context: Context) {
-        // Allowed in main thread, to prevent session -1
-        db = Room.databaseBuilder(context, ReportDatabase::class.java, "bb-report-db")
-            .allowMainThreadQueries()
-            .build()
-
-        db.sessionDao().closePreviousSession()
-        bbSessionId = db.sessionDao().create()
+    internal fun createSession() {
+        sessionDao?.closePreviousSession()
+        bbSessionId = sessionDao?.create(
+            SessionEntry().toEntity()
+        ) ?: -1L
     }
 }
 

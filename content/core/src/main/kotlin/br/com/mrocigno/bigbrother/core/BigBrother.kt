@@ -21,10 +21,6 @@ object BigBrother {
         pages.add(PageData(name, creator))
     }
 
-    internal fun getPages(location: KClass<*>) = activityPages[location]
-
-    internal fun getPages() = pages
-
     fun config(configuration: BigBrotherConfig.() -> Unit) = apply {
         config.apply(configuration)
     }
@@ -33,4 +29,8 @@ object BigBrother {
         if (!isBubbleEnabled) tasks.removeAll { it is BigBrotherWatchTask }
         context.registerActivityLifecycleCallbacks(BigBrotherObserver())
     }
+
+    internal fun getPages(location: KClass<*>) = activityPages[location]
+
+    internal fun getPages() = pages
 }

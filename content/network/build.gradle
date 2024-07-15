@@ -2,7 +2,6 @@ plugins {
     alias libs.plugins.android.library
     alias libs.plugins.android.kotlin
     id 'kotlin-parcelize'
-    id 'com.google.devtools.ksp'
 }
 
 apply from: file('../../gradle/publish.gradle')
@@ -16,7 +15,4 @@ dependencies {
     compileOnly libs.squareup.okhttp3
 
     implementation libs.androidx.activity
-    implementation libs.androidx.room.runtime
-    implementation libs.androidx.room.ktx
-    ksp libs.androidx.room.compiler
 }

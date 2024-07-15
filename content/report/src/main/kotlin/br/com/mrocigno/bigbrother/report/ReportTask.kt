@@ -11,7 +11,6 @@ import br.com.mrocigno.bigbrother.core.BigBrotherTask
 import br.com.mrocigno.bigbrother.report.BigBrotherReport.nestedLevel
 import br.com.mrocigno.bigbrother.report.model.ReportType
 import br.com.mrocigno.bigbrother.report.ui.ClickObserverView
-import com.jakewharton.threetenabp.AndroidThreeTen
 
 internal class ReportTask : BigBrotherTask() {
 
@@ -19,9 +18,7 @@ internal class ReportTask : BigBrotherTask() {
 
     override fun onCreate(): Boolean {
         try {
-            val context = context ?: throw IllegalStateException("context is null")
-            AndroidThreeTen.init(context)
-            BigBrotherReport.createSession(context)
+            BigBrotherReport.createSession()
         } catch (e: Exception) {
             Log.e(BBTAG, "failed to initialize big brother report task", e)
             return false

@@ -19,7 +19,7 @@ import br.com.mrocigno.bigbrother.common.route.intentToLogList
 import br.com.mrocigno.bigbrother.common.route.intentToNetworkList
 import br.com.mrocigno.bigbrother.report.BigBrotherReport
 import br.com.mrocigno.bigbrother.report.R
-import br.com.mrocigno.bigbrother.report.entity.SessionEntity
+import br.com.mrocigno.bigbrother.report.model.SessionEntry
 import br.com.mrocigno.bigbrother.report.model.SessionStatus
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -62,7 +62,7 @@ class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) {
             val text = it?.run { format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) }
             search.setText(text)
             scope.launch {
-                BigBrotherReport.listSessions(it).collectLatest { sessions ->
+                BigBrotherReport.listSessions(it)?.collectLatest { sessions ->
                     adapter.list = sessions
                 }
             }
@@ -83,7 +83,7 @@ class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) {
         }
     }
 
-    private fun onViewClick(session: SessionEntity, view: View) {
+    private fun onViewClick(session: SessionEntry, view: View) {
         PopupMenu(requireContext(), view, Gravity.CENTER_HORIZONTAL).apply {
             inflate(R.menu.bigbrother_session_menu)
 
