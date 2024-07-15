@@ -53,7 +53,7 @@ class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) {
         }
 
         lifecycleScope.launchWhenCreated {
-            BigBrotherNetworkHolder.getBySessionId(sessionId).collect {
+            BigBrotherNetworkHolder.getBySessionId(sessionId)?.collect {
                 emptyState.isVisible = it.isEmpty()
                 adapter.setList(it.toList())
             }

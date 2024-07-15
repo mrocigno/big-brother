@@ -4,6 +4,12 @@
     <application>
 
         <provider
+            android:authorities="${applicationId}.DATABASE_TASK"
+            android:name=".BigBrotherDatabaseTask"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <provider
             android:authorities="${applicationId}.VORTEX"
             android:name=".BigBrotherWatchTask"
             android:enabled="true"

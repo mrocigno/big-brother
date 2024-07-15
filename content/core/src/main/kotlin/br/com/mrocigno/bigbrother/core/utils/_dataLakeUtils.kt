@@ -14,4 +14,4 @@ var lastClickPosition: PointF?
 
 var bbSessionId: Long
     get() = dataLake["sessionId"] as? Long ?: randomSession
-    set(value) { dataLake["sessionId"] = value }
+    set(value) { dataLake["sessionId"] = value.takeIf { it != -1L } }

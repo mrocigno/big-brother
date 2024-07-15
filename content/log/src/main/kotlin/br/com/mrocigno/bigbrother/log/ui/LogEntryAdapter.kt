@@ -1,10 +1,10 @@
-package br.com.mrocigno.bigbrother.log
+package br.com.mrocigno.bigbrother.log.ui
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import br.com.mrocigno.bigbrother.log.entity.LogEntry
-import br.com.mrocigno.bigbrother.log.entity.LogEntryType
+import br.com.mrocigno.bigbrother.log.model.LogEntry
+import br.com.mrocigno.bigbrother.log.model.LogEntryType
 
 class LogEntryAdapter : Adapter<LogEntryView>() {
 

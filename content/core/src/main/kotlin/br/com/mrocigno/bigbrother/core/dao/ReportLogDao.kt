@@ -1,12 +1,12 @@
-package br.com.mrocigno.bigbrother.report.dao
+package br.com.mrocigno.bigbrother.core.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import br.com.mrocigno.bigbrother.report.entity.ReportLogEntity
+import br.com.mrocigno.bigbrother.core.entity.ReportLogEntity
 
 @Dao
-internal interface ReportLogDao {
+interface ReportLogDao {
 
     @Insert
     suspend fun add(report: ReportLogEntity): Long

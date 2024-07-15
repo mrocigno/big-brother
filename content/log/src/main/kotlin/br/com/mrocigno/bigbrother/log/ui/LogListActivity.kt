@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.log
+package br.com.mrocigno.bigbrother.log.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar
 import br.com.mrocigno.bigbrother.common.route.SESSION_ID_ARG
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.core.utils.bbSessionId
+import br.com.mrocigno.bigbrother.log.R
 
 @OutOfDomain
 class LogListActivity : AppCompatActivity(R.layout.bigbrother_activity_log_list) {
