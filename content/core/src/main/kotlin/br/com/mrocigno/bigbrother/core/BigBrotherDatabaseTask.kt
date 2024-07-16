@@ -20,6 +20,7 @@ class BigBrotherDatabaseTask : BigBrotherTask() {
             // main thread allowed to prevent session -1
             db = Room.databaseBuilder(context, BigBrotherDatabase::class.java, "big-brother-database")
                 .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
                 .build()
         } catch (e: Exception) {
             Log.e(BBTAG, "failed to initialize big brother network task", e)

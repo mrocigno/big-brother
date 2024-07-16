@@ -25,6 +25,9 @@ import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.ObjectOutputStream
 import java.io.Serializable
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.reflect.KClass
 import kotlin.reflect.cast
 
@@ -152,5 +155,14 @@ inline fun <T> T.applyScoped(scope: CoroutineScope, crossinline block: suspend T
     scope.launch {
         block()
     }
+    return this
+}
+
+@OptIn(ExperimentalContracts::class)
+inline fun <T> T.applyIf(condition: Boolean, block: T.() -> Unit): T {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    if (condition) block()
     return this
 }

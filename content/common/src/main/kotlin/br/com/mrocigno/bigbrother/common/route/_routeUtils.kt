@@ -3,10 +3,7 @@ package br.com.mrocigno.bigbrother.common.route
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import br.com.mrocigno.bigbrother.common.BuildConfig
 
-const val SCREEN_NAME_ARG = "bigbrother.SCREEN_NAME_ARG"
-const val STACKTRACE_ARG = "bigbrother.STACKTRACE_ARG"
 const val ANIMATE_ARG = "bigbrother.ANIMATE_ARG"
 const val SESSION_ID_ARG = "BigBrother.SESSION_ID"
 
@@ -26,13 +23,9 @@ fun Context.intentToLogList(sessionId: Long) =
         .putExtra(SESSION_ID_ARG, sessionId)
 
 fun Context.intentToCrash(
-    screenName: String,
     sessionId: Long,
-    stackTrace: String,
     animate: Boolean = true
 ) =
     intentAction("CRASH_ACTIVITY")
-        .putExtra(SCREEN_NAME_ARG, screenName)
-        .putExtra(STACKTRACE_ARG, stackTrace)
         .putExtra(SESSION_ID_ARG, sessionId)
         .putExtra(ANIMATE_ARG, animate)

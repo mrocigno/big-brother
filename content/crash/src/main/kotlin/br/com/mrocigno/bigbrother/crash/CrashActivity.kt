@@ -17,14 +17,15 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
 import br.com.mrocigno.bigbrother.common.route.ANIMATE_ARG
-import br.com.mrocigno.bigbrother.common.route.SCREEN_NAME_ARG
 import br.com.mrocigno.bigbrother.common.route.SESSION_ID_ARG
-import br.com.mrocigno.bigbrother.common.route.STACKTRACE_ARG
 import br.com.mrocigno.bigbrother.common.utils.highlightStacktrace
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
+import br.com.mrocigno.bigbrother.core.BigBrotherDatabaseTask.Companion.bbdb
 import br.com.mrocigno.bigbrother.core.OutOfDomain
+import br.com.mrocigno.bigbrother.core.entity.CrashEntity
 import br.com.mrocigno.bigbrother.report.BigBrotherReport
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.runBlocking
 import kotlin.system.exitProcess
 
 @OutOfDomain
@@ -50,11 +51,18 @@ class CrashActivity : AppCompatActivity(R.layout.bigbrother_activity_crash) {
         if (animate) BigBrotherReport.deleteCurrentSession()
 
         setupWindow()
-        setupThumb()
-        setupStackTrace()
-        setupTimeline()
-
         startAnimation()
+
+        runBlocking {
+            val entity = bbdb?.crashDao()?.getBySessionId(sessionId) ?: run {
+                finish()
+                return@runBlocking
+            }
+
+            setupThumb(entity)
+            setupStackTrace(entity)
+            setupTimeline()
+        }
 
         onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -69,8 +77,8 @@ class CrashActivity : AppCompatActivity(R.layout.bigbrother_activity_crash) {
         statusBarGuideline.updateLayoutParams<MarginLayoutParams> { topMargin = statusBarHeight }
     }
 
-    private fun setupThumb() {
-        screenName.text = intent.getStringExtra(SCREEN_NAME_ARG)
+    private fun setupThumb(entity: CrashEntity) {
+        screenName.text = entity.activityName
         val bitmap = runCatching {
             BitmapFactory.decodeStream(openFileInput("print_crash_session_$sessionId.png"))
         }.getOrNull()
@@ -83,12 +91,12 @@ class CrashActivity : AppCompatActivity(R.layout.bigbrother_activity_crash) {
         if (animate) exitProcess(0)
     }
 
-    private fun setupStackTrace() {
+    private fun setupStackTrace(entity: CrashEntity) {
         btnStacktrace.setOnClickListener {
             stacktrace.isVisible = true
             timeline.isVisible = false
         }
-        stacktrace.text = intent.getStringExtra(STACKTRACE_ARG)
+        stacktrace.text = entity.stackTrace
             ?.highlightStacktrace(this@CrashActivity)
     }
 

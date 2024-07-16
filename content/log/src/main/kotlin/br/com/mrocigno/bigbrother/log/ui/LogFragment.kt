@@ -86,7 +86,7 @@ class LogFragment : Fragment(R.layout.bigbrother_fragment_log) {
 
     private fun setupSearchView() {
         clear.setOnClickListener {
-            BBLog.clear()
+            BBLog.clear(sessionId)
         }
         searchViewLayout.setEndIconOnClickListener {
             applyFilter(searchView.text.toString())

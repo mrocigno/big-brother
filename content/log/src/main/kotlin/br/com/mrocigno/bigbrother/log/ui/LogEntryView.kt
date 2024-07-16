@@ -3,6 +3,7 @@ package br.com.mrocigno.bigbrother.log.ui
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import br.com.mrocigno.bigbrother.common.utils.applyIf
 import br.com.mrocigno.bigbrother.common.utils.getColor
 import br.com.mrocigno.bigbrother.common.utils.highlightQuery
 import br.com.mrocigno.bigbrother.common.utils.inflate
@@ -24,7 +25,15 @@ class LogEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbr
         icon.setTextColor(getColor(type.fgColor))
 
         message.setTextColor(getColor(type.textColor))
-        message.text = itemView.context.getString(CommonR.string.generic_separation, model.tag, model.message)
+        message.text = StringBuilder()
+            .append(model.tag)
+            .append(" - ")
+            .append(model.message)
+            .applyIf(model.errorStacktrace != null) {
+                appendLine()
+                append(model.errorStacktrace)
+            }
+            .toString()
             .highlightQuery(query, highlightColor)
 
         if (message.lineCount > 4) itemView.setOnClickListener {
