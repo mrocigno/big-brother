@@ -61,9 +61,9 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="50dp"
+            android:layout_width="96dp"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/bigbrother_ic_database" />
+            app:srcCompat="@drawable/bigbrother_data_file_not_found" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"

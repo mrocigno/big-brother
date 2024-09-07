@@ -21,6 +21,7 @@ class FileTreeDecoration(context: Context) : RecyclerView.ItemDecoration() {
             val centerY = ((view.bottom - view.y) / 2) + view.y
             val x = view.x - spacingS
             c.drawLine(x, view.y - spacingXl, x, centerY, paint)
+            c.drawLine(x - spacingXl, view.y - spacingXl, x - spacingXl, centerY, paint)
             c.drawLine(x, centerY, x + spacingS, centerY, paint)
         }
     }

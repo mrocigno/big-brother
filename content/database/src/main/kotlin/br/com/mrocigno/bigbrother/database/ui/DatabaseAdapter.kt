@@ -1,53 +1,70 @@
 package br.com.mrocigno.bigbrother.database.ui
 
+import android.graphics.Typeface.BOLD
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import br.com.mrocigno.bigbrother.common.utils.gone
 import br.com.mrocigno.bigbrother.common.utils.inflate
+import br.com.mrocigno.bigbrother.common.utils.visible
 import br.com.mrocigno.bigbrother.core.utils.getTask
 import br.com.mrocigno.bigbrother.database.DatabaseTask
 import br.com.mrocigno.bigbrother.database.R
-import br.com.mrocigno.bigbrother.database.model.DatabaseListItem
+import br.com.mrocigno.bigbrother.database.model.FileListItem
+import br.com.mrocigno.bigbrother.database.model.FileListItem.Companion.DATABASE
+import br.com.mrocigno.bigbrother.database.model.FileListItem.Companion.LABEL
+import br.com.mrocigno.bigbrother.database.model.FileListItem.Companion.SHARED_PREFERENCES
 import br.com.mrocigno.bigbrother.common.R as CR
 
 internal class DatabaseAdapter(
-    private val onClick: (DatabaseListItem) -> Unit
+    private val onClick: (FileListItem) -> Unit
 ) : RecyclerView.Adapter<DatabaseListItemViewHolder>() {
 
-    private val differ = DatabaseListItem.Differ(this)
-    var list: List<DatabaseListItem>
+    private val differ = FileListItem.Differ(this)
+    var list: List<FileListItem>
         get() = differ.currentList
         set(value) {
             differ.submitList(value)
         }
 
     init {
-        list = getTask(DatabaseTask::class)
-            ?.databases
-            ?.values
-            ?.map { db ->
-                DatabaseListItem(
-                    nodeLvl = 0,
-                    type = DatabaseListItem.DATABASE,
-                    icon = R.drawable.bigbrother_ic_database,
-                    title = db.name,
-                    databaseHelper = db,
-                    children = db.tablesName.map { tableName ->
-                        DatabaseListItem(
-                            nodeLvl = 1,
-                            type = DatabaseListItem.TABLE,
-                            icon = R.drawable.bigbrother_ic_table,
-                            title = tableName,
-                            databaseHelper = db
-                        )
-                    }
-                )
-            }
-            ?: emptyList()
+        val task = getTask(DatabaseTask::class)
+        val databases = task?.databases?.values.orEmpty()
+        val sharedPreferences = task?.sharedPreferences?.values.orEmpty()
+
+        list = listOf(
+            FileListItem(LABEL, "Database")
+        ) + databases.map { db ->
+            FileListItem(
+                nodeLvl = 1,
+                type = DATABASE,
+                icon = R.drawable.bigbrother_ic_database,
+                title = db.name,
+                databaseHelper = db,
+                children = db.tablesName.map { tableName ->
+                    FileListItem(
+                        nodeLvl = 2,
+                        type = FileListItem.TABLE,
+                        icon = R.drawable.bigbrother_ic_table,
+                        title = tableName,
+                        databaseHelper = db
+                    )
+                }
+            )
+        } + listOf(
+            FileListItem(LABEL, "SharedPreferences")
+        ) + sharedPreferences.map { sp ->
+            FileListItem(
+                nodeLvl = 1,
+                type = SHARED_PREFERENCES,
+                title = sp.name,
+                icon = R.drawable.bigbrother_ic_file,
+            )
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -65,7 +82,7 @@ internal class DatabaseAdapter(
         }
     }
 
-    private fun toggle(model: DatabaseListItem) {
+    private fun toggle(model: FileListItem) {
         val children = model.children ?: return
 
         list = if (list.contains(children.first())) {
@@ -84,14 +101,26 @@ internal class DatabaseListItemViewHolder(parent: ViewGroup) : ViewHolder(parent
 
     private val context get() = itemView.context
 
-    fun bind(model: DatabaseListItem, onClick: () -> Unit) {
-        if (model.type == DatabaseListItem.DATABASE) itemView.setBackgroundColor(context.getColor(CR.color.background))
+    fun bind(model: FileListItem, onClick: () -> Unit) {
+        when (model.type) {
+            DATABASE -> itemView.setBackgroundColor(context.getColor(CR.color.background))
+            LABEL -> {
+                title.setTypeface(title.typeface, BOLD)
+                itemView.setBackgroundColor(context.getColor(CR.color.background))
+            }
+            else -> itemView.background = null
+        }
+
         itemView.updateLayoutParams<RecyclerView.LayoutParams> {
             val spacing = context.resources.getDimensionPixelOffset(CR.dimen.spacing_xl)
             leftMargin = spacing * model.nodeLvl
         }
 
-        icon.setImageDrawable(ContextCompat.getDrawable(context, model.icon))
+        model.icon.takeIf { it != -1 }?.let { getDrawable(context, it) }
+            ?.run(icon::setImageDrawable)
+            ?.run { icon.visible() }
+            ?: icon.gone()
+
         title.text = model.title
 
         itemView.setOnClickListener {

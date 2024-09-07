@@ -67,19 +67,16 @@ internal class DatabaseHelper(file: File) {
                 val rowContent = mutableMapOf<String, ColumnContent>()
                 columnNames.forEach { columnName ->
                     val data = getColumnIndex(columnName).run(::getString) ?: "null"
-                    val lines = data.split("\n")
 
                     rowContent[columnName] = runCatching {
-                        check(lines.size > 1)
+                        if (!data.trim().startsWith('{')) check(data.length > 100)
                         checkNotNull(pkColumn)
 
                         val id = getColumnIndex(pkColumn).run(::getInt)
-                        val content = lines
-                            .subList(0, min(lines.size, 3))
-                            .joinToString("  ")
+                        val content = data.substring(0 , min(data.length, 100)).replace("\n", "  ")
 
                         ColumnContent(
-                            "$content...",
+                            "$content${if (content.length > 100) "…" else ""}",
                             true,
                             "SELECT $columnName FROM $tableName WHERE $pkColumn = $id"
                         )

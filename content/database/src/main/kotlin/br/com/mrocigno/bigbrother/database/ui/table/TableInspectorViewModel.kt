@@ -12,7 +12,9 @@ import br.com.mrocigno.bigbrother.database.DatabaseTask
 import br.com.mrocigno.bigbrother.database.model.TableDump
 import br.com.mrocigno.bigbrother.database.ui.table.filter.FilterData
 import br.com.mrocigno.bigbrother.database.ui.table.filter.FilterSort
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class TableInspectorViewModel(
@@ -32,15 +34,17 @@ class TableInspectorViewModel(
 
     fun listAll() = viewModelScope.launch {
         isLoading.value = true
-        _tableDump.postValue(dbHelper.listAll(tableName))
-        delay(300)
+        async(Dispatchers.IO) {
+            _tableDump.postValue(dbHelper.listAll(tableName))
+        }.await()
         isLoading.value = false
     }
 
-    fun executeSQL(sql: String) = viewModelScope.launch {
+    fun executeSQL(sql: String) = CoroutineScope(Dispatchers.IO).launch {
         isLoading.postValue(true)
-        _tableDump.postValue(dbHelper.execSQL(sql))
-        delay(300)
+        async(Dispatchers.IO) {
+            _tableDump.postValue(dbHelper.execSQL(sql))
+        }.await()
         isLoading.postValue(false)
     }
 

@@ -3,6 +3,8 @@ package br.com.mrocigno.bigbrother.common.utils
 import android.graphics.RectF
 import android.view.View
 import android.view.ViewTreeObserver
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 
 fun View.onMeasured(block: View.() -> Unit) {
     val callback = object : ViewTreeObserver.OnGlobalLayoutListener {
@@ -21,3 +23,11 @@ fun View.getBounds() = RectF(
     x + width,
     y + height
 )
+
+fun View.gone() {
+    isGone = true
+}
+
+fun View.visible() {
+    isVisible = true
+}

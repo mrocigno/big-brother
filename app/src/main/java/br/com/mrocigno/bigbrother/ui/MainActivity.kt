@@ -27,6 +27,16 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
         setupReportGroup()
         setupLogGroup()
         setupGeneralGroup()
+
+        val pref = getSharedPreferences("filename", MODE_PRIVATE)
+        pref.edit()
+            .putInt("int", 1)
+            .putBoolean("boolean", true)
+            .putLong("long", 1000L)
+            .putFloat("float", 0.1f)
+            .putString("string", "string")
+            .putStringSet("stringSet", setOf("string1", "string2"))
+            .apply()
     }
 
     override fun onResume() {
