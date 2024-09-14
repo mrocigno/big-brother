@@ -45,6 +45,7 @@ class CrashObserver(
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             .run(activity::startActivity)
 
+        default?.uncaughtException(t, e)
         Process.killProcess(Process.myPid())
         exitProcess(0)
     }

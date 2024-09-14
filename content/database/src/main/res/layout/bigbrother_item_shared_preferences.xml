@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:foreground="?selectableItemBackground"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/prefs_item_type"
+        android:layout_width="35dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:layout_marginBottom="@dimen/spacing_xs"
+        android:background="@drawable/bigbrother_bg_prefs_type"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="@dimen/spacing_xxs"
+        android:textColor="@color/text_title"
+        android:textSize="@dimen/spacing_m"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpUsage"
+        tools:text="Int" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/prefs_item_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_xxs"
+        android:layout_marginEnd="@dimen/spacing_m"
+        android:textColor="@color/text_title"
+        android:textSize="@dimen/text_m"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/prefs_item_type"
+        app:layout_constraintTop_toTopOf="@id/prefs_item_type"
+        tools:text="Title:" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/prefs_item_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xxs"
+        android:layout_marginEnd="@dimen/spacing_m"
+        android:layout_marginBottom="@dimen/spacing_xxs"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:textColor="@color/text_paragraph"
+        android:textSize="@dimen/text_m"
+        app:layout_constraintBottom_toBottomOf="@id/prefs_item_type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/prefs_item_title"
+        app:layout_constraintTop_toBottomOf="@id/prefs_item_title"
+        tools:text="@tools:sample/lorem[30]" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

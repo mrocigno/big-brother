@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     app:layoutDescription="@xml/bigbrother_searchable_scene">
 
     <androidx.appcompat.widget.Toolbar
@@ -13,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/bigbrother_ic_arrow_back"
-        app:title="Json Viewer" />
+        tools:title="Filename.xml" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@id/searchable_view_layout"
@@ -27,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@id/searchable_toolbar">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/json_viewer_search_view"
+            android:id="@+id/property_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/json_viewer_search_hint" />
@@ -35,11 +36,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/json_viewer_disclaimer"
+        android:id="@+id/property_disclaimer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="@string/json_viewer_disclaimer"
+        android:text="@string/bigbrother_prefs_disclaimer"
         android:textColor="@color/text_paragraph"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,10 +51,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:overScrollMode="never"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/json_viewer_disclaimer" />
+        app:layout_constraintTop_toBottomOf="@id/property_disclaimer" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

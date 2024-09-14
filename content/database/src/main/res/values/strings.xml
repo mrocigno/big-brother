@@ -2,6 +2,9 @@
 <resources>
     <string name="bigbrother_table_empty_state">Nothing found in current query</string>
     <string name="bigbrother_expanded_plain_text">Expanded data</string>
-    <string name="bigbrother_db_empty_state">No database found</string>
+    <string name="bigbrother_db_empty_state">No data file found</string>
     <string name="bigbrother_db_search_hint">Search by db name or table</string>
+    <string name="bigbrother_prefs_save">Save</string>
+    <string name="bigbrother_prefs_string_disclaimer">Change the value then click save</string>
+    <string name="bigbrother_prefs_disclaimer">Click and hold to copy value or click to edit data</string>
 </resources>

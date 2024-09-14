@@ -7,6 +7,9 @@
 
     <color name="themed_transparent">#99000000</color>
 
+    <color name="co_brand_default">#CECECE</color>
+    <color name="co_brand_secondary">#FFFFFF</color>
+
     <color name="text_title">#FFFFFFFF</color>
     <color name="text_title_inverse">#FF000000</color>
     <color name="text_paragraph">#D8D8D8</color>

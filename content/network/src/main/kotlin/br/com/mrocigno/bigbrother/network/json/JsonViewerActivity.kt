@@ -16,14 +16,15 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.json.JSONArray
 import org.json.JSONObject
+import br.com.mrocigno.bigbrother.common.R as CR
 
 @OutOfDomain
 class JsonViewerActivity : AppCompatActivity(R.layout.bigbrother_activity_json_viewer) {
 
-    private val searchLayout: TextInputLayout by lazy { findViewById(R.id.json_viewer_search_view_layout) }
+    private val searchLayout: TextInputLayout by lazy { findViewById(CR.id.searchable_view_layout) }
     private val searchView: TextInputEditText by lazy { findViewById(R.id.json_viewer_search_view) }
-    private val recycler: RecyclerView by lazy { findViewById(R.id.json_viewer_recycler) }
-    private val toolbar: Toolbar by lazy { findViewById(R.id.json_viewer_toolbar) }
+    private val recycler: RecyclerView by lazy { findViewById(CR.id.searchable_recycler_view) }
+    private val toolbar: Toolbar by lazy { findViewById(CR.id.searchable_toolbar) }
 
     private val adapter get() = recycler.adapter as JsonViewerAdapter
 

@@ -39,10 +39,8 @@
         <item name="endIconTint">?colorPrimary</item>
     </style>
 
-    <style name="SQL" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="input_outlined" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxBackgroundColor">#33000000</item>
-        <item name="endIconCheckable">true</item>
-        <item name="endIconDrawable">@drawable/bigbrother_ic_search</item>
         <item name="endIconMode">custom</item>
         <item name="endIconTint">?colorPrimary</item>
     </style>

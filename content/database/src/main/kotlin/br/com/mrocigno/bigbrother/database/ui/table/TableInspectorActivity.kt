@@ -3,12 +3,10 @@ package br.com.mrocigno.bigbrother.database.ui.table
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
@@ -19,6 +17,7 @@ import br.com.mrocigno.bigbrother.common.table.OnItemClickListener
 import br.com.mrocigno.bigbrother.common.table.ViewHolder
 import br.com.mrocigno.bigbrother.common.utils.cast
 import br.com.mrocigno.bigbrother.common.utils.inflate
+import br.com.mrocigno.bigbrother.common.utils.showDialog
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.database.R
 import br.com.mrocigno.bigbrother.database.model.TableDump
@@ -116,18 +115,16 @@ class TableInspectorActivity :
             if (expandedData.isJson && jsonViewer != null) {
                 startActivity(JsonViewerActivity.intent(this, expandedData.data))
             } else {
-                val content = LayoutInflater.from(this).inflate(R.layout.bigbrother_dialog_content, null).apply {
-                    findViewById<AppCompatTextView>(R.id.dialog_message).text = expandedData.data
-                }
-
-                AlertDialog.Builder(this)
-                    .setTitle(R.string.bigbrother_expanded_plain_text)
-                    .setView(content)
-                    .setPositiveButton(CR.string.close) { dialog, _ ->
-                        dialog.dismiss()
+                showDialog(
+                    title = getString(R.string.bigbrother_expanded_plain_text),
+                    content = R.layout.bigbrother_dialog_content,
+                    onView = {
+                        findViewById<AppCompatTextView>(R.id.dialog_message).text = expandedData.data
+                    },
+                    positiveButton = getString(CR.string.close) to {
+                        dismiss()
                     }
-                    .create()
-                    .show()
+                )
             }
         }
     }

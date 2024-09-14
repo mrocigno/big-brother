@@ -7,13 +7,13 @@
         motion:constraintSetStart="@id/start"
         motion:duration="1000">
 
-        <OnSwipe motion:touchAnchorId="@id/json_viewer_recycler" />
+        <OnSwipe motion:touchAnchorId="@id/searchable_recycler_view" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
 
         <Constraint
-            android:id="@+id/json_viewer_toolbar"
+            android:id="@+id/searchable_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             motion:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
-            android:id="@+id/json_viewer_search_view_layout"
+            android:id="@+id/searchable_view_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
@@ -31,7 +31,7 @@
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent" />
         <Constraint
-            android:id="@+id/json_viewer_toolbar"
+            android:id="@+id/searchable_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             motion:layout_constraintEnd_toEndOf="parent"

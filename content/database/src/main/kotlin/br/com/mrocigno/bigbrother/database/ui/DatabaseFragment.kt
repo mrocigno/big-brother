@@ -13,7 +13,8 @@ import br.com.mrocigno.bigbrother.common.FileTreeDecoration
 import br.com.mrocigno.bigbrother.core.utils.getTask
 import br.com.mrocigno.bigbrother.database.DatabaseTask
 import br.com.mrocigno.bigbrother.database.R
-import br.com.mrocigno.bigbrother.database.model.DatabaseListItem
+import br.com.mrocigno.bigbrother.database.model.FileListItem
+import br.com.mrocigno.bigbrother.database.ui.prefs.SharedPreferencesDetailsActivity
 import br.com.mrocigno.bigbrother.database.ui.table.TableInspectorActivity
 import br.com.mrocigno.bigbrother.common.R as CR
 
@@ -35,7 +36,10 @@ class DatabaseFragment : Fragment(R.layout.bigbrother_fragment_database) {
         super.onViewCreated(view, savedInstanceState)
         setupRecycler()
         refresh.setOnClickListener {
-            getTask(DatabaseTask::class)?.listDefaultDatabases()
+            getTask(DatabaseTask::class)?.run {
+                listDefaultDatabases()
+                listSharedPreferences()
+            }
             setupRecycler()
         }
     }
@@ -47,12 +51,18 @@ class DatabaseFragment : Fragment(R.layout.bigbrother_fragment_database) {
         emptyState.isVisible = adapter.list.isEmpty()
     }
 
-    private fun onItemClick(model: DatabaseListItem) {
+    private fun onItemClick(model: FileListItem) {
         when (model.type) {
-            DatabaseListItem.DATABASE -> Unit
-            DatabaseListItem.TABLE -> {
+            FileListItem.DATABASE -> Unit
+            FileListItem.LABEL -> Unit
+            FileListItem.TABLE -> {
                 TableInspectorActivity
-                    .intent(requireContext(), model.databaseHelper.name, model.title)
+                    .intent(requireContext(), model.databaseHelper?.name.orEmpty(), model.title)
+                    .run(::startActivity)
+            }
+            FileListItem.SHARED_PREFERENCES -> {
+                SharedPreferencesDetailsActivity
+                    .intent(requireContext(), model.title)
                     .run(::startActivity)
             }
         }
