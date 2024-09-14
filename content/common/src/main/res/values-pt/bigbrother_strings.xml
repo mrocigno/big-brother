@@ -6,4 +6,5 @@
     <string name="deselect_all">Desmarcar todos</string>
     <string name="close">Fechar</string>
     <string name="copy_feedback">chave %1s copiada</string>
+    <string name="search_hint">Procure pela chave ou valor</string>
 </resources>
