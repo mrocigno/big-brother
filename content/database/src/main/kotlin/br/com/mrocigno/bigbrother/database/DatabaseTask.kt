@@ -14,7 +14,7 @@ import java.io.File
 internal class DatabaseTask : BigBrotherTask() {
 
     val databases: HashMap<String, DatabaseHelper> = hashMapOf()
-    val sharedPreferences: HashMap<String, SharedPreferencesHelper> = hashMapOf()
+    val sharedPreferences: MutableSet<String> = mutableSetOf()
 
     private val supervisor = SupervisorJob()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + supervisor)
@@ -43,7 +43,7 @@ internal class DatabaseTask : BigBrotherTask() {
         }
 
         sharedPreferencesDir.listFiles { file -> file.canWrite() }?.forEach { file ->
-            sharedPreferences[file.name] = SharedPreferencesHelper(file)
+            sharedPreferences.add(file.name)
         }
     } else Unit
 

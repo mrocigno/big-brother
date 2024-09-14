@@ -9,6 +9,12 @@
             android:label="teste"
             android:theme="@style/Theme.BigBrother"/>
 
+        <activity
+            android:name=".ui.prefs.SharedPreferencesDetailsActivity"
+            android:exported="false"
+            android:label="teste"
+            android:theme="@style/Theme.BigBrother"/>
+
         <provider
             android:authorities="${applicationId}.DATABASE"
             android:name=".DatabaseTask"

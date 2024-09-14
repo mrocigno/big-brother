@@ -34,7 +34,7 @@ internal class DatabaseAdapter(
     init {
         val task = getTask(DatabaseTask::class)
         val databases = task?.databases?.values.orEmpty()
-        val sharedPreferences = task?.sharedPreferences?.values.orEmpty()
+        val sharedPreferences = task?.sharedPreferences.orEmpty()
 
         list = listOf(
             FileListItem(LABEL, "Database")
@@ -61,7 +61,7 @@ internal class DatabaseAdapter(
             FileListItem(
                 nodeLvl = 1,
                 type = SHARED_PREFERENCES,
-                title = sp.name,
+                title = sp,
                 icon = R.drawable.bigbrother_ic_file,
             )
         }

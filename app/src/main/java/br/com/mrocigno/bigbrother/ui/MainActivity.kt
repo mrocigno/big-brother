@@ -35,6 +35,19 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
             .putLong("long", 1000L)
             .putFloat("float", 0.1f)
             .putString("string", "string")
+            .putString("json", """
+                |{
+                |    "string": "string",
+                |    "int": 1,
+                |    "boolean": true,
+                |    "long": 1000,
+                |    "float": 0.1,
+                |    "array": [
+                |        "string1",
+                |        "string2"
+                |    ]
+                |}
+            """.trimMargin())
             .putStringSet("stringSet", setOf("string1", "string2"))
             .apply()
     }

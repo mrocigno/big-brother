@@ -14,6 +14,7 @@ import br.com.mrocigno.bigbrother.core.utils.getTask
 import br.com.mrocigno.bigbrother.database.DatabaseTask
 import br.com.mrocigno.bigbrother.database.R
 import br.com.mrocigno.bigbrother.database.model.FileListItem
+import br.com.mrocigno.bigbrother.database.ui.prefs.SharedPreferencesDetailsActivity
 import br.com.mrocigno.bigbrother.database.ui.table.TableInspectorActivity
 import br.com.mrocigno.bigbrother.common.R as CR
 
@@ -53,9 +54,15 @@ class DatabaseFragment : Fragment(R.layout.bigbrother_fragment_database) {
     private fun onItemClick(model: FileListItem) {
         when (model.type) {
             FileListItem.DATABASE -> Unit
+            FileListItem.LABEL -> Unit
             FileListItem.TABLE -> {
                 TableInspectorActivity
                     .intent(requireContext(), model.databaseHelper?.name.orEmpty(), model.title)
+                    .run(::startActivity)
+            }
+            FileListItem.SHARED_PREFERENCES -> {
+                SharedPreferencesDetailsActivity
+                    .intent(requireContext(), model.title)
                     .run(::startActivity)
             }
         }

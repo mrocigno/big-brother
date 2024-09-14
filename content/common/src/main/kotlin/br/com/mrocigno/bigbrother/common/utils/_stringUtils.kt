@@ -11,3 +11,8 @@ fun space(count: Int) = StringBuilder().apply {
 }
 
 fun String.removeComma() = replace(",", "")
+
+fun String.trimExtension() = substringBeforeLast(".")
+
+fun String.startsWith(vararg chars: Char) =
+    firstOrNull()?.run(chars::contains) ?: false
