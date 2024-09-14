@@ -35,6 +35,17 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/property_disclaimer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/bigbrother_prefs_disclaimer"
+        android:textColor="@color/text_paragraph"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchable_view_layout" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@id/searchable_recycler_view"
         android:layout_width="0dp"
@@ -43,6 +54,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchable_view_layout" />
+        app:layout_constraintTop_toBottomOf="@id/property_disclaimer" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

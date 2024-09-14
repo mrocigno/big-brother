@@ -25,7 +25,9 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/table_inspector_sql_layout"
-                style="@style/SQL"
+                style="@style/input_outlined"
+                app:endIconCheckable="true"
+                app:endIconDrawable="@drawable/bigbrother_ic_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"

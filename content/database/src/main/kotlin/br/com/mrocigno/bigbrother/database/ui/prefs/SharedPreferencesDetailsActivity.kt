@@ -1,39 +1,42 @@
 package br.com.mrocigno.bigbrother.database.ui.prefs
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.ColorStateList.valueOf
 import android.os.Bundle
-import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil.ItemCallback
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import br.com.mrocigno.bigbrother.common.utils.inflate
-import br.com.mrocigno.bigbrother.common.utils.startsWith
+import br.com.mrocigno.bigbrother.common.utils.showDialog
+import br.com.mrocigno.bigbrother.common.utils.toIntRound
+import br.com.mrocigno.bigbrother.common.utils.toLongRound
 import br.com.mrocigno.bigbrother.common.utils.trimExtension
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.database.R
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlin.math.min
 import br.com.mrocigno.bigbrother.common.R as CR
 
 @OutOfDomain
+@SuppressLint("ApplySharedPref")
 class SharedPreferencesDetailsActivity :
     AppCompatActivity(R.layout.bigbrother_activity_shared_preferences_details) {
 
     private val searchLayout: TextInputLayout by lazy { findViewById(CR.id.searchable_view_layout) }
+    private val search: TextInputEditText by lazy { findViewById(R.id.property_search) }
     private val recycler: RecyclerView by lazy { findViewById(CR.id.searchable_recycler_view) }
     private val toolbar: Toolbar by lazy { findViewById(CR.id.searchable_toolbar) }
     private val adapter: SharedPreferencesItemAdapter get() = recycler.adapter as SharedPreferencesItemAdapter
 
     private val prefsName by lazy { checkNotNull(intent.getStringExtra(PREFS_NAME_ARG)) }
+    private val prefs: SharedPreferences by lazy {
+        getSharedPreferences(prefsName.trimExtension(), MODE_PRIVATE)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,12 +44,84 @@ class SharedPreferencesDetailsActivity :
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
         toolbar.title = prefsName
 
-        val prefs = getSharedPreferences(prefsName.trimExtension(), MODE_PRIVATE)
         recycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        recycler.adapter = SharedPreferencesItemAdapter(prefs)
-        prefs.registerOnSharedPreferenceChangeListener { sharedPreferences, _ ->
-            adapter.list = sharedPreferences.all.toList()
+        recycler.adapter = SharedPreferencesItemAdapter(prefs, ::onItemClick)
+
+        search.addTextChangedListener {
+            adapter.filter = it.toString().trim()
         }
+    }
+
+    private fun onItemClick(key: String, data: Any?) = when (data) {
+        is String -> editString(key, data)
+        is Boolean -> editBoolean(key, data)
+        is Float -> editNumeric(key, data) {
+            prefs.edit().putFloat(key, it.toFloat()).commit()
+        }
+        is Long -> editNumeric(key, data) {
+            prefs.edit().putLong(key, it.toLongRound()).commit()
+        }
+        is Int -> editNumeric(key, data) {
+            prefs.edit().putInt(key, it.toIntRound()).commit()
+        }
+        else -> {
+            Toast.makeText(this, "type not editable", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun <T> editNumeric(key: String, data: T, save: (String) -> Unit) {
+        showDialog(
+            content = R.layout.bigbrother_dialog_edit_numeric,
+            onView = {
+                val input = findViewById<TextInputEditText>(R.id.edit_numeric_input)
+                input.setText(data.toString())
+            },
+            title = key,
+            negativeButton = getString(CR.string.close) to { dismiss() },
+            positiveButton = getString(R.string.bigbrother_prefs_save) to {
+                val input = it?.findViewById<TextInputEditText>(R.id.edit_numeric_input)
+                save(input?.text.toString())
+                adapter.fullList = prefs.all.toList()
+            }
+        )
+    }
+
+    private fun editString(key: String, data: String) {
+        showDialog(
+            content = R.layout.bigbrother_dialog_edit_string,
+            onView = {
+                val input = findViewById<TextInputEditText>(R.id.edit_string_input)
+                input.setText(data)
+            },
+            title = key,
+            negativeButton = getString(CR.string.close) to { dismiss() },
+            positiveButton = getString(R.string.bigbrother_prefs_save) to {
+                val input = it?.findViewById<TextInputEditText>(R.id.edit_string_input)
+                prefs.edit().putString(key, input?.text.toString()).commit()
+                adapter.fullList = prefs.all.toList()
+            }
+        )
+    }
+
+    private fun editBoolean(key: String, data: Boolean) {
+        showDialog(
+            content = R.layout.bigbrother_dialog_edit_boolean,
+            onView = {
+                val view = findViewById<AppCompatCheckBox>(R.id.edit_boolean_checkbox)
+                view.setOnCheckedChangeListener { _, isChecked ->
+                    view.text = isChecked.toString()
+                }
+                view.isChecked = data
+                view.text = data.toString()
+            },
+            title = key,
+            negativeButton = getString(CR.string.close) to { dismiss() },
+            positiveButton = getString(R.string.bigbrother_prefs_save) to {
+                val view = it?.findViewById<AppCompatCheckBox>(R.id.edit_boolean_checkbox)
+                prefs.edit().putBoolean(key, view?.isChecked == true).commit()
+                adapter.fullList = prefs.all.toList()
+            }
+        )
     }
 
     companion object {
@@ -56,110 +131,5 @@ class SharedPreferencesDetailsActivity :
         fun intent(context: Context, prefsName: String) =
             Intent(context, SharedPreferencesDetailsActivity::class.java)
                 .putExtra(PREFS_NAME_ARG, prefsName)
-    }
-}
-
-class SharedPreferencesItemAdapter(
-    prefs: SharedPreferences
-) : Adapter<SharedPreferencesItemViewHolder>() {
-
-    var list: List<Pair<String, Any?>>
-        get() = differ.currentList
-        set(value) {
-            differ.submitList(value)
-        }
-
-    private val differ = AsyncListDiffer(this, object : ItemCallback<Pair<String, Any?>>() {
-        override fun areContentsTheSame(
-            oldItem: Pair<String, Any?>,
-            newItem: Pair<String, Any?>
-        ) = oldItem == newItem
-
-        override fun areItemsTheSame(
-            oldItem: Pair<String, Any?>,
-            newItem: Pair<String, Any?>
-        ) = oldItem.first == newItem.first
-    })
-
-    init {
-        list = prefs.all.toList()
-    }
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): SharedPreferencesItemViewHolder = SharedPreferencesItemViewHolder(parent)
-
-    override fun onBindViewHolder(holder: SharedPreferencesItemViewHolder, position: Int) {
-        val (key, value) = list[position]
-        holder.bind(key, value)
-    }
-
-    override fun getItemCount(): Int = list.size
-}
-
-class SharedPreferencesItemViewHolder(
-    parent: ViewGroup
-) : ViewHolder(parent.inflate(R.layout.bigbrother_item_shared_preferences)) {
-
-    private val title: AppCompatTextView by lazy { itemView.findViewById(R.id.prefs_item_title) }
-    private val value: AppCompatTextView by lazy { itemView.findViewById(R.id.prefs_item_value) }
-    private val type: AppCompatTextView by lazy { itemView.findViewById(R.id.prefs_item_type) }
-
-    private val context: Context get() = itemView.context
-
-    fun bind(key: String, data: Any?) {
-        val valueString = data.toString().let { str ->
-            str.substring(0, min(str.length, 200))
-                .lines()
-                .joinToString(" ") { it.trim() }
-        }
-
-        title.text = key
-        value.text = valueString
-        value.setTextColor(context.getColor(CR.color.text_paragraph))
-
-        type.text = when (data) {
-            is Boolean -> {
-                type.backgroundTintList = valueOf(context.getColor(CR.color.boy_red))
-                "B"
-            }
-
-            is HashSet<*> -> {
-                type.backgroundTintList = valueOf(context.getColor(CR.color.beaver))
-                "HS"
-            }
-
-            is Float -> {
-                type.backgroundTintList = valueOf(context.getColor(CR.color.licorice))
-                "F"
-            }
-
-            is Int -> {
-                type.backgroundTintList = valueOf(context.getColor(CR.color.moss_green))
-                "Int"
-            }
-
-            is Long -> {
-                type.backgroundTintList = valueOf(context.getColor(CR.color.olive_drab))
-                "L"
-            }
-
-            is String -> {
-                if (data.trim().startsWith('{', ']')) {
-                    type.backgroundTintList = valueOf(context.getColor(CR.color.text_hyperlink))
-                    value.setTextColor(context.getColor(CR.color.text_hyperlink))
-                    "JS"
-                } else {
-                    type.backgroundTintList = valueOf(context.getColor(CR.color.shadow))
-                    "S"
-                }
-            }
-
-            else -> {
-                if (data != null) data::class.java.simpleName
-                else "unknown"
-            }
-        }
     }
 }
