@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="json_viewer_search_hint">Search key or value</string>
     <string name="json_viewer_expand_click">click to expand</string>
     <string name="json_viewer_disclaimer">click and hold on any item to copy it to the clipboard</string>
 
