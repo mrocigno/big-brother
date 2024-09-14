@@ -3,6 +3,7 @@ package br.com.mrocigno.bigbrother.common.utils
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -10,10 +11,17 @@ import android.graphics.PointF
 
 fun Activity.printScreen(clickPosition: PointF? = null): Bitmap {
     val root = rootView
-    val bitmap = Bitmap.createBitmap(root.width, root.height, Bitmap.Config.ARGB_8888)
-    Canvas(bitmap).apply {
-        root.draw(this)
-        clickPosition?.run(::drawClick)
+    val bitmap = runCatching {
+        val temp = Bitmap.createBitmap(root.width, root.height, Bitmap.Config.ARGB_8888)
+        Canvas(temp).apply {
+            root.draw(this)
+            clickPosition?.run(::drawClick)
+        }
+        temp
+    }.getOrElse {
+        assets.open("file-not-found.webp").use {
+            BitmapFactory.decodeStream(it)
+        }
     }
     return bitmap
 }

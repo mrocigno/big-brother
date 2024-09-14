@@ -30,19 +30,20 @@ class ComposableActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-           Column {
-               Toolbar()
-               Box(
-                   contentAlignment = Alignment.Center,
-                   modifier = Modifier
-                       .weight(1f)
-                       .fillMaxWidth()
-               ) {
-                   Button(onClick = { listOf("")[2] }) {
-                       Text(stringResource(R.string.force_crash))
-                   }
-               }
-           }
+            Column {
+                Toolbar()
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                ) {
+                    Button(onClick = { listOf("")[2] }) {
+                        Text(stringResource(R.string.force_crash))
+                    }
+                }
+            }
+            error("Error")
         }
     }
 }
