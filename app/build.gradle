@@ -36,4 +36,6 @@ dependencies {
     implementation project(":content:log")
     implementation project(":content:leak")
     implementation project(":content:database")
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 }

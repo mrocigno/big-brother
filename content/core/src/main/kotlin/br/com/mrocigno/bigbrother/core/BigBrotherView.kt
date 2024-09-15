@@ -1,6 +1,7 @@
 package br.com.mrocigno.bigbrother.core
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.RectF
@@ -22,6 +23,7 @@ import java.lang.Float.min
 import kotlin.math.roundToLong
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
+@SuppressLint("ClickableViewAccessibility")
 class BigBrotherView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -77,11 +79,15 @@ class BigBrotherView @JvmOverloads constructor(
         id = R.id.bigbrother
         config.initial(this)
 
-        setOnTouchListener { _, event ->
-            removableArea(event)
-            moveBubble(event)
+        setOnLongClickListener {
+            parentVG.addView(removableView)
 
-            if (event.action == MotionEvent.ACTION_UP && !move) performClick()
+            setOnTouchListener { _, event ->
+                removableArea(event)
+                moveBubble(event)
+                true
+            }
+
             true
         }
 
@@ -113,6 +119,7 @@ class BigBrotherView @JvmOverloads constructor(
                 if (parentVG.contains(bigBrotherContainerView)) bigBrotherContainerView.collapse()
             }
             MotionEvent.ACTION_UP -> {
+                setOnTouchListener(null)
                 fadeAnimation.start()
                 if (!move) return
                 if (isInRemovableArea(event)) onVortexKilled?.invoke()
@@ -124,9 +131,6 @@ class BigBrotherView @JvmOverloads constructor(
         if (!move) return
         when (event.action) {
             MotionEvent.ACTION_MOVE -> {
-                if (!parentVG.contains(removableView)) {
-                    parentVG.addView(removableView)
-                }
                 if (isInRemovableArea(event)) {
                     removableView.scaleX = 1.2f
                     removableView.scaleY = 1.2f

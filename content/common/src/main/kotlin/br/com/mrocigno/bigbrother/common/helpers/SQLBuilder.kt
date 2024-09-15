@@ -154,9 +154,3 @@ class SQLBuilder(
         }
     }
 }
-
-fun main() {
-    println(SQLBuilder("SELECT * FROM teste WHERE id = 1 OR session = 'bcs' AND session = 'ab ds sad asd sad asc' ORDER BY id ASC, session DESC")
-        .getSelectSql())
-    SQLBuilder("update tblReportLogs set session_id = 2 where id = 2")
-}
