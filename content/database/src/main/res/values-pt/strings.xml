@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bigbrother_table_empty_state">Nada encontrado com a query atual</string>
+    <string name="bigbrother_expanded_plain_text">Valor expandido</string>
+    <string name="bigbrother_db_empty_state">Nenhum arquivo de dados encontrado</string>
+    <string name="bigbrother_db_search_hint">Pesquise por bd ou tabela</string>
+    <string name="bigbrother_prefs_save">Salvar</string>
+    <string name="bigbrother_prefs_string_disclaimer">Altere o valor e então clique em salvar</string>
+    <string name="bigbrother_prefs_disclaimer">Clique e segure para copiar os dados ou clique para editar o valor</string>
+</resources>

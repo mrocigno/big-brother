@@ -2,12 +2,12 @@ package br.com.mrocigno.bigbrother.ui.network
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import br.com.mrocigno.bigbrother.R
 import br.com.mrocigno.bigbrother.core.utils.openBigBrotherBubble
@@ -22,9 +22,7 @@ class NetworkActivity : AppCompatActivity(R.layout.network_activity) {
     private val progressBar: LinearProgressIndicator by lazy { findViewById(R.id.progress_bar) }
     private val toolbar: Toolbar by lazy { findViewById(R.id.toolbar) }
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[NetworkViewModel::class.java]
-    }
+    private val viewModel: NetworkViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +51,7 @@ class NetworkActivity : AppCompatActivity(R.layout.network_activity) {
 
         errorLoadList.setOnClickListener {
             openBigBrotherBubble()
-            viewModel.fetchError()
+            viewModel.fetchPost()
         }
     }
 }

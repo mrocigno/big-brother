@@ -22,6 +22,8 @@
 
         <item name="fontFamily">@font/lato</item>
         <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+
+        <item name="alertDialogTheme">@style/AlertBigBrother</item>
     </style>
 
     <style name="BigBrotherButton" parent="Widget.AppCompat.Button">
@@ -37,9 +39,22 @@
         <item name="endIconTint">?colorPrimary</item>
     </style>
 
+    <style name="input_outlined" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">#33000000</item>
+        <item name="endIconMode">custom</item>
+        <item name="endIconTint">?colorPrimary</item>
+    </style>
+
     <style name="TextAppearance_Tab">
         <item name="android:fontFamily">@font/courier_bold</item>
         <item name="android:textColor">@color/text_title</item>
         <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="AlertBigBrother" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/bigbrother_alert_background</item>
+        <item name="colorPrimary">@color/brand_default</item>
+        <item name="colorPrimaryVariant">@color/brand_secondary</item>
+        <item name="colorOnPrimary">@android:color/white</item>
     </style>
 </resources>

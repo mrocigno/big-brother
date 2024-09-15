@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/bigbrother_activity_json_viewer_scene">
+    app:layoutDescription="@xml/bigbrother_searchable_scene">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/json_viewer_toolbar"
+        android:id="@id/searchable_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,7 +16,7 @@
         app:title="Json Viewer" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/json_viewer_search_view_layout"
+        android:id="@id/searchable_view_layout"
         style="@style/SearchView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -24,13 +24,13 @@
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/json_viewer_toolbar">
+        app:layout_constraintTop_toBottomOf="@id/searchable_toolbar">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/json_viewer_search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/json_viewer_search_hint" />
+            android:hint="@string/search_hint" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,10 +43,10 @@
         android:textColor="@color/text_paragraph"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/json_viewer_search_view_layout" />
+        app:layout_constraintTop_toBottomOf="@id/searchable_view_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/json_viewer_recycler"
+        android:id="@id/searchable_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:overScrollMode="never"

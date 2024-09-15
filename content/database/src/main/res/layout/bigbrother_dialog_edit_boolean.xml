@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/edit_boolean_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:layout_marginStart="@dimen/spacing_m"
+        android:padding="@dimen/spacing_m"
+        android:textSize="@dimen/text_m"
+        tools:text="true" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:paddingHorizontal="@dimen/spacing_m"
+        android:text="@string/bigbrother_prefs_string_disclaimer"
+        android:textColor="@color/text_title"
+        android:textSize="@dimen/text_m" />
+
+</LinearLayout>

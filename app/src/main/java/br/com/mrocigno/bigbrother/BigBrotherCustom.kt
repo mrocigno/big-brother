@@ -1,6 +1,7 @@
 package br.com.mrocigno.bigbrother
 
 import br.com.mrocigno.bigbrother.core.BigBrotherProvider
+import br.com.mrocigno.bigbrother.database.addDatabasePage
 import br.com.mrocigno.bigbrother.log.addLogPage
 import br.com.mrocigno.bigbrother.network.addNetworkPage
 import br.com.mrocigno.bigbrother.report.addSessionPage
@@ -12,6 +13,7 @@ class BigBrotherCustom : BigBrotherProvider() {
 
     override fun setupPages() {
         addNetworkPage()
+        addDatabasePage()
         addLogPage()
         addSessionPage()
         addPage(CustomPageActivity::class) {

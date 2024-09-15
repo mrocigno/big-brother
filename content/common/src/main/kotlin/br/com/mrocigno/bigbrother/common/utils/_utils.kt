@@ -20,10 +20,23 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import br.com.mrocigno.bigbrother.common.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
+import java.io.ObjectOutputStream
 import java.io.Serializable
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+import kotlin.reflect.KClass
+import kotlin.reflect.cast
 
-fun ViewGroup.inflate(@LayoutRes resId: Int) =
-    LayoutInflater.from(context).inflate(resId, this, false)
+fun ViewGroup.inflate(@LayoutRes resId: Int, attachToRoot: Boolean = false) =
+    LayoutInflater.from(context).inflate(resId, this, attachToRoot)
+
+fun <T : Any> Any.cast(clazz: KClass<T>): T {
+    return clazz.cast(this)
+}
 
 fun Context.copyToClipboard(text: String, toastFeedback: String? = "Copied to clipboard") {
     val clipboard = getSystemService(ClipboardManager::class.java)
@@ -38,7 +51,7 @@ inline fun <reified T> Intent.getParcelableExtraCompat(key: String): T? = when {
     else -> @Suppress("DEPRECATION") getParcelableExtra(key) as? T?
 }
 
-inline fun <reified T> Bundle.getParcelableExtraCompat(key: String): T? = when {
+inline fun <reified T> Bundle.getParcelableCompat(key: String): T? = when {
     Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getParcelable(key, T::class.java)
     else -> @Suppress("DEPRECATION") getParcelable(key) as? T?
 }
@@ -48,7 +61,7 @@ inline fun <reified T : Serializable> Intent.getSerializableExtraCompat(key: Str
     else -> @Suppress("DEPRECATION") getSerializableExtra(key) as? T?
 }
 
-inline fun <reified T : Serializable> Bundle.getSerializableExtraCompat(key: String): T? = when {
+inline fun <reified T : Serializable> Bundle.getSerializableCompat(key: String): T? = when {
     Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializable(key, T::class.java)
     else -> @Suppress("DEPRECATION") getSerializable(key) as? T?
 }
@@ -128,4 +141,28 @@ fun <T> MutableList<T>.update(model: T) {
     val index = indexOf(model).takeIf { it != -1 } ?: return
     removeAt(index)
     add(index, model)
+}
+
+fun Any?.canBeSerialized(): Boolean = runCatching {
+    if (this !is Serializable) return false
+    "".apply {  }
+    ObjectOutputStream(ByteArrayOutputStream())
+        .use { it.writeObject(this) }
+        .let { true }
+}.getOrElse { false }
+
+inline fun <T> T.applyScoped(scope: CoroutineScope, crossinline block: suspend T.() -> Unit): T {
+    scope.launch {
+        block()
+    }
+    return this
+}
+
+@OptIn(ExperimentalContracts::class)
+inline fun <T> T.applyIf(condition: Boolean, block: T.() -> Unit): T {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    if (condition) block()
+    return this
 }

@@ -3,6 +3,7 @@ plugins {
     alias libs.plugins.android.application apply false
     alias libs.plugins.android.library apply false
     alias libs.plugins.android.kotlin apply false
+    alias libs.plugins.ksp apply false
 }
 
 allprojects {
@@ -16,20 +17,20 @@ allprojects {
 
         android {
             namespace "br.com.mrocigno.bigbrother$suffix"
-            compileSdk 33
+            compileSdk 34
 
             defaultConfig {
                 minSdk 23
-                targetSdk 33
+                targetSdk 34
                 versionCode 1
                 versionName "1.0"
                 resConfigs "en", "pt"
 
                 testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-                javaCompileOptions {
-                    annotationProcessorOptions {
-                        arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+                if (project.hasProperty("ksp")) {
+                    ksp {
+                        arg("room.schemaLocation", "$projectDir/schemas")
                     }
                 }
             }
@@ -40,17 +41,22 @@ allprojects {
                     proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
                 }
             }
+
             compileOptions {
-                sourceCompatibility JavaVersion.VERSION_1_8
-                targetCompatibility JavaVersion.VERSION_1_8
+                sourceCompatibility JavaVersion.VERSION_17
+                targetCompatibility JavaVersion.VERSION_17
             }
+
             kotlinOptions {
-                jvmTarget = '1.8'
+                jvmTarget = '17'
+            }
+
+            buildFeatures {
+                buildConfig = true
             }
         }
 
         dependencies {
-
             implementation libs.androidx.core
             implementation libs.androidx.appcompat
             implementation libs.material

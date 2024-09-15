@@ -4,6 +4,8 @@
     <color name="background_secondary">#F3F3F3</color>
     <color name="background_tertiary">#FFFFFF</color>
 
+    <color name="themed_transparent">#99FFFFFF</color>
+
     <color name="brand_default">@color/moss_green</color>
     <color name="brand_secondary">@color/boy_red</color>
 
@@ -32,6 +34,6 @@
     <color name="olive_drab">#5E4D3D</color>
     <color name="moss_green">#929663</color>
     <color name="boy_red">#6D6944</color>
-    <color name="licorice">#1C1209</color>
+    <color name="licorice">#573C22</color>
     <!--endregion-->
 </resources>

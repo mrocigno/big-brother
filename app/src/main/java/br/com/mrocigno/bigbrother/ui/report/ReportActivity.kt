@@ -36,7 +36,7 @@ class ReportActivity : AppCompatActivity(R.layout.report_activity) {
         }
 
         forceCrash.setOnClickListener {
-            throw Exception("generic crash")
+            listOf("")[1]
         }
     }
 }

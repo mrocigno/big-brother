@@ -1,14 +1,14 @@
 package br.com.mrocigno.bigbrother.report
 
 import br.com.mrocigno.bigbrother.common.utils.appendSpace
-import br.com.mrocigno.bigbrother.report.entity.ReportLogEntity
+import br.com.mrocigno.bigbrother.report.model.ReportLogEntry
 import br.com.mrocigno.bigbrother.report.model.ReportType
 
-internal fun List<ReportLogEntity>.buildReport() = ReportGenerator(this)
+internal fun List<ReportLogEntry>.buildReport() = ReportGenerator(this)
 
-internal class ReportGenerator(list: List<ReportLogEntity>) {
+internal class ReportGenerator(list: List<ReportLogEntry>) {
 
-    private var finalList: List<ReportLogEntity> = list
+    private var finalList: List<ReportLogEntry> = list
 
     // TODO: Add some configs here
 

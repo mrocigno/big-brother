@@ -7,8 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="100dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="100dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/main_title"
@@ -147,44 +147,53 @@
         <br.com.mrocigno.bigbrother.ui.GroupLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Logs"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            android:text="Logs">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/log_debug"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:textColor="@color/boy_red"
                 android:text="Log debug example"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:textColor="@color/boy_red"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/log_error"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:textColor="@color/icon_negative"
                 android:text="Log error example"
-                app:layout_constraintTop_toBottomOf="@id/log_debug"/>
+                android:textColor="@color/icon_negative"
+                app:layout_constraintTop_toBottomOf="@id/log_debug" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/log_warn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:textColor="@color/text_highlight"
                 android:text="Log warn example"
-                app:layout_constraintTop_toBottomOf="@id/log_error"/>
+                android:textColor="@color/text_highlight"
+                app:layout_constraintTop_toBottomOf="@id/log_error" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/log_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:textColor="@color/text_hyperlink"
                 android:text="Log info example"
-                app:layout_constraintTop_toBottomOf="@id/log_warn"/>
+                android:textColor="@color/text_hyperlink"
+                app:layout_constraintTop_toBottomOf="@id/log_warn" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/log_assert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Log assert example"
+                android:textColor="@color/icon_negative"
+                app:layout_constraintTop_toBottomOf="@id/log_info" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/log_verbose"
@@ -192,14 +201,14 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Log verbose example"
-                app:layout_constraintTop_toBottomOf="@id/log_info"/>
+                app:layout_constraintTop_toBottomOf="@id/log_assert" />
 
         </br.com.mrocigno.bigbrother.ui.GroupLayout>
 
         <br.com.mrocigno.bigbrother.ui.GroupLayout
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:text="General">
 
             <androidx.appcompat.widget.AppCompatButton
@@ -208,7 +217,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="@string/out_of_domain_button"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/custom_page"
@@ -216,7 +225,15 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="@string/custom_page_activity_button"
-                app:layout_constraintTop_toBottomOf="@id/out_of_domain"/>
+                app:layout_constraintTop_toBottomOf="@id/out_of_domain" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/compose_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/compose_activity_button"
+                app:layout_constraintTop_toBottomOf="@id/custom_page" />
 
         </br.com.mrocigno.bigbrother.ui.GroupLayout>
 

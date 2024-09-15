@@ -1,0 +1,18 @@
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.android.kotlin
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+}
+
+apply from: file('../../gradle/publish.gradle')
+
+dependencies {
+
+    compileOnly project(":content:core")
+    compileOnly project(":content:network")
+    implementation project(":content:common")
+
+    implementation libs.kotlin.coroutines
+    implementation libs.androidx.activity
+}

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/table_inspector_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$Behavior">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="@color/background_secondary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:statusBarScrim="@color/background_secondary"
+            app:titleEnabled="false"
+            app:toolbarId="@+id/table_inspector_toolbar">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/table_inspector_sql_layout"
+                style="@style/input_outlined"
+                app:endIconCheckable="true"
+                app:endIconDrawable="@drawable/bigbrother_ic_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="?actionBarSize"
+                android:padding="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/table_inspector_sql"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="SQL"
+                    android:inputType="textMultiLine"
+                    android:maxLines="10"
+                    android:scrollbars="none"
+                    android:scrollHorizontally="false"
+                    app:fontFamily="@font/courier_regular" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/table_inspector_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                app:navigationIcon="@drawable/bigbrother_ic_arrow_back"
+                tools:title="table name" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/table_inspector_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+    <FrameLayout
+        android:id="@+id/table_inspector_loading_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#6D000000">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/boy_red"/>
+
+    </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

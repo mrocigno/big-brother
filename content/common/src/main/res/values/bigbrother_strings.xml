@@ -5,4 +5,7 @@
 
     <string name="select_all">Select all</string>
     <string name="deselect_all">Deselect all</string>
+    <string name="close">Close</string>
+    <string name="copy_feedback">key %1s copied</string>
+    <string name="search_hint">Search key or value</string>
 </resources>

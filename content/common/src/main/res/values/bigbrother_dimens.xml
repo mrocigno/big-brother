@@ -3,8 +3,14 @@
 
     <dimen name="bigbrother_size">32dp</dimen>
     <dimen name="spacing_stroke">1dp</dimen>
+    <dimen name="spacing_xxs">4dp</dimen>
+    <dimen name="spacing_xs">8dp</dimen>
     <dimen name="spacing_s">12dp</dimen>
     <dimen name="spacing_m">16dp</dimen>
     <dimen name="spacing_l">24dp</dimen>
+    <dimen name="spacing_xl">34dp</dimen>
     <dimen name="spacing_td_top">48dp</dimen>
+
+    <dimen name="text_m">16sp</dimen>
+    <dimen name="text_l">24sp</dimen>
 </resources>
