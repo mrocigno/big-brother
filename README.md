@@ -189,7 +189,7 @@ Now with de dependencies correctly implemented, we will configure to start using
       override fun onCreate() {
           super.onCreate()
   
-          // Implement together with (Timber lib)[https://github.com/JakeWharton/timber]
+          // Implement together with [Timber lib](https://github.com/JakeWharton/timber)
           Timber.plant(BigBrotherLogTree())
   
           // Start the watch
@@ -202,13 +202,60 @@ Now with de dependencies correctly implemented, we will configure to start using
 
 ## Network
 The network implementation allows you to receive requests and responses from your services without needing to be plugged into Android Studio, all within the app with a user-friendly interface that helps both Android devs, backend devs who are doing integrated testing and even QA to analyze the error before opening a bug card.
+![network gif](gifs/network.gif)
 <details>
     <summary><b><i>Setup Network</i></b></summary>
 
-       
+* With OkHttp3
+  Add the BigBrotherInterceptor into your OkHttp3 client.
+
+  ```kotlin
+  // Using the extension
+  private val okHttpClient : OkHttpClient = OkHttpClient.Builder()
+      .connectTimeout(30, TimeUnit.SECONDS)
+      .readTimeout(30, TimeUnit.SECONDS)
+      .bigBrotherIntercept(blockList = arrayOf(
+          "dont/intercept/this",
+          "not/even/this"
+      ))
+      .build()
+  
+  // OR add raw class
+  private val okHttpClient : OkHttpClient = OkHttpClient.Builder()
+      .connectTimeout(30, TimeUnit.SECONDS)
+      .readTimeout(30, TimeUnit.SECONDS)
+      .addInterceptor(BigBrotherInterceptor(blockList = arrayOf(
+          "dont/intercept/this",
+          "not/even/this"
+      )))
+      .build()
+  ```
+
+* Custom (to support legacy implementation like AsyncTask)
+  To manually add entries to network section
+
+  ```kotlin
+  BigBrotherNetworkHolder.addEntry(
+      NetworkEntryModel(
+          fullUrl = "www.google.com/example",
+          url = "/example",
+          statusCode = 200,
+          hour = "10:00",
+          method = "GET",
+          request = NetworkPayloadModel(
+              headers = mapOf("Authorization" to listOf("abc123")),
+              body = null
+          ),
+          response = NetworkPayloadModel(
+              headers = emptyMap(),
+              body = """
+                  {"response": "value"}
+              """
+          ) 
+      )
+  )
+  ```
 </details>
-
-
 
 ## Log
 
