@@ -202,11 +202,12 @@ Now with de dependencies correctly implemented, we will configure to start using
 
 ## Network
 The network implementation allows you to receive requests and responses from your services without needing to be plugged into Android Studio, all within the app with a user-friendly interface that helps both Android devs, backend devs who are doing integrated testing and even QA to analyze the error before opening a bug card.
-![network gif](gifs/network.gif)
+
 <details>
     <summary><b><i>Setup Network</i></b></summary>
 
 * With OkHttp3
+
   Add the BigBrotherInterceptor into your OkHttp3 client.
 
   ```kotlin
@@ -232,6 +233,7 @@ The network implementation allows you to receive requests and responses from you
   ```
 
 * Custom (to support legacy implementation like AsyncTask)
+
   To manually add entries to network section
 
   ```kotlin
@@ -256,6 +258,9 @@ The network implementation allows you to receive requests and responses from you
   )
   ```
 </details>
+
+![network gif](gifs/network.gif)
+
 
 ## Log
 
