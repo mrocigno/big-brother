@@ -261,10 +261,28 @@ The network implementation allows you to receive requests and responses from you
 
 ![network gif](gifs/network.gif)
 
-
 ## Log
 
-> TODO: add prints and usage
+The Log implementation allows you to view the logs (set by you) in a user-friendly interface without needing to be connected to Android Studio's logact
+
+<details>
+    <summary><b><i>Setup Log</i></b></summary>
+
+  In your debug application you need to plant `BigBrotherLogTree` in the [Timber lib](https://github.com/JakeWharton/timber)
+  ```kotlin
+  class SampleApplication : Application() {
+  
+      override fun onCreate() {
+          super.onCreate()
+        
+          Timber.plant(BigBrotherLogTree())
+      }
+  }
+```
+
+</details>
+
+![logs gif](gifs/log.gif)
 
 ## Report
 
