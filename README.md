@@ -286,4 +286,21 @@ The Log implementation allows you to view the logs (set by you) in a user-friend
 
 ## Report
 
-> TODO: add prints and usage
+The Report implementation will record all the data provided by the other implementations and save it to a database to retrieve the data for later troubleshooting.
+This implementation requires no setup
+
+![session gif](gifs/session.gif)
+
+## Database
+
+The Database implementation allows you to view your databases/tables and make queries with SQL, it also allows you to view and edit your sharedPreferences files.
+This implementation requires no setup
+
+![session gif](gifs/database.gif)
+
+## Crash
+
+The crash implementation will display a screen with the exception stackTrace and a timeline with a print of where the user clicked whenever a crash occurs in your application.
+This implementation requires no setup
+
+![session gif](gifs/crash.gif)
