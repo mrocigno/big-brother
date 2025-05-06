@@ -59,11 +59,11 @@ class FilterView @JvmOverloads constructor(
     private var data: FilterData = filterData
 
     init {
-        val paddingOffset = context.resources.getDimensionPixelOffset(CR.dimen.spacing_s)
+        val paddingOffset = context.resources.getDimensionPixelOffset(CR.dimen.bb_spacing_s)
 
         setLayerType(LAYER_TYPE_SOFTWARE, null)
         inflate(context, R.layout.bigbrother_view_filter, this)
-        setBackgroundColor(context.getColor(CR.color.themed_transparent))
+        setBackgroundColor(context.getColor(CR.color.bb_themed_transparent))
         setPadding(paddingOffset, refView.height, paddingOffset, paddingOffset)
         content.onMeasured {
             val headerCenter = refView.visibleCenter()
@@ -96,7 +96,7 @@ class FilterView @JvmOverloads constructor(
     }
 
     fun View.visibleCenter(): Float {
-        val padding = context.resources.getDimension(CR.dimen.spacing_s)
+        val padding = context.resources.getDimension(CR.dimen.bb_spacing_s)
         val temp = x + (width / 2)
         return when {
             temp > content.width -> x + padding
@@ -114,7 +114,7 @@ class FilterView @JvmOverloads constructor(
     }
 
     private fun setupViews() {
-        val selectedColor = context.getColor(CR.color.background_tertiary)
+        val selectedColor = context.getColor(CR.color.bb_background_tertiary)
 
         confirm.setOnClickListener {
             onConfirm()
@@ -158,7 +158,7 @@ class FilterView @JvmOverloads constructor(
     }
 
     private fun Drawable.fixColor() {
-        val color = context.getColor(CR.color.background_secondary)
+        val color = context.getColor(CR.color.bb_background_secondary)
         when (this) {
             is RotateDrawable -> drawable?.fixColor()
             is GradientDrawable -> setColor(color)

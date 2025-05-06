@@ -30,7 +30,7 @@
         android:id="@+id/session_details_print_divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="@color/text_title"
+        android:background="@color/bb_text_title"
         app:layout_constraintBottom_toBottomOf="@id/session_details_print_guide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -74,8 +74,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="100dp"
-                android:padding="@dimen/spacing_m"
-                android:textColor="@color/text_title"
+                android:padding="@dimen/bb_spacing_m"
+                android:textColor="@color/bb_text_title"
                 app:fontFamily="@font/courier_regular"
                 tools:text="@tools:sample/lorem[5]" />
 

@@ -7,8 +7,8 @@ import kotlin.reflect.KClass
 
 object BigBrother {
 
+    val config = BigBrotherConfig()
     internal val tasks = mutableListOf<BigBrotherTask>()
-    internal val config = BigBrotherConfig()
 
     private val activityPages: HashMap<KClass<out Activity>, List<PageData>> = hashMapOf()
     private val pages: MutableList<PageData> = mutableListOf()

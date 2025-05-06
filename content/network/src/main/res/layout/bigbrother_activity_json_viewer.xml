@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="@string/json_viewer_disclaimer"
-        android:textColor="@color/text_paragraph"
+        android:textColor="@color/bb_text_paragraph"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchable_view_layout" />

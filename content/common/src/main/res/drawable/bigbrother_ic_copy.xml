@@ -4,6 +4,6 @@
     android:viewportWidth="960"
     android:viewportHeight="960">
   <path
-      android:fillColor="@color/text_hyperlink"
+      android:fillColor="@color/bb_text_hyperlink"
       android:pathData="M200,880q-33,0 -56.5,-23.5T120,800L120,240h80v560h440v80L200,880ZM360,720q-33,0 -56.5,-23.5T280,640L280,160q0,-33 23.5,-56.5T360,80h360q33,0 56.5,23.5T800,160v480q0,33 -23.5,56.5T720,720L360,720ZM360,640h360L720,160L360,160v480ZM360,640L360,160v480Z"/>
 </vector>

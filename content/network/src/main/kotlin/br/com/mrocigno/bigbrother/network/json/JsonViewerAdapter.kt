@@ -130,13 +130,13 @@ class JsonViewerViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layo
     private fun adjustLevel(model: JsonViewerModel) {
         itemView.setBackgroundColor(ColorUtils.setAlphaComponent(Color.GRAY, model.lvl * 10))
         itemView.updateLayoutParams<RecyclerView.LayoutParams> {
-            val spacing = context.resources.getDimensionPixelOffset(CR.dimen.spacing_s)
+            val spacing = context.resources.getDimensionPixelOffset(CR.dimen.bb_spacing_s)
             leftMargin = spacing * model.lvl
         }
     }
 
     private fun adjustContent(model: JsonViewerModel, query: String, onExpand: (model: JsonViewerModel) -> Unit) {
-        val highlightColor = context.getColor(CR.color.text_highlight)
+        val highlightColor = context.getColor(CR.color.bb_text_highlight)
         key.text = model.key.plus(":").highlightQuery(query, highlightColor)
         if (model.children != null) {
             icon.isVisible = true
@@ -146,12 +146,12 @@ class JsonViewerViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layo
                 icon.rotation = 0f
             }
             value.text = context.getString(R.string.json_viewer_expand_click)
-            value.setTextColor(context.getColor(CR.color.text_hyperlink))
+            value.setTextColor(context.getColor(CR.color.bb_text_hyperlink))
             itemView.setOnClickListener { onExpand(model) }
         } else {
             icon.isVisible = false
             itemView.setOnClickListener(null)
-            value.setTextColor(context.getColor(CR.color.text_paragraph))
+            value.setTextColor(context.getColor(CR.color.bb_text_paragraph))
             value.text = model.value.toString().highlightQuery(query, highlightColor)
         }
         itemView.setOnLongClickListener {

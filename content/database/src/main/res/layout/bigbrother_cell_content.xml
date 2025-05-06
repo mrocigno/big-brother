@@ -8,8 +8,8 @@
     android:ellipsize="end"
     android:gravity="center_vertical"
     android:maxLines="1"
-    android:paddingHorizontal="@dimen/spacing_xs"
-    android:textColor="@color/text_paragraph"
-    android:textSize="@dimen/text_m"
+    android:paddingHorizontal="@dimen/bb_spacing_xs"
+    android:textColor="@color/bb_text_paragraph"
+    android:textSize="@dimen/bb_text_m"
     app:fontFamily="@font/lato"
     tools:text="test" />

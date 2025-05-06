@@ -20,14 +20,14 @@ class CustomPageActivity : AppCompatActivity(R.layout.custom_page_activity) {
         val clazz = findViewById<AppCompatTextView>(R.id.fun_body1)
         val clazzSsb = SpannableStringBuilder(clazz.text)
         val clazzIndex = clazzSsb.indexOf("class")
-        val clazzSpan = ForegroundColorSpan(getColor(CR.color.net_entry_put))
+        val clazzSpan = ForegroundColorSpan(getColor(CR.color.bb_net_entry_put))
         clazzSsb.setSpan(clazzSpan, clazzIndex, clazzIndex + 5, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         clazz.text = clazzSsb
 
         val string = findViewById<AppCompatTextView>(R.id.fun_body2)
         val stringSsb = SpannableStringBuilder(string.text)
         val stringIndex = stringSsb.indexOf("\"custom name\"")
-        val stringSpan = ForegroundColorSpan(getColor(CR.color.net_entry_get))
+        val stringSpan = ForegroundColorSpan(getColor(CR.color.bb_net_entry_get))
         stringSsb.setSpan(stringSpan, stringIndex, stringIndex + 13, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         string.text = stringSsb
     }

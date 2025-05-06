@@ -5,7 +5,7 @@
     android:id="@+id/net_entry_details_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/bb_background"
     android:fitsSystemWindows="false"
     app:layoutDescription="@xml/bigbrother_activity_network_entry_scene">
 
@@ -13,7 +13,7 @@
         android:id="@+id/net_entry_details_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/background"
+        android:background="@color/bb_background"
         app:layout_constraintBottom_toBottomOf="@id/net_entry_details_copy_all"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,7 @@
         android:id="@+id/net_entry_details_status_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_title"
+        android:textColor="@color/bb_text_title"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
         android:id="@+id/net_entry_details_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_title"
+        android:textColor="@color/bb_text_title"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:textColor="@color/text_title"
+        android:textColor="@color/bb_text_title"
         android:textIsSelectable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/network_copy"
-        android:textColor="@color/text_hyperlink"
+        android:textColor="@color/bb_text_hyperlink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/net_entry_details_general_info" />
@@ -91,7 +91,7 @@
         android:id="@+id/net_entry_details_loading_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/background"
+        android:background="@color/bb_background"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminateTint="@color/boy_red" />
+            android:indeterminateTint="@color/bb_boy_red" />
 
     </FrameLayout>
 

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="background">#FF121212</color>
-    <color name="background_secondary">#1E1E1E</color>
-    <color name="background_tertiary">#404040</color>
+    <color name="bb_background">#FF121212</color>
+    <color name="bb_background_secondary">#1E1E1E</color>
+    <color name="bb_background_tertiary">#404040</color>
 
-    <color name="themed_transparent">#99000000</color>
+    <color name="bb_themed_transparent">#99000000</color>
 
-    <color name="co_brand_default">#CECECE</color>
-    <color name="co_brand_secondary">#FFFFFF</color>
+    <color name="bb_co_brand_default">#CECECE</color>
+    <color name="bb_co_brand_secondary">#FFFFFF</color>
 
-    <color name="text_title">#FFFFFFFF</color>
-    <color name="text_title_inverse">#FF000000</color>
-    <color name="text_paragraph">#D8D8D8</color>
-    <color name="text_hyperlink">#FF00C4FF</color>
-    <color name="text_highlight">#FFFFEB3B</color>
+    <color name="bb_text_title">#FFFFFFFF</color>
+    <color name="bb_text_title_inverse">#FF000000</color>
+    <color name="bb_text_paragraph">#D8D8D8</color>
+    <color name="bb_text_hyperlink">#FF00C4FF</color>
+    <color name="bb_text_highlight">#FFFFEB3B</color>
 
-    <color name="icon_negative">#BC0000</color>
-    <color name="icon_positive">#046500</color>
+    <color name="bb_icon_negative">#BC0000</color>
+    <color name="bb_icon_positive">#046500</color>
 
-    <color name="divider">#22FFFFFF</color>
+    <color name="bb_divider">#22FFFFFF</color>
 
-    <color name="net_entry_post">#03A9F4</color>
-    <color name="net_entry_put">#FF5722</color>
-    <color name="net_entry_get">#388E3C</color>
-    <color name="net_entry_delete">#FF4545</color>
+    <color name="bb_net_entry_post">#03A9F4</color>
+    <color name="bb_net_entry_put">#FF5722</color>
+    <color name="bb_net_entry_get">#388E3C</color>
+    <color name="bb_net_entry_delete">#FF4545</color>
 </resources>

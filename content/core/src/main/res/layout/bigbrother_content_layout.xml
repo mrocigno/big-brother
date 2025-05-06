@@ -14,9 +14,9 @@
         android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
         app:tabMode="scrollable"
-        app:tabSelectedTextColor="@color/text_title"
+        app:tabSelectedTextColor="@color/bb_text_title"
         app:tabTextAppearance="@style/TextAppearance_Tab"
-        app:tabTextColor="@color/text_title" />
+        app:tabTextColor="@color/bb_text_title" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/td_dreams_pager"

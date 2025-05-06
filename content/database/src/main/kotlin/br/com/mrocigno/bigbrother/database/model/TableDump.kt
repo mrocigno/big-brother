@@ -40,7 +40,7 @@ class TableDump(
 
         val paint = view.paint
         val padding = view.paddingStart + view.paddingEnd
-        val headerPadding = context.resources.getDimensionPixelSize(CR.dimen.spacing_l)
+        val headerPadding = context.resources.getDimensionPixelSize(CR.dimen.bb_spacing_l)
 
         val manager = context.getSystemService(WindowManager::class.java)
         val fullWidth = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

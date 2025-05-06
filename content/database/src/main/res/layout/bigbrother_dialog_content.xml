@@ -9,8 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:fontFamily="@font/lato"
-        android:padding="@dimen/spacing_l"
-        android:textColor="@color/text_title"
+        android:padding="@dimen/bb_spacing_l"
+        android:textColor="@color/bb_text_title"
         android:textIsSelectable="true"
         android:textSize="16sp"
         tools:text="@tools:sample/lorem/random" />

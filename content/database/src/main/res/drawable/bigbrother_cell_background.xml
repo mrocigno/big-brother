@@ -2,12 +2,12 @@
 <layer-list android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:gravity="start" android:width="1dp">
         <shape android:shape="rectangle">
-            <solid android:color="@color/divider"/>
+            <solid android:color="@color/bb_divider"/>
         </shape>
     </item>
     <item android:gravity="bottom" android:height="1dp">
         <shape android:shape="rectangle">
-            <solid android:color="@color/divider"/>
+            <solid android:color="@color/bb_divider"/>
         </shape>
     </item>
 </layer-list>
