@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.core.content.edit
 import br.com.mrocigno.bigbrother.R
-import br.com.mrocigno.bigbrother.log.BBLog
 import br.com.mrocigno.bigbrother.ui.compose.ComposableActivity
 import br.com.mrocigno.bigbrother.ui.general.CustomPageActivity
 import br.com.mrocigno.bigbrother.ui.general.OutOfDomainActivity
@@ -28,14 +28,19 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
         setupLogGroup()
         setupGeneralGroup()
 
+        createTestSharedPreferences()
+    }
+
+    private fun createTestSharedPreferences() {
         val pref = getSharedPreferences("filename", MODE_PRIVATE)
-        pref.edit()
-            .putInt("int", 1)
-            .putBoolean("boolean", true)
-            .putLong("long", 1000L)
-            .putFloat("float", 0.1f)
-            .putString("string", "string")
-            .putString("json", """
+        if (pref.contains("int")) return
+        pref.edit {
+            putInt("int", 1)
+            putBoolean("boolean", true)
+            putLong("long", 1000L)
+            putFloat("float", 0.1f)
+            putString("string", "string")
+            putString("json", """
                 |{
                 |    "string": "string",
                 |    "int": 1,
@@ -47,14 +52,14 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
                 |        "string2"
                 |    ]
                 |}
-            """.trimMargin())
-            .putStringSet("stringSet", setOf("string1", "string2"))
-            .apply()
+                """.trimMargin()
+            )
+            putStringSet("stringSet", setOf("string1", "string2"))
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        setupLogcatToggle()
         setupAppThemeToggle()
     }
 
@@ -78,30 +83,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
         darkmode.setOnClickListener {
             lightmode.isChecked = false
             AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-        }
-    }
-
-    private fun setupLogcatToggle() {
-        val logEnabled = findViewById<AppCompatRadioButton>(R.id.logcat_enabled)
-        val logDisabled = findViewById<AppCompatRadioButton>(R.id.logcat_disabled)
-
-        logEnabled.isChecked = false
-        logEnabled.isChecked = false
-
-        if (BBLog.isLoggable) {
-            logEnabled.isChecked = true
-        } else {
-            logDisabled.isChecked = true
-        }
-
-        logEnabled.setOnClickListener {
-            logDisabled.isChecked = false
-            BBLog.isLoggable = true
-        }
-
-        logDisabled.setOnClickListener {
-            logEnabled.isChecked = false
-            BBLog.isLoggable = false
         }
     }
 

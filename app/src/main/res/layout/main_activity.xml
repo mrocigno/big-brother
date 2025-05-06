@@ -70,40 +70,6 @@
                 app:layout_constraintStart_toEndOf="@id/dark_mode_radio"
                 app:layout_constraintTop_toTopOf="@id/dark_mode_radio" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/logcat_subtitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/bb_spacing_m"
-                android:layout_marginTop="@dimen/bb_spacing_m"
-                android:text="@string/logcat_logs"
-                android:textColor="@color/bb_text_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/dark_mode_radio" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/logcat_enabled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/bb_spacing_s"
-                android:layout_marginTop="@dimen/bb_spacing_s"
-                android:buttonTint="@color/bb_moss_green"
-                android:text="@string/enabled"
-                app:layout_constraintEnd_toStartOf="@id/logcat_disabled"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/logcat_subtitle" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/logcat_disabled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/bb_spacing_s"
-                android:buttonTint="@color/bb_moss_green"
-                android:text="@string/disabled"
-                app:layout_constraintStart_toEndOf="@id/logcat_enabled"
-                app:layout_constraintTop_toTopOf="@id/logcat_enabled" />
-
         </br.com.mrocigno.bigbrother.ui.GroupLayout>
 
         <br.com.mrocigno.bigbrother.ui.GroupLayout

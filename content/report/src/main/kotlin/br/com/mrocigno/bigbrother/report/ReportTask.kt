@@ -29,7 +29,7 @@ internal class ReportTask : BigBrotherTask() {
 
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
         mapping[activity.hashCode()] = ++nestedLevel
-        activity.rootView.addView(ClickObserverView.getOrCreate(activity))
+        ClickObserverView.getOrCreate(activity)?.run(activity.rootView::addView)
         bbTrack(ReportType.TRACK) {
             "---> ${activity::class.simpleName}"
         }

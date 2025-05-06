@@ -11,7 +11,10 @@ class SampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        BigBrother.watch(this, isBubbleEnabled = true)
+        BigBrother.config {
+            isClickRecorderEnabled = true
+        }.watch(this, isBubbleEnabled = true)
+
         Timber.plant(DebugTree())
         Timber.plant(BigBrotherLogTree())
     }

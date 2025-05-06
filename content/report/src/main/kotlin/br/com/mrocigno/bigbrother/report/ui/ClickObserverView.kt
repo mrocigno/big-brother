@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import android.widget.FrameLayout.LayoutParams.MATCH_PARENT
 import androidx.fragment.app.Fragment
+import br.com.mrocigno.bigbrother.core.BigBrother
 import br.com.mrocigno.bigbrother.core.utils.lastClickPosition
 import br.com.mrocigno.bigbrother.report.R
 
@@ -31,15 +32,19 @@ class ClickObserverView @JvmOverloads constructor(
     companion object {
 
         fun getOrCreate(activity: Activity) =
-            get(activity) ?: ClickObserverView(activity)
+            (get(activity) ?: ClickObserverView(activity))
+                .takeIf { BigBrother.config.isClickRecorderEnabled }
 
         fun getOrCreate(fragment: Fragment) =
-            get(fragment) ?: fragment.activity?.let { ClickObserverView(it) }
+            (get(fragment) ?: fragment.activity?.let { ClickObserverView(it) })
+                .takeIf { BigBrother.config.isClickRecorderEnabled }
 
         fun get(activity: Activity) =
-            activity.findViewById<ClickObserverView>(R.id.click_observer)
+            (activity.findViewById<ClickObserverView>(R.id.click_observer))
+                .takeIf { BigBrother.config.isClickRecorderEnabled }
 
         fun get(fragment: Fragment) =
-            fragment.view?.findViewById<ClickObserverView>(R.id.click_observer)
+            (fragment.view?.findViewById<ClickObserverView>(R.id.click_observer))
+                .takeIf { BigBrother.config.isClickRecorderEnabled }
     }
 }

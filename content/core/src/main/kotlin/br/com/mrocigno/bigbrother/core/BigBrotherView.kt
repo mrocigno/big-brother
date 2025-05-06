@@ -3,6 +3,7 @@ package br.com.mrocigno.bigbrother.core
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
+import android.graphics.Rect
 import android.graphics.RectF
 import android.os.Build
 import android.util.AttributeSet
@@ -11,7 +12,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.core.graphics.toRect
 import androidx.core.view.contains
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -53,12 +53,19 @@ class BigBrotherView @JvmOverloads constructor(
             startDelay = 2000L
         }
 
+    private val View.bounds get() = RectF(x, y, x + width, y + height)
     private val area by lazy {
         RectF(
             0f,
             statusBarHeight,
             (parentVG.width - width).toFloat(),
             parentVG.height - height - navigationBarHeight
+        )
+    }
+    private val excludeSystemGesturesArea by lazy {
+        Rect(
+            0, 0,
+            BigBrother.config.size, BigBrother.config.size
         )
     }
 
@@ -183,8 +190,6 @@ class BigBrotherView @JvmOverloads constructor(
         )
     }
 
-    private val View.bounds get() = RectF(x, y, x + width, y + height)
-
     private fun RectF.intersects(bounds: RectF): Boolean {
         return intersects(bounds.left, bounds.top, bounds.right, bounds.bottom)
     }
@@ -193,7 +198,7 @@ class BigBrotherView @JvmOverloads constructor(
         super.onLayout(changed, left, top, right, bottom)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            systemGestureExclusionRects = listOf(this.bounds.toRect())
+            systemGestureExclusionRects = listOf(excludeSystemGesturesArea)
         }
     }
 

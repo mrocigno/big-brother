@@ -80,13 +80,18 @@ class BigBrotherContainerView(
         isExpanded = false
         vortex.setBackgroundResource(BigBrother.config.iconRes)
 
-        TransitionManager.beginDelayedTransition(parentVG, CircularRevealTransition().apply {
-            doOnStart { isAnimationRunning = true }
-            doOnEnd {
-                parentVG.removeView(this@BigBrotherContainerView)
-                isAnimationRunning = false
-            }
-        })
+        runCatching {
+            TransitionManager.beginDelayedTransition(parentVG, CircularRevealTransition().apply {
+                doOnStart { isAnimationRunning = true }
+                doOnEnd {
+                    parentVG.removeView(this@BigBrotherContainerView)
+                    isAnimationRunning = false
+                }
+            })
+        }.onFailure {
+            parentVG.removeView(this@BigBrotherContainerView)
+            isAnimationRunning = false
+        }
         isInvisible = true
     }
 
