@@ -43,7 +43,6 @@ class ComposableActivity : AppCompatActivity() {
                     }
                 }
             }
-            error("Error")
         }
     }
 }
