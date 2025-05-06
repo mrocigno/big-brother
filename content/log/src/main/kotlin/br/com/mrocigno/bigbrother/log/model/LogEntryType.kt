@@ -11,38 +11,38 @@ enum class LogEntryType(
 ) {
     ERROR(
         "E",
-        CommonR.color.icon_negative,
+        CommonR.color.bb_icon_negative,
         android.R.color.white,
-        CommonR.color.icon_negative
+        CommonR.color.bb_icon_negative
     ),
     WARN(
         "W",
-        CommonR.color.text_highlight,
+        CommonR.color.bb_text_highlight,
         android.R.color.black,
-        CommonR.color.text_highlight
+        CommonR.color.bb_text_highlight
     ),
     DEBUG(
         "D",
-        CommonR.color.boy_red,
+        CommonR.color.bb_boy_red,
         android.R.color.white,
-        CommonR.color.text_paragraph
+        CommonR.color.bb_text_paragraph
     ),
     VERBOSE(
         "V",
-        CommonR.color.text_title,
-        CommonR.color.text_title_inverse,
-        CommonR.color.text_paragraph
+        CommonR.color.bb_text_title,
+        CommonR.color.bb_text_title_inverse,
+        CommonR.color.bb_text_paragraph
     ),
     INFO(
         "I",
-        CommonR.color.text_hyperlink,
+        CommonR.color.bb_text_hyperlink,
         android.R.color.white,
-        CommonR.color.text_title
+        CommonR.color.bb_text_title
     ),
     ASSERT(
         "WTF",
-        CommonR.color.icon_negative,
+        CommonR.color.bb_icon_negative,
         android.R.color.white,
-        CommonR.color.icon_negative
+        CommonR.color.bb_icon_negative
     )
 }

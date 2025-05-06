@@ -58,7 +58,7 @@ private fun Toolbar() {
         title = {
             Text(
                 text = stringResource(R.string.compose_activity_button),
-                color = colorResource(CR.color.text_title)
+                color = colorResource(CR.color.bb_text_title)
             )
         },
         navigationIcon = {
@@ -66,7 +66,7 @@ private fun Toolbar() {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = null,
-                    tint = colorResource(CR.color.text_title)
+                    tint = colorResource(CR.color.bb_text_title)
                 )
             }
         }

@@ -34,7 +34,7 @@ class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.b
         query: String,
         onEntryClick: (model: NetworkEntryModel) -> Unit
     ) {
-        val highlightColor = context.getColor(CommonR.color.text_highlight)
+        val highlightColor = context.getColor(CommonR.color.bb_text_highlight)
         hour.text = model.hour.highlightQuery(query, highlightColor)
         url.text = model.url.highlightQuery(query, highlightColor)
         method.byMethod(model.method)
@@ -50,7 +50,7 @@ class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.b
         model: NetworkEntryModel,
         query: String
     ) {
-        val highlightColor = context.getColor(CommonR.color.text_highlight)
+        val highlightColor = context.getColor(CommonR.color.bb_text_highlight)
         dot.isInvisible = true
         loading.isVisible = true
         arrow.isInvisible = true
@@ -65,7 +65,7 @@ class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.b
         query: String,
         onEntryClick: (model: NetworkEntryModel) -> Unit
     ) {
-        val highlightColor = context.getColor(CommonR.color.text_highlight)
+        val highlightColor = context.getColor(CommonR.color.bb_text_highlight)
         dot.isVisible = true
         loading.isGone = true
         arrow.isVisible = true
@@ -79,11 +79,11 @@ class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.b
 
     private fun AppCompatTextView.byMethod(method: String) {
         val color = when (method) {
-            "POST" -> CommonR.color.net_entry_post
-            "PUT" -> CommonR.color.net_entry_put
-            "GET" -> CommonR.color.net_entry_get
-            "DELETE" -> CommonR.color.net_entry_delete
-            else -> CommonR.color.text_title
+            "POST" -> CommonR.color.bb_net_entry_post
+            "PUT" -> CommonR.color.bb_net_entry_put
+            "GET" -> CommonR.color.bb_net_entry_get
+            "DELETE" -> CommonR.color.bb_net_entry_delete
+            else -> CommonR.color.bb_text_title
         }
         val colorList = ColorStateList.valueOf(context.getColor(color))
         backgroundTintList = colorList

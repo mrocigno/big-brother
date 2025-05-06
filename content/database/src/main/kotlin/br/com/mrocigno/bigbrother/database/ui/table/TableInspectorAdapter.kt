@@ -81,7 +81,7 @@ class HeaderViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.b
             null -> ContextCompat.getDrawable(context, R.drawable.bigbrother_cell_header_background)
         }
         textView.text = data
-        textView.setTextColor(context.getColor(CR.color.text_title))
+        textView.setTextColor(context.getColor(CR.color.bb_text_title))
     }
 }
 
@@ -92,7 +92,7 @@ class ContentViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.
 
     fun bind(content: ColumnContent?) {
         if (content?.shouldExpand == true) {
-            textView.setTextColor(context.getColor(CR.color.text_hyperlink))
+            textView.setTextColor(context.getColor(CR.color.bb_text_hyperlink))
             textView.text = SpannableStringBuilder(content.data).apply {
                 this.setSpan(UnderlineSpan(), 0, this.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
@@ -100,7 +100,7 @@ class ContentViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.
         } else {
             textView.text = content?.data.orEmpty()
             textView.setOnClickListener(null)
-            textView.setTextColor(context.getColor(CR.color.text_paragraph))
+            textView.setTextColor(context.getColor(CR.color.bb_text_paragraph))
         }
     }
 }

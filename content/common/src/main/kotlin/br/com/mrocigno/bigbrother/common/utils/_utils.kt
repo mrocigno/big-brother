@@ -80,8 +80,8 @@ fun String.highlightQuery(query: String, @ColorInt color: Int = Color.YELLOW): C
 
 fun String.highlightStacktrace(context: Context): CharSequence {
     val result = SpannableStringBuilder(this)
-    val highlightColor = context.getColor(R.color.text_highlight)
-    val linkColor = context.getColor(R.color.text_hyperlink)
+    val highlightColor = context.getColor(R.color.bb_text_highlight)
+    val linkColor = context.getColor(R.color.bb_text_hyperlink)
 
     findCause { start, end ->
         result.setSpan(

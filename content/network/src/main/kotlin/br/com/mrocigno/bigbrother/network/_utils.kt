@@ -10,9 +10,9 @@ import okhttp3.OkHttpClient
 
 internal fun View.byStatusCode(statusCode: Int?) {
     val containerColor = when (statusCode) {
-        null -> R.color.text_highlight
-        in 200..399 -> R.color.icon_positive
-        else -> R.color.icon_negative
+        null -> R.color.bb_text_highlight
+        in 200..399 -> R.color.bb_icon_positive
+        else -> R.color.bb_icon_negative
     }
     backgroundTintList = ColorStateList.valueOf(context.getColor(containerColor))
 }

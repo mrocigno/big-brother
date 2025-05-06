@@ -16,7 +16,7 @@ val Activity.statusBarHeight: Int
     get() {
         val resId = resources.getIdentifier("status_bar_height", "dimen", "android")
         return if (resId > 0) resources.getDimensionPixelSize(resId)
-        else resources.getDimensionPixelSize(R.dimen.spacing_l)
+        else resources.getDimensionPixelSize(R.dimen.bb_spacing_l)
     }
 
 fun Activity.getNavigationBarHeight(force: Boolean = false): Int {

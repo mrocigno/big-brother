@@ -4,7 +4,7 @@ import androidx.annotation.ColorRes
 import br.com.mrocigno.bigbrother.common.R
 
 enum class SessionStatus(@ColorRes val color: Int) {
-    FINISHED(R.color.text_paragraph),
-    CRASHED(R.color.icon_negative),
-    RUNNING(R.color.text_highlight)
+    FINISHED(R.color.bb_text_paragraph),
+    CRASHED(R.color.bb_icon_negative),
+    RUNNING(R.color.bb_text_highlight)
 }

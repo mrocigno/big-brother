@@ -24,11 +24,11 @@ class NetworkEntryTemplate(private val model: NetworkEntryModel) {
     private val backgroundTertiaryParam = "BBbackgroundTertiaryColor"
 
     fun getHtml(context: Context): String {
-        val hexText = Integer.toHexString(context.getColor(R.color.text_title))
-        val hexTextLink = Integer.toHexString(context.getColor(R.color.text_hyperlink))
-        val hexBackground = Integer.toHexString(context.getColor(R.color.background))
-        val hexSecondary = Integer.toHexString(context.getColor(R.color.background_secondary))
-        val hexTertiary = Integer.toHexString(context.getColor(R.color.background_tertiary))
+        val hexText = Integer.toHexString(context.getColor(R.color.bb_text_title))
+        val hexTextLink = Integer.toHexString(context.getColor(R.color.bb_text_hyperlink))
+        val hexBackground = Integer.toHexString(context.getColor(R.color.bb_background))
+        val hexSecondary = Integer.toHexString(context.getColor(R.color.bb_background_secondary))
+        val hexTertiary = Integer.toHexString(context.getColor(R.color.bb_background_tertiary))
 
         return context.assets.open(fileName).bufferedReader().use {
             it.readText()

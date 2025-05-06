@@ -3,17 +3,17 @@
     <public />
     <style name="Theme.BigBrother" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/brand_default</item>
-        <item name="colorPrimaryVariant">@color/brand_secondary</item>
+        <item name="colorPrimary">@color/bb_brand_default</item>
+        <item name="colorPrimaryVariant">@color/bb_brand_secondary</item>
         <item name="colorOnPrimary">@android:color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/co_brand_default</item>
-        <item name="colorSecondaryVariant">@color/co_brand_secondary</item>
+        <item name="colorSecondary">@color/bb_co_brand_default</item>
+        <item name="colorSecondaryVariant">@color/bb_co_brand_secondary</item>
         <item name="colorOnSecondary">@android:color/black</item>
 
-        <item name="android:colorAccent">@color/moss_green</item>
+        <item name="android:colorAccent">@color/bb_moss_green</item>
 
-        <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowBackground">@color/bb_background</item>
 
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="windowActionBar">false</item>
@@ -27,8 +27,8 @@
     </style>
 
     <style name="BigBrotherButton" parent="Widget.AppCompat.Button">
-        <item name="android:backgroundTint">@color/text_title</item>
-        <item name="android:textColor">@color/text_title_inverse</item>
+        <item name="android:backgroundTint">@color/bb_text_title</item>
+        <item name="android:textColor">@color/bb_text_title_inverse</item>
     </style>
 
     <style name="SearchView" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
@@ -47,14 +47,14 @@
 
     <style name="TextAppearance_Tab">
         <item name="android:fontFamily">@font/courier_bold</item>
-        <item name="android:textColor">@color/text_title</item>
+        <item name="android:textColor">@color/bb_text_title</item>
         <item name="android:textSize">15sp</item>
     </style>
 
     <style name="AlertBigBrother" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="android:windowBackground">@drawable/bigbrother_alert_background</item>
-        <item name="colorPrimary">@color/brand_default</item>
-        <item name="colorPrimaryVariant">@color/brand_secondary</item>
+        <item name="colorPrimary">@color/bb_brand_default</item>
+        <item name="colorPrimaryVariant">@color/bb_brand_secondary</item>
         <item name="colorOnPrimary">@android:color/white</item>
     </style>
 </resources>

@@ -8,4 +8,4 @@
     android:textSize="20sp"
     android:padding="10dp"
     android:gravity="center_horizontal"
-    android:textColor="@color/text_title"/>
+    android:textColor="@color/bb_text_title"/>

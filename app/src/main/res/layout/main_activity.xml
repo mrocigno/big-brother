@@ -17,7 +17,7 @@
             android:gravity="center"
             android:padding="20dp"
             android:text="BigBrother sample"
-            android:textColor="@color/text_title"
+            android:textColor="@color/bb_text_title"
             android:textSize="30sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -27,7 +27,7 @@
             android:gravity="center"
             android:paddingBottom="20dp"
             android:text="v0.0.1"
-            android:textColor="@color/text_title"
+            android:textColor="@color/bb_text_title"
             android:textSize="15sp" />
 
         <br.com.mrocigno.bigbrother.ui.GroupLayout
@@ -40,10 +40,10 @@
                 android:id="@+id/app_theme_subtitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_m"
-                android:layout_marginTop="@dimen/spacing_m"
+                android:layout_marginStart="@dimen/bb_spacing_m"
+                android:layout_marginTop="@dimen/bb_spacing_m"
                 android:text="@string/app_theme"
-                android:textColor="@color/text_title"
+                android:textColor="@color/bb_text_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -52,9 +52,9 @@
                 android:id="@+id/dark_mode_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_s"
-                android:layout_marginTop="@dimen/spacing_s"
-                android:buttonTint="@color/moss_green"
+                android:layout_marginStart="@dimen/bb_spacing_s"
+                android:layout_marginTop="@dimen/bb_spacing_s"
+                android:buttonTint="@color/bb_moss_green"
                 android:text="@string/dark_mode"
                 app:layout_constraintEnd_toStartOf="@id/light_mode_radio"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,8 +64,8 @@
                 android:id="@+id/light_mode_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_s"
-                android:buttonTint="@color/moss_green"
+                android:layout_marginStart="@dimen/bb_spacing_s"
+                android:buttonTint="@color/bb_moss_green"
                 android:text="@string/light_mode"
                 app:layout_constraintStart_toEndOf="@id/dark_mode_radio"
                 app:layout_constraintTop_toTopOf="@id/dark_mode_radio" />
@@ -74,10 +74,10 @@
                 android:id="@+id/logcat_subtitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_m"
-                android:layout_marginTop="@dimen/spacing_m"
+                android:layout_marginStart="@dimen/bb_spacing_m"
+                android:layout_marginTop="@dimen/bb_spacing_m"
                 android:text="@string/logcat_logs"
-                android:textColor="@color/text_title"
+                android:textColor="@color/bb_text_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dark_mode_radio" />
@@ -86,9 +86,9 @@
                 android:id="@+id/logcat_enabled"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_s"
-                android:layout_marginTop="@dimen/spacing_s"
-                android:buttonTint="@color/moss_green"
+                android:layout_marginStart="@dimen/bb_spacing_s"
+                android:layout_marginTop="@dimen/bb_spacing_s"
+                android:buttonTint="@color/bb_moss_green"
                 android:text="@string/enabled"
                 app:layout_constraintEnd_toStartOf="@id/logcat_disabled"
                 app:layout_constraintStart_toStartOf="parent"
@@ -98,8 +98,8 @@
                 android:id="@+id/logcat_disabled"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_s"
-                android:buttonTint="@color/moss_green"
+                android:layout_marginStart="@dimen/bb_spacing_s"
+                android:buttonTint="@color/bb_moss_green"
                 android:text="@string/disabled"
                 app:layout_constraintStart_toEndOf="@id/logcat_enabled"
                 app:layout_constraintTop_toTopOf="@id/logcat_enabled" />
@@ -156,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Log debug example"
-                android:textColor="@color/boy_red"
+                android:textColor="@color/bb_boy_red"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Log error example"
-                android:textColor="@color/icon_negative"
+                android:textColor="@color/bb_icon_negative"
                 app:layout_constraintTop_toBottomOf="@id/log_debug" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -174,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Log warn example"
-                android:textColor="@color/text_highlight"
+                android:textColor="@color/bb_text_highlight"
                 app:layout_constraintTop_toBottomOf="@id/log_error" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -183,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Log info example"
-                android:textColor="@color/text_hyperlink"
+                android:textColor="@color/bb_text_hyperlink"
                 app:layout_constraintTop_toBottomOf="@id/log_warn" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -192,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="Log assert example"
-                android:textColor="@color/icon_negative"
+                android:textColor="@color/bb_icon_negative"
                 app:layout_constraintTop_toBottomOf="@id/log_info" />
 
             <androidx.appcompat.widget.AppCompatButton

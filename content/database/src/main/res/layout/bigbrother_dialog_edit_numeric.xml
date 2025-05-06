@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:paddingHorizontal="10dp"
-        android:paddingVertical="@dimen/spacing_m">
+        android:paddingVertical="@dimen/bb_spacing_m">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_numeric_input"
@@ -28,9 +28,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:paddingHorizontal="@dimen/spacing_m"
+        android:paddingHorizontal="@dimen/bb_spacing_m"
         android:text="@string/bigbrother_prefs_string_disclaimer"
-        android:textColor="@color/text_title"
-        android:textSize="@dimen/text_m" />
+        android:textColor="@color/bb_text_title"
+        android:textSize="@dimen/bb_text_m" />
 
 </LinearLayout>

@@ -95,36 +95,36 @@ class SharedPreferencesItemViewHolder(
 
         title.text = key
         value.text = valueString
-        value.setTextColor(context.getColor(CR.color.text_paragraph))
+        value.setTextColor(context.getColor(CR.color.bb_text_paragraph))
 
         when (data) {
             is Boolean -> {
-                type.backgroundTintList = valueOf(context.getColor(CR.color.boy_red))
+                type.backgroundTintList = valueOf(context.getColor(CR.color.bb_boy_red))
                 type.text = "B"
             }
             is HashSet<*> -> {
-                type.backgroundTintList = valueOf(context.getColor(CR.color.beaver))
+                type.backgroundTintList = valueOf(context.getColor(CR.color.bb_beaver))
                 type.text = "HS"
             }
             is Float -> {
-                type.backgroundTintList = valueOf(context.getColor(CR.color.licorice))
+                type.backgroundTintList = valueOf(context.getColor(CR.color.bb_licorice))
                 type.text = "F"
             }
             is Int -> {
-                type.backgroundTintList = valueOf(context.getColor(CR.color.moss_green))
+                type.backgroundTintList = valueOf(context.getColor(CR.color.bb_moss_green))
                 type.text = "Int"
             }
             is Long -> {
-                type.backgroundTintList = valueOf(context.getColor(CR.color.olive_drab))
+                type.backgroundTintList = valueOf(context.getColor(CR.color.bb_olive_drab))
                 type.text = "L"
             }
             is String -> {
                 if (data.isJson()) {
-                    type.backgroundTintList = valueOf(context.getColor(CR.color.text_hyperlink))
-                    value.setTextColor(context.getColor(CR.color.text_hyperlink))
+                    type.backgroundTintList = valueOf(context.getColor(CR.color.bb_text_hyperlink))
+                    value.setTextColor(context.getColor(CR.color.bb_text_hyperlink))
                     type.text =  "JS"
                 } else {
-                    type.backgroundTintList = valueOf(context.getColor(CR.color.shadow))
+                    type.backgroundTintList = valueOf(context.getColor(CR.color.bb_shadow))
                     type.text = "S"
                 }
             }

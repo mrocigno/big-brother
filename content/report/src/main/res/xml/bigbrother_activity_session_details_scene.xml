@@ -46,7 +46,7 @@
 
             <CustomAttribute
                 motion:attributeName="titleTextColor"
-                motion:customColorValue="@color/text_title" />
+                motion:customColorValue="@color/bb_text_title" />
         </Constraint>
 
         <Constraint

@@ -49,7 +49,7 @@ class BigBrotherContainerView(
         setBackgroundResource(CommonR.drawable.bigbrother_content_background)
         inflate(context, R.layout.bigbrother_content_layout, this)
         isInvisible = true
-        setPadding(resources.getDimensionPixelSize(CommonR.dimen.spacing_stroke))
+        setPadding(resources.getDimensionPixelSize(CommonR.dimen.bb_spacing_stroke))
 
         afterMeasure {
             y = statusBarHeight + vortex.height.toFloat()

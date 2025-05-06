@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 
 class FileTreeDecoration(context: Context) : RecyclerView.ItemDecoration() {
 
-    private val spacingXl = context.resources.getDimension(R.dimen.spacing_xl)
-    private val spacingS = context.resources.getDimension(R.dimen.spacing_s)
+    private val spacingXl = context.resources.getDimension(R.dimen.bb_spacing_xl)
+    private val spacingS = context.resources.getDimension(R.dimen.bb_spacing_s)
     private val paint = Paint().apply {
-        this.color = context.getColor(R.color.text_title)
+        this.color = context.getColor(R.color.bb_text_title)
         this.strokeWidth = 4f
     }
 

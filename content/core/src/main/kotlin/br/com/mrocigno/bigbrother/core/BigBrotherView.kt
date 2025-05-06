@@ -63,7 +63,7 @@ class BigBrotherView @JvmOverloads constructor(
     }
 
     private val removableView by lazy {
-        val padding = context.resources.getDimensionPixelSize(CommonR.dimen.spacing_s)
+        val padding = context.resources.getDimensionPixelSize(CommonR.dimen.bb_spacing_s)
         FrameLayout(context).apply {
             setBackgroundResource(CommonR.drawable.bigbrother_remove_area_background)
             layoutParams = LayoutParams(config.size, config.size).apply {

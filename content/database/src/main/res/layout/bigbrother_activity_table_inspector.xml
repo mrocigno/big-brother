@@ -17,9 +17,9 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="@color/background_secondary"
+            app:contentScrim="@color/bb_background_secondary"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:statusBarScrim="@color/background_secondary"
+            app:statusBarScrim="@color/bb_background_secondary"
             app:titleEnabled="false"
             app:toolbarId="@+id/table_inspector_toolbar">
 
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminateTint="@color/boy_red"/>
+            android:indeterminateTint="@color/bb_boy_red"/>
 
     </FrameLayout>
 

@@ -13,7 +13,7 @@
         android:layout_height="10dp"
         android:layout_marginStart="10dp"
         android:background="@drawable/bigbrother_background_dot"
-        android:backgroundTint="@color/icon_positive"
+        android:backgroundTint="@color/bb_icon_positive"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/net_entry_hour"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
         android:layout_height="0dp"
         android:scaleX="2"
         android:scaleY="2"
-        android:indeterminateTint="@color/text_highlight"
+        android:indeterminateTint="@color/bb_text_highlight"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/net_entry_dot"
         app:layout_constraintEnd_toEndOf="@id/net_entry_dot"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_margin="10dp"
-        android:textColor="@color/text_title"
+        android:textColor="@color/bb_text_title"
         android:textSize="11sp"
         app:fontFamily="@font/lato"
         app:layout_constraintStart_toEndOf="@id/net_entry_dot"
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:textColor="@color/text_title"
+        android:textColor="@color/bb_text_title"
         android:textSize="11sp"
         app:fontFamily="@font/lato"
         app:layout_constraintBottom_toBottomOf="@id/net_entry_hour"
@@ -65,7 +65,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:textColor="@color/text_title"
+        android:textColor="@color/bb_text_title"
         android:textSize="15sp"
         app:fontFamily="@font/courier_bold"
         app:layout_constraintEnd_toStartOf="@id/net_entry_arrow"
@@ -87,9 +87,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/net_entry_url"
-        tools:backgroundTint="@color/net_entry_post"
+        tools:backgroundTint="@color/bb_net_entry_post"
         tools:text="POST"
-        tools:textColor="@color/net_entry_post" />
+        tools:textColor="@color/bb_net_entry_post" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/net_entry_arrow"
@@ -106,7 +106,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="@color/divider"
+        android:background="@color/bb_divider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

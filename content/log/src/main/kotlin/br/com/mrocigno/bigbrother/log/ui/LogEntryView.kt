@@ -17,7 +17,7 @@ class LogEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbr
     private val message: AppCompatTextView by lazy { itemView.findViewById(R.id.log_entry_message) }
 
     fun bind(model: LogEntry, query: String, onClick: () -> Unit) {
-        val highlightColor = getColor(CommonR.color.text_highlight)
+        val highlightColor = getColor(CommonR.color.bb_text_highlight)
 
         val type = model.lvl
         icon.text = type.initial

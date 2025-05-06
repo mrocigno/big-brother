@@ -103,16 +103,16 @@ internal class DatabaseListItemViewHolder(parent: ViewGroup) : ViewHolder(parent
 
     fun bind(model: FileListItem, onClick: () -> Unit) {
         when (model.type) {
-            DATABASE -> itemView.setBackgroundColor(context.getColor(CR.color.background))
+            DATABASE -> itemView.setBackgroundColor(context.getColor(CR.color.bb_background))
             LABEL -> {
                 title.setTypeface(title.typeface, BOLD)
-                itemView.setBackgroundColor(context.getColor(CR.color.background))
+                itemView.setBackgroundColor(context.getColor(CR.color.bb_background))
             }
             else -> itemView.background = null
         }
 
         itemView.updateLayoutParams<RecyclerView.LayoutParams> {
-            val spacing = context.resources.getDimensionPixelOffset(CR.dimen.spacing_xl)
+            val spacing = context.resources.getDimensionPixelOffset(CR.dimen.bb_spacing_xl)
             leftMargin = spacing * model.nodeLvl
         }
 
