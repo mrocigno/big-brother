@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mrocigno.bigbrother.common.FileTreeDecoration
-import br.com.mrocigno.bigbrother.core.utils.getTask
+import br.com.mrocigno.bigbrother.core.utils.getBigBrotherTask
 import br.com.mrocigno.bigbrother.database.DatabaseTask
 import br.com.mrocigno.bigbrother.database.R
 import br.com.mrocigno.bigbrother.database.model.FileListItem
@@ -36,7 +36,7 @@ internal class DatabaseFragment : Fragment(R.layout.bigbrother_fragment_database
         super.onViewCreated(view, savedInstanceState)
         setupRecycler()
         refresh.setOnClickListener {
-            getTask(DatabaseTask::class)?.run {
+            getBigBrotherTask(DatabaseTask::class)?.run {
                 listDefaultDatabases()
                 listSharedPreferences()
             }

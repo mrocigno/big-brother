@@ -81,7 +81,7 @@ data class NetworkEntryModel(
                 append(headers)
             }
 
-        if (!request.body.isNullOrBlank()) {
+        if (!request.body.takeIf { it != "empty" }.isNullOrBlank()) {
             append(" \\")
             appendLine()
             append("--data '${request.body}'")

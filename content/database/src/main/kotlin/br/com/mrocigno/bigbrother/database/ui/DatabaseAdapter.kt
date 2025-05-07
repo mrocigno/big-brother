@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.mrocigno.bigbrother.common.utils.gone
 import br.com.mrocigno.bigbrother.common.utils.inflate
 import br.com.mrocigno.bigbrother.common.utils.visible
-import br.com.mrocigno.bigbrother.core.utils.getTask
+import br.com.mrocigno.bigbrother.core.utils.getBigBrotherTask
 import br.com.mrocigno.bigbrother.database.DatabaseTask
 import br.com.mrocigno.bigbrother.database.R
 import br.com.mrocigno.bigbrother.database.model.FileListItem
@@ -32,7 +32,7 @@ internal class DatabaseAdapter(
         }
 
     init {
-        val task = getTask(DatabaseTask::class)
+        val task = getBigBrotherTask(DatabaseTask::class)
         val databases = task?.databases?.values.orEmpty()
         val sharedPreferences = task?.sharedPreferences.orEmpty()
 

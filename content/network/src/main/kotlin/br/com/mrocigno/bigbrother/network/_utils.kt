@@ -5,6 +5,7 @@ import android.view.View
 import br.com.mrocigno.bigbrother.common.R
 import br.com.mrocigno.bigbrother.core.BigBrother
 import br.com.mrocigno.bigbrother.core.BigBrotherProvider
+import br.com.mrocigno.bigbrother.core.utils.addBigBrotherInterceptor
 import br.com.mrocigno.bigbrother.network.ui.NetworkFragment
 import okhttp3.OkHttpClient
 
@@ -18,12 +19,15 @@ internal fun View.byStatusCode(statusCode: Int?) {
 }
 
 fun BigBrotherProvider.addNetworkPage(customName: String = "Network") {
+    addInterceptor(NetworkEntryInterceptor())
     addPage(customName) { NetworkFragment() }
 }
 
 fun BigBrother.addNetworkPage(customName: String = "Network") {
+    addInterceptor(NetworkEntryInterceptor())
     addPage(customName) { NetworkFragment() }
 }
 
+@Deprecated("Use addBigBrotherInterceptor instead")
 fun OkHttpClient.Builder.bigBrotherIntercept(vararg blockList: String) =
-    addInterceptor(BigBrotherInterceptor(*blockList))
+    addBigBrotherInterceptor(*blockList)

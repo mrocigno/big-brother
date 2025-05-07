@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import br.com.mrocigno.bigbrother.common.helpers.SQLBuilder
-import br.com.mrocigno.bigbrother.core.utils.getTask
+import br.com.mrocigno.bigbrother.core.utils.getBigBrotherTask
 import br.com.mrocigno.bigbrother.database.DatabaseHelper
 import br.com.mrocigno.bigbrother.database.DatabaseTask
 import br.com.mrocigno.bigbrother.database.model.TableDump
@@ -29,7 +29,7 @@ internal class TableInspectorViewModel(
     private val filters = hashMapOf<Int, FilterData>()
 
     private val dbHelper: DatabaseHelper by lazy {
-        checkNotNull(getTask(DatabaseTask::class)?.databases?.get(dbName))
+        checkNotNull(getBigBrotherTask(DatabaseTask::class)?.databases?.get(dbName))
     }
 
     fun listAll() = viewModelScope.launch {

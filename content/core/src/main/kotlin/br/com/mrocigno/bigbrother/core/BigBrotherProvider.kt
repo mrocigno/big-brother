@@ -26,6 +26,9 @@ abstract class BigBrotherProvider : ContentProvider() {
     fun addPage(location: KClass<out Activity>, wrapper: ActivityPageWrapper.() -> Unit) =
         BigBrother.addPage(location, wrapper)
 
+    fun addInterceptor(interceptor: BigBrotherInterceptor) =
+        BigBrother.addInterceptor(interceptor)
+
     final override fun query(
         p0: Uri,
         p1: Array<out String>?,
