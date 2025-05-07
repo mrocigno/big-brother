@@ -17,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class TableInspectorViewModel(
+internal class TableInspectorViewModel(
     private val tableName: String,
     private val dbName: String
 ) : ViewModel() {

@@ -1,9 +1,9 @@
-package br.com.mrocigno.bigbrother.core.entity
+package br.com.mrocigno.bigbrother.common.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import br.com.mrocigno.bigbrother.core.utils.bbSessionId
+import br.com.mrocigno.bigbrother.common.utils.bbSessionId
 import org.threeten.bp.LocalDateTime
 
 @Entity("tblCrash")

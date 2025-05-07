@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 
-class NetworkEntryAdapter(
+internal class NetworkEntryAdapter(
     private val onEntryClick: (NetworkEntryModel) -> Unit
 ) : Adapter<NetworkEntryView>() {
 

@@ -9,7 +9,7 @@ import br.com.mrocigno.bigbrother.common.utils.copyToClipboard
 import br.com.mrocigno.bigbrother.network.json.JsonViewerActivity
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 
-class NetworkEntryTemplate(private val model: NetworkEntryModel) {
+internal class NetworkEntryTemplate(private val model: NetworkEntryModel) {
 
     private val fileName = "network-entry-details.html"
 

@@ -2,10 +2,10 @@ package br.com.mrocigno.bigbrother.report
 
 import android.util.Log
 import br.com.mrocigno.bigbrother.common.BBTAG
-import br.com.mrocigno.bigbrother.core.BigBrotherDatabaseTask.Companion.bbdb
-import br.com.mrocigno.bigbrother.core.dao.ReportLogDao
-import br.com.mrocigno.bigbrother.core.dao.SessionDao
-import br.com.mrocigno.bigbrother.core.utils.bbSessionId
+import br.com.mrocigno.bigbrother.common.dao.ReportLogDao
+import br.com.mrocigno.bigbrother.common.dao.SessionDao
+import br.com.mrocigno.bigbrother.common.db.BigBrotherDatabase.Companion.bbdb
+import br.com.mrocigno.bigbrother.common.utils.bbSessionId
 import br.com.mrocigno.bigbrother.report.model.ReportLogEntry
 import br.com.mrocigno.bigbrother.report.model.ReportType
 import br.com.mrocigno.bigbrother.report.model.SessionEntry

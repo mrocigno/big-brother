@@ -33,7 +33,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import java.util.concurrent.CancellationException
 import br.com.mrocigno.bigbrother.common.R as CR
 
-class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) {
+internal class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) {
 
     private val recycler: RecyclerView by lazy { requireView().findViewById(R.id.session_recycler) }
     private val searchLayout: TextInputLayout by lazy { requireView().findViewById(R.id.session_search_layout) }

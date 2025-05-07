@@ -45,6 +45,7 @@ object NetworkConfig {
                 url = "/example",
                 statusCode = 200,
                 hour = "10:00",
+                elapsedTime = "10ms",
                 method = "GET",
                 request = NetworkPayloadModel(
                     headers = mapOf("Authorization" to listOf("abc123")),

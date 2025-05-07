@@ -1,13 +1,13 @@
 package br.com.mrocigno.bigbrother.log.model
 
 import androidx.recyclerview.widget.DiffUtil
-import br.com.mrocigno.bigbrother.core.entity.LogEntity
-import br.com.mrocigno.bigbrother.core.utils.bbSessionId
+import br.com.mrocigno.bigbrother.common.entity.LogEntity
+import br.com.mrocigno.bigbrother.common.utils.bbSessionId
 import br.com.mrocigno.bigbrother.report.bbTrack
 import br.com.mrocigno.bigbrother.report.model.ReportType
 import org.threeten.bp.LocalDateTime
 
-class LogEntry(
+internal class LogEntry(
     val id: Long = 0,
     val sessionId: Long = bbSessionId,
     val lvl: LogEntryType,

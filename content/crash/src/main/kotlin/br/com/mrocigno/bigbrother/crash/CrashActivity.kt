@@ -16,20 +16,20 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
+import br.com.mrocigno.bigbrother.common.db.BigBrotherDatabase.Companion.bbdb
+import br.com.mrocigno.bigbrother.common.entity.CrashEntity
 import br.com.mrocigno.bigbrother.common.route.ANIMATE_ARG
 import br.com.mrocigno.bigbrother.common.route.SESSION_ID_ARG
 import br.com.mrocigno.bigbrother.common.utils.highlightStacktrace
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
-import br.com.mrocigno.bigbrother.core.BigBrotherDatabaseTask.Companion.bbdb
 import br.com.mrocigno.bigbrother.core.OutOfDomain
-import br.com.mrocigno.bigbrother.core.entity.CrashEntity
 import br.com.mrocigno.bigbrother.report.BigBrotherReport
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.runBlocking
 import kotlin.system.exitProcess
 
 @OutOfDomain
-class CrashActivity : AppCompatActivity(R.layout.bigbrother_activity_crash) {
+internal class CrashActivity : AppCompatActivity(R.layout.bigbrother_activity_crash) {
 
     private val statusBarGuideline: View by lazy { findViewById(R.id.crash_status_bar_guideline) }
     private val root: MotionLayout by lazy { findViewById(R.id.crash_root) }

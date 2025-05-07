@@ -1,9 +1,9 @@
-package br.com.mrocigno.bigbrother.core.dao
+package br.com.mrocigno.bigbrother.common.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import br.com.mrocigno.bigbrother.core.entity.CrashEntity
+import br.com.mrocigno.bigbrother.common.entity.CrashEntity
 
 @Dao
 interface CrashDao {

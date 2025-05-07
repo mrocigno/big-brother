@@ -17,7 +17,7 @@ import br.com.mrocigno.bigbrother.common.utils.inflate
 import br.com.mrocigno.bigbrother.network.R
 import br.com.mrocigno.bigbrother.common.R as CR
 
-class JsonViewerAdapter(
+internal class JsonViewerAdapter(
     private val origin: List<JsonViewerModel>
 ) : Adapter<JsonViewerViewHolder>() {
 
@@ -114,7 +114,7 @@ class JsonViewerAdapter(
     }
 }
 
-class JsonViewerViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_json_viewer)) {
+internal class JsonViewerViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_json_viewer)) {
 
     private val key: AppCompatTextView by lazy { itemView.findViewById(R.id.json_viewer_item_key) }
     private val value: AppCompatTextView by lazy { itemView.findViewById(R.id.json_viewer_item_value) }

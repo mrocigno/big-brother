@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.mrocigno.bigbrother.common.utils.bbSessionId
 import br.com.mrocigno.bigbrother.common.utils.disableChangeAnimation
 import br.com.mrocigno.bigbrother.core.OutOfDomain
-import br.com.mrocigno.bigbrother.core.utils.bbSessionId
 import br.com.mrocigno.bigbrother.network.BigBrotherNetworkHolder
 import br.com.mrocigno.bigbrother.network.R
 import com.google.android.material.textfield.TextInputEditText
@@ -21,7 +21,7 @@ import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
 @OutOfDomain
-class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) {
+internal class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) {
 
     private val recycler: RecyclerView by lazy { requireView().findViewById(R.id.net_recycler) }
     private val searchViewLayout: TextInputLayout by lazy { requireView().findViewById(R.id.net_search_layout) }

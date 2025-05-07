@@ -8,7 +8,7 @@ import br.com.mrocigno.bigbrother.common.utils.applyScoped
 import br.com.mrocigno.bigbrother.network.BigBrotherNetworkHolder
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 
-class NetworkEntryDetailsViewModel : ViewModel() {
+internal class NetworkEntryDetailsViewModel : ViewModel() {
 
     fun getNetworkEntry(entryId: Long): LiveData<NetworkEntryModel> =
         MutableLiveData<NetworkEntryModel>().applyScoped(viewModelScope) {

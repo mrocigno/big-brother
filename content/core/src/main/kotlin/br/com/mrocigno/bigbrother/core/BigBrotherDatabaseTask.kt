@@ -4,13 +4,11 @@ import android.app.Application
 import android.util.Log
 import androidx.room.Room
 import br.com.mrocigno.bigbrother.common.BBTAG
-import br.com.mrocigno.bigbrother.core.db.BigBrotherDatabase
-import br.com.mrocigno.bigbrother.core.utils.getTask
+import br.com.mrocigno.bigbrother.common.db.BigBrotherDatabase
+import br.com.mrocigno.bigbrother.common.db.BigBrotherDatabase.Companion.bbdb
 import com.jakewharton.threetenabp.AndroidThreeTen
 
-class BigBrotherDatabaseTask : BigBrotherTask() {
-
-    private var db: BigBrotherDatabase? = null
+internal class BigBrotherDatabaseTask : BigBrotherTask() {
 
     override fun onCreate(): Boolean {
         try {
@@ -18,7 +16,7 @@ class BigBrotherDatabaseTask : BigBrotherTask() {
             AndroidThreeTen.init(context)
 
             // main thread allowed to prevent session -1
-            db = Room.databaseBuilder(context, BigBrotherDatabase::class.java, "big-brother-database")
+            bbdb = Room.databaseBuilder(context, BigBrotherDatabase::class.java, "big-brother-database")
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build()
@@ -27,11 +25,5 @@ class BigBrotherDatabaseTask : BigBrotherTask() {
             return false
         }
         return super.onCreate()
-    }
-
-    companion object {
-
-        val bbdb: BigBrotherDatabase?
-            get() = getTask(BigBrotherDatabaseTask::class)?.db
     }
 }

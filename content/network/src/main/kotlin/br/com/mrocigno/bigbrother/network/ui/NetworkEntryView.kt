@@ -16,7 +16,7 @@ import br.com.mrocigno.bigbrother.network.byStatusCode
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
-class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_network_entry)) {
+internal class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_network_entry)) {
 
     private val dot: View by lazy { itemView.findViewById(R.id.net_entry_dot) }
     private val hour: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_hour) }

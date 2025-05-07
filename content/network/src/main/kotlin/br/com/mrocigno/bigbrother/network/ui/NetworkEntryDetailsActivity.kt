@@ -26,7 +26,7 @@ import br.com.mrocigno.bigbrother.network.byStatusCode
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 
 @OutOfDomain
-class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_network_entry) {
+internal class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_network_entry) {
 
     private val toolbar: Toolbar by lazy { findViewById(R.id.net_entry_details_toolbar) }
     private val background: View by lazy { findViewById(R.id.net_entry_details_background) }

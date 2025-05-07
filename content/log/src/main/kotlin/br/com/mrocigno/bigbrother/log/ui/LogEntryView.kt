@@ -11,7 +11,7 @@ import br.com.mrocigno.bigbrother.log.R
 import br.com.mrocigno.bigbrother.log.model.LogEntry
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
-class LogEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_log_entry)) {
+internal class LogEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_log_entry)) {
 
     private val icon: AppCompatTextView by lazy { itemView.findViewById(R.id.log_entry_icon) }
     private val message: AppCompatTextView by lazy { itemView.findViewById(R.id.log_entry_message) }

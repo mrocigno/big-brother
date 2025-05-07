@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import br.com.mrocigno.bigbrother.log.model.LogEntry
 import br.com.mrocigno.bigbrother.log.model.LogEntryType
 
-class LogEntryAdapter : Adapter<LogEntryView>() {
+internal class LogEntryAdapter : Adapter<LogEntryView>() {
 
     private val differ = AsyncListDiffer(this, LogEntry.Differ())
     private val items: List<LogEntry> get() = differ.currentList

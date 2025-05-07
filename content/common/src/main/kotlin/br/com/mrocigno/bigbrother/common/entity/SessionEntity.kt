@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.core.entity
+package br.com.mrocigno.bigbrother.common.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

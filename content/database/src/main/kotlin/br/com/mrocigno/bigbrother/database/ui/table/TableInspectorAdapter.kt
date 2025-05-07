@@ -18,7 +18,7 @@ import br.com.mrocigno.bigbrother.database.model.TableDump
 import br.com.mrocigno.bigbrother.database.ui.table.filter.FilterSort
 import br.com.mrocigno.bigbrother.common.R as CR
 
-class TableInspectorAdapter(
+internal class TableInspectorAdapter(
     context: Context,
     private val tableDump: TableDump
 ) : LinkedAdaptiveTableAdapter<ViewHolder>() {
@@ -85,7 +85,7 @@ class HeaderViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.b
     }
 }
 
-class ContentViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_cell_content)) {
+internal class ContentViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_cell_content)) {
 
     private val textView: AppCompatTextView get() = itemView as AppCompatTextView
     private val context: Context get() = itemView.context

@@ -1,9 +1,9 @@
-package br.com.mrocigno.bigbrother.core.dao
+package br.com.mrocigno.bigbrother.common.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import br.com.mrocigno.bigbrother.core.entity.ReportLogEntity
+import br.com.mrocigno.bigbrother.common.entity.ReportLogEntity
 
 @Dao
 interface ReportLogDao {

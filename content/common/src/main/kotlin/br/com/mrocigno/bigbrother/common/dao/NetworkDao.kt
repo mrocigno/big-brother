@@ -1,10 +1,10 @@
-package br.com.mrocigno.bigbrother.core.dao
+package br.com.mrocigno.bigbrother.common.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import br.com.mrocigno.bigbrother.core.entity.NetworkEntity
+import br.com.mrocigno.bigbrother.common.entity.NetworkEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

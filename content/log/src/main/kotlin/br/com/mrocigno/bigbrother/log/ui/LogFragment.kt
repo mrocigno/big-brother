@@ -15,10 +15,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mrocigno.bigbrother.common.route.SESSION_ID_ARG
+import br.com.mrocigno.bigbrother.common.utils.bbSessionId
 import br.com.mrocigno.bigbrother.common.utils.disableChangeAnimation
 import br.com.mrocigno.bigbrother.common.utils.getColorState
 import br.com.mrocigno.bigbrother.core.OutOfDomain
-import br.com.mrocigno.bigbrother.core.utils.bbSessionId
 import br.com.mrocigno.bigbrother.log.BBLog
 import br.com.mrocigno.bigbrother.log.R
 import br.com.mrocigno.bigbrother.log.model.LogEntryType
@@ -29,7 +29,7 @@ import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
 @OutOfDomain
-class LogFragment : Fragment(R.layout.bigbrother_fragment_log) {
+internal class LogFragment : Fragment(R.layout.bigbrother_fragment_log) {
 
     private val chipGroup: ChipGroup by lazy { requireView().findViewById(R.id.log_chip_group) }
     private val recycler: RecyclerView by lazy { requireView().findViewById(R.id.log_recycler) }

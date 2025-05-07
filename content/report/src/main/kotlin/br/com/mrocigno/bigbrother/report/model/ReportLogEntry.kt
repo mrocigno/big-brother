@@ -1,10 +1,10 @@
 package br.com.mrocigno.bigbrother.report.model
 
-import br.com.mrocigno.bigbrother.core.entity.ReportLogEntity
-import br.com.mrocigno.bigbrother.core.utils.bbSessionId
+import br.com.mrocigno.bigbrother.common.entity.ReportLogEntity
+import br.com.mrocigno.bigbrother.common.utils.bbSessionId
 import org.threeten.bp.LocalDateTime
 
-class ReportLogEntry(
+internal class ReportLogEntry(
     val id: Long = 0,
     val sessionId: Long = bbSessionId,
     val nestedLevel: Int = 0,

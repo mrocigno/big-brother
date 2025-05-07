@@ -1,9 +1,9 @@
-package br.com.mrocigno.bigbrother.core.dao
+package br.com.mrocigno.bigbrother.common.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import br.com.mrocigno.bigbrother.core.entity.LogEntity
+import br.com.mrocigno.bigbrother.common.entity.LogEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

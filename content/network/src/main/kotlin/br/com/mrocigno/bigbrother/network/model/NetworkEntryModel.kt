@@ -1,10 +1,8 @@
 package br.com.mrocigno.bigbrother.network.model
 
-import android.content.Context
 import androidx.recyclerview.widget.DiffUtil
-import br.com.mrocigno.bigbrother.core.entity.NetworkEntity
-import br.com.mrocigno.bigbrother.core.utils.bbSessionId
-import br.com.mrocigno.bigbrother.network.R
+import br.com.mrocigno.bigbrother.common.entity.NetworkEntity
+import br.com.mrocigno.bigbrother.common.utils.bbSessionId
 import br.com.mrocigno.bigbrother.report.bbTrack
 import br.com.mrocigno.bigbrother.report.model.ReportType
 import okhttp3.Request
@@ -48,7 +46,7 @@ data class NetworkEntryModel(
         response = NetworkPayloadModel.fromString(entry.responseHeader, entry.responseBody)
     )
 
-    class Differ : DiffUtil.ItemCallback<NetworkEntryModel>() {
+    internal class Differ : DiffUtil.ItemCallback<NetworkEntryModel>() {
         override fun areItemsTheSame(oldItem: NetworkEntryModel, newItem: NetworkEntryModel) =
             oldItem.hour == newItem.hour
                 && oldItem.url == newItem.url
@@ -71,20 +69,6 @@ data class NetworkEntryModel(
         .appendLine(hour)
         .toString()
 
-    fun all(context: Context) =
-        context.getString(
-            R.string.network_copy_all_template,
-            fullUrl,
-            method,
-            (statusCode ?: -1).toString(),
-            hour,
-            elapsedTime,
-            request.headers,
-            request.formattedBody,
-            response?.headers ?: "empty",
-            response?.formattedBody ?: "empty"
-        )
-
     fun toCURL() = StringBuilder("curl --location --request $method '$fullUrl'").apply {
         request.headers?.takeIf { it.isNotEmpty() }
             ?.map {
@@ -104,7 +88,7 @@ data class NetworkEntryModel(
         }
     }.toString()
 
-    fun toEntity(): NetworkEntity = NetworkEntity(
+    internal fun toEntity(): NetworkEntity = NetworkEntity(
         id = id,
         sessionId = bbSessionId,
         fullUrl = fullUrl,
