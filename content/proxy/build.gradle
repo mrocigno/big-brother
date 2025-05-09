@@ -12,4 +12,6 @@ dependencies {
     implementation project(":content:common")
 
     implementation libs.androidx.activity
+
+    compileOnly libs.squareup.okhttp3
 }

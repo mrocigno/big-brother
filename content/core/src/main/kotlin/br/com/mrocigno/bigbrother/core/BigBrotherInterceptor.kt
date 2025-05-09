@@ -21,7 +21,8 @@ internal class BBInterceptor(private vararg val blockList: String) : Interceptor
     override fun intercept(chain: Interceptor.Chain): Response {
         if (chain.request().isBlocked()) return chain.proceed(chain.request())
 
-        val orderedInterceptors = interceptors.sortedBy { it.priority }
+        val orderedInterceptors = interceptors
+            .sortedByDescending { it.priority }
 
         try {
             var request = chain.request()
@@ -30,14 +31,14 @@ internal class BBInterceptor(private vararg val blockList: String) : Interceptor
             }
 
             var response = chain.proceed(request)
-            orderedInterceptors.reversed().forEach {
+            orderedInterceptors.forEach {
                 response = it.onResponse(response)
             }
 
             return response
         } catch (e: Exception) {
             var exception = e
-            orderedInterceptors.reversed().forEach {
+            orderedInterceptors.forEach {
                 exception = it.onError(exception)
             }
             throw e

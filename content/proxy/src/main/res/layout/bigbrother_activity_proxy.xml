@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/proxy_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/bigbrother_ic_arrow_back"
+        app:title="Criando nova regra" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/proxy_rule_name_layout"
+                style="@style/input_outlined"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/bb_spacing_m"
+                app:endIconDrawable="@drawable/bigbrother_ic_shuffle"
+                app:helperText="Pode ser uma boa ideia adicionar um nome mais descritivo para sua regra, porém é divertido nomes aletórios!"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/proxy_rule_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nome para a regra" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/proxy_rule_condition_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/bb_spacing_m"
+                android:layout_marginTop="@dimen/bb_spacing_l"
+                android:text="Condições"
+                android:textColor="@color/bb_text_title"
+                android:textSize="@dimen/bb_text_l"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_name_layout" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/proxy_rule_look_conditions"
+                android:layout_width="?minTouchTargetSize"
+                android:layout_height="?minTouchTargetSize"
+                android:layout_marginEnd="@dimen/bb_spacing_m"
+                android:scaleType="center"
+                android:src="@drawable/bigbrother_ic_mistery"
+                app:layout_constraintBottom_toBottomOf="@id/proxy_rule_condition_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/proxy_rule_condition_title" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/proxy_rule_condition_layout"
+                style="@style/input_outlined"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/bb_spacing_m"
+                app:endIconDrawable="@drawable/bigbrother_ic_search"
+                app:helperText="Nesse campo é possível utilizar regex. Utilize * se quiser que essa regra afete todas as chamadas"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_title">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/proxy_rule_condition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Path"
+                    android:text="*" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/proxy_rule_condition_header_layout"
+                style="@style/input_outlined"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/bb_spacing_m"
+                app:endIconDrawable="@drawable/bigbrother_ic_add"
+                app:helperText="Apenas chamadas que contenham esses headers serão afetadas"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_layout"
+                app:placeholderText="example1=*; example2=*">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/proxy_rule_condition_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Headers" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/proxy_rule_actions_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/bb_spacing_m"
+                android:layout_marginTop="@dimen/bb_spacing_l"
+                android:text="Ações"
+                android:textColor="@color/bb_text_title"
+                android:textSize="@dimen/bb_text_l"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_header_layout" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/proxy_rule_add_action"
+                android:layout_width="?minTouchTargetSize"
+                android:layout_height="?minTouchTargetSize"
+                android:layout_marginEnd="@dimen/bb_spacing_m"
+                android:scaleType="center"
+                android:src="@drawable/bigbrother_ic_add"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/proxy_rule_actions_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/proxy_rule_actions_title"
+                tools:visibility="visible" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/proxy_rule_actions_recycler"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_actions_title"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/proxy_rule_actions_empty_state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bb_spacing_m"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_actions_title"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/bigbrother_ic_terminal" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Nenhuma ação adicionada"
+                    android:textColor="@color/bb_text_title"
+                    android:textSize="17sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/proxy_rule_empty_add_action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bb_text_hyperlink"
+                    android:text="Adicionar ação" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bb_text_title_inverse">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bb_divider" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salvar" />
+
+    </FrameLayout>
+
+</LinearLayout>

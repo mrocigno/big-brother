@@ -33,6 +33,7 @@ dependencies {
     implementation project(":content:report")
     implementation project(":content:crash")
     implementation project(":content:network")
+    implementation project(":content:proxy")
     implementation project(":content:log")
     implementation project(":content:database")
 }

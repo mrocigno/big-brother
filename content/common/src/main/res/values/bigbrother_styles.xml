@@ -31,6 +31,11 @@
         <item name="android:textColor">@color/bb_text_title_inverse</item>
     </style>
 
+    <style name="BigBrotherButtonSmall" parent="Widget.AppCompat.Button.Small">
+        <item name="android:backgroundTint">@color/bb_text_title</item>
+        <item name="android:textColor">@color/bb_text_title_inverse</item>
+    </style>
+
     <style name="SearchView" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
         <item name="boxBackgroundColor">#33000000</item>
         <item name="endIconCheckable">true</item>
