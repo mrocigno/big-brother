@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="7dp"
+    android:textSize="@dimen/bb_text_m"
+    android:foreground="?selectableItemBackground"
+    android:textColor="@color/bb_text_hyperlink"
+    tools:text="@tools:sample/lorem[6]" />

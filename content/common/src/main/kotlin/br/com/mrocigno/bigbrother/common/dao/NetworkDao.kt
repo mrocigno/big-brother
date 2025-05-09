@@ -21,4 +21,7 @@ interface NetworkDao {
 
     @Query("SELECT * FROM tblNetwork WHERE id = :id")
     fun getById(id: Long): Flow<NetworkEntity>
+
+    @Query("SELECT DISTINCT full_url FROM tblNetwork")
+    fun listEndpoints(): Flow<List<String>>
 }

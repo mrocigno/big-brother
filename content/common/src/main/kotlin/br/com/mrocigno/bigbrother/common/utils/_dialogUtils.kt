@@ -13,13 +13,13 @@ fun AppCompatActivity.showDialog(
     positiveButton: Pair<String, DialogButtonClick>? = null,
     negativeButton: Pair<String, DialogButtonClick>? = null,
     onView: View.() -> Unit = {},
-) {
+): AlertDialog {
 
     val view = content.takeIf { it != -1 }?.let {
         View.inflate(this, it, null)
     }
 
-    AlertDialog.Builder(this).apply {
+    return AlertDialog.Builder(this).apply {
         title.takeIf { it.isNotEmpty() }?.run(::setTitle)
         view?.run(::setView)
         view?.onView()
