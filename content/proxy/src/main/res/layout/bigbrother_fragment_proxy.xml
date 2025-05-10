@@ -64,16 +64,23 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/bigbrother_search_list" />
+            app:srcCompat="@drawable/bigbrother_ic_terminal" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="empty"
+            android:text="Nenhuma regra de proxy criada"
             android:textColor="@color/bb_text_title"
             android:textSize="17sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/proxy_empty_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adicionar regra"
+            android:textColor="@color/bb_text_hyperlink" />
 
     </LinearLayout>
 

@@ -8,6 +8,7 @@ import androidx.room.Transaction
 import br.com.mrocigno.bigbrother.common.entity.ProxyActionEntity
 import br.com.mrocigno.bigbrother.common.entity.ProxyRuleEntity
 import br.com.mrocigno.bigbrother.common.entity.ProxyRuleWithActions
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProxyDao {
@@ -20,9 +21,19 @@ interface ProxyDao {
 
     @Transaction
     @Query("SELECT * FROM tblProxyRule")
-    suspend fun getAll(): List<ProxyRuleWithActions>
+    fun getAll(): Flow<List<ProxyRuleWithActions>>
 
     @Transaction
     @Query("SELECT * FROM tblProxyRule WHERE enabled = 1")
     fun getAllEnabled(): List<ProxyRuleWithActions>
+
+    @Query("UPDATE tblProxyRule SET enabled = :enabled WHERE id = :id")
+    fun updateEnabled(id: Long, enabled: Boolean)
+
+    @Query("DELETE FROM tblProxyRule WHERE id = :id")
+    suspend fun deleteRule(id: Long)
+
+    @Query("DELETE FROM tblProxyAction WHERE proxy_id = :id")
+    suspend fun deleteActions(id: Long)
+
 }

@@ -79,4 +79,8 @@
         <item name="colorPrimaryVariant">@color/bb_brand_secondary</item>
         <item name="colorOnPrimary">@android:color/white</item>
     </style>
+
+    <style name="BigBrotherSwitch" parent="Widget.AppCompat.Button">
+        <item name="colorControlActivated">@color/bb_brand_default</item>
+    </style>
 </resources>

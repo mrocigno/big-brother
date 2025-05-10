@@ -8,12 +8,10 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.mrocigno.bigbrother.common.provider.id
 import br.com.mrocigno.bigbrother.common.utils.gone
-import br.com.mrocigno.bigbrother.common.utils.highlightQuery
 import br.com.mrocigno.bigbrother.common.utils.inflate
 import br.com.mrocigno.bigbrother.common.utils.visible
 import br.com.mrocigno.bigbrother.proxy.R
 import br.com.mrocigno.bigbrother.proxy.model.ProxyActionModel
-import br.com.mrocigno.bigbrother.common.R as CR
 
 internal class ProxyActionsAdapter : Adapter<ActionViewHolder>() {
 
@@ -43,8 +41,6 @@ internal class ActionViewHolder(
 
     fun bind(model: ProxyActionModel) {
         description.text = model.getDescription(context)
-            .highlightQuery(""""${model.name.orEmpty()}"""", context.getColor(CR.color.bb_net_entry_put))
-            .highlightQuery(""""${model.value.orEmpty()}"""", context.getColor(CR.color.bb_net_entry_get))
 
         model.body?.let {
             body.text = it
