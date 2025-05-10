@@ -7,22 +7,27 @@ import br.com.mrocigno.bigbrother.common.converter.LocalDateTimeConverter
 import br.com.mrocigno.bigbrother.common.dao.CrashDao
 import br.com.mrocigno.bigbrother.common.dao.LogDao
 import br.com.mrocigno.bigbrother.common.dao.NetworkDao
+import br.com.mrocigno.bigbrother.common.dao.ProxyDao
 import br.com.mrocigno.bigbrother.common.dao.ReportLogDao
 import br.com.mrocigno.bigbrother.common.dao.SessionDao
 import br.com.mrocigno.bigbrother.common.entity.CrashEntity
 import br.com.mrocigno.bigbrother.common.entity.LogEntity
 import br.com.mrocigno.bigbrother.common.entity.NetworkEntity
+import br.com.mrocigno.bigbrother.common.entity.ProxyActionEntity
+import br.com.mrocigno.bigbrother.common.entity.ProxyRuleEntity
 import br.com.mrocigno.bigbrother.common.entity.ReportLogEntity
 import br.com.mrocigno.bigbrother.common.entity.SessionEntity
 
 @Database(
-    version = 2,
+    version = 4,
     entities = [
         SessionEntity::class,
         ReportLogEntity::class,
         LogEntity::class,
         NetworkEntity::class,
-        CrashEntity::class
+        CrashEntity::class,
+        ProxyRuleEntity::class,
+        ProxyActionEntity::class
     ]
 )
 @TypeConverters(LocalDateTimeConverter::class)
@@ -37,6 +42,8 @@ abstract class BigBrotherDatabase : RoomDatabase() {
     abstract fun networkDao(): NetworkDao
 
     abstract fun crashDao(): CrashDao
+
+    abstract fun proxyDao(): ProxyDao
 
     companion object {
 

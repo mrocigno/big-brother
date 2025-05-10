@@ -7,4 +7,8 @@
     <string name="proxy_remove_header_message">Para remover um header antes de ser executado o request</string>
     <string name="proxy_set_query_message">Para adicionar ou editar uma queryString antes de ser executado o request</string>
     <string name="proxy_remove_query_message">Para remover uma queryString antes de ser executado o request</string>
+
+    <string name="proxy_set_header_description">Adicionar ou editar o header \"%s\" com o valor \"%s\"</string>
+    <string name="proxy_set_path_description">Alterar o path request para %s\"%2s\"</string>
+    <string name="proxy_set_body_description">Usar o body customizado:</string>
 </resources>

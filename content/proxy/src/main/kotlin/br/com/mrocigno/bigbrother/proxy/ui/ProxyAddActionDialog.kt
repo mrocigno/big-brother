@@ -17,7 +17,7 @@ import br.com.mrocigno.bigbrother.proxy.model.ProxyActions
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-private const val BODY_PLACEHOLDER = "{\n\t\t\"placeholder\": \"placeholder\",\n\t\t\"placeholder\": \"placeholder\"\n}"
+internal const val BODY_PLACEHOLDER = "{\n\t\t\"placeholder\": \"placeholder\",\n\t\t\"placeholder\": \"placeholder\"\n}"
 
 internal fun AppCompatActivity.proxyAddActionDialog(onResult: (ProxyActionModel) -> Unit) {
     val items = ProxyActions.values()

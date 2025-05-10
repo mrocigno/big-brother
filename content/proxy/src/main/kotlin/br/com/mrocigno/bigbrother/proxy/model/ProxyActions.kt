@@ -10,6 +10,7 @@ internal enum class ProxyActions(
     val label: Int = br.com.mrocigno.bigbrother.common.R.string.close,
     val message: Int = br.com.mrocigno.bigbrother.common.R.string.close,
     val group: Int = R.id.proxy_action_name_value_group,
+    val description: Int = R.string.proxy_set_header_description,
     val validate: (name: TextInputEditText, value: TextInputEditText, body: TextInputEditText) -> Boolean = { _, _, _ -> true }
 ) {
     EMPTY(
@@ -22,6 +23,7 @@ internal enum class ProxyActions(
         label = R.string.proxy_set_body_label,
         message = R.string.proxy_set_body_message,
         group = R.id.proxy_action_body_layout,
+        description = R.string.proxy_set_body_description,
         validate = { _, _, body ->
             val bodyText = body.text.toString().trim()
             val json = runCatching { JSONObject(bodyText) }
@@ -38,12 +40,14 @@ internal enum class ProxyActions(
     SET_HEADER(
         label = R.string.proxy_set_header_label,
         message = R.string.proxy_set_header_message,
+        description = R.string.proxy_set_header_description,
         group = R.id.proxy_action_name_value_group
     ),
     SET_PATH(
         label = R.string.proxy_set_path_label,
         message = R.string.proxy_set_path_message,
-        group = R.id.proxy_action_value_layout
+        group = R.id.proxy_action_value_layout,
+        description = R.string.proxy_set_path_description
     ),
     SET_QUERY(
         label = R.string.proxy_set_query_label,

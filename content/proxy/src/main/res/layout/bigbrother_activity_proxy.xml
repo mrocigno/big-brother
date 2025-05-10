@@ -151,6 +151,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                android:overScrollMode="never"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/proxy_rule_actions_title"
@@ -207,6 +208,7 @@
             android:background="@color/bb_divider" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/proxy_rule_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Salvar" />

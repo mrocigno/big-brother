@@ -35,6 +35,7 @@ class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_proxy) {
     private val actionsEmptyState: ViewGroup by id(R.id.proxy_rule_actions_empty_state)
     private val actionsGroup: Group by id(R.id.proxy_rule_actions_group)
     private val actions: RecyclerView by id(R.id.proxy_rule_actions_recycler)
+    private val saveButton: AppCompatButton by id(R.id.proxy_rule_save)
 
     private val viewModel: ProxyViewModel by viewModels()
 
@@ -74,6 +75,14 @@ class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_proxy) {
             it.setOnClickListener {
                 proxyAddActionDialog(viewModel::addAction)
             }
+        }
+
+        saveButton.setOnClickListener {
+            viewModel.save(
+                ruleName = ruleName.text.toString(),
+                pathCondition = condition.text.toString(),
+                headerCondition = headers.text.toString()
+            )
         }
     }
 
