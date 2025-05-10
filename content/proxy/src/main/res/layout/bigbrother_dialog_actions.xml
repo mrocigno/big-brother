@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -31,14 +31,12 @@
         android:id="@+id/proxy_action_all_groups"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
         app:constraint_referenced_ids="proxy_action_name_value_group, proxy_action_body_layout" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/proxy_action_name_value_group"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
         app:constraint_referenced_ids="proxy_action_name_layout, proxy_action_value_layout" />
 
     <com.google.android.material.textfield.TextInputLayout

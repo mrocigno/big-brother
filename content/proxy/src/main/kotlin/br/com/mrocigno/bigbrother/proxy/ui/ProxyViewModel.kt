@@ -29,6 +29,17 @@ internal class ProxyViewModel(savedStateHandle: SavedStateHandle) : ViewModel() 
         _actions.value = _actions.value.orEmpty() + action
     }
 
+    fun updateAction(old: ProxyActionModel?, new: ProxyActionModel) {
+        val mutableList = _actions.value.orEmpty().toMutableList()
+        val oldIndex = old?.let(mutableList::indexOf) ?: mutableList.size
+        mutableList[oldIndex] = new
+        _actions.value = mutableList
+    }
+
+    fun removeAction(action: ProxyActionModel) {
+        _actions.value = _actions.value.orEmpty() - action
+    }
+
     fun save(currentRule: ProxyRuleModel?, ruleName: String, pathCondition: String, headerCondition: String) {
         viewModelScope.launch {
             val ruleId = insertRule(ProxyRuleEntity(

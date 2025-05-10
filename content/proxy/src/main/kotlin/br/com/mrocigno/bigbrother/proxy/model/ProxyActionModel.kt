@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 internal data class ProxyActionModel(
     val id: Long = 0,
-    val action: ProxyActions,
+    val action: ProxyActions = ProxyActions.EMPTY,
     val name: String? = null,
     val value: String? = null,
     val body: String? = null

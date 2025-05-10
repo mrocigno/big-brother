@@ -98,9 +98,9 @@ internal class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_pr
         saveButton.setOnClickListener {
             viewModel.save(
                 currentRule = proxyRuleModel,
-                ruleName = ruleName.text.toString(),
-                pathCondition = condition.text.toString(),
-                headerCondition = headers.text.toString()
+                ruleName = ruleName.text.toString().trim(),
+                pathCondition = condition.text.toString().trim().ifEmpty { "*" },
+                headerCondition = headers.text.toString().trim()
             )
             finish()
         }
@@ -116,7 +116,14 @@ internal class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_pr
     }
 
     private fun setupActions() {
-        val adapter = ProxyActionsAdapter()
+        val adapter = ProxyActionsAdapter {
+            proxyUpdateActionDialog(
+                old = it,
+                onDelete = viewModel::removeAction,
+                onSave = viewModel::updateAction
+            )
+        }
+        actions.itemAnimator = null
         actions.adapter = adapter
         actions.layoutManager = LinearLayoutManager(this)
         viewModel.actions.observe(this) {

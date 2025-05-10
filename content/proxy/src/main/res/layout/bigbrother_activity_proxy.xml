@@ -217,6 +217,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:visibility="gone"
+                tools:visibility="visible"
                 android:textColor="@color/design_default_color_error"
                 android:layout_height="wrap_content"
                 android:text="Deletar" />

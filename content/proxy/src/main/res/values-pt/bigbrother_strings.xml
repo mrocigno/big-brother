@@ -10,5 +10,5 @@
 
     <string name="proxy_set_header_description">Adiciona ou edita o header \"%s\" com o valor \"%s\"</string>
     <string name="proxy_set_path_description">Altera o path request para %s\"%2s\"</string>
-    <string name="proxy_set_body_description">Subistitui o body request</string>
+    <string name="proxy_set_body_description">Substitui o body request</string>
 </resources>

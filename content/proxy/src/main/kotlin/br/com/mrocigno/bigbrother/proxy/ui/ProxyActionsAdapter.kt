@@ -13,7 +13,9 @@ import br.com.mrocigno.bigbrother.common.utils.visible
 import br.com.mrocigno.bigbrother.proxy.R
 import br.com.mrocigno.bigbrother.proxy.model.ProxyActionModel
 
-internal class ProxyActionsAdapter : Adapter<ActionViewHolder>() {
+internal class ProxyActionsAdapter(
+    private val onActionClick: (ProxyActionModel) -> Unit
+) : Adapter<ActionViewHolder>() {
 
     var list: List<ProxyActionModel>
         get() = differ.currentList
@@ -25,7 +27,11 @@ internal class ProxyActionsAdapter : Adapter<ActionViewHolder>() {
         ActionViewHolder(parent)
 
     override fun onBindViewHolder(holder: ActionViewHolder, position: Int) {
-        holder.bind(list[position])
+        val model = list[position]
+        holder.bind(model)
+        holder.itemView.setOnClickListener {
+            onActionClick.invoke(model)
+        }
     }
 
     override fun getItemCount(): Int = list.size
