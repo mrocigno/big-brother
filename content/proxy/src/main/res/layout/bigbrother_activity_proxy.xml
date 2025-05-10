@@ -126,11 +126,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_header_layout" />
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/proxy_rule_actions_group"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="proxy_rule_add_action, proxy_rule_actions_recycler" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/proxy_rule_add_action"
                 android:layout_width="?minTouchTargetSize"
                 android:layout_height="?minTouchTargetSize"
                 android:layout_marginEnd="@dimen/bb_spacing_m"
+                android:foreground="?selectableItemBackground"
                 android:scaleType="center"
                 android:src="@drawable/bigbrother_ic_add"
                 android:visibility="gone"
@@ -180,8 +187,8 @@
                     android:id="@+id/proxy_rule_empty_add_action"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/bb_text_hyperlink"
-                    android:text="Adicionar ação" />
+                    android:text="Adicionar ação"
+                    android:textColor="@color/bb_text_hyperlink" />
 
             </LinearLayout>
 

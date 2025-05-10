@@ -1,21 +1,39 @@
 package br.com.mrocigno.bigbrother.proxy.model
 
+import br.com.mrocigno.bigbrother.common.utils.setInputLayoutError
 import br.com.mrocigno.bigbrother.proxy.R
+import com.google.android.material.textfield.TextInputEditText
+import org.json.JSONArray
+import org.json.JSONObject
 
 internal enum class ProxyActions(
     val label: Int = br.com.mrocigno.bigbrother.common.R.string.close,
     val message: Int = br.com.mrocigno.bigbrother.common.R.string.close,
-    val group: Int = R.id.proxy_action_name_value_group
+    val group: Int = R.id.proxy_action_name_value_group,
+    val validate: (name: TextInputEditText, value: TextInputEditText, body: TextInputEditText) -> Boolean = { _, _, _ -> true }
 ) {
     EMPTY(
         label = R.string.proxy_empty_label,
         message = R.string.proxy_empty_message,
-        group = -1
+        group = -1,
+        validate = { _, _, _ -> false }
     ),
     SET_BODY(
         label = R.string.proxy_set_body_label,
         message = R.string.proxy_set_body_message,
-        group = R.id.proxy_action_body_layout
+        group = R.id.proxy_action_body_layout,
+        validate = { _, _, body ->
+            val bodyText = body.text.toString().trim()
+            val json = runCatching { JSONObject(bodyText) }
+                .recoverCatching { JSONArray(bodyText) }
+                .getOrElse { it.message }
+
+            when {
+                bodyText.isEmpty() -> { body.setInputLayoutError("Campo vazio"); false }
+                json is String -> { body.setInputLayoutError("Formato inválido\n$json"); false }
+                else -> true
+            }
+        }
     ),
     SET_HEADER(
         label = R.string.proxy_set_header_label,

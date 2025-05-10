@@ -81,6 +81,7 @@ internal class SharedPreferencesDetailsActivity :
                 val input = it?.findViewById<TextInputEditText>(R.id.edit_numeric_input)
                 save(input?.text.toString())
                 adapter.fullList = prefs.all.toList()
+                dismiss()
             }
         )
     }
@@ -98,6 +99,7 @@ internal class SharedPreferencesDetailsActivity :
                 val input = it?.findViewById<TextInputEditText>(R.id.edit_string_input)
                 prefs.edit { putString(key, input?.text.toString()) }
                 adapter.fullList = prefs.all.toList()
+                dismiss()
             }
         )
     }
@@ -119,6 +121,7 @@ internal class SharedPreferencesDetailsActivity :
                 val view = it?.findViewById<AppCompatCheckBox>(R.id.edit_boolean_checkbox)
                 prefs.edit { putBoolean(key, view?.isChecked == true) }
                 adapter.fullList = prefs.all.toList()
+                dismiss()
             }
         )
     }

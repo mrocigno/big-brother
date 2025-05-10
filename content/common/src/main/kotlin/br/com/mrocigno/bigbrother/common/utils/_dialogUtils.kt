@@ -19,19 +19,29 @@ fun AppCompatActivity.showDialog(
         View.inflate(this, it, null)
     }
 
-    return AlertDialog.Builder(this).apply {
+    val alert = AlertDialog.Builder(this).apply {
         title.takeIf { it.isNotEmpty() }?.run(::setTitle)
         view?.run(::setView)
         view?.onView()
         positiveButton?.run {
-            setPositiveButton(first) { dialog, _ ->
-                second(dialog, view)
-            }
+            setPositiveButton(first, null)
         }
         negativeButton?.run {
-            setNegativeButton(first) { dialog, _ ->
-                second(dialog, view)
-            }
+            setNegativeButton(first, null)
         }
     }.show()
+
+    positiveButton?.second?.run {
+        alert.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
+            invoke(alert, view)
+        }
+    }
+
+    negativeButton?.second?.run {
+        alert.getButton(AlertDialog.BUTTON_NEGATIVE)?.setOnClickListener {
+            invoke(alert, view)
+        }
+    }
+
+    return alert
 }

@@ -18,6 +18,7 @@ fun AppCompatActivity.proxyAddHeaderDialog(onSave: (String) -> Unit) =
 
             val newData = "$name=$value"
             onSave(newData)
+            dismiss()
         },
         negativeButton = "Cancelar" to {
             dismiss()
