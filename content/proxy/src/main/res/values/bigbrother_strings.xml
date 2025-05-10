@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="proxy_empty_label" translatable="false"></string>
+    <string name="proxy_set_body_label" translatable="false">SET BODY</string>
+    <string name="proxy_set_path_label" translatable="false">SET PATH</string>
+    <string name="proxy_set_header_label" translatable="false">SET HEADER</string>
+    <string name="proxy_remove_header_label" translatable="false">REMOVE HEADER</string>
+    <string name="proxy_set_query_label" translatable="false">SET QUERY</string>
+    <string name="proxy_remove_query_label" translatable="false">REMOVE QUERY</string>
+
+    <string name="proxy_empty_message">Select an option into dropdown to continue</string>
+    <string name="proxy_set_body_message">To edit the body before the request is executed</string>
+    <string name="proxy_set_path_message">To edit the endpoint before the request is executed</string>
+    <string name="proxy_set_header_message">To add or edit a header before the request is executed</string>
+    <string name="proxy_remove_header_message">To remove a header before the request is executed</string>
+    <string name="proxy_set_query_message">To add or edit a query string before the request is executed</string>
+    <string name="proxy_remove_query_message">To remove a query string before the request is executed</string>
+</resources>
