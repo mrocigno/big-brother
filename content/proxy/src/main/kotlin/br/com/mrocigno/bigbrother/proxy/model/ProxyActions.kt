@@ -25,14 +25,15 @@ internal enum class ProxyActions(
         group = R.id.proxy_action_body_layout,
         description = R.string.proxy_set_body_description,
         validate = { _, _, body ->
+            val context = body.context
             val bodyText = body.text.toString().trim()
             val json = runCatching { JSONObject(bodyText) }
                 .recoverCatching { JSONArray(bodyText) }
                 .getOrElse { it.message }
 
             when {
-                bodyText.isEmpty() -> { body.setInputLayoutError("Campo vazio"); false }
-                json is String -> { body.setInputLayoutError("Formato inválido\n$json"); false }
+                bodyText.isEmpty() -> { body.setInputLayoutError(context.getString(R.string.proxy_required_field)); false }
+                json is String -> { body.setInputLayoutError(context.getString(R.string.proxy_json_invalid, json)); false }
                 else -> true
             }
         }
@@ -41,27 +42,83 @@ internal enum class ProxyActions(
         label = R.string.proxy_set_header_label,
         message = R.string.proxy_set_header_message,
         description = R.string.proxy_set_header_description,
-        group = R.id.proxy_action_name_value_group
+        group = R.id.proxy_action_name_value_group,
+        validate = { name, value, _ ->
+            val context = name.context
+            val nameText = name.text.toString().trim()
+            val valueText = value.text.toString().trim()
+
+            when {
+                nameText.isEmpty() -> { name.setInputLayoutError(context.getString(R.string.proxy_required_field)); false }
+                nameText.contains(" ") -> { name.setInputLayoutError(context.getString(R.string.proxy_spaces_error)); false }
+                valueText.isEmpty() -> { value.setInputLayoutError(context.getString(R.string.proxy_required_field)); false }
+                else -> true
+            }
+        }
     ),
     SET_PATH(
         label = R.string.proxy_set_path_label,
         message = R.string.proxy_set_path_message,
         group = R.id.proxy_action_value_layout,
-        description = R.string.proxy_set_path_description
+        description = R.string.proxy_set_path_description,
+        validate = { _, value, _ ->
+            val context = value.context
+            val valueText = value.text.toString().trim()
+
+            when {
+                valueText.isEmpty() -> { value.setInputLayoutError(context.getString(R.string.proxy_required_field)); false }
+                else -> true
+            }
+        }
     ),
     SET_QUERY(
         label = R.string.proxy_set_query_label,
         message = R.string.proxy_set_query_message,
-        group = R.id.proxy_action_name_value_group
+        group = R.id.proxy_action_name_value_group,
+        description = R.string.proxy_set_query_description,
+        validate = { name, value, _ ->
+            val context = name.context
+            val nameText = name.text.toString().trim()
+            val valueText = value.text.toString().trim()
+
+            when {
+                nameText.isEmpty() -> { name.setInputLayoutError(context.getString(R.string.proxy_required_field)); false }
+                nameText.contains(" ") -> { name.setInputLayoutError(context.getString(R.string.proxy_spaces_error)); false }
+                valueText.isEmpty() -> { value.setInputLayoutError(context.getString(R.string.proxy_required_field)); false }
+                else -> true
+            }
+        }
     ),
     REMOVE_HEADER(
         label = R.string.proxy_remove_header_label,
         message = R.string.proxy_remove_header_message,
-        group = R.id.proxy_action_name_layout
+        group = R.id.proxy_action_name_layout,
+        description = R.string.proxy_remove_header_description,
+        validate = { name, _, _ ->
+            val context = name.context
+            val nameText = name.text.toString().trim()
+
+            when {
+                nameText.isEmpty() -> { name.setInputLayoutError(context.getString(R.string.proxy_required_field)); false }
+                nameText.contains(" ") -> { name.setInputLayoutError(context.getString(R.string.proxy_spaces_error)); false }
+                else -> true
+            }
+        }
     ),
     REMOVE_QUERY(
         label = R.string.proxy_remove_query_label,
         message = R.string.proxy_remove_query_message,
-        group = R.id.proxy_action_name_layout
+        group = R.id.proxy_action_name_layout,
+        description = R.string.proxy_remove_query_description,
+        validate = { name, _, _ ->
+            val context = name.context
+            val nameText = name.text.toString().trim()
+
+            when {
+                nameText.isEmpty() -> { name.setInputLayoutError(context.getString(R.string.proxy_required_field)); false }
+                nameText.contains(" ") -> { name.setInputLayoutError(context.getString(R.string.proxy_spaces_error)); false }
+                else -> true
+            }
+        }
     )
 }

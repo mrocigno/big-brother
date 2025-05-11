@@ -7,4 +7,8 @@
     <string name="close">Fechar</string>
     <string name="copy_feedback">chave %1s copiada</string>
     <string name="search_hint">Procure pela chave ou valor</string>
+    <string name="delete">Deletar</string>
+    <string name="save">Salvar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="add">Adicionar</string>
 </resources>

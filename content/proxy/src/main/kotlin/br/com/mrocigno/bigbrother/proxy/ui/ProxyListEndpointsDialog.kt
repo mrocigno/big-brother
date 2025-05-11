@@ -16,12 +16,13 @@ import br.com.mrocigno.bigbrother.common.utils.inflate
 import br.com.mrocigno.bigbrother.common.utils.showDialog
 import br.com.mrocigno.bigbrother.proxy.R
 import kotlinx.coroutines.launch
+import br.com.mrocigno.bigbrother.common.R as CR
 
 fun AppCompatActivity.proxyListEndpointsDialog(onSelect: (String) -> Unit) {
     var dialog: AlertDialog? = null
     dialog = showDialog(
         content = R.layout.bigbrother_dialog_list_endpoints,
-        negativeButton = "Cancelar" to { dismiss() },
+        negativeButton = getString(CR.string.cancel) to { dismiss() },
         onView = {
             val list = findViewById<RecyclerView>(R.id.proxy_endpoint_recycler)
             val emptyState = findViewById<View>(R.id.proxy_endpoint_empty_state)

@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/bigbrother_ic_arrow_back"
-        app:title="Criando nova regra" />
+        app:title="@string/proxy_rule_title" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/bb_spacing_m"
                 app:endIconDrawable="@drawable/bigbrother_ic_shuffle"
-                app:helperText="Pode ser uma boa ideia adicionar um nome mais descritivo para sua regra, porém é divertido nomes aletórios!"
+                app:helperText="@string/proxy_rule_name_helper"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -41,7 +41,7 @@
                     android:id="@+id/proxy_rule_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nome para a regra" />
+                    android:hint="@string/proxy_rule_name_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/bb_spacing_m"
                 android:layout_marginTop="@dimen/bb_spacing_l"
-                android:text="Condições"
+                android:text="@string/proxy_rule_condition_title"
                 android:textColor="@color/bb_text_title"
                 android:textSize="@dimen/bb_text_l"
                 android:textStyle="bold"
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/bb_spacing_m"
                 app:endIconDrawable="@drawable/bigbrother_ic_search"
-                app:helperText="Utilize * se quiser que essa regra afete todos os paths"
+                app:helperText="@string/proxy_rule_path_helper"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_title">
@@ -86,8 +86,8 @@
                     android:id="@+id/proxy_rule_condition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Path"
-                    android:text="*" />
+                    android:hint="@string/proxy_rule_path_hint"
+                    tools:text="*" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,17 +98,17 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/bb_spacing_m"
                 app:endIconDrawable="@drawable/bigbrother_ic_add"
-                app:helperText="Apenas chamadas que contenham esses headers serão afetadas"
+                app:helperText="@string/proxy_rule_header_helper"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_layout"
-                app:placeholderText="example1=*; example2=*">
+                app:placeholderText="example1=*;example2=*">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/proxy_rule_condition_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Headers" />
+                    android:hint="@string/proxy_rule_header_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/bb_spacing_m"
                 android:layout_marginTop="@dimen/bb_spacing_l"
-                android:text="Ações"
+                android:text="@string/proxy_rule_action_title"
                 android:textColor="@color/bb_text_title"
                 android:textSize="@dimen/bb_text_l"
                 android:textStyle="bold"
@@ -150,8 +150,8 @@
                 android:id="@+id/proxy_rule_actions_recycler"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:overScrollMode="never"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/proxy_rule_actions_title"
@@ -180,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="Nenhuma ação adicionada"
+                    android:text="@string/proxy_rule_empty_label"
                     android:textColor="@color/bb_text_title"
                     android:textSize="17sp" />
 
@@ -188,7 +188,7 @@
                     android:id="@+id/proxy_rule_empty_add_action"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Adicionar ação"
+                    android:text="@string/proxy_rule_empty_button"
                     android:textColor="@color/bb_text_hyperlink" />
 
             </LinearLayout>
@@ -215,19 +215,19 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/proxy_rule_delete"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:textColor="@color/design_default_color_error"
                 android:layout_height="wrap_content"
-                android:text="Deletar" />
+                android:layout_weight="1"
+                android:text="@string/delete"
+                android:textColor="@color/design_default_color_error"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/proxy_rule_save"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Salvar" />
+                android:layout_weight="1"
+                android:text="@string/save" />
         </LinearLayout>
 
     </FrameLayout>

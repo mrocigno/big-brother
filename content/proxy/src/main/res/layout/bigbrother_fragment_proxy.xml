@@ -29,7 +29,7 @@
                     android:id="@+id/proxy_search_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="teste" />
+                    android:hint="@string/proxy_list_rules_search_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Nenhuma regra de proxy criada"
+            android:text="@string/proxy_list_rules_empty_label"
             android:textColor="@color/bb_text_title"
             android:textSize="17sp" />
 
@@ -79,7 +79,7 @@
             android:id="@+id/proxy_empty_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Adicionar regra"
+            android:text="@string/proxy_list_rules_empty_button"
             android:textColor="@color/bb_text_hyperlink" />
 
     </LinearLayout>

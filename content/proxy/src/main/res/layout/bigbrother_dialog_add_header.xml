@@ -9,7 +9,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         style="@style/input_outlined"
-        android:hint="Name"
+        android:hint="@string/proxy_rule_name_hint"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -23,7 +23,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         style="@style/input_outlined"
-        android:hint="Value"
+        android:hint="@string/proxy_add_action_value_hint"
         android:layout_marginTop="@dimen/bb_spacing_s"
         app:helperText="Use * para permitir qualquer valor"
         android:layout_height="wrap_content">

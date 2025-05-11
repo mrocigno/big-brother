@@ -53,8 +53,8 @@ internal class RuleViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.l
     fun bind(model: ProxyRuleModel) {
         name.text = model.ruleName
         condition.text = when (model.pathCondition == "*") {
-            true -> "Afeta todas as requests"
-            false -> "Afeta algumas requests"
+            true -> context.getString(R.string.proxy_actions_afects_all)
+            false -> context.getString(R.string.proxy_actions_afects_few)
         }
         switch.isChecked = model.enabled
         switch.setOnCheckedChangeListener { _, isChecked ->

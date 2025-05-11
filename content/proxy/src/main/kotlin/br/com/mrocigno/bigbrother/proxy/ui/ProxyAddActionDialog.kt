@@ -16,6 +16,7 @@ import br.com.mrocigno.bigbrother.proxy.model.ProxyActionModel
 import br.com.mrocigno.bigbrother.proxy.model.ProxyActions
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import br.com.mrocigno.bigbrother.common.R as CR
 import com.google.android.material.R as MR
 
 private const val BODY_PLACEHOLDER = "{\n\t\t\"placeholder\": \"placeholder\",\n\t\t\"placeholder\": \"placeholder\"\n}"
@@ -25,10 +26,10 @@ internal fun AppCompatActivity.proxyAddActionDialog(
 ) {
     val items = ProxyActions.values()
     showDialog(
-        title = "Nova ação",
+        title = getString(R.string.proxy_add_action_title),
         content = R.layout.bigbrother_dialog_actions,
-        negativeButton = "Cancelar" to { dismiss() },
-        positiveButton = "Adicionar" to getPositiveButtonClick(items, onSave),
+        negativeButton = getString(CR.string.cancel) to { dismiss() },
+        positiveButton = getString(CR.string.add) to getPositiveButtonClick(items, onSave),
         onView = { setupDialog(null, items) }
     )
 }
@@ -40,14 +41,14 @@ internal fun AppCompatActivity.proxyUpdateActionDialog(
 ) {
     val items = ProxyActions.values()
     showDialog(
-        title = "Editando",
+        title = getString(R.string.proxy_edit_action_title),
         content = R.layout.bigbrother_dialog_actions,
-        negativeButton = "Deletar" to {
+        negativeButton = getString(CR.string.delete) to {
             onDelete.invoke(old)
             dismiss()
         },
         negativeButtonColor = MR.color.design_default_color_error,
-        positiveButton = "Salvar" to getPositiveButtonClick(items) { onSave.invoke(old, it) },
+        positiveButton = getString(CR.string.save) to getPositiveButtonClick(items) { onSave.invoke(old, it) },
         onView = { setupDialog(old, items) }
     )
 }
