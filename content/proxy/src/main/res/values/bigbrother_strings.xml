@@ -51,4 +51,5 @@
     <string name="proxy_add_header_title">Add Header</string>
     <string name="proxy_actions_afects_all">Affects all requests</string>
     <string name="proxy_actions_afects_few">Affects some requests</string>
+    <string name="proxy_actions_do_nothing">No actions added</string>
 </resources>

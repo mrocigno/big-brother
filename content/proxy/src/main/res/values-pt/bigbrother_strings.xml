@@ -43,4 +43,5 @@
     <string name="proxy_add_header_title">Adicionar Header</string>
     <string name="proxy_actions_afects_all">Afeta todas as requests</string>
     <string name="proxy_actions_afects_few">Afeta algumas requests</string>
+    <string name="proxy_actions_do_nothing">Nenhuma ação adicionada</string>
 </resources>

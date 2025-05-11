@@ -67,6 +67,8 @@ internal class RuleViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.l
             if (index > 0) builder.appendLine()
             builder.append(action.getDescription(context), BulletSpan(gap), SPAN_EXCLUSIVE_EXCLUSIVE)
         }
-        actions.text = builder
+        actions.text = builder.ifEmpty {
+            builder.append(context.getString(R.string.proxy_actions_do_nothing), BulletSpan(gap), SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
     }
 }
