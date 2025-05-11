@@ -36,8 +36,9 @@ internal class ProxyViewModel(savedStateHandle: SavedStateHandle) : ViewModel() 
         _actions.value = mutableList
     }
 
-    fun removeAction(action: ProxyActionModel) {
+    fun removeAction(action: ProxyActionModel) = viewModelScope.launch {
         _actions.value = _actions.value.orEmpty() - action
+        proxyDao?.deleteAction(action.id)
     }
 
     fun save(currentRule: ProxyRuleModel?, ruleName: String, pathCondition: String, headerCondition: String) {

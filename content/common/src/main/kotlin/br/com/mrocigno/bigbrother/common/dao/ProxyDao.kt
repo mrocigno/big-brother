@@ -33,7 +33,9 @@ interface ProxyDao {
     @Query("DELETE FROM tblProxyRule WHERE id = :id")
     suspend fun deleteRule(id: Long)
 
-    @Query("DELETE FROM tblProxyAction WHERE proxy_id = :id")
-    suspend fun deleteActions(id: Long)
+    @Query("DELETE FROM tblProxyAction WHERE id = :id")
+    suspend fun deleteAction(id: Long)
 
+    @Query("DELETE FROM tblProxyAction WHERE proxy_id = :proxyId")
+    suspend fun deleteActions(proxyId: Long)
 }

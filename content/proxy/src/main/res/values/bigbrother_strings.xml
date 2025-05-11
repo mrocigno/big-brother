@@ -4,6 +4,7 @@
     <string name="proxy_set_body_label" translatable="false">SET BODY</string>
     <string name="proxy_set_path_label" translatable="false">SET PATH</string>
     <string name="proxy_set_header_label" translatable="false">SET HEADER</string>
+    <string name="proxy_set_method_label" translatable="false">SET METHOD</string>
     <string name="proxy_remove_header_label" translatable="false">REMOVE HEADER</string>
     <string name="proxy_set_query_label" translatable="false">SET QUERY</string>
     <string name="proxy_remove_query_label" translatable="false">REMOVE QUERY</string>
@@ -12,11 +13,13 @@
     <string name="proxy_set_body_message">To edit the body before the request is executed</string>
     <string name="proxy_set_path_message">To edit the endpoint before the request is executed</string>
     <string name="proxy_set_header_message">To add or edit a header before the request is executed</string>
+    <string name="proxy_set_method_message">To change request method</string>
     <string name="proxy_remove_header_message">To remove a header before the request is executed</string>
     <string name="proxy_set_query_message">To add or edit a queryString before the request is executed</string>
     <string name="proxy_remove_query_message">To remove a queryString before the request is executed</string>
 
     <string name="proxy_set_header_description">Adds or edits the \"%s\" header with the value \"%s\"</string>
+    <string name="proxy_set_method_description">Changes the request method to %s\"%2s\"</string>
     <string name="proxy_set_path_description">Changes the request path to %s\"%2s\"</string>
     <string name="proxy_set_body_description">Replaces the request body</string>
     <string name="proxy_set_query_description">Adds or edits the \"%s\" queryString with the value \"%s\"</string>

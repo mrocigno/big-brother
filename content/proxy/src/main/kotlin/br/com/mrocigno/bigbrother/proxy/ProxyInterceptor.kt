@@ -38,19 +38,23 @@ internal class ProxyInterceptor : BigBrotherInterceptor {
     private fun Request.applyAllActions(actions: List<ProxyActionModel>): Request {
         val pathBuilder = url.toString().toUri().buildUpon()
         val builder = newBuilder()
+        var newMethod = method
+        var newBody = body
         actions.forEach {
             when (it.action) {
                 ProxyActions.EMPTY -> Unit
                 ProxyActions.SET_BODY -> {
-                    val body = it.body
-                        ?.takeIf { !method.equals("get", true) }
+                    newBody = it.body
+                        ?.takeIf { !newMethod.equals("get", true) }
                         ?.toRequestBody()
-
-                    builder.method(method, body)
                 }
 
                 ProxyActions.SET_HEADER -> {
                     builder.header(it.name.orEmpty(), it.value.orEmpty())
+                }
+
+                ProxyActions.SET_METHOD -> {
+                    newMethod = it.value.orEmpty()
                 }
 
                 ProxyActions.SET_PATH -> {
@@ -73,6 +77,7 @@ internal class ProxyInterceptor : BigBrotherInterceptor {
                 }
             }
         }
+        builder.method(newMethod, newBody)
         builder.url(pathBuilder.build().toString())
         return builder.build()
     }

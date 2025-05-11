@@ -48,7 +48,9 @@ internal fun AppCompatActivity.proxyUpdateActionDialog(
             dismiss()
         },
         negativeButtonColor = MR.color.design_default_color_error,
-        positiveButton = getString(CR.string.save) to getPositiveButtonClick(items) { onSave.invoke(old, it) },
+        positiveButton = getString(CR.string.save) to getPositiveButtonClick(items) {
+            onSave.invoke(old, it.copy(id = old.id))
+        },
         onView = { setupDialog(old, items) }
     )
 }

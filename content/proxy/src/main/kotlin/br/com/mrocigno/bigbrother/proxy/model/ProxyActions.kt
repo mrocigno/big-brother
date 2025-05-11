@@ -56,6 +56,21 @@ internal enum class ProxyActions(
             }
         }
     ),
+    SET_METHOD(
+        label = R.string.proxy_set_method_label,
+        message = R.string.proxy_set_method_message,
+        group = R.id.proxy_action_value_layout,
+        description = R.string.proxy_set_method_description,
+        validate = { _, value, _ ->
+            val context = value.context
+            val valueText = value.text.toString().trim()
+
+            when {
+                valueText.isEmpty() -> { value.setInputLayoutError(context.getString(br.com.mrocigno.bigbrother.proxy.R.string.proxy_required_field)); false }
+                else -> true
+            }
+        }
+    ),
     SET_PATH(
         label = R.string.proxy_set_path_label,
         message = R.string.proxy_set_path_message,
