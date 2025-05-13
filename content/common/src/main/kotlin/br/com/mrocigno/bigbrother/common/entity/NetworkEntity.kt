@@ -16,6 +16,7 @@ class NetworkEntity(
     @ColumnInfo(name = "elapsed_time") var elapsedTime: String? = null,
     @ColumnInfo(name = "hour") val hour: String,
     @ColumnInfo(name = "method") val method: String,
+    @ColumnInfo(name = "proxy_rules") val proxyRules: String? = null,
     @ColumnInfo(name = "request_header") val requestHeader: String? = null,
     @ColumnInfo(name = "request_body") val requestBody: String? = null,
     @ColumnInfo(name = "response_header") val responseHeader: String? = null,

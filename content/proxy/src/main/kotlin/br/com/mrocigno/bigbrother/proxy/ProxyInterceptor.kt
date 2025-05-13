@@ -3,6 +3,7 @@ package br.com.mrocigno.bigbrother.proxy
 import androidx.core.net.toUri
 import br.com.mrocigno.bigbrother.common.dao.ProxyDao
 import br.com.mrocigno.bigbrother.common.db.BigBrotherDatabase.Companion.bbdb
+import br.com.mrocigno.bigbrother.common.route.PROXY_APPLIED_HEADER
 import br.com.mrocigno.bigbrother.core.BigBrotherInterceptor
 import br.com.mrocigno.bigbrother.proxy.model.ProxyActionModel
 import br.com.mrocigno.bigbrother.proxy.model.ProxyActions
@@ -13,26 +14,34 @@ import okhttp3.Response
 
 internal class ProxyInterceptor : BigBrotherInterceptor {
 
-    private val proxyDao: ProxyDao? get() = bbdb?.proxyDao()
     override val priority: Int = 1000
+    private val proxyDao: ProxyDao? get() = bbdb?.proxyDao()
+    private val rules: ThreadLocal<List<ProxyRuleModel>> = ThreadLocal()
 
     override fun onRequest(request: Request): Request {
-        val rules = proxyDao?.getAllEnabled()
+        val list = proxyDao?.getAllEnabled()
             ?.map(::ProxyRuleModel)
             ?.filter { it.matches(request) }
             ?.takeIf { it.isNotEmpty() }
             ?: return request
 
-        val actions = rules.flatMap { it.actions }
+        rules.set(list)
+        val actions = list.flatMap { it.actions }
         return request.applyAllActions(actions)
     }
 
     override fun onResponse(response: Response): Response {
-        return response.newBuilder().addHeader("proxied_response", "true").build()
+        val list = rules.get() ?: return response
+        rules.remove()
+
+        return response.newBuilder()
+            .addHeader(PROXY_APPLIED_HEADER, list.joinToString { it.id.toString() })
+            .build()
     }
 
     override fun onError(e: Exception): Exception {
-        throw e
+        rules.remove()
+        return e
     }
 
     private fun Request.applyAllActions(actions: List<ProxyActionModel>): Request {
@@ -62,9 +71,10 @@ internal class ProxyInterceptor : BigBrotherInterceptor {
 
                 ProxyActions.SET_PATH -> {
                     val newPath = it.value.orEmpty().toUri()
-                    pathBuilder.encodedAuthority(newPath.encodedAuthority)
-                    pathBuilder.encodedPath(newPath.encodedPath)
-                    pathBuilder.encodedQuery(newPath.encodedQuery)
+                    newPath.scheme?.run(pathBuilder::scheme)
+                    newPath.encodedAuthority?.run(pathBuilder::encodedAuthority)
+                    newPath.encodedPath?.run(pathBuilder::encodedPath)
+                    newPath.encodedQuery?.run(pathBuilder::encodedQuery)
                 }
 
                 ProxyActions.SET_QUERY -> {

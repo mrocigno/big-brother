@@ -8,6 +8,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import br.com.mrocigno.bigbrother.common.provider.id
 import br.com.mrocigno.bigbrother.common.utils.byMethod
 import br.com.mrocigno.bigbrother.common.utils.highlightQuery
 import br.com.mrocigno.bigbrother.common.utils.inflate
@@ -18,14 +19,16 @@ import br.com.mrocigno.bigbrother.common.R as CommonR
 
 internal class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_network_entry)) {
 
-    private val dot: View by lazy { itemView.findViewById(R.id.net_entry_dot) }
-    private val hour: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_hour) }
-    private val method: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_method) }
-    private val elapsedTime: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_elapsed_time) }
-    private val container: ViewGroup by lazy { itemView.findViewById(R.id.net_entry_container) }
-    private val url: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_url) }
-    private val loading: View by lazy { itemView.findViewById(R.id.net_entry_loading) }
-    private val arrow: View by lazy { itemView.findViewById(R.id.net_entry_arrow) }
+    private val dot: View by id(R.id.net_entry_dot)
+    private val hour: AppCompatTextView by id(R.id.net_entry_hour)
+    private val method: AppCompatTextView by id(R.id.net_entry_method)
+    private val elapsedTime: AppCompatTextView by id(R.id.net_entry_elapsed_time)
+    private val container: ViewGroup by id(R.id.net_entry_container)
+    private val url: AppCompatTextView by id(R.id.net_entry_url)
+    private val loading: View by id(R.id.net_entry_loading)
+    private val arrow: View by id(R.id.net_entry_arrow)
+    private val proxiedIcon: View by id(R.id.net_entry_proxied_icon)
+    private val proxied: View by id(R.id.net_entry_proxied)
 
     private val context get() = itemView.context
 
@@ -72,6 +75,8 @@ internal class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R
         dot.byStatusCode(model.statusCode)
         method.text = "${model.method} - ${model.statusCode}".highlightQuery(query, highlightColor)
         elapsedTime.text = model.elapsedTime?.highlightQuery(query, highlightColor)
+        proxied.isVisible = model.proxyRules != null
+        proxiedIcon.isVisible = model.proxyRules != null
         container.setOnClickListener {
             onEntryClick.invoke(model)
         }

@@ -1,5 +1,6 @@
 package br.com.mrocigno.bigbrother.network
 
+import br.com.mrocigno.bigbrother.common.route.PROXY_APPLIED_HEADER
 import br.com.mrocigno.bigbrother.core.BigBrotherInterceptor
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 import br.com.mrocigno.bigbrother.network.model.NetworkPayloadModel
@@ -26,7 +27,8 @@ internal class NetworkEntryInterceptor() : BigBrotherInterceptor {
         val currentEntry = entry.get()?.copy(
             elapsedTime = "${endingAt - (startingAt.get() ?: endingAt)}ms",
             statusCode = response.code,
-            response = NetworkPayloadModel(response)
+            response = NetworkPayloadModel(response),
+            proxyRules = response.header(PROXY_APPLIED_HEADER)
         ) ?: throw IllegalStateException("Unknow request")
         entry.remove()
         startingAt.remove()

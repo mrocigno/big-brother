@@ -23,7 +23,8 @@ data class NetworkEntryModel(
     val hour: String,
     val method: String,
     val request: NetworkPayloadModel,
-    var response: NetworkPayloadModel? = null
+    var response: NetworkPayloadModel? = null,
+    val proxyRules: String? = null
 ) : Serializable {
 
     constructor(request: Request) : this(
@@ -42,6 +43,7 @@ data class NetworkEntryModel(
         elapsedTime = entry.elapsedTime,
         hour = entry.hour,
         method = entry.method,
+        proxyRules = entry.proxyRules,
         request = NetworkPayloadModel.fromString(entry.requestHeader, entry.requestBody)!!,
         response = NetworkPayloadModel.fromString(entry.responseHeader, entry.responseBody)
     )
@@ -97,6 +99,7 @@ data class NetworkEntryModel(
         elapsedTime = elapsedTime,
         hour = hour,
         method = method,
+        proxyRules = proxyRules,
         requestHeader = request.formattedHeaders,
         requestBody = request.formattedBody,
         responseHeader = response?.formattedHeaders.toString(),

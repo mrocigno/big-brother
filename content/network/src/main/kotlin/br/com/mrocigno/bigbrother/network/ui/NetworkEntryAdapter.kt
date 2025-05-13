@@ -1,12 +1,15 @@
 package br.com.mrocigno.bigbrother.network.ui
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import br.com.mrocigno.bigbrother.network.R
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 
 internal class NetworkEntryAdapter(
-    private val onEntryClick: (NetworkEntryModel) -> Unit
+    private val onEntryClick: (NetworkEntryModel) -> Unit,
+    private val onEntryLongClick: (View, NetworkEntryModel) -> Unit
 ) : Adapter<NetworkEntryView>() {
 
     private val differ = AsyncListDiffer(this, NetworkEntryModel.Differ())
@@ -24,7 +27,13 @@ internal class NetworkEntryAdapter(
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: NetworkEntryView, position: Int) {
-        holder.bind(items[position], query, onEntryClick)
+        val item = items[position]
+        holder.bind(item, query, onEntryClick)
+        holder.itemView.setOnLongClickListener {
+            val title = it.findViewById(R.id.net_entry_url) ?: it
+            onEntryLongClick.invoke(title, item)
+            true
+        }
     }
 
     fun filter(query: String) {

@@ -4,6 +4,7 @@
     <string name="json_viewer_expand_click">click to expand</string>
     <string name="json_viewer_disclaimer">click and hold on any item to copy it to the clipboard</string>
 
+    <string name="network_proxied" translatable="false">Proxied</string>
     <string name="network_list_title">Session %d calls</string>
     <string name="network_search_hint">Search by method, code or url</string>
     <string name="network_hour_info">Hour:</string>

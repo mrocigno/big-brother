@@ -74,9 +74,10 @@
                 android:id="@+id/proxy_rule_method_layout"
                 style="@style/spinner_outlined"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="@dimen/bb_spacing_m"
                 app:endIconDrawable="@drawable/bigbrother_ic_arrow_drop_down"
+                app:layout_constraintBottom_toBottomOf="@id/proxy_rule_condition_layout"
                 app:layout_constraintEnd_toStartOf="@id/proxy_rule_condition_layout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/proxy_rule_condition_layout">
@@ -84,7 +85,7 @@
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/proxy_rule_method"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:hint="@string/proxy_rule_method_hint"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
@@ -99,7 +100,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/bb_spacing_m"
                 app:endIconDrawable="@drawable/bigbrother_ic_search"
-                app:helperText="@string/proxy_rule_path_helper"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/proxy_rule_method_layout"
                 app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_title">
@@ -109,12 +109,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/proxy_rule_path_hint"
-                    android:maxLines="1"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
                     tools:text="*" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:id="@+id/proxy_rule_condition_helper"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/bb_spacing_m"
+                android:text="@string/proxy_rule_path_helper"
+                android:layout_marginTop="@dimen/bb_spacing_xxs"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="@id/proxy_rule_condition_layout"
+                app:layout_constraintStart_toStartOf="@id/proxy_rule_method_layout"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_layout" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/proxy_rule_condition_header_layout"
@@ -126,7 +135,7 @@
                 app:helperText="@string/proxy_rule_header_helper"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_layout"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_helper"
                 app:placeholderText="example1=*;example2=*">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -177,6 +186,7 @@
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"
                 android:visibility="gone"
+                tools:listitem="@layout/bigbrother_item_action"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/proxy_rule_actions_title"
@@ -225,7 +235,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bb_text_title_inverse">
+        android:background="@color/bb_text_title">
 
         <View
             android:layout_width="match_parent"
@@ -240,24 +250,21 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/proxy_rule_delete"
-                style="@style/BigBrotherButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/bb_spacing_xxs"
                 android:layout_marginStart="@dimen/bb_spacing_xxs"
                 android:layout_marginEnd="@dimen/bb_spacing_xxs"
                 android:layout_weight="1"
-                android:backgroundTint="@color/design_default_color_error"
                 android:drawableStart="@drawable/bigbrother_ic_clear"
-                android:drawableTint="@android:color/white"
+                android:drawableTint="@color/design_default_color_error"
                 android:text="@string/delete"
-                android:textColor="@android:color/white"
+                android:textColor="@color/design_default_color_error"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/proxy_rule_save"
-                style="@style/BigBrotherButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/bb_spacing_xxs"
@@ -266,7 +273,8 @@
                 android:layout_weight="1"
                 android:drawableStart="@drawable/bigbrother_ic_save"
                 android:drawableTint="@color/bb_text_title_inverse"
-                android:text="@string/save" />
+                android:text="@string/save"
+                android:textColor="@color/bb_text_title_inverse" />
         </LinearLayout>
 
     </FrameLayout>

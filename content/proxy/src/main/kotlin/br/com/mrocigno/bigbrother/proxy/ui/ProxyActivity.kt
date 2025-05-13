@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mrocigno.bigbrother.common.helpers.SimpleSpinnerAdapter
 import br.com.mrocigno.bigbrother.common.provider.id
+import br.com.mrocigno.bigbrother.common.route.METHOD_ARG
+import br.com.mrocigno.bigbrother.common.route.PATH_ARG
 import br.com.mrocigno.bigbrother.common.utils.getParcelableExtraCompat
 import br.com.mrocigno.bigbrother.common.utils.gone
 import br.com.mrocigno.bigbrother.common.utils.visible
@@ -47,13 +49,22 @@ internal class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_pr
 
     private val viewModel: ProxyViewModel by viewModels()
     private val proxyRuleModel: ProxyRuleModel? by lazy {
-        intent.getParcelableExtraCompat(EXTRA_PROXY_RULE_MODEL)
+        intent.getParcelableExtraCompat(EXTRA_PROXY_RULE_MODEL) ?: run {
+            val path = intent.getStringExtra(PATH_ARG)
+            val method = intent.getStringExtra(METHOD_ARG)
+            if (path != null && method != null) {
+                ProxyRuleModel(
+                    methodCondition = method,
+                    pathCondition = path
+                )
+            } else null
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        window.navigationBarColor = getColor(CR.color.bb_text_title_inverse)
+        window.navigationBarColor = getColor(CR.color.bb_text_title)
 
         setupToolbar()
         setupFormFields()
@@ -67,7 +78,7 @@ internal class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_pr
     }
 
     private fun setupFormFields() {
-        ruleName.setText(proxyRuleModel?.ruleName ?: randomName())
+        ruleName.setText(proxyRuleModel?.ruleName?.takeIf { it.isNotBlank() } ?: randomName())
         ruleNameLayout.setEndIconOnClickListener {
             ruleName.setText(randomName())
         }
@@ -134,6 +145,7 @@ internal class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_pr
         actions.itemAnimator = null
         actions.adapter = adapter
         actions.layoutManager = LinearLayoutManager(this)
+        actions.addItemDecoration(ProxyActionItemDecorator(this))
         viewModel.actions.observe(this) {
             adapter.list = it
             if (it.isNotEmpty()) {

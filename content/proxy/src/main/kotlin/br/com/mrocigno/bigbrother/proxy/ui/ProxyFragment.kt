@@ -1,10 +1,9 @@
 package br.com.mrocigno.bigbrother.proxy.ui
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.PopupMenu
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -86,8 +85,7 @@ class ProxyFragment : Fragment(R.layout.bigbrother_fragment_proxy) {
                 }
                 true
             }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) setForceShowIcon(true)
+            setForceShowIcon(true)
             show()
         }
     }

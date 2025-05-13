@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/network_menu_proxy"
+        android:title="Create proxy rule"
+        android:icon="@drawable/bigbrother_ic_terminal" />
+</menu>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/bb_spacing_m"
     android:foreground="?selectableItemBackground">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -46,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="@id/proxy_item_action_description"
         app:layout_constraintStart_toStartOf="@id/proxy_item_action_description"
         app:layout_constraintTop_toBottomOf="@id/proxy_item_action_description"
-        tools:text="@tools:sample/lorem/random"
+        tools:text="@tools:sample/lorem[10]"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
