@@ -19,7 +19,7 @@ import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.bigbrother.common.R as CR
 import com.google.android.material.R as MR
 
-private const val BODY_PLACEHOLDER = "{\n\t\t\"placeholder\": \"placeholder\",\n\t\t\"placeholder\": \"placeholder\"\n}"
+private const val BODY_PLACEHOLDER = "{\n\t\t\"placeholder1\": \"placeholder\",\n\t\t\"placeholder2\": \"placeholder\"\n}"
 
 internal fun AppCompatActivity.proxyAddActionDialog(
     onSave: (new: ProxyActionModel) -> Unit
@@ -75,7 +75,9 @@ private fun View.setupDialog(old: ProxyActionModel?, items: Array<ProxyActions>)
     }
 
     name.setText(old?.name)
+    name.doOnTextChanged { _, _, _, _ -> name.setInputLayoutError(null) }
     value.setText(old?.value)
+    value.doOnTextChanged { _, _, _, _ -> value.setInputLayoutError(null) }
     body.setText(old?.body ?: BODY_PLACEHOLDER)
     body.doOnTextChanged { _, _, _, _ -> body.setInputLayoutError(null) }
     spinner.setAdapter(adapter)
@@ -106,8 +108,7 @@ private fun getPositiveButtonClick(
                 action = action,
                 name = name.text.toString().trim(),
                 value = value.text.toString().trim(),
-                body = body.text.toString().trim()
-                    .takeIf { action == ProxyActions.SET_BODY }
+                body = body.text.toString().trim().takeIf { action == ProxyActions.SET_BODY }
             )
         )
         dismiss()

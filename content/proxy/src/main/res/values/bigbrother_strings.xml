@@ -33,6 +33,7 @@
     <string name="proxy_rule_name_helper">It might be a good idea to add a more descriptive name for your rule, but random names are fun!</string>
     <string name="proxy_rule_name_hint">Rule name</string>
     <string name="proxy_rule_condition_title">Conditions</string>
+    <string name="proxy_rule_method_hint" translatable="false">Method</string>
     <string name="proxy_rule_path_hint">Path</string>
     <string name="proxy_rule_path_helper">Use * if you want this rule to affect all paths</string>
     <string name="proxy_rule_header_helper">Only requests containing these headers will be affected</string>
@@ -55,4 +56,6 @@
     <string name="proxy_actions_afects_all">Affects all requests</string>
     <string name="proxy_actions_afects_few">Affects some requests</string>
     <string name="proxy_actions_do_nothing">No actions added</string>
+    <string name="proxy_list_rules_enable_all">Enable all rules</string>
+    <string name="proxy_list_rules_disable_all">Disable all rules</string>
 </resources>

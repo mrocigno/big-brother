@@ -19,7 +19,7 @@ import br.com.mrocigno.bigbrother.common.entity.ReportLogEntity
 import br.com.mrocigno.bigbrother.common.entity.SessionEntity
 
 @Database(
-    version = 4,
+    version = 5,
     entities = [
         SessionEntity::class,
         ReportLogEntity::class,

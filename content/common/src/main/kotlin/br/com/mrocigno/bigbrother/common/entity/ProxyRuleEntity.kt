@@ -11,6 +11,7 @@ class ProxyRuleEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "rule_name") val ruleName: String,
+    @ColumnInfo(name = "method_condition") val methodCondition: String,
     @ColumnInfo(name = "path_condition") val pathCondition: String,
     @ColumnInfo(name = "header_condition") val headerCondition: String,
     @ColumnInfo(name = "enabled") val enabled: Boolean = true

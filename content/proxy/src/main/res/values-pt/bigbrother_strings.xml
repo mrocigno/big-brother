@@ -46,4 +46,6 @@
     <string name="proxy_actions_afects_all">Afeta todas as requests</string>
     <string name="proxy_actions_afects_few">Afeta algumas requests</string>
     <string name="proxy_actions_do_nothing">Nenhuma ação adicionada</string>
+    <string name="proxy_list_rules_enable_all">Habilitar todas as regras</string>
+    <string name="proxy_list_rules_disable_all">Desabilitar todas as regras</string>
 </resources>

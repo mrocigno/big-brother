@@ -41,11 +41,18 @@ internal class ProxyViewModel(savedStateHandle: SavedStateHandle) : ViewModel() 
         proxyDao?.deleteAction(action.id)
     }
 
-    fun save(currentRule: ProxyRuleModel?, ruleName: String, pathCondition: String, headerCondition: String) {
+    fun save(
+        currentRule: ProxyRuleModel?,
+        ruleName: String,
+        methodCondition: String,
+        pathCondition: String,
+        headerCondition: String
+    ) {
         viewModelScope.launch {
             val ruleId = insertRule(ProxyRuleEntity(
                 id = currentRule?.id ?: 0,
                 ruleName = ruleName,
+                methodCondition = methodCondition,
                 pathCondition = pathCondition,
                 headerCondition = headerCondition
             ))

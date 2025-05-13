@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toStartOf="@id/proxy_rule_item_switch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="asdasd" />
+        tools:text="@tools:sample/lorem[3]" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/proxy_rule_item_condition"
@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="@id/proxy_rule_item_name"
         app:layout_constraintStart_toStartOf="@id/proxy_rule_item_name"
         app:layout_constraintTop_toBottomOf="@id/proxy_rule_item_name"
-        tools:text="asdas" />
+        tools:text="@tools:sample/lorem[3]" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/proxy_rule_item_actions"

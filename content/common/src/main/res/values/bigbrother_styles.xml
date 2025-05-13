@@ -80,7 +80,7 @@
         <item name="colorOnPrimary">@android:color/white</item>
     </style>
 
-    <style name="BigBrotherSwitch" parent="Widget.AppCompat.Button">
+    <style name="BigBrotherSwitch">
         <item name="colorControlActivated">@color/bb_brand_default</item>
     </style>
 </resources>

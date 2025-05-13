@@ -30,6 +30,9 @@ interface ProxyDao {
     @Query("UPDATE tblProxyRule SET enabled = :enabled WHERE id = :id")
     fun updateEnabled(id: Long, enabled: Boolean)
 
+    @Query("UPDATE tblProxyRule SET enabled = :enabled")
+    fun updateAllEnabled(enabled: Boolean)
+
     @Query("DELETE FROM tblProxyRule WHERE id = :id")
     suspend fun deleteRule(id: Long)
 

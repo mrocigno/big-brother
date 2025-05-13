@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -12,6 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.mrocigno.bigbrother.common.helpers.SimpleSpinnerAdapter
 import br.com.mrocigno.bigbrother.common.provider.id
 import br.com.mrocigno.bigbrother.common.utils.getParcelableExtraCompat
 import br.com.mrocigno.bigbrother.common.utils.gone
@@ -30,6 +32,7 @@ internal class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_pr
     private val toolbar: Toolbar by id(R.id.proxy_rule_toolbar)
     private val ruleNameLayout: TextInputLayout by id(R.id.proxy_rule_name_layout)
     private val ruleName: TextInputEditText by id(R.id.proxy_rule_name)
+    private val method: AutoCompleteTextView by id(R.id.proxy_rule_method)
     private val conditionLayout: TextInputLayout by id(R.id.proxy_rule_condition_layout)
     private val condition: TextInputEditText by id(R.id.proxy_rule_condition)
     private val headersLayout: TextInputLayout by id(R.id.proxy_rule_condition_header_layout)
@@ -69,10 +72,14 @@ internal class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_pr
             ruleName.setText(randomName())
         }
 
+        method.setText(proxyRuleModel?.methodCondition ?: "*")
+        method.setAdapter(SimpleSpinnerAdapter(this, resources.getStringArray(CR.array.methods)))
+
         condition.setText(proxyRuleModel?.pathCondition ?: "*")
         conditionLayout.setEndIconOnClickListener {
-            proxyListEndpointsDialog {
-                condition.setText(it)
+            proxyListEndpointsDialog { method, url ->
+                this.method.setText(method)
+                this.condition.setText(url)
             }
         }
 
@@ -99,6 +106,7 @@ internal class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_pr
             viewModel.save(
                 currentRule = proxyRuleModel,
                 ruleName = ruleName.text.toString().trim(),
+                methodCondition = method.text.toString().trim().ifEmpty { "*" },
                 pathCondition = condition.text.toString().trim().ifEmpty { "*" },
                 headerCondition = headers.text.toString().trim()
             )

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="methods">
+        <item>*</item>
+        <item>GET</item>
+        <item>POST</item>
+        <item>PUT</item>
+        <item>PATCH</item>
+        <item>DELETE</item>
+    </string-array>
+</resources>

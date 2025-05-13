@@ -10,6 +10,7 @@ import okhttp3.Request
 internal data class ProxyRuleModel(
     val id: Long = 0,
     val ruleName: String = "",
+    val methodCondition: String = "",
     val pathCondition: String = "",
     val headerCondition: String = "",
     val actions: List<ProxyActionModel> = emptyList(),
@@ -19,20 +20,33 @@ internal data class ProxyRuleModel(
     constructor(entity: ProxyRuleWithActions) : this(
         id = entity.rule.id,
         ruleName = entity.rule.ruleName,
+        methodCondition = entity.rule.methodCondition,
         pathCondition = entity.rule.pathCondition,
         headerCondition = entity.rule.headerCondition,
         actions = entity.actions.map(::ProxyActionModel),
         enabled = entity.rule.enabled
     )
 
-    fun matches(request: Request): Boolean {
-        val sanityRegex = pathCondition
-            .replace(".", "\\.")
-            .replace("*", ".*")
-
-        val regex = Regex(sanityRegex)
-        return regex.matches(request.url.toString())
+    fun matches(request: Request): Boolean = when {
+        !methodCondition.fixRegex()
+            .matches(request.method) -> false
+        !(headerCondition
+            .split(";")
+            .filter { it.contains("=") }
+            .takeIf { it.isNotEmpty() }
+            ?.any { condition ->
+                val (name, value) = condition.split("=", limit = 2)
+                value.fixRegex().matches(request.headers[name].orEmpty())
+            }
+            ?: true) -> false
+        !pathCondition.fixRegex().matches(request.url.toString()) -> false
+        else -> true
     }
+
+    private fun String.fixRegex() =
+        this.replace(".", "\\.")
+            .replace("*", ".*")
+            .toRegex()
 
     class Differ : ItemCallback<ProxyRuleModel>() {
 

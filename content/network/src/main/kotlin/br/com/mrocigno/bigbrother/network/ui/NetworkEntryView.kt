@@ -1,7 +1,6 @@
 package br.com.mrocigno.bigbrother.network.ui
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -9,6 +8,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import br.com.mrocigno.bigbrother.common.utils.byMethod
 import br.com.mrocigno.bigbrother.common.utils.highlightQuery
 import br.com.mrocigno.bigbrother.common.utils.inflate
 import br.com.mrocigno.bigbrother.network.R
@@ -75,18 +75,5 @@ internal class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R
         container.setOnClickListener {
             onEntryClick.invoke(model)
         }
-    }
-
-    private fun AppCompatTextView.byMethod(method: String) {
-        val color = when (method) {
-            "POST" -> CommonR.color.bb_net_entry_post
-            "PUT" -> CommonR.color.bb_net_entry_put
-            "GET" -> CommonR.color.bb_net_entry_get
-            "DELETE" -> CommonR.color.bb_net_entry_delete
-            else -> CommonR.color.bb_text_title
-        }
-        val colorList = ColorStateList.valueOf(context.getColor(color))
-        backgroundTintList = colorList
-        setTextColor(colorList)
     }
 }

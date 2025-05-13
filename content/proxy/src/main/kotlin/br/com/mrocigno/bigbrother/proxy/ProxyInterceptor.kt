@@ -55,6 +55,9 @@ internal class ProxyInterceptor : BigBrotherInterceptor {
 
                 ProxyActions.SET_METHOD -> {
                     newMethod = it.value.orEmpty()
+                    if (!newMethod.equals("get", true) && newBody == null) {
+                        newBody = "".toRequestBody()
+                    }
                 }
 
                 ProxyActions.SET_PATH -> {
@@ -73,7 +76,10 @@ internal class ProxyInterceptor : BigBrotherInterceptor {
                 }
 
                 ProxyActions.REMOVE_QUERY -> {
-
+                    pathBuilder.clearQuery()
+                    url.queryParameterNames.filterNot { query -> query == it.name }.forEach { query ->
+                        pathBuilder.appendQueryParameter(query, url.queryParameter(query))
+                    }
                 }
             }
         }
