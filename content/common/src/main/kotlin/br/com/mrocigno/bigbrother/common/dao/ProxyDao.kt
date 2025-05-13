@@ -24,21 +24,29 @@ interface ProxyDao {
     fun getAll(): Flow<List<ProxyRuleWithActions>>
 
     @Transaction
+    @Query("SELECT * FROM tblProxyRule WHERE id IN (:ids)")
+    fun getRules(ids: LongArray): Flow<List<ProxyRuleWithActions>>
+
+    @Transaction
+    @Query("SELECT * FROM tblProxyRule WHERE id = :id")
+    fun getRuleById(id: Long): ProxyRuleWithActions
+
+    @Transaction
     @Query("SELECT * FROM tblProxyRule WHERE enabled = 1")
     fun getAllEnabled(): List<ProxyRuleWithActions>
 
     @Query("UPDATE tblProxyRule SET enabled = :enabled WHERE id = :id")
-    fun updateEnabled(id: Long, enabled: Boolean)
+    fun updateEnabledById(id: Long, enabled: Boolean)
 
     @Query("UPDATE tblProxyRule SET enabled = :enabled")
     fun updateAllEnabled(enabled: Boolean)
 
     @Query("DELETE FROM tblProxyRule WHERE id = :id")
-    suspend fun deleteRule(id: Long)
+    suspend fun deleteRuleById(id: Long)
 
     @Query("DELETE FROM tblProxyAction WHERE id = :id")
-    suspend fun deleteAction(id: Long)
+    suspend fun deleteActionById(id: Long)
 
     @Query("DELETE FROM tblProxyAction WHERE proxy_id = :proxyId")
-    suspend fun deleteActions(proxyId: Long)
+    suspend fun deleteActionsByRuleId(proxyId: Long)
 }

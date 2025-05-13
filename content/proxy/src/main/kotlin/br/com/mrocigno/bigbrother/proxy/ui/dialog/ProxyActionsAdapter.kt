@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.proxy.ui
+package br.com.mrocigno.bigbrother.proxy.ui.dialog
 
 import android.content.Context
 import android.view.ViewGroup

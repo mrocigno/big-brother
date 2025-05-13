@@ -12,7 +12,7 @@ import br.com.mrocigno.bigbrother.proxy.model.ProxyActionModel
 import br.com.mrocigno.bigbrother.proxy.model.ProxyRuleModel
 import kotlinx.coroutines.launch
 
-internal class ProxyViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
+internal class ProxyCreateRuleViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val proxyDao: ProxyDao? = bbdb?.proxyDao()
 
@@ -38,7 +38,7 @@ internal class ProxyViewModel(savedStateHandle: SavedStateHandle) : ViewModel() 
 
     fun removeAction(action: ProxyActionModel) = viewModelScope.launch {
         _actions.value = _actions.value.orEmpty() - action
-        proxyDao?.deleteAction(action.id)
+        proxyDao?.deleteActionById(action.id)
     }
 
     fun save(
@@ -63,8 +63,8 @@ internal class ProxyViewModel(savedStateHandle: SavedStateHandle) : ViewModel() 
     fun delete(proxyRuleModel: ProxyRuleModel) {
         val id = proxyRuleModel.id
         viewModelScope.launch {
-            proxyDao?.deleteRule(id)
-            proxyDao?.deleteActions(id)
+            proxyDao?.deleteRuleById(id)
+            proxyDao?.deleteActionsByRuleId(id)
         }
     }
 

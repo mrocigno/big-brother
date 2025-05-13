@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mrocigno.bigbrother.common.route.checkIntent
-import br.com.mrocigno.bigbrother.common.route.intentToProxyRule
+import br.com.mrocigno.bigbrother.common.route.intentToProxyCreateRule
 import br.com.mrocigno.bigbrother.common.utils.bbSessionId
 import br.com.mrocigno.bigbrother.common.utils.disableChangeAnimation
 import br.com.mrocigno.bigbrother.core.OutOfDomain
@@ -70,7 +70,7 @@ internal class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) 
     }
 
     private fun onEntryLongClick(view: View, entry: NetworkEntryModel) {
-        val intent = requireContext().intentToProxyRule(entry.method, entry.fullUrl)
+        val intent = requireContext().intentToProxyCreateRule(entry.method, entry.fullUrl)
         if (!requireContext().checkIntent(intent)) return
 
         PopupMenu(requireContext(), view).apply {

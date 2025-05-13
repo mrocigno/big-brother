@@ -32,4 +32,6 @@ Tempo corrido: %s\n
 === Body ===\n
 %s\n
     </string>
+    <string name="net_entry_details_proxy_rules">Foram aplicadas regras de proxy nessa request</string>
+    <string name="net_entry_details_proxy_button">Ver regras</string>
 </resources>

@@ -77,7 +77,7 @@ internal class RuleViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.l
         switch.isChecked = model.enabled
         switch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked == model.enabled) return@setOnCheckedChangeListener
-            bbdb?.proxyDao()?.updateEnabled(model.id, isChecked)
+            bbdb?.proxyDao()?.updateEnabledById(model.id, isChecked)
         }
 
         val builder = SpannableStringBuilder()

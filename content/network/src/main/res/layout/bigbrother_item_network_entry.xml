@@ -65,11 +65,13 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginStart="10dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/net_entry_elapsed_time"
         app:layout_constraintStart_toEndOf="@id/net_entry_elapsed_time"
         app:layout_constraintTop_toTopOf="@id/net_entry_elapsed_time"
         app:srcCompat="@drawable/bigbrother_ic_terminal"
-        app:tint="@color/bb_text_hyperlink" />
+        app:tint="@color/bb_text_hyperlink"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/net_entry_proxied"

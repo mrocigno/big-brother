@@ -33,4 +33,6 @@ Elapsed time: %s\n
 === Body ===\n
 %s\n
     </string>
+    <string name="net_entry_details_proxy_rules">Proxy rules were applied to this request</string>
+    <string name="net_entry_details_proxy_button">See rules</string>
 </resources>

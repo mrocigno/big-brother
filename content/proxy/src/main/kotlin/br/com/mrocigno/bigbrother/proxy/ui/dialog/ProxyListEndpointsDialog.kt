@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.proxy.ui
+package br.com.mrocigno.bigbrother.proxy.ui.dialog
 
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -15,7 +15,7 @@ import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 import br.com.mrocigno.bigbrother.common.R as CR
 
-fun AppCompatActivity.proxyListEndpointsDialog(onSelect: (method: String, url: String) -> Unit) {
+internal fun AppCompatActivity.proxyListEndpointsDialog(onSelect: (method: String, url: String) -> Unit) {
     var dialog: AlertDialog? = null
     dialog = showDialog(
         content = R.layout.bigbrother_dialog_list_endpoints,

@@ -24,12 +24,17 @@ import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.proxy.R
 import br.com.mrocigno.bigbrother.proxy.model.ProxyRuleModel
 import br.com.mrocigno.bigbrother.proxy.randomName
+import br.com.mrocigno.bigbrother.proxy.ui.dialog.ProxyActionsAdapter
+import br.com.mrocigno.bigbrother.proxy.ui.dialog.proxyAddActionDialog
+import br.com.mrocigno.bigbrother.proxy.ui.dialog.proxyAddHeaderDialog
+import br.com.mrocigno.bigbrother.proxy.ui.dialog.proxyListEndpointsDialog
+import br.com.mrocigno.bigbrother.proxy.ui.dialog.proxyUpdateActionDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.bigbrother.common.R as CR
 
 @OutOfDomain
-internal class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_proxy) {
+internal class ProxyCreateRuleActivity : AppCompatActivity(R.layout.bigbrother_activity_create_rule) {
 
     private val toolbar: Toolbar by id(R.id.proxy_rule_toolbar)
     private val ruleNameLayout: TextInputLayout by id(R.id.proxy_rule_name_layout)
@@ -47,7 +52,7 @@ internal class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_pr
     private val saveButton: AppCompatButton by id(R.id.proxy_rule_save)
     private val deleteButton: AppCompatButton by id(R.id.proxy_rule_delete)
 
-    private val viewModel: ProxyViewModel by viewModels()
+    private val viewModel: ProxyCreateRuleViewModel by viewModels()
     private val proxyRuleModel: ProxyRuleModel? by lazy {
         intent.getParcelableExtraCompat(EXTRA_PROXY_RULE_MODEL) ?: run {
             val path = intent.getStringExtra(PATH_ARG)
@@ -163,7 +168,7 @@ internal class ProxyActivity : AppCompatActivity(R.layout.bigbrother_activity_pr
         private const val EXTRA_PROXY_RULE_MODEL = "br.com.mrocigno.EXTRA_PROXY_RULE_MODEL"
 
         fun intent(context: Context, proxyRuleModel: ProxyRuleModel? = null) =
-            Intent(context, ProxyActivity::class.java)
+            Intent(context, ProxyCreateRuleActivity::class.java)
                 .putExtra(EXTRA_PROXY_RULE_MODEL, proxyRuleModel)
     }
 }

@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.proxy.ui
+package br.com.mrocigno.bigbrother.proxy.ui.dialog
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
@@ -8,7 +8,7 @@ import br.com.mrocigno.bigbrother.proxy.R
 import com.google.android.material.textfield.TextInputEditText
 import br.com.mrocigno.bigbrother.common.R as CR
 
-fun AppCompatActivity.proxyAddHeaderDialog(onSave: (String) -> Unit) =
+internal fun AppCompatActivity.proxyAddHeaderDialog(onSave: (String) -> Unit) =
     showDialog(
         content = R.layout.bigbrother_dialog_add_header,
         title = getString(R.string.proxy_add_header_title),

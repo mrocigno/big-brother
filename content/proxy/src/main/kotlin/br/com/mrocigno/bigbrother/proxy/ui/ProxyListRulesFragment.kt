@@ -5,32 +5,35 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mrocigno.bigbrother.common.db.BigBrotherDatabase.Companion.bbdb
 import br.com.mrocigno.bigbrother.common.provider.id
+import br.com.mrocigno.bigbrother.common.route.RULES_ARG
 import br.com.mrocigno.bigbrother.proxy.R
 import br.com.mrocigno.bigbrother.proxy.model.ProxyRuleModel
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class ProxyFragment : Fragment(R.layout.bigbrother_fragment_proxy) {
+internal class ProxyListRulesFragment : Fragment(R.layout.bigbrother_fragment_list_rules) {
 
     private val recycler: RecyclerView by id(R.id.proxy_recycler)
-    private val searchViewLayout: TextInputLayout by id(R.id.proxy_search_layout)
     private val searchView: TextInputEditText by id(R.id.proxy_search_view)
     private val add: AppCompatImageView by id(R.id.proxy_add)
     private val emptyAdd: View by id(R.id.proxy_empty_add)
     private val emptyState: View by id(R.id.proxy_empty_state)
     private val toggleAll: SwitchCompat by id(R.id.proxy_toggle_all)
 
+    private val viewModel: ProxyListRulesViewModel by activityViewModels()
     private val adapter: ProxyRuleAdapter get() = recycler.adapter as ProxyRuleAdapter
+    private val rulesId: LongArray? by lazy { arguments?.getLongArray(RULES_ARG) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,7 +46,7 @@ class ProxyFragment : Fragment(R.layout.bigbrother_fragment_proxy) {
         searchView.doOnTextChanged { text, _, _, _ -> adapter.filter(text.toString()) }
         arrayOf(emptyAdd, add).forEach {
             it.setOnClickListener {
-                ProxyActivity.intent(requireContext())
+                ProxyCreateRuleActivity.intent(requireContext())
                     .run(::startActivity)
             }
         }
@@ -58,7 +61,7 @@ class ProxyFragment : Fragment(R.layout.bigbrother_fragment_proxy) {
         )
 
         lifecycleScope.launch {
-            bbdb?.proxyDao()?.getAll()
+            viewModel.listRules(rulesId)
                 ?.map { it.map(::ProxyRuleModel) }
                 ?.collect {
                     emptyState.isVisible = it.isEmpty()
@@ -70,7 +73,7 @@ class ProxyFragment : Fragment(R.layout.bigbrother_fragment_proxy) {
     }
 
     private fun onItemClicked(rule: ProxyRuleModel) {
-        ProxyActivity.intent(requireContext(), rule).run(::startActivity)
+        ProxyCreateRuleActivity.intent(requireContext(), rule).run(::startActivity)
     }
 
     private fun onItemLongClicked(view: View, rule: ProxyRuleModel) {
@@ -80,7 +83,7 @@ class ProxyFragment : Fragment(R.layout.bigbrother_fragment_proxy) {
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_proxy_delete -> lifecycleScope.launch {
-                        bbdb?.proxyDao()?.deleteRule(rule.id)
+                        bbdb?.proxyDao()?.deleteRuleById(rule.id)
                     }
                 }
                 true
@@ -104,5 +107,13 @@ class ProxyFragment : Fragment(R.layout.bigbrother_fragment_proxy) {
                 }
             }
         }
+    }
+
+    companion object {
+
+        fun newInstance(rulesId: LongArray?) =
+            ProxyListRulesFragment().apply {
+                arguments = bundleOf(RULES_ARG to rulesId)
+            }
     }
 }

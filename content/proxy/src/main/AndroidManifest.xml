@@ -4,13 +4,25 @@
     <application>
 
         <activity
-            android:name=".ui.ProxyActivity"
+            android:name=".ui.ProxyCreateRuleActivity"
             android:exported="false"
             android:theme="@style/Theme.BigBrother"
             android:windowSoftInputMode="adjustResize" >
 
             <intent-filter>
                 <action android:name="${applicationId}.CREATE_PROXY_RULE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.ProxyListRulesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.BigBrother"
+            android:windowSoftInputMode="adjustResize" >
+
+            <intent-filter>
+                <action android:name="${applicationId}.LIST_PROXY_RULES" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

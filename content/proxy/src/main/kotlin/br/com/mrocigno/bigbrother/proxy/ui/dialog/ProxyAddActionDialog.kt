@@ -1,4 +1,4 @@
-package br.com.mrocigno.bigbrother.proxy.ui
+package br.com.mrocigno.bigbrother.proxy.ui.dialog
 
 import android.view.View
 import android.widget.AutoCompleteTextView

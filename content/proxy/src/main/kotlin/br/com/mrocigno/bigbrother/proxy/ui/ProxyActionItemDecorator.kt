@@ -11,7 +11,7 @@ import br.com.mrocigno.bigbrother.common.utils.getBounds
 import br.com.mrocigno.bigbrother.proxy.R
 import br.com.mrocigno.bigbrother.common.R as CR
 
-class ProxyActionItemDecorator(context: Context) : ItemDecoration() {
+internal class ProxyActionItemDecorator(context: Context) : ItemDecoration() {
 
     private val line = Paint().apply {
         color = context.getColor(CR.color.bb_text_title)
@@ -20,7 +20,7 @@ class ProxyActionItemDecorator(context: Context) : ItemDecoration() {
     }
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        if ((parent.adapter?.itemCount ?: 0) < 1) return
+        if ((parent.adapter?.itemCount ?: 0) < 2) return
         parent.children.forEach {
             val isFirstView = parent.getChildAdapterPosition(it) == 0
             val isLastView = parent.getChildAdapterPosition(it) == (parent.adapter?.itemCount ?: 0) - 1
