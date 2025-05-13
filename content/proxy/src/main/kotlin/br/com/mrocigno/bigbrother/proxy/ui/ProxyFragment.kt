@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -15,7 +16,6 @@ import br.com.mrocigno.bigbrother.common.db.BigBrotherDatabase.Companion.bbdb
 import br.com.mrocigno.bigbrother.common.provider.id
 import br.com.mrocigno.bigbrother.proxy.R
 import br.com.mrocigno.bigbrother.proxy.model.ProxyRuleModel
-import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.flow.map
@@ -29,7 +29,7 @@ class ProxyFragment : Fragment(R.layout.bigbrother_fragment_proxy) {
     private val add: AppCompatImageView by id(R.id.proxy_add)
     private val emptyAdd: View by id(R.id.proxy_empty_add)
     private val emptyState: View by id(R.id.proxy_empty_state)
-    private val toggleAll: SwitchMaterial by id(R.id.proxy_toggle_all)
+    private val toggleAll: SwitchCompat by id(R.id.proxy_toggle_all)
 
     private val adapter: ProxyRuleAdapter get() = recycler.adapter as ProxyRuleAdapter
 

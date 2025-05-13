@@ -14,7 +14,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
+            android:paddingVertical="10dp"
             app:contentScrim="@android:color/transparent"
             app:layout_scrollFlags="enterAlways|scroll">
 
@@ -52,7 +52,7 @@
                     app:srcCompat="@drawable/bigbrother_ic_add"
                     app:tint="?colorPrimary" />
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/proxy_toggle_all"
                     android:layout_width="wrap_content"
                     android:layout_height="?minTouchTargetSize"
