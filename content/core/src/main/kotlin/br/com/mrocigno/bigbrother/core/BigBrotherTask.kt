@@ -11,6 +11,8 @@ abstract class BigBrotherTask : ContentProvider() {
 
     protected open val priority: Int? = null
 
+    open fun onStartTask() = Unit
+
     open fun onActivityCreated(activity: Activity, bundle: Bundle?) = Unit
 
     open fun onActivityStarted(activity: Activity) = Unit
@@ -27,7 +29,7 @@ abstract class BigBrotherTask : ContentProvider() {
 
     open fun onFragmentStopped(fragment: Fragment) = Unit
 
-    override fun onCreate(): Boolean {
+    final override fun onCreate(): Boolean {
         val priority = this.priority ?: BigBrother.tasks.size
         BigBrother.tasks.add(priority, this)
         return true

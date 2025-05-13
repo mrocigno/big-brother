@@ -34,6 +34,7 @@ object BigBrother {
 
     fun watch(context: Application, isBubbleEnabled: Boolean = true) {
         if (!isBubbleEnabled) tasks.removeAll { it is BigBrotherWatchTask }
+        tasks.forEach { it.onStartTask() }
         context.registerActivityLifecycleCallbacks(BigBrotherObserver())
     }
 

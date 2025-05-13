@@ -10,7 +10,9 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 
 internal class BigBrotherDatabaseTask : BigBrotherTask() {
 
-    override fun onCreate(): Boolean {
+    override val priority: Int get() = 0
+
+    override fun onStartTask() {
         try {
             val context = context as Application
             AndroidThreeTen.init(context)
@@ -22,8 +24,6 @@ internal class BigBrotherDatabaseTask : BigBrotherTask() {
                 .build()
         } catch (e: Exception) {
             Log.e(BBTAG, "failed to initialize big brother network task", e)
-            return false
         }
-        return super.onCreate()
     }
 }
