@@ -78,6 +78,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/net_entry_details_general_info" />
 
+    <LinearLayout
+        android:id="@+id/net_entry_details_proxy_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/bb_background_secondary"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/net_entry_details_background">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingHorizontal="10dp"
+            android:text="@string/net_entry_details_proxy_rules" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/net_entry_details_proxy_rules"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/net_entry_details_proxy_button"
+            android:textColor="@color/bb_text_hyperlink"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
     <WebView
         android:id="@+id/net_entry_details_web"
         android:layout_width="0dp"
@@ -85,7 +114,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/net_entry_details_background" />
+        app:layout_constraintTop_toBottomOf="@id/net_entry_details_proxy_container" />
 
     <FrameLayout
         android:id="@+id/net_entry_details_loading_container"

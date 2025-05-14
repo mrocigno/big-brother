@@ -1,0 +1,18 @@
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.android.kotlin
+    id 'kotlin-parcelize'
+}
+
+apply from: file('../../gradle/publish.gradle')
+
+dependencies {
+
+    compileOnly project(":content:core")
+    implementation project(":content:common")
+
+    implementation libs.androidx.activity
+    implementation libs.androidx.fragment
+
+    compileOnly libs.squareup.okhttp3
+}

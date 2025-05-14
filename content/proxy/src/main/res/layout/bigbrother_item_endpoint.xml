@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/proxy_eps_method"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/bigbrother_background_method"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textSize="10sp"
+        android:minWidth="25sp"
+        app:fontFamily="@font/lato"
+        tools:backgroundTint="@color/bb_net_entry_post"
+        tools:text="POST"
+        tools:textColor="@color/bb_net_entry_post" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/proxy_eps_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="7dp"
+        android:textColor="@color/bb_text_hyperlink"
+        android:textSize="@dimen/bb_text_m"
+        tools:text="@tools:sample/lorem[10]" />
+</LinearLayout>

@@ -23,7 +23,7 @@ allprojects {
                 minSdk 23
                 targetSdk 34
                 versionCode 1
-                versionName "1.0"
+                versionName project.findProperty("libVersion")
                 resConfigs "en", "pt"
 
                 testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

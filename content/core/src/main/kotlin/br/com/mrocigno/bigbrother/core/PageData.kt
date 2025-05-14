@@ -2,7 +2,7 @@ package br.com.mrocigno.bigbrother.core
 
 import androidx.fragment.app.Fragment
 
-class PageData(
+internal class PageData(
     val name: String,
     val creator: (BigBrotherView) -> Fragment
 )

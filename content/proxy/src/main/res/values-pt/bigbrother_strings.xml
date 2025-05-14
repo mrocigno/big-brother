@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="proxy_empty_message">Selecione uma opção no dropdown para continuar</string>
+    <string name="proxy_set_body_message">Para editar o body antes de ser executado o request</string>
+    <string name="proxy_set_path_message">Para editar o endpoint antes de ser executado o request</string>
+    <string name="proxy_set_header_message">Para adicionar ou editar um header antes de ser executado o request</string>
+    <string name="proxy_set_method_message">Para alterar o method do request</string>
+    <string name="proxy_remove_header_message">Para remover um header antes de ser executado o request</string>
+    <string name="proxy_set_query_message">Para adicionar ou editar uma queryString antes de ser executado o request</string>
+    <string name="proxy_remove_query_message">Para remover uma queryString antes de ser executado o request</string>
+
+    <string name="proxy_set_header_description">Adiciona ou edita o header \"%s\" com o valor \"%s\"</string>
+    <string name="proxy_set_method_description">Muda o method do request para %s\"%2s\"</string>
+    <string name="proxy_set_path_description">Altera o path request para %s\"%2s\"</string>
+    <string name="proxy_set_body_description">Substitui o body request</string>
+    <string name="proxy_set_query_description">Adiciona ou edita a queryString \"%s\" com o valor \"%s\"</string>
+    <string name="proxy_remove_header_description">Remove o header \"%s\"</string>
+    <string name="proxy_remove_query_description">Remove o queryString \"%s\"</string>
+
+    <string name="proxy_required_field">Campo obrigatório</string>
+    <string name="proxy_json_invalid">Formato inválido\n%1$s</string>
+    <string name="proxy_spaces_error">Não pode conter espaços</string>
+    <string name="proxy_rule_title">Criando nova regra</string>
+    <string name="proxy_rule_name_helper">Pode ser uma boa ideia adicionar um nome mais descritivo para sua regra, porém é divertido nomes aletórios!</string>
+    <string name="proxy_rule_name_hint">Nome para a regra</string>
+    <string name="proxy_rule_condition_title">Condições</string>
+    <string name="proxy_rule_path_hint">Path</string>
+    <string name="proxy_rule_path_helper">Utilize * se quiser que essa regra afete todos os paths</string>
+    <string name="proxy_rule_header_helper">Apenas chamadas que contenham esses headers serão afetadas</string>
+    <string name="proxy_rule_header_hint">Headers</string>
+    <string name="proxy_rule_action_title">Ações</string>
+    <string name="proxy_rule_empty_label">Nenhuma ação adicionada</string>
+    <string name="proxy_rule_empty_button">Adicionar ação</string>
+    <string name="proxy_add_action_action_hint">Selecione uma ação</string>
+    <string name="proxy_add_action_name_hint">Name</string>
+    <string name="proxy_add_action_value_hint">Value</string>
+    <string name="proxy_add_action_body_hint">Body</string>
+    <string name="proxy_list_url_search_hint">Pesquisar URL</string>
+    <string name="proxy_list_url_empty_label">Nenhuma URL encontrada</string>
+    <string name="proxy_list_rules_search_hint">Pesquisar regra</string>
+    <string name="proxy_list_rules_empty_label">Nenhuma regra de proxy criada</string>
+    <string name="proxy_list_rules_empty_button">Adicionar regra</string>
+    <string name="proxy_add_action_title">Nova ação</string>
+    <string name="proxy_edit_action_title">Editando</string>
+    <string name="proxy_add_header_title">Adicionar Header</string>
+    <string name="proxy_actions_afects_all">Afeta todas as requests</string>
+    <string name="proxy_actions_afects_few">Afeta algumas requests</string>
+    <string name="proxy_actions_do_nothing">Nenhuma ação adicionada</string>
+    <string name="proxy_list_rules_enable_all">Habilitar todas as regras</string>
+    <string name="proxy_list_rules_disable_all">Desabilitar todas as regras</string>
+</resources>

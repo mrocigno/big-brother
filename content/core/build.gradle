@@ -11,9 +11,7 @@ dependencies {
     implementation project(":content:common")
     implementation libs.kotlin.reflection
 
-    api libs.androidx.room.runtime
-    implementation libs.androidx.room.ktx
-    ksp libs.androidx.room.compiler
+    compileOnly libs.squareup.okhttp3
 
     constraints {
         api project(":content:log")
@@ -21,5 +19,6 @@ dependencies {
         api project(":content:report")
         api project(":content:crash")
         api project(":content:database")
+        api project(":content:proxy")
     }
 }

@@ -14,7 +14,7 @@
 
     <color name="bb_text_title">#FF000000</color>
     <color name="bb_text_title_inverse">#FFFFFFFF</color>
-    <color name="bb_text_paragraph">#636363</color>
+    <color name="bb_text_paragraph">#4D4D4D</color>
     <color name="bb_text_hyperlink">#FF007BFF</color>
     <color name="bb_text_highlight">#EBB901</color>
 

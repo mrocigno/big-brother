@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import br.com.mrocigno.bigbrother.common.utils.decorView
 import br.com.mrocigno.bigbrother.common.utils.rootView
 
-class BigBrotherWatchTask : BigBrotherTask() {
+internal class BigBrotherWatchTask : BigBrotherTask() {
 
     private val lastPoint = PointF(0f, 200f)
     private var alive = true

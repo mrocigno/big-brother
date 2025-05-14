@@ -1,5 +1,6 @@
 package br.com.mrocigno.bigbrother.network.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
+import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -14,10 +16,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import br.com.mrocigno.bigbrother.common.provider.id
+import br.com.mrocigno.bigbrother.common.route.checkIntent
+import br.com.mrocigno.bigbrother.common.route.intentToProxyListRules
 import br.com.mrocigno.bigbrother.common.utils.copyToClipboard
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
 import br.com.mrocigno.bigbrother.core.OutOfDomain
@@ -26,17 +33,20 @@ import br.com.mrocigno.bigbrother.network.byStatusCode
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 
 @OutOfDomain
-class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_network_entry) {
+internal class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_network_entry) {
 
-    private val toolbar: Toolbar by lazy { findViewById(R.id.net_entry_details_toolbar) }
-    private val background: View by lazy { findViewById(R.id.net_entry_details_background) }
-    private val statusCode: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_status_code) }
-    private val method: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_method) }
-    private val generalInfo: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_general_info) }
-    private val copyAll: AppCompatTextView by lazy { findViewById(R.id.net_entry_details_copy_all) }
-    private val loading: View by lazy { findViewById(R.id.net_entry_details_loading_container) }
+    private val root: MotionLayout by id(R.id.net_entry_details_root)
+    private val toolbar: Toolbar by id(R.id.net_entry_details_toolbar)
+    private val background: View by id(R.id.net_entry_details_background)
+    private val statusCode: AppCompatTextView by id(R.id.net_entry_details_status_code)
+    private val method: AppCompatTextView by id(R.id.net_entry_details_method)
+    private val generalInfo: AppCompatTextView by id(R.id.net_entry_details_general_info)
+    private val copyAll: AppCompatTextView by id(R.id.net_entry_details_copy_all)
+    private val loading: View by id(R.id.net_entry_details_loading_container)
+    private val proxyContainer: View by id(R.id.net_entry_details_proxy_container)
+    private val proxyRules: View by id(R.id.net_entry_details_proxy_rules)
 
-    private val webView: WebView by lazy { findViewById(R.id.net_entry_details_web) }
+    private val webView: WebView by id(R.id.net_entry_details_web)
 
     private val entryId: Long by lazy { intent.getLongExtra(ENTRY_ID_ARG, -1) }
     private val viewModel: NetworkEntryDetailsViewModel by viewModels()
@@ -58,6 +68,7 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activi
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupContent() {
         loading.isVisible = true
         viewModel.getNetworkEntry(entryId).observe(this) { model ->
@@ -65,6 +76,18 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activi
             method.text = model.method
             generalInfo.text = model.formatInfo()
             copyAll.setOnClickListener { copyToClipboard(model.toCURL()) }
+            if (checkIntent(intentToProxyListRules(null))) {
+                proxyContainer.isVisible = model.proxyRules != null
+                proxyRules.setOnClickListener {
+                    val ids = model.proxyRules?.split(", ")
+                        ?.map { it.toLong() }
+                        ?.toLongArray()
+                        ?: return@setOnClickListener
+
+                    intentToProxyListRules(ids)
+                        .run(::startActivity)
+                }
+            }
 
             NetworkEntryTemplate(model).load(webView)
             webView.webViewClient = object : WebViewClient() {
@@ -72,6 +95,44 @@ class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbrother_activi
                     loading.isVisible = false
                     background.byStatusCode(model.statusCode)
                 }
+            }
+
+            var inverse = false
+            var isScrolling = false
+            var startY = -1f
+            var height = 0
+            background.doOnLayout { height = it.height }
+
+            webView.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        startY = event.rawY
+                        inverse = root.progress == 1f
+                        isScrolling = webView.scrollY > 100
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        if (isScrolling) return@setOnTouchListener false
+                        root.progress =
+                            if (inverse) 1f - ((event.rawY - startY) / height).coerceIn(0f, 1f)
+                            else ((startY - event.rawY) / height).coerceIn(0f, 1f)
+
+                        if (root.progress in 0.001f..0.999f) {
+                            webView.scrollY = 0
+                        }
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        if (!isScrolling && root.progress in 0.001f .. 0.999f) {
+                            if (event.rawY < startY) {
+                                root.transitionToEnd()
+                            } else if (event.rawY > startY) {
+                                root.transitionToStart()
+                            }
+                        }
+                        isScrolling = false
+                        startY = -1f
+                    }
+                }
+                false
             }
         }
     }

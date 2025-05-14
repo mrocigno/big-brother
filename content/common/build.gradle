@@ -1,6 +1,7 @@
 plugins {
     alias libs.plugins.android.library
     alias libs.plugins.android.kotlin
+    id 'com.google.devtools.ksp'
 }
 
 apply from: file('../../gradle/publish.gradle')
@@ -8,6 +9,9 @@ apply from: file('../../gradle/publish.gradle')
 dependencies {
 
     api libs.jakewharton.threetenabp
+    api libs.androidx.room.runtime
+    implementation libs.androidx.room.ktx
+    ksp libs.androidx.room.compiler
 
     compileOnly libs.androidx.room.ktx
 }

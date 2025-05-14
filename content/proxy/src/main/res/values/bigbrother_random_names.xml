@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="bigbrother_names">
+        <item>Winston Smith</item>
+        <item>Julia</item>
+        <item>O\'Brien</item>
+        <item>Big Brother</item>
+        <item>Emmanuel Goldstein</item>
+        <item>Mr. Charrington</item>
+        <item>Syme</item>
+        <item>Parsons</item>
+        <item>Miniver</item>
+        <item>Minipax</item>
+        <item>Miniluv</item>
+        <item>Miniplenty</item>
+        <item>Oceânia</item>
+        <item>Eurásia</item>
+        <item>Lestásia</item>
+        <item>Londres</item>
+        <item>Airstrip One</item>
+        <item>Newspeak</item>
+        <item>Doublethink</item>
+        <item>Thought Police</item>
+        <item>Thoughtcrime</item>
+        <item>Two Minutes Hate</item>
+        <item>Ingsoc</item>
+        <item>Telescreen</item>
+    </string-array>
+</resources>

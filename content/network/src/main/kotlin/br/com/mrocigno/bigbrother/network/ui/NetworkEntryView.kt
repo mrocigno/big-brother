@@ -1,7 +1,6 @@
 package br.com.mrocigno.bigbrother.network.ui
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -9,6 +8,8 @@ import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import br.com.mrocigno.bigbrother.common.provider.id
+import br.com.mrocigno.bigbrother.common.utils.byMethod
 import br.com.mrocigno.bigbrother.common.utils.highlightQuery
 import br.com.mrocigno.bigbrother.common.utils.inflate
 import br.com.mrocigno.bigbrother.network.R
@@ -16,16 +17,18 @@ import br.com.mrocigno.bigbrother.network.byStatusCode
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
-class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_network_entry)) {
+internal class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.bigbrother_item_network_entry)) {
 
-    private val dot: View by lazy { itemView.findViewById(R.id.net_entry_dot) }
-    private val hour: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_hour) }
-    private val method: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_method) }
-    private val elapsedTime: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_elapsed_time) }
-    private val container: ViewGroup by lazy { itemView.findViewById(R.id.net_entry_container) }
-    private val url: AppCompatTextView by lazy { itemView.findViewById(R.id.net_entry_url) }
-    private val loading: View by lazy { itemView.findViewById(R.id.net_entry_loading) }
-    private val arrow: View by lazy { itemView.findViewById(R.id.net_entry_arrow) }
+    private val dot: View by id(R.id.net_entry_dot)
+    private val hour: AppCompatTextView by id(R.id.net_entry_hour)
+    private val method: AppCompatTextView by id(R.id.net_entry_method)
+    private val elapsedTime: AppCompatTextView by id(R.id.net_entry_elapsed_time)
+    private val container: ViewGroup by id(R.id.net_entry_container)
+    private val url: AppCompatTextView by id(R.id.net_entry_url)
+    private val loading: View by id(R.id.net_entry_loading)
+    private val arrow: View by id(R.id.net_entry_arrow)
+    private val proxiedIcon: View by id(R.id.net_entry_proxied_icon)
+    private val proxied: View by id(R.id.net_entry_proxied)
 
     private val context get() = itemView.context
 
@@ -72,21 +75,10 @@ class NetworkEntryView(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.b
         dot.byStatusCode(model.statusCode)
         method.text = "${model.method} - ${model.statusCode}".highlightQuery(query, highlightColor)
         elapsedTime.text = model.elapsedTime?.highlightQuery(query, highlightColor)
+        proxied.isVisible = model.proxyRules != null
+        proxiedIcon.isVisible = model.proxyRules != null
         container.setOnClickListener {
             onEntryClick.invoke(model)
         }
-    }
-
-    private fun AppCompatTextView.byMethod(method: String) {
-        val color = when (method) {
-            "POST" -> CommonR.color.bb_net_entry_post
-            "PUT" -> CommonR.color.bb_net_entry_put
-            "GET" -> CommonR.color.bb_net_entry_get
-            "DELETE" -> CommonR.color.bb_net_entry_delete
-            else -> CommonR.color.bb_text_title
-        }
-        val colorList = ColorStateList.valueOf(context.getColor(color))
-        backgroundTintList = colorList
-        setTextColor(colorList)
     }
 }

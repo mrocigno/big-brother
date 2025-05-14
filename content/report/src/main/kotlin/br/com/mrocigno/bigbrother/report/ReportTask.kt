@@ -16,15 +16,12 @@ internal class ReportTask : BigBrotherTask() {
 
     private val mapping = mutableMapOf<Int, Int>()
 
-    override fun onCreate(): Boolean {
+    override fun onStartTask() {
         try {
             BigBrotherReport.createSession()
         } catch (e: Exception) {
             Log.e(BBTAG, "failed to initialize big brother report task", e)
-            return false
         }
-
-        return super.onCreate()
     }
 
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {

@@ -21,6 +21,7 @@ import androidx.core.content.withStyledAttributes
 import androidx.core.view.NestedScrollingChild2
 import androidx.core.view.NestedScrollingChildHelper
 import androidx.core.view.ViewCompat
+import androidx.core.view.updateLayoutParams
 import br.com.mrocigno.bigbrother.common.R
 import br.com.mrocigno.bigbrother.common.table.AdaptiveTableState.Companion.NO_DRAGGING_POSITION
 import br.com.mrocigno.bigbrother.common.table.ScrollType.Companion.SCROLL_HORIZONTAL
@@ -127,6 +128,13 @@ class AdaptiveTableLayout @JvmOverloads constructor(
             manager.clear()
             recycleViewHolders(true)
             return
+        }
+
+        updateLayoutParams {
+            if (height == LayoutParams.WRAP_CONTENT) {
+                height = adapter.getRowHeight(0) * adapter.rowCount
+                return
+            }
         }
 
         // init manager. Not include headers

@@ -51,7 +51,7 @@ class NetworkActivity : AppCompatActivity(R.layout.network_activity) {
 
         errorLoadList.setOnClickListener {
             openBigBrotherBubble()
-            viewModel.fetchPost()
+            viewModel.fetchError()
         }
     }
 }

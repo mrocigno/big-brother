@@ -2,6 +2,7 @@ package br.com.mrocigno.bigbrother.common.utils
 
 import android.content.DialogInterface
 import android.view.View
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
@@ -11,27 +12,49 @@ fun AppCompatActivity.showDialog(
     content: Int = -1,
     title: String = "",
     positiveButton: Pair<String, DialogButtonClick>? = null,
+    @ColorRes positiveButtonColor: Int? = null,
     negativeButton: Pair<String, DialogButtonClick>? = null,
+    @ColorRes negativeButtonColor: Int? = null,
     onView: View.() -> Unit = {},
-) {
+): AlertDialog {
 
     val view = content.takeIf { it != -1 }?.let {
         View.inflate(this, it, null)
     }
 
-    AlertDialog.Builder(this).apply {
+    val alert = AlertDialog.Builder(this).apply {
         title.takeIf { it.isNotEmpty() }?.run(::setTitle)
-        view?.run(::setView)
         view?.onView()
+        view?.run(::setView)
         positiveButton?.run {
-            setPositiveButton(first) { dialog, _ ->
-                second(dialog, view)
-            }
+            setPositiveButton(first, null)
         }
         negativeButton?.run {
-            setNegativeButton(first) { dialog, _ ->
-                second(dialog, view)
-            }
+            setNegativeButton(first, null)
         }
     }.show()
+
+    positiveButton?.second?.run {
+        alert.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
+            positiveButtonColor
+                ?.let(::getColor)
+                ?.run(::setTextColor)
+            setOnClickListener {
+                invoke(alert, view)
+            }
+        }
+    }
+
+    negativeButton?.second?.run {
+        alert.getButton(AlertDialog.BUTTON_NEGATIVE)?.apply {
+            negativeButtonColor
+                ?.let(::getColor)
+                ?.run(::setTextColor)
+            setOnClickListener {
+                invoke(alert, view)
+            }
+        }
+    }
+
+    return alert
 }

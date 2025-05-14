@@ -22,8 +22,7 @@ class BigBrotherConfig(
     var isClickRecorderEnabled: Boolean = true,
 ) {
 
-    @Deprecated("Use sizeRes instead")
-    var size: Int = 0
+    internal var size: Int = 0
 
     internal fun initial(bigBrotherView: BigBrotherView) = bigBrotherView.apply {
         size = resources.getDimensionPixelSize(sizeRes)

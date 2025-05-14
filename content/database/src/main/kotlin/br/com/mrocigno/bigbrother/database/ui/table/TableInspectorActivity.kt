@@ -29,7 +29,7 @@ import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.bigbrother.common.R as CR
 
 @OutOfDomain
-class TableInspectorActivity :
+internal class TableInspectorActivity :
     AppCompatActivity(R.layout.bigbrother_activity_table_inspector), OnItemClickListener {
 
     private val loading: ViewGroup by lazy { findViewById(R.id.table_inspector_loading_container) }

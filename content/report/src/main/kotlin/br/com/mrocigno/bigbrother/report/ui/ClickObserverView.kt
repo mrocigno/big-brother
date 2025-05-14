@@ -13,7 +13,7 @@ import br.com.mrocigno.bigbrother.core.utils.lastClickPosition
 import br.com.mrocigno.bigbrother.report.R
 
 @SuppressLint("ClickableViewAccessibility")
-class ClickObserverView @JvmOverloads constructor(
+internal class ClickObserverView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

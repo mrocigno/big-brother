@@ -13,7 +13,7 @@ import br.com.mrocigno.bigbrother.database.R
 import kotlin.math.roundToInt
 import br.com.mrocigno.bigbrother.common.R as CR
 
-class TableDump(
+internal class TableDump(
     val data: List<Map<String, ColumnContent>> = emptyList(),
     val sql: String = "",
     val rowCount: Int = 0,
