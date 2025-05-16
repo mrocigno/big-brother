@@ -71,8 +71,8 @@ internal class RuleViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.l
     fun bind(model: ProxyRuleModel) {
         name.text = model.ruleName
         condition.text = when (model.pathCondition == "*" && model.methodCondition == "*" && model.headerCondition.isBlank()) {
-            true -> context.getString(R.string.proxy_actions_afects_all)
-            false -> context.getString(R.string.proxy_actions_afects_few)
+            true -> context.getString(R.string.bigbrother_proxy_actions_afects_all)
+            false -> context.getString(R.string.bigbrother_proxy_actions_afects_few)
         }
         switch.setOnCheckedChangeListener(null)
         switch.isChecked = model.enabled
@@ -87,7 +87,7 @@ internal class RuleViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.l
             builder.append(action.getDescription(context), BulletSpan(gap), SPAN_EXCLUSIVE_EXCLUSIVE)
         }
         actions.text = builder.ifEmpty {
-            builder.append(context.getString(R.string.proxy_actions_do_nothing), BulletSpan(gap), SPAN_EXCLUSIVE_EXCLUSIVE)
+            builder.append(context.getString(R.string.bigbrother_proxy_actions_do_nothing), BulletSpan(gap), SPAN_EXCLUSIVE_EXCLUSIVE)
         }
     }
 }

@@ -18,7 +18,7 @@ internal class LogListActivity : AppCompatActivity(R.layout.bigbrother_activity_
         super.onCreate(savedInstanceState)
 
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
-        toolbar.title = getString(R.string.log_list_title, sessionId)
+        toolbar.title = getString(R.string.bigbrother_log_list_title, sessionId)
         supportFragmentManager.beginTransaction()
             .add(R.id.log_list_container, LogFragment.newInstance(sessionId), "logs")
             .commit()

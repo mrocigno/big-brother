@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="json_viewer_expand_click">click to expand</string>
-    <string name="json_viewer_disclaimer">click and hold on any item to copy it to the clipboard</string>
+    <string name="bigbrother_json_viewer_expand_click">click to expand</string>
+    <string name="bigbrother_json_viewer_disclaimer">click and hold on any item to copy it to the clipboard</string>
 
-    <string name="network_proxied" translatable="false">Proxied</string>
-    <string name="network_list_title">Session %d calls</string>
-    <string name="network_search_hint">Search by method, code or url</string>
-    <string name="network_hour_info">Hour:</string>
-    <string name="network_elapsed_time_info">Elapsed time:</string>
-    <string name="network_url_info">URL:</string>
-    <string name="network_copy">Copy as cURL</string>
-    <string name="network_empty_state">No requests for this session</string>
-    <string name="network_copy_all_template">
+    <string name="bigbrother_network_proxied" translatable="false">Proxied</string>
+    <string name="bigbrother_network_list_title">Session %d calls</string>
+    <string name="bigbrother_network_search_hint">Search by method, code or url</string>
+    <string name="bigbrother_network_hour_info">Hour:</string>
+    <string name="bigbrother_network_elapsed_time_info">Elapsed time:</string>
+    <string name="bigbrother_network_url_info">URL:</string>
+    <string name="bigbrother_network_copy">Copy as cURL</string>
+    <string name="bigbrother_network_empty_state">No requests for this session</string>
+    <string name="bigbrother_network_copy_all_template">
 URL: %s\n
 Method: %s\n
 Status code: %s\n
@@ -33,13 +33,13 @@ Elapsed time: %s\n
 === Body ===\n
 %s\n
     </string>
-    <string name="net_entry_details_zero_proxy_rules">No proxy rules applied</string>
-    <plurals name="net_entry_details_proxy_rules">
+    <string name="bigbrother_net_entry_details_zero_proxy_rules">No proxy rules applied</string>
+    <plurals name="bigbrother_net_entry_details_proxy_rules">
         <item quantity="one">%s proxy rule applied</item>
         <item quantity="other">%s proxy rules applied</item>
     </plurals>
-    <string name="net_entry_details_zero_proxy_button">Create rule</string>
-    <plurals name="net_entry_details_proxy_button">
+    <string name="bigbrother_net_entry_details_zero_proxy_button">Create rule</string>
+    <plurals name="bigbrother_net_entry_details_proxy_button">
         <item quantity="one">See rule</item>
         <item quantity="other">See rules</item>
     </plurals>

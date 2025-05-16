@@ -27,7 +27,7 @@ internal fun Fragment.showImportRulesDialog(onSave: suspend (List<ProxyRuleModel
             val list =
                 runCatching { Json.decodeFromString<List<ProxyRuleModel>>(txt.text.toString().trim()) }
                     .onFailure {
-                        txt.setInputLayoutError(getString(R.string.proxy_json_invalid, it.message))
+                        txt.setInputLayoutError(getString(R.string.bigbrother_proxy_json_invalid, it.message))
                         txt.doOnTextChanged { _, _, _, _ -> txt.setInputLayoutError("") }
                         return@click
                     }.getOrThrow()
@@ -42,7 +42,7 @@ internal fun Fragment.showImportRulesDialog(onSave: suspend (List<ProxyRuleModel
 internal fun Fragment.showExportRulesDialog(json: String) =
     requireActivity().showDialog(
         content = R.layout.bigbrother_dialog_export_rules,
-        positiveButton = getString(R.string.proxy_export_copy) to {
+        positiveButton = getString(R.string.bigbrother_proxy_export_copy) to {
             requireContext().copyToClipboard(json)
             dismiss()
         },

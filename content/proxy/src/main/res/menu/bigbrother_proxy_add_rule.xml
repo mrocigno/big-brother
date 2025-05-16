@@ -4,16 +4,16 @@
     <item
         android:id="@+id/proxy_menu_create_rule"
         android:icon="@drawable/bigbrother_ic_add"
-        android:title="@string/proxy_menu_create_rule" />
+        android:title="@string/bigbrother_proxy_menu_create_rule" />
 
     <item
         android:id="@+id/proxy_menu_import_rule"
         android:icon="@drawable/bigbrother_ic_download"
-        android:title="@string/proxy_menu_import_rule" />
+        android:title="@string/bigbrother_proxy_menu_import_rule" />
 
     <item
         android:id="@+id/proxy_menu_export_rule"
         android:icon="@drawable/bigbrother_ic_upload"
-        android:title="@string/proxy_menu_export_rule"
+        android:title="@string/bigbrother_proxy_menu_export_rule"
         android:visible="false" />
 </menu>

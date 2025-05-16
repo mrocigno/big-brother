@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="json_viewer_expand_click">clique para expandir</string>
-    <string name="json_viewer_disclaimer">Clique e segure em cima de qualquer item para copiar os dados</string>
+    <string name="bigbrother_json_viewer_expand_click">clique para expandir</string>
+    <string name="bigbrother_json_viewer_disclaimer">Clique e segure em cima de qualquer item para copiar os dados</string>
 
-    <string name="network_list_title">Requesições da sessão %d</string>
-    <string name="network_search_hint">Procure por método, status code ou url</string>
-    <string name="network_hour_info">Horário:</string>
-    <string name="network_elapsed_time_info">Tempo corrido:</string>
-    <string name="network_url_info">URL:</string>
-    <string name="network_copy">Copiar como cURL</string>
-    <string name="network_empty_state">Nenhuma requisição para essa sessão</string>
-    <string name="network_copy_all_template">
+    <string name="bigbrother_network_list_title">Requesições da sessão %d</string>
+    <string name="bigbrother_network_search_hint">Procure por método, status code ou url</string>
+    <string name="bigbrother_network_hour_info">Horário:</string>
+    <string name="bigbrother_network_elapsed_time_info">Tempo corrido:</string>
+    <string name="bigbrother_network_url_info">URL:</string>
+    <string name="bigbrother_network_copy">Copiar como cURL</string>
+    <string name="bigbrother_network_empty_state">Nenhuma requisição para essa sessão</string>
+    <string name="bigbrother_network_copy_all_template">
 URL: %s\n
 Method: %s\n
 Status code: %s\n
@@ -32,13 +32,13 @@ Tempo corrido: %s\n
 === Body ===\n
 %s\n
     </string>
-    <string name="net_entry_details_zero_proxy_rules">Nenhuma regra de proxy aplicada</string>
-    <plurals name="net_entry_details_proxy_rules" tools:ignore="MissingQuantity">
+    <string name="bigbrother_net_entry_details_zero_proxy_rules">Nenhuma regra de proxy aplicada</string>
+    <plurals name="bigbrother_net_entry_details_proxy_rules" tools:ignore="MissingQuantity">
         <item quantity="one">%s regra de proxy aplicada</item>
         <item quantity="other">%s regras de proxy aplicadas</item>
     </plurals>
-    <string name="net_entry_details_zero_proxy_button">Criar regra</string>
-    <plurals name="net_entry_details_proxy_button" tools:ignore="MissingQuantity, ImpliedQuantity">
+    <string name="bigbrother_net_entry_details_zero_proxy_button">Criar regra</string>
+    <plurals name="bigbrother_net_entry_details_proxy_button" tools:ignore="MissingQuantity, ImpliedQuantity">
         <item quantity="one">Ver regra</item>
         <item quantity="other">Ver regras</item>
     </plurals>

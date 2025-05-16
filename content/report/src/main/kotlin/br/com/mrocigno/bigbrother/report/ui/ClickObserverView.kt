@@ -21,7 +21,8 @@ internal class ClickObserverView @JvmOverloads constructor(
 
     init {
         layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
-        id = R.id.click_observer
+        id = R.id.bigbrother_click_observer
+        importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
 
         setOnTouchListener { _, event ->
             lastClickPosition = PointF(event.rawX, event.rawY)
@@ -40,11 +41,11 @@ internal class ClickObserverView @JvmOverloads constructor(
                 .takeIf { BigBrother.config.isClickRecorderEnabled }
 
         fun get(activity: Activity) =
-            (activity.findViewById<ClickObserverView>(R.id.click_observer))
+            (activity.findViewById<ClickObserverView>(R.id.bigbrother_click_observer))
                 .takeIf { BigBrother.config.isClickRecorderEnabled }
 
         fun get(fragment: Fragment) =
-            (fragment.view?.findViewById<ClickObserverView>(R.id.click_observer))
+            (fragment.view?.findViewById<ClickObserverView>(R.id.bigbrother_click_observer))
                 .takeIf { BigBrother.config.isClickRecorderEnabled }
     }
 }

@@ -36,7 +36,7 @@
                         android:id="@+id/proxy_search_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/proxy_list_rules_search_hint" />
+                        android:hint="@string/bigbrother_proxy_list_rules_search_hint" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,7 +59,7 @@
                     android:layout_gravity="end"
                     android:layout_marginEnd="10dp"
                     android:checked="true"
-                    android:text="@string/proxy_list_rules_disable_all"
+                    android:text="@string/bigbrother_proxy_list_rules_disable_all"
                     android:theme="@style/BigBrotherSwitch"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/proxy_search_layout"
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="@string/proxy_list_rules_empty_label"
+            android:text="@string/bigbrother_proxy_list_rules_empty_label"
             android:textColor="@color/bb_text_title"
             android:textSize="17sp" />
 
@@ -104,7 +104,7 @@
             android:id="@+id/proxy_empty_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/proxy_list_rules_empty_button"
+            android:text="@string/bigbrother_proxy_list_rules_empty_button"
             android:textColor="@color/bb_text_hyperlink" />
 
     </LinearLayout>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="log_list_title">Session %d logs</string>
+    <string name="bigbrother_log_list_title">Session %d logs</string>
+    <string name="bigbrother_log_empty_state">No logs found in this session</string>
 </resources>

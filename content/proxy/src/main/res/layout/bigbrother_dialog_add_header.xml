@@ -10,7 +10,7 @@
         style="@style/input_outlined"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/proxy_add_action_name_hint">
+        android:hint="@string/bigbrother_proxy_add_action_name_hint">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/proxy_header_name"
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/bb_spacing_s"
-        android:hint="@string/proxy_add_action_value_hint"
+        android:hint="@string/bigbrother_proxy_add_action_value_hint"
         app:helperText="Use * para permitir qualquer valor">
 
         <com.google.android.material.textfield.TextInputEditText

@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/bb_spacing_xxs"
-        android:text="@string/network_proxied"
+        android:text="@string/bigbrother_network_proxied"
         android:textColor="@color/bb_text_hyperlink"
         android:textSize="11sp"
         android:visibility="gone"

@@ -26,7 +26,7 @@ internal fun AppCompatActivity.proxyAddActionDialog(
 ) {
     val items = ProxyActions.values()
     showDialog(
-        title = getString(R.string.proxy_add_action_title),
+        title = getString(R.string.bigbrother_proxy_add_action_title),
         content = R.layout.bigbrother_dialog_actions,
         negativeButton = getString(CR.string.cancel) to { dismiss() },
         positiveButton = getString(CR.string.add) to getPositiveButtonClick(items, onSave),
@@ -41,7 +41,7 @@ internal fun AppCompatActivity.proxyUpdateActionDialog(
 ) {
     val items = ProxyActions.values()
     showDialog(
-        title = getString(R.string.proxy_edit_action_title),
+        title = getString(R.string.bigbrother_proxy_edit_action_title),
         content = R.layout.bigbrother_dialog_actions,
         negativeButton = getString(CR.string.delete) to {
             onDelete.invoke(old)

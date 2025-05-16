@@ -72,7 +72,7 @@
         android:foreground="?selectableItemBackground"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/network_copy"
+        android:text="@string/bigbrother_network_copy"
         android:textColor="@color/bb_text_hyperlink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

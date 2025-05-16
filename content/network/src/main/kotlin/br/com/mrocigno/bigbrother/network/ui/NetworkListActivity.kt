@@ -18,7 +18,7 @@ internal class NetworkListActivity : AppCompatActivity(R.layout.bigbrother_activ
         super.onCreate(savedInstanceState)
 
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
-        toolbar.title = getString(R.string.network_list_title, sessionId)
+        toolbar.title = getString(R.string.bigbrother_network_list_title, sessionId)
         supportFragmentManager.beginTransaction()
             .add(R.id.net_list_container, NetworkFragment.newInstance(sessionId), "network")
             .commit()

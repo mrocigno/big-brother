@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="report_session_search_hint">Data</string>
-    <string name="report_session_session">Sessão %d</string>
-    <string name="report_session_requests">Requisições da seção</string>
+    <string name="bigbrother_report_session_search_hint">Data</string>
+    <string name="bigbrother_report_session_session">Sessão %d</string>
+    <string name="bigbrother_report_session_requests">Requisições da seção</string>
 </resources>

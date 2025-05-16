@@ -133,8 +133,8 @@ internal class ProxyListRulesFragment : Fragment(R.layout.bigbrother_fragment_li
             setOnCheckedChangeListener(null)
             isChecked = it.all { it.enabled }
             setText(
-                if (isChecked) R.string.proxy_list_rules_disable_all
-                else R.string.proxy_list_rules_enable_all
+                if (isChecked) R.string.bigbrother_proxy_list_rules_disable_all
+                else R.string.bigbrother_proxy_list_rules_enable_all
             )
             setOnCheckedChangeListener { _, isChecked ->
                 lifecycleScope.launch {

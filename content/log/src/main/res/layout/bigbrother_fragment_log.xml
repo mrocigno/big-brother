@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="@string/log_empty_state"
+            android:text="@string/bigbrother_log_empty_state"
             android:textColor="@color/bb_text_title"
             android:textSize="17sp" />
 

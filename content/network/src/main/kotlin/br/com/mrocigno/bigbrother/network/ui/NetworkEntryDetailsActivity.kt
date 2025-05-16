@@ -88,14 +88,14 @@ internal class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbroth
 
                 proxyContainer.visible()
                 if (ids.isEmpty()) {
-                    proxyLabel.text = getString(R.string.net_entry_details_zero_proxy_rules)
-                    proxyRules.text = getString(R.string.net_entry_details_zero_proxy_button)
+                    proxyLabel.text = getString(R.string.bigbrother_net_entry_details_zero_proxy_rules)
+                    proxyRules.text = getString(R.string.bigbrother_net_entry_details_zero_proxy_button)
                     proxyRules.setOnClickListener {
                         intentToProxyCreateRule(model.method, model.fullUrl).run(::startActivity)
                     }
                 } else {
-                    proxyLabel.text = resources.getQuantityString(R.plurals.net_entry_details_proxy_rules, ids.size, ids.size)
-                    proxyRules.text = resources.getQuantityString(R.plurals.net_entry_details_proxy_button, ids.size)
+                    proxyLabel.text = resources.getQuantityString(R.plurals.bigbrother_net_entry_details_proxy_rules, ids.size, ids.size)
+                    proxyRules.text = resources.getQuantityString(R.plurals.bigbrother_net_entry_details_proxy_button, ids.size)
                     proxyRules.setOnClickListener {
                         intentToProxyListRules(ids).run(::startActivity)
                     }
@@ -150,15 +150,15 @@ internal class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbroth
     }
 
     private fun NetworkEntryModel.formatInfo() = SpannableStringBuilder().apply {
-        append(getString(R.string.network_hour_info), StyleSpan(Typeface.BOLD), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        append(getString(R.string.bigbrother_network_hour_info), StyleSpan(Typeface.BOLD), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         append("  ")
         append(hour)
         appendLine()
-        append(getString(R.string.network_elapsed_time_info), StyleSpan(Typeface.BOLD), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        append(getString(R.string.bigbrother_network_elapsed_time_info), StyleSpan(Typeface.BOLD), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         append("  ")
         append(elapsedTime)
         appendLine()
-        append(getString(R.string.network_url_info), StyleSpan(Typeface.BOLD), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        append(getString(R.string.bigbrother_network_url_info), StyleSpan(Typeface.BOLD), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         append("  ")
         append(fullUrl)
     }

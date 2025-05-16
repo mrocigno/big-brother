@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/bigbrother_ic_arrow_back"
-        app:title="@string/proxy_rule_title" />
+        app:title="@string/bigbrother_proxy_rule_title" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/bb_spacing_m"
                 app:endIconDrawable="@drawable/bigbrother_ic_shuffle"
-                app:helperText="@string/proxy_rule_name_helper"
+                app:helperText="@string/bigbrother_proxy_rule_name_helper"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -41,7 +41,7 @@
                     android:id="@+id/proxy_rule_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/proxy_rule_name_hint" />
+                    android:hint="@string/bigbrother_proxy_rule_name_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/bb_spacing_m"
                 android:layout_marginTop="@dimen/bb_spacing_l"
-                android:text="@string/proxy_rule_condition_title"
+                android:text="@string/bigbrother_proxy_rule_condition_title"
                 android:textColor="@color/bb_text_title"
                 android:textSize="@dimen/bb_text_l"
                 android:textStyle="bold"
@@ -75,7 +75,7 @@
                     android:id="@+id/proxy_rule_method"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:hint="@string/proxy_rule_method_hint"
+                    android:hint="@string/bigbrother_proxy_rule_method_hint"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:text="*" />
@@ -97,7 +97,7 @@
                     android:id="@+id/proxy_rule_condition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/proxy_rule_path_hint"
+                    android:hint="@string/bigbrother_proxy_rule_path_hint"
                     tools:text="*" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -107,7 +107,7 @@
                 android:id="@+id/proxy_rule_condition_helper"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/bb_spacing_m"
-                android:text="@string/proxy_rule_path_helper"
+                android:text="@string/bigbrother_proxy_rule_path_helper"
                 android:layout_marginTop="@dimen/bb_spacing_xxs"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="@id/proxy_rule_condition_layout"
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/bb_spacing_m"
                 app:endIconDrawable="@drawable/bigbrother_ic_add"
-                app:helperText="@string/proxy_rule_header_helper"
+                app:helperText="@string/bigbrother_proxy_rule_header_helper"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_helper"
@@ -131,7 +131,7 @@
                     android:id="@+id/proxy_rule_condition_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/proxy_rule_header_hint" />
+                    android:hint="@string/bigbrother_proxy_rule_header_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/bb_spacing_m"
                 android:layout_marginTop="@dimen/bb_spacing_l"
-                android:text="@string/proxy_rule_action_title"
+                android:text="@string/bigbrother_proxy_rule_action_title"
                 android:textColor="@color/bb_text_title"
                 android:textSize="@dimen/bb_text_l"
                 android:textStyle="bold"
@@ -204,7 +204,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="@string/proxy_rule_empty_label"
+                    android:text="@string/bigbrother_proxy_rule_empty_label"
                     android:textColor="@color/bb_text_title"
                     android:textSize="17sp" />
 
@@ -212,7 +212,7 @@
                     android:id="@+id/proxy_rule_empty_add_action"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/proxy_rule_empty_button"
+                    android:text="@string/bigbrother_proxy_rule_empty_button"
                     android:textColor="@color/bb_text_hyperlink" />
 
             </LinearLayout>

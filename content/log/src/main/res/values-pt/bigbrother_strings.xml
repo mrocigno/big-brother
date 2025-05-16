@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="log_list_title">Logs da sessão %d</string>
-    <string name="log_empty_state">Nenhum log encontrado nessa sessão</string>
+    <string name="bigbrother_log_list_title">Logs da sessão %d</string>
+    <string name="bigbrother_log_empty_state">Nenhum log encontrado nessa sessão</string>
 </resources>
