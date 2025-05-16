@@ -72,7 +72,7 @@
         android:foreground="?selectableItemBackground"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/network_copy"
+        android:text="@string/bigbrother_network_copy"
         android:textColor="@color/bb_text_hyperlink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,19 +91,20 @@
         app:layout_constraintTop_toBottomOf="@id/net_entry_details_background">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/net_entry_details_proxy_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingHorizontal="10dp"
-            android:text="@string/net_entry_details_proxy_rules" />
+            tools:text="@tools:sample/lorem[3]" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/net_entry_details_proxy_rules"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/net_entry_details_proxy_button"
             android:textColor="@color/bb_text_hyperlink"
-            android:textSize="11sp" />
+            android:textSize="11sp"
+            tools:text="@tools:sample/lorem[2]" />
 
     </LinearLayout>
 

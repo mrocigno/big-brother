@@ -3,17 +3,21 @@
 
     <item
         android:id="@+id/menu_session_report"
+        android:icon="@drawable/bigbrother_ic_file"
         android:title="Report"/>
 
     <item
         android:id="@+id/menu_session_network"
+        android:icon="@drawable/bigbrother_ic_search_list"
         android:title="Network"/>
 
     <item
         android:id="@+id/menu_session_logs"
+        android:icon="@drawable/bigbrother_ic_notes"
         android:title="Logs"/>
 
     <item
         android:id="@+id/menu_session_crash"
+        android:icon="@drawable/bigbrother_ic_bug"
         android:title="Crash details"/>
 </menu>

@@ -21,7 +21,7 @@ internal class SessionItemViewHolder(parent: ViewGroup) : ViewHolder(parent.infl
 
     fun bind(model: SessionEntry) {
         imgCount.text = if (model.status == SessionStatus.CRASHED) "1" else "0"
-        title.text = context.getString(R.string.report_session_session, model.id)
+        title.text = context.getString(R.string.bigbrother_report_session_session, model.id)
         status.text = model.status.name
         status.setTextColor(context.getColor(model.status.color))
         model.dateTime

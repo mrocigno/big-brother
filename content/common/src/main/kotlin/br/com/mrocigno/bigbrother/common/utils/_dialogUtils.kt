@@ -4,11 +4,11 @@ import android.content.DialogInterface
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 
 typealias DialogButtonClick = DialogInterface.(View?) -> Unit
 
-fun AppCompatActivity.showDialog(
+fun FragmentActivity.showDialog(
     content: Int = -1,
     title: String = "",
     positiveButton: Pair<String, DialogButtonClick>? = null,

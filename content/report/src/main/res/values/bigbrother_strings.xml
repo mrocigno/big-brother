@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="report_session_search_hint">Date</string>
-    <string name="report_session_session">Session %d</string>
-    <string name="report_session_requests">Network calls</string>
+    <string name="bigbrother_report_session_search_hint">Date</string>
+    <string name="bigbrother_report_session_session">Session %d</string>
+    <string name="bigbrother_report_session_requests">Network calls</string>
 </resources>

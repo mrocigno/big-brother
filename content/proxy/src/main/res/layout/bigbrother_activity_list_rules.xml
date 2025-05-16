@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/bigbrother_ic_arrow_back"
-        app:title="Regras" />
+        app:title="@string/bigbrother_proxy_list_rules_title" />
 
     <FrameLayout
         android:id="@+id/proxy_list_rules_container"

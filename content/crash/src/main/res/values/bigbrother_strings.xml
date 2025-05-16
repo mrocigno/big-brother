@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="crash_title">The app crashed :(</string>
-    <string name="crash_screen">On screen:</string>
+    <string name="bigbrother_crash_title">The app crashed :(</string>
+    <string name="bigbrother_crash_screen">On screen:</string>
 </resources>

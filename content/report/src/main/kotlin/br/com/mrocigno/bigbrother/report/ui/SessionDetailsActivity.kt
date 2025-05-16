@@ -53,7 +53,7 @@ internal class SessionDetailsActivity : AppCompatActivity(R.layout.bigbrother_ac
 
     private fun setupView() {
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
-        toolbar.title = getString(R.string.report_session_session, sessionId)
+        toolbar.title = getString(R.string.bigbrother_report_session_session, sessionId)
 
         runCatching {
             BitmapFactory.decodeStream(openFileInput("print_crash_session_$sessionId.png"))

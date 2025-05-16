@@ -145,7 +145,7 @@ internal class JsonViewerViewHolder(parent: ViewGroup) : ViewHolder(parent.infla
             } else {
                 icon.rotation = 0f
             }
-            value.text = context.getString(R.string.json_viewer_expand_click)
+            value.text = context.getString(R.string.bigbrother_json_viewer_expand_click)
             value.setTextColor(context.getColor(CR.color.bb_text_hyperlink))
             itemView.setOnClickListener { onExpand(model) }
         } else {

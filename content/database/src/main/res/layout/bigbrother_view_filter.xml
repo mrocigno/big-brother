@@ -32,7 +32,7 @@
                 android:foreground="?selectableItemBackground"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="Ordenar A - Z"
+                android:text="@string/bigbrother_filter_popup_order_asc"
                 android:textColor="@color/bb_text_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
                 android:foreground="?selectableItemBackground"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="Ordenar Z - A"
+                android:text="@string/bigbrother_filter_popup_order_desc"
                 android:textColor="@color/bb_text_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +71,7 @@
                 android:foreground="?selectableItemBackground"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="Limpar filtros"
+                android:text="@string/bigbrother_filter_popup_clean_filter"
                 android:textColor="@color/bb_text_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +101,7 @@
                     android:id="@+id/filter_view_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Buscar" />
+                    android:hint="@string/generic_search" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -120,7 +120,8 @@
                 android:foreground="?selectableItemBackground"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"
-                android:text="OK"
+                android:text="@string/ok"
+                android:textAllCaps="true"
                 android:textColor="@color/bb_text_title"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -134,7 +135,8 @@
                 android:foreground="?selectableItemBackground"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"
-                android:text="CANCELAR"
+                android:text="@string/cancel"
+                android:textAllCaps="true"
                 android:textColor="@color/bb_text_title"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@id/filter_view_confirm"

@@ -8,8 +8,10 @@ import br.com.mrocigno.bigbrother.common.R
 import br.com.mrocigno.bigbrother.common.entity.ProxyActionEntity
 import br.com.mrocigno.bigbrother.common.utils.highlightQuery
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 @Parcelize
+@Serializable
 internal data class ProxyActionModel(
     val id: Long = 0,
     val action: ProxyActions = ProxyActions.EMPTY,
@@ -31,6 +33,8 @@ internal data class ProxyActionModel(
         context.getString(action.description, name.orEmpty(), value.orEmpty(), body.orEmpty())
             .highlightQuery(""""${name.orEmpty()}"""", context.getColor(R.color.bb_net_entry_put))
             .highlightQuery(""""${value.orEmpty()}"""", context.getColor(R.color.bb_net_entry_get))
+
+    fun newEntity(ruleId: Long) = copy(id = 0).toEntity(ruleId)
 
     fun toEntity(ruleId: Long) =
         ProxyActionEntity(

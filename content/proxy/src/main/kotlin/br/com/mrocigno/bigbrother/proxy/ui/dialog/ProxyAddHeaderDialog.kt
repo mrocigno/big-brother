@@ -11,7 +11,7 @@ import br.com.mrocigno.bigbrother.common.R as CR
 internal fun AppCompatActivity.proxyAddHeaderDialog(onSave: (String) -> Unit) =
     showDialog(
         content = R.layout.bigbrother_dialog_add_header,
-        title = getString(R.string.proxy_add_header_title),
+        title = getString(R.string.bigbrother_proxy_add_header_title),
         positiveButton = getString(CR.string.add) to add@{
             val name = it?.findViewById<TextInputEditText>(R.id.proxy_header_name)
             val value = it?.findViewById<TextInputEditText>(R.id.proxy_header_value)
@@ -20,7 +20,7 @@ internal fun AppCompatActivity.proxyAddHeaderDialog(onSave: (String) -> Unit) =
             val valueText = value?.text.toString().trim().ifBlank { "*" }
 
             if (nameText.isBlank()) {
-                name?.setInputLayoutError(getString(R.string.proxy_required_field))
+                name?.setInputLayoutError(getString(R.string.bigbrother_proxy_required_field))
                 return@add
             }
 
