@@ -1,5 +1,6 @@
 package br.com.mrocigno.bigbrother.proxy
 
+import android.net.Uri
 import androidx.core.net.toUri
 import br.com.mrocigno.bigbrother.common.dao.ProxyDao
 import br.com.mrocigno.bigbrother.common.db.BigBrotherDatabase.Companion.bbdb
@@ -53,9 +54,7 @@ internal class ProxyInterceptor : BigBrotherInterceptor {
             when (it.action) {
                 ProxyActions.EMPTY -> Unit
                 ProxyActions.SET_BODY -> {
-                    newBody = it.body
-                        ?.takeIf { !newMethod.equals("get", true) }
-                        ?.toRequestBody()
+                    newBody = it.body?.toRequestBody()
                 }
 
                 ProxyActions.SET_HEADER -> {
@@ -78,7 +77,7 @@ internal class ProxyInterceptor : BigBrotherInterceptor {
                 }
 
                 ProxyActions.SET_QUERY -> {
-                    pathBuilder.appendQueryParameter(it.name.orEmpty(), it.value.orEmpty())
+                    pathBuilder.setQuery(it.name.orEmpty(), it.value.orEmpty())
                 }
 
                 ProxyActions.REMOVE_HEADER -> {
@@ -86,15 +85,26 @@ internal class ProxyInterceptor : BigBrotherInterceptor {
                 }
 
                 ProxyActions.REMOVE_QUERY -> {
-                    pathBuilder.clearQuery()
-                    url.queryParameterNames.filterNot { query -> query == it.name }.forEach { query ->
-                        pathBuilder.appendQueryParameter(query, url.queryParameter(query))
-                    }
+                    pathBuilder.setQuery(it.name.orEmpty(), null)
                 }
             }
         }
-        builder.method(newMethod, newBody)
+        builder.method(newMethod, newBody.takeIf { !newMethod.equals("get", true) })
         builder.url(pathBuilder.build().toString())
         return builder.build()
+    }
+
+    private fun Uri.Builder.setQuery(name: String, value: String? = null) {
+        val current = toString().toUri()
+        clearQuery()
+        current.queryParameterNames
+            .filterNot { it == name }
+            .forEach { query ->
+                appendQueryParameter(query, current.getQueryParameter(query))
+            }
+
+        value?.takeIf { it.isNotBlank() }?.run {
+            appendQueryParameter(name, value)
+        }
     }
 }

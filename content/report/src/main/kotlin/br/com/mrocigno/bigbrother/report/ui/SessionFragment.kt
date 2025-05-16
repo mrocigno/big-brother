@@ -86,6 +86,7 @@ internal class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) 
     private fun onViewClick(session: SessionEntry, view: View) {
         PopupMenu(requireContext(), view, Gravity.CENTER_HORIZONTAL).apply {
             inflate(R.menu.bigbrother_session_menu)
+            setForceShowIcon(true)
 
             val sessionIntent = SessionDetailsActivity.intent(requireContext(), session.id)
             val networkSessionIntent = requireContext().intentToNetworkList(session.id)

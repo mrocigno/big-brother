@@ -2,11 +2,15 @@ package br.com.mrocigno.bigbrother.proxy.model
 
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
+import br.com.mrocigno.bigbrother.common.entity.ProxyRuleEntity
 import br.com.mrocigno.bigbrother.common.entity.ProxyRuleWithActions
+import br.com.mrocigno.bigbrother.common.utils.orTrue
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 import okhttp3.Request
 
 @Parcelize
+@Serializable
 internal data class ProxyRuleModel(
     val id: Long = 0,
     val ruleName: String = "",
@@ -28,9 +32,9 @@ internal data class ProxyRuleModel(
     )
 
     fun matches(request: Request): Boolean = when {
-        !methodCondition.fixRegex()
-            .matches(request.method) -> false
-        !(headerCondition
+        !methodCondition.fixRegex().matches(request.method) -> false
+        !pathCondition.fixRegex().matches(request.url.toString()) -> false
+        !headerCondition
             .split(";")
             .filter { it.contains("=") }
             .takeIf { it.isNotEmpty() }
@@ -38,14 +42,21 @@ internal data class ProxyRuleModel(
                 val (name, value) = condition.split("=", limit = 2)
                 value.fixRegex().matches(request.headers[name].orEmpty())
             }
-            ?: true) -> false
-        !pathCondition.fixRegex().matches(request.url.toString()) -> false
+            .orTrue() -> false
         else -> true
     }
+
+    fun newEntity() = ProxyRuleEntity(
+        ruleName = ruleName,
+        methodCondition = methodCondition,
+        pathCondition = pathCondition,
+        headerCondition = headerCondition,
+    )
 
     private fun String.fixRegex() =
         this.replace(".", "\\.")
             .replace("*", ".*")
+            .replace("?", "\\?")
             .toRegex()
 
     class Differ : ItemCallback<ProxyRuleModel>() {

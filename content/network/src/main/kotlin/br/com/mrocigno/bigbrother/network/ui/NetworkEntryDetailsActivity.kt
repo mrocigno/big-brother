@@ -14,6 +14,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -24,9 +25,11 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import br.com.mrocigno.bigbrother.common.provider.id
 import br.com.mrocigno.bigbrother.common.route.checkIntent
+import br.com.mrocigno.bigbrother.common.route.intentToProxyCreateRule
 import br.com.mrocigno.bigbrother.common.route.intentToProxyListRules
 import br.com.mrocigno.bigbrother.common.utils.copyToClipboard
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
+import br.com.mrocigno.bigbrother.common.utils.visible
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.network.R
 import br.com.mrocigno.bigbrother.network.byStatusCode
@@ -44,7 +47,8 @@ internal class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbroth
     private val copyAll: AppCompatTextView by id(R.id.net_entry_details_copy_all)
     private val loading: View by id(R.id.net_entry_details_loading_container)
     private val proxyContainer: View by id(R.id.net_entry_details_proxy_container)
-    private val proxyRules: View by id(R.id.net_entry_details_proxy_rules)
+    private val proxyLabel: AppCompatTextView by id(R.id.net_entry_details_proxy_label)
+    private val proxyRules: AppCompatButton by id(R.id.net_entry_details_proxy_rules)
 
     private val webView: WebView by id(R.id.net_entry_details_web)
 
@@ -77,15 +81,24 @@ internal class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbroth
             generalInfo.text = model.formatInfo()
             copyAll.setOnClickListener { copyToClipboard(model.toCURL()) }
             if (checkIntent(intentToProxyListRules(null))) {
-                proxyContainer.isVisible = model.proxyRules != null
-                proxyRules.setOnClickListener {
-                    val ids = model.proxyRules?.split(", ")
-                        ?.map { it.toLong() }
-                        ?.toLongArray()
-                        ?: return@setOnClickListener
+                val ids = model.proxyRules?.split(", ")
+                    ?.map { it.toLong() }
+                    ?.toLongArray()
+                    ?: longArrayOf()
 
-                    intentToProxyListRules(ids)
-                        .run(::startActivity)
+                proxyContainer.visible()
+                if (ids.isEmpty()) {
+                    proxyLabel.text = getString(R.string.net_entry_details_zero_proxy_rules)
+                    proxyRules.text = getString(R.string.net_entry_details_zero_proxy_button)
+                    proxyRules.setOnClickListener {
+                        intentToProxyCreateRule(model.method, model.fullUrl).run(::startActivity)
+                    }
+                } else {
+                    proxyLabel.text = resources.getQuantityString(R.plurals.net_entry_details_proxy_rules, ids.size, ids.size)
+                    proxyRules.text = resources.getQuantityString(R.plurals.net_entry_details_proxy_button, ids.size)
+                    proxyRules.setOnClickListener {
+                        intentToProxyListRules(ids).run(::startActivity)
+                    }
                 }
             }
 
@@ -102,8 +115,7 @@ internal class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbroth
             var startY = -1f
             var height = 0
             background.doOnLayout { height = it.height }
-
-            webView.setOnTouchListener { v, event ->
+            webView.setOnTouchListener { _, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
                         startY = event.rawY
@@ -118,15 +130,15 @@ internal class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbroth
 
                         if (root.progress in 0.001f..0.999f) {
                             webView.scrollY = 0
+                            webView.isVerticalScrollBarEnabled = false
+                        } else {
+                            webView.isVerticalScrollBarEnabled = true
                         }
                     }
                     MotionEvent.ACTION_UP -> {
-                        if (!isScrolling && root.progress in 0.001f .. 0.999f) {
-                            if (event.rawY < startY) {
-                                root.transitionToEnd()
-                            } else if (event.rawY > startY) {
-                                root.transitionToStart()
-                            }
+                        if (!isScrolling && root.progress in 0.001f .. 0.999f) when {
+                            event.rawY < startY -> root.transitionToEnd()
+                            event.rawY > startY -> root.transitionToStart()
                         }
                         isScrolling = false
                         startY = -1f

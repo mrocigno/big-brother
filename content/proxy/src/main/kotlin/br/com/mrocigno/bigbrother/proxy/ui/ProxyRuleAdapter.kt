@@ -74,6 +74,7 @@ internal class RuleViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.l
             true -> context.getString(R.string.proxy_actions_afects_all)
             false -> context.getString(R.string.proxy_actions_afects_few)
         }
+        switch.setOnCheckedChangeListener(null)
         switch.isChecked = model.enabled
         switch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked == model.enabled) return@setOnCheckedChangeListener

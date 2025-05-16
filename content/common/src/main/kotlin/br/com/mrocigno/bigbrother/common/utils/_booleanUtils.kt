@@ -5,3 +5,7 @@ fun Boolean.ifTrue(block: () -> Unit) =
 
 fun Boolean.ifFalse(block: () -> Unit) =
     if (!this) block() else Unit
+
+fun Boolean?.orTrue() = this ?: true
+
+fun Boolean?.orFalse() = this ?: false

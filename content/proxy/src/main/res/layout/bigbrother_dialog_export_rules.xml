@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_string_layout"
+        style="@style/input_outlined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:hint="JSON"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="@dimen/bb_spacing_m">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_string_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:scrollHorizontally="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</FrameLayout>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="json_viewer_expand_click">clique para expandir</string>
     <string name="json_viewer_disclaimer">Clique e segure em cima de qualquer item para copiar os dados</string>
@@ -32,6 +32,14 @@ Tempo corrido: %s\n
 === Body ===\n
 %s\n
     </string>
-    <string name="net_entry_details_proxy_rules">Foram aplicadas regras de proxy nessa request</string>
-    <string name="net_entry_details_proxy_button">Ver regras</string>
+    <string name="net_entry_details_zero_proxy_rules">Nenhuma regra de proxy aplicada</string>
+    <plurals name="net_entry_details_proxy_rules" tools:ignore="MissingQuantity">
+        <item quantity="one">%s regra de proxy aplicada</item>
+        <item quantity="other">%s regras de proxy aplicadas</item>
+    </plurals>
+    <string name="net_entry_details_zero_proxy_button">Criar regra</string>
+    <plurals name="net_entry_details_proxy_button" tools:ignore="MissingQuantity, ImpliedQuantity">
+        <item quantity="one">Ver regra</item>
+        <item quantity="other">Ver regras</item>
+    </plurals>
 </resources>

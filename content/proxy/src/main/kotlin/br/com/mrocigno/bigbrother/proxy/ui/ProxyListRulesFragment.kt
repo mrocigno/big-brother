@@ -18,9 +18,13 @@ import br.com.mrocigno.bigbrother.common.provider.id
 import br.com.mrocigno.bigbrother.common.route.RULES_ARG
 import br.com.mrocigno.bigbrother.proxy.R
 import br.com.mrocigno.bigbrother.proxy.model.ProxyRuleModel
+import br.com.mrocigno.bigbrother.proxy.ui.dialog.showExportRulesDialog
+import br.com.mrocigno.bigbrother.proxy.ui.dialog.showImportRulesDialog
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 internal class ProxyListRulesFragment : Fragment(R.layout.bigbrother_fragment_list_rules) {
 
@@ -34,6 +38,9 @@ internal class ProxyListRulesFragment : Fragment(R.layout.bigbrother_fragment_li
     private val viewModel: ProxyListRulesViewModel by activityViewModels()
     private val adapter: ProxyRuleAdapter get() = recycler.adapter as ProxyRuleAdapter
     private val rulesId: LongArray? by lazy { arguments?.getLongArray(RULES_ARG) }
+    private val serializer = Json {
+        prettyPrint = true
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,11 +52,39 @@ internal class ProxyListRulesFragment : Fragment(R.layout.bigbrother_fragment_li
     private fun setupForm() {
         searchView.doOnTextChanged { text, _, _, _ -> adapter.filter(text.toString()) }
         arrayOf(emptyAdd, add).forEach {
-            it.setOnClickListener {
-                ProxyCreateRuleActivity.intent(requireContext())
-                    .run(::startActivity)
-            }
+            it.setOnClickListener(::createRulePopup)
         }
+    }
+
+    private fun createRulePopup(parent: View) {
+        PopupMenu(requireContext(), parent).apply {
+            inflate(R.menu.bigbrother_proxy_add_rule)
+            menu.findItem(R.id.proxy_menu_export_rule).isVisible = adapter.itemCount > 0
+            setForceShowIcon(true)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.proxy_menu_create_rule -> openCreateRuleActivity()
+                    R.id.proxy_menu_import_rule -> showImportDialog()
+                    R.id.proxy_menu_export_rule -> showExportDialog()
+                }
+                true
+            }
+        }.show()
+    }
+
+    private fun openCreateRuleActivity() {
+        ProxyCreateRuleActivity.intent(requireContext()).run(::startActivity)
+    }
+
+    private fun showImportDialog() {
+        showImportRulesDialog {
+            viewModel.saveAll(it)
+        }
+    }
+
+    private fun showExportDialog() {
+        val json = serializer.encodeToString(adapter.items)
+        showExportRulesDialog(json)
     }
 
     private fun setupRecycler() {

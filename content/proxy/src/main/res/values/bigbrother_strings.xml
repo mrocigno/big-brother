@@ -58,4 +58,9 @@
     <string name="proxy_actions_do_nothing">No actions added</string>
     <string name="proxy_list_rules_enable_all">Enable all rules</string>
     <string name="proxy_list_rules_disable_all">Disable all rules</string>
+    <string name="proxy_list_rules_title">Applied rules</string>
+    <string name="proxy_menu_create_rule">Create new rule</string>
+    <string name="proxy_menu_import_rule">Import rules</string>
+    <string name="proxy_menu_export_rule">Export rules</string>
+    <string name="proxy_export_copy">Copy</string>
 </resources>
