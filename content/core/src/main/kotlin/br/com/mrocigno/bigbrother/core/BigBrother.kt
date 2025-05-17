@@ -10,7 +10,7 @@ object BigBrother {
 
     val config = BigBrotherConfig()
     internal val tasks = mutableListOf<BigBrotherTask>()
-    internal val interceptors = mutableSetOf<BigBrotherInterceptor>()
+    internal val interceptors = mutableSetOf<BBInterceptor>()
 
     private val activityPages: HashMap<KClass<out Activity>, List<PageData>> = hashMapOf()
     private val pages: MutableList<PageData> = mutableListOf()
@@ -23,7 +23,7 @@ object BigBrother {
         pages.add(PageData(name, creator))
     }
 
-    fun addInterceptor(interceptor: BigBrotherInterceptor) {
+    fun addInterceptor(interceptor: BBInterceptor) {
         Log.e("TAG", "addInterceptor: ${interceptor.hashCode()}")
         interceptors.add(interceptor)
     }

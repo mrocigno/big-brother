@@ -1,15 +1,15 @@
 package br.com.mrocigno.bigbrother.core.utils
 
 import android.app.Activity
-import br.com.mrocigno.bigbrother.core.BBInterceptor
 import br.com.mrocigno.bigbrother.core.BigBrother
+import br.com.mrocigno.bigbrother.core.BigBrotherInterceptor
 import br.com.mrocigno.bigbrother.core.BigBrotherTask
 import br.com.mrocigno.bigbrother.core.BigBrotherView
 import okhttp3.OkHttpClient
 import kotlin.reflect.KClass
 
 fun OkHttpClient.Builder.addBigBrotherInterceptor(vararg blockList: String) =
-    addInterceptor(BBInterceptor(*blockList))
+    addInterceptor(BigBrotherInterceptor(*blockList))
 
 fun Activity.openBigBrotherBubble() =
     BigBrotherView.get(this).animateToCenter()

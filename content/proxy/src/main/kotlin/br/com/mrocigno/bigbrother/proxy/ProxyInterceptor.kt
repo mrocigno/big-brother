@@ -5,7 +5,7 @@ import androidx.core.net.toUri
 import br.com.mrocigno.bigbrother.common.dao.ProxyDao
 import br.com.mrocigno.bigbrother.common.db.BigBrotherDatabase.Companion.bbdb
 import br.com.mrocigno.bigbrother.common.route.PROXY_APPLIED_HEADER
-import br.com.mrocigno.bigbrother.core.BigBrotherInterceptor
+import br.com.mrocigno.bigbrother.core.BBInterceptor
 import br.com.mrocigno.bigbrother.proxy.model.ProxyActionModel
 import br.com.mrocigno.bigbrother.proxy.model.ProxyActions
 import br.com.mrocigno.bigbrother.proxy.model.ProxyRuleModel
@@ -13,7 +13,7 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 
-internal class ProxyInterceptor : BigBrotherInterceptor {
+internal class ProxyInterceptor : BBInterceptor {
 
     override val priority: Int = 1000
     private val proxyDao: ProxyDao? get() = bbdb?.proxyDao()

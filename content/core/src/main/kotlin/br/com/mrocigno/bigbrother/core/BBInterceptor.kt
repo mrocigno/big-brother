@@ -5,7 +5,7 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 
-interface BigBrotherInterceptor {
+interface BBInterceptor {
 
     val priority: Int
 
@@ -16,7 +16,7 @@ interface BigBrotherInterceptor {
     fun onError(e: Exception): Exception
 }
 
-internal class BBInterceptor(private vararg val blockList: String) : Interceptor {
+class BigBrotherInterceptor(private vararg val blockList: String) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         if (chain.request().isBlocked()) return chain.proceed(chain.request())

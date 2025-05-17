@@ -7,6 +7,7 @@ Created to improve the manual testing, the BigBrother lib is a tool that allows 
 * **`Report`** - a report generator. It will record a timeline using data provided by the other modules (or custom)
 * **`Database`** - provide an interface to navigate between your database/sharedPreferences files
 * **`Crash`** - when the app crashs, it will show a screen with stackTrace exception and a timeline with a print where the user clicked to cause the error
+* **`Proxy`** - create rules to modify some data in the network requests 
 
 ## Getting started
 
@@ -14,7 +15,7 @@ Big Brother's goal is to provide tools that help developers/QA test their featur
 To use BigBrother in the app, implements the following dependencies in `build.gradle` on app module:
 ```groovy
 dependencies {
-    def bigbrother_last_release = '1.0.0'
+    def bigbrother_last_release = '1.1.2'
 
     // The version definition is required only on core implementation
     debugImplementation "io.github.mrocigno:big-brother-core:$bigbrother_last_release"
@@ -34,6 +35,9 @@ dependencies {
 
     // To get database/sharedPreferences files
     debugImplementation "io.github.mrocigno:big-brother-database"
+
+    // To create proxy rules
+    debugImplementation "io.github.mrocigno:big-brother-proxy"
 }
 ```
 
@@ -66,8 +70,11 @@ Now with de dependencies correctly implemented, we will configure to start using
           // If the big-brother-report was implemented in build.grade
           BigBrother.addSessionPage(customName = "Session")
   
-          // If the big-brother- was implemented in build.grade
+          // If the big-brother-database was implemented in build.grade
           BigBrother.addDatabasePage(customName = "Database")
+  
+          // If the big-brother-proxy was implemented in build.grade
+          BigBrother.addProxyPage(customName = "Proxy")
   
           // If you want to create some custom tool for your project
           BigBrother.addPage(name = "My Awesome Tool") { bubble: BigBrotherView ->
@@ -118,8 +125,11 @@ Now with de dependencies correctly implemented, we will configure to start using
           // If the big-brother-report was implemented in build.grade
           addSessionPage(customName = "Session")
   
-          // If the big-brother- was implemented in build.grade
+          // If the big-brother-database was implemented in build.grade
           addDatabasePage(customName = "Database")
+  
+          // If the big-brother-proxy was implemented in build.grade
+          addProxyPage(customName = "Proxy")
   
           // If you want to create some custom tool for your project
           addPage(name = "My Awesome Tool") { bubble: BigBrotherView ->
@@ -215,20 +225,20 @@ The network implementation allows you to receive requests and responses from you
   private val okHttpClient : OkHttpClient = OkHttpClient.Builder()
       .connectTimeout(30, TimeUnit.SECONDS)
       .readTimeout(30, TimeUnit.SECONDS)
-      .bigBrotherIntercept(blockList = arrayOf(
+      .addBigBrotherInterceptor(
           "dont/intercept/this",
           "not/even/this"
-      ))
+      )
       .build()
   
   // OR add raw class
   private val okHttpClient : OkHttpClient = OkHttpClient.Builder()
       .connectTimeout(30, TimeUnit.SECONDS)
       .readTimeout(30, TimeUnit.SECONDS)
-      .addInterceptor(BigBrotherInterceptor(blockList = arrayOf(
+      .addInterceptor(BigBrotherInterceptor(
           "dont/intercept/this",
           "not/even/this"
-      )))
+      ))
       .build()
   ```
 
@@ -304,3 +314,38 @@ The crash implementation will display a screen with the exception stackTrace and
 This implementation requires no setup
 
 ![session gif](gifs/crash.gif)
+
+## Proxy
+
+The proxy module allows you to create rules that can modify network requests in real time. This is useful for testing different scenarios, such as simulating network errors or modifying data before it reaches the server.
+
+<details>
+    <summary><b><i>Setup Proxy</i></b></summary>
+
+  As in the network implementation, we need to configure an interceptor (if you already configured the interceptor for network, you don't need to do anything else)
+
+  ```kotlin
+  // Using the extension
+  private val okHttpClient : OkHttpClient = OkHttpClient.Builder()
+      .connectTimeout(30, TimeUnit.SECONDS)
+      .readTimeout(30, TimeUnit.SECONDS)
+      .addBigBrotherInterceptor(
+          "dont/intercept/this",
+          "not/even/this"
+      )
+      .build()
+  
+  // OR add raw class
+  private val okHttpClient : OkHttpClient = OkHttpClient.Builder()
+      .connectTimeout(30, TimeUnit.SECONDS)
+      .readTimeout(30, TimeUnit.SECONDS)
+      .addInterceptor(BigBrotherInterceptor(
+          "dont/intercept/this",
+          "not/even/this"
+      ))
+      .build()
+  ```
+
+</details>
+
+![proxy gif](gifs/proxy.gif)
