@@ -19,11 +19,30 @@ internal enum class ProxyActions(
         group = -1,
         validate = { _, _, _ -> false }
     ),
-    SET_BODY(
+    SET_BODY_REQUEST(
         label = R.string.bigbrother_proxy_set_body_label,
         message = R.string.bigbrother_proxy_set_body_message,
         group = R.id.proxy_action_body_layout,
         description = R.string.bigbrother_proxy_set_body_description,
+        validate = { _, _, body ->
+            val context = body.context
+            val bodyText = body.text.toString().trim()
+            val json = runCatching { JSONObject(bodyText) }
+                .recoverCatching { JSONArray(bodyText) }
+                .getOrElse { it.message }
+
+            when {
+                bodyText.isEmpty() -> { body.setInputLayoutError(context.getString(R.string.bigbrother_proxy_required_field)); false }
+                json is String -> { body.setInputLayoutError(context.getString(R.string.bigbrother_proxy_json_invalid, json)); false }
+                else -> true
+            }
+        }
+    ),
+    SET_BODY_RESPONSE(
+        label = R.string.bigbrother_proxy_set_body_response_label,
+        message = R.string.bigbrother_proxy_set_body_response_message,
+        group = R.id.proxy_action_body_layout,
+        description = R.string.bigbrother_proxy_set_body_response_description,
         validate = { _, _, body ->
             val context = body.context
             val bodyText = body.text.toString().trim()
@@ -100,6 +119,22 @@ internal enum class ProxyActions(
                 nameText.isEmpty() -> { name.setInputLayoutError(context.getString(R.string.bigbrother_proxy_required_field)); false }
                 nameText.contains(" ") -> { name.setInputLayoutError(context.getString(R.string.bigbrother_proxy_spaces_error)); false }
                 valueText.isEmpty() -> { value.setInputLayoutError(context.getString(R.string.bigbrother_proxy_required_field)); false }
+                else -> true
+            }
+        }
+    ),
+    SET_RESPONSE_CODE(
+        label = R.string.bigbrother_proxy_set_response_code_label,
+        message = R.string.bigbrother_proxy_set_response_code_message,
+        group = R.id.proxy_action_value_layout,
+        description = R.string.bigbrother_proxy_set_response_code_description,
+        validate = { name, value, _ ->
+            val context = name.context
+            val valueText = value.text.toString().trim()
+
+            when {
+                valueText.isEmpty() -> { value.setInputLayoutError(context.getString(R.string.bigbrother_proxy_required_field)); false }
+                valueText.any { !it.isDigit() } -> { value.setInputLayoutError(context.getString(R.string.bigbrother_proxy_number_field)); false }
                 else -> true
             }
         }

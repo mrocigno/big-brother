@@ -2,21 +2,26 @@
 <resources>
     <string name="bigbrother_proxy_empty_message">Selecione uma opção no dropdown para continuar</string>
     <string name="bigbrother_proxy_set_body_message">Para editar o body antes de ser executado o request</string>
+    <string name="bigbrother_proxy_set_body_response_message">Para editar o body da resposta</string>
     <string name="bigbrother_proxy_set_path_message">Para editar o endpoint antes de ser executado o request</string>
     <string name="bigbrother_proxy_set_header_message">Para adicionar ou editar um header antes de ser executado o request</string>
     <string name="bigbrother_proxy_set_method_message">Para alterar o method do request</string>
     <string name="bigbrother_proxy_remove_header_message">Para remover um header antes de ser executado o request</string>
     <string name="bigbrother_proxy_set_query_message">Para adicionar ou editar uma queryString antes de ser executado o request</string>
+    <string name="bigbrother_proxy_set_response_code_message">Para alterar o response code</string>
     <string name="bigbrother_proxy_remove_query_message">Para remover uma queryString antes de ser executado o request</string>
 
     <string name="bigbrother_proxy_set_header_description">Adiciona ou edita o header \"%s\" com o valor \"%s\"</string>
     <string name="bigbrother_proxy_set_method_description">Muda o method do request para %s\"%2s\"</string>
     <string name="bigbrother_proxy_set_path_description">Altera o path request para %s\"%2s\"</string>
     <string name="bigbrother_proxy_set_body_description">Substitui o body request</string>
+    <string name="bigbrother_proxy_set_body_response_description">Substitui o body response</string>
     <string name="bigbrother_proxy_set_query_description">Adiciona ou edita a queryString \"%s\" com o valor \"%s\"</string>
+    <string name="bigbrother_proxy_set_response_code_description">Substitui o response code para %s\"%2s\"</string>
     <string name="bigbrother_proxy_remove_header_description">Remove o header \"%s\"</string>
     <string name="bigbrother_proxy_remove_query_description">Remove o queryString \"%s\"</string>
 
+    <string name="bigbrother_proxy_number_field">O campo deve ser um número</string>
     <string name="bigbrother_proxy_required_field">Campo obrigatório</string>
     <string name="bigbrother_proxy_json_invalid">Formato inválido\n%1$s</string>
     <string name="bigbrother_proxy_spaces_error">Não pode conter espaços</string>

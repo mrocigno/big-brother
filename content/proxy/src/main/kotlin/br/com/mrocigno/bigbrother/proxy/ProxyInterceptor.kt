@@ -12,6 +12,7 @@ import br.com.mrocigno.bigbrother.proxy.model.ProxyRuleModel
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import okhttp3.ResponseBody.Companion.toResponseBody
 
 internal class ProxyInterceptor : BBInterceptor {
 
@@ -35,9 +36,7 @@ internal class ProxyInterceptor : BBInterceptor {
         val list = rules.get() ?: return response
         rules.remove()
 
-        return response.newBuilder()
-            .addHeader(PROXY_APPLIED_HEADER, list.joinToString { it.id.toString() })
-            .build()
+        return response.applyAllActions(list)
     }
 
     override fun onError(e: Exception): Exception {
@@ -52,8 +51,11 @@ internal class ProxyInterceptor : BBInterceptor {
         var newBody = body
         actions.forEach {
             when (it.action) {
-                ProxyActions.EMPTY -> Unit
-                ProxyActions.SET_BODY -> {
+                ProxyActions.EMPTY,
+                ProxyActions.SET_BODY_RESPONSE,
+                ProxyActions.SET_RESPONSE_CODE -> Unit
+
+                ProxyActions.SET_BODY_REQUEST -> {
                     newBody = it.body?.toRequestBody()
                 }
 
@@ -91,6 +93,35 @@ internal class ProxyInterceptor : BBInterceptor {
         }
         builder.method(newMethod, newBody.takeIf { !newMethod.equals("get", true) })
         builder.url(pathBuilder.build().toString())
+        return builder.build()
+    }
+
+    private fun Response.applyAllActions(rules: List<ProxyRuleModel>): Response {
+        val actions = rules.flatMap { it.actions }
+        val builder = newBuilder()
+            .addHeader(PROXY_APPLIED_HEADER, rules.joinToString { it.id.toString() })
+
+        actions.forEach {
+            when (it.action) {
+                ProxyActions.EMPTY,
+                ProxyActions.SET_BODY_REQUEST,
+                ProxyActions.SET_HEADER,
+                ProxyActions.SET_METHOD,
+                ProxyActions.SET_PATH,
+                ProxyActions.SET_QUERY,
+                ProxyActions.REMOVE_HEADER,
+                ProxyActions.REMOVE_QUERY -> Unit
+
+                ProxyActions.SET_BODY_RESPONSE -> {
+                    builder.body(it.body?.toResponseBody())
+                }
+
+                ProxyActions.SET_RESPONSE_CODE -> {
+                    builder.code(it.value?.toIntOrNull() ?: -1)
+                }
+            }
+        }
+
         return builder.build()
     }
 

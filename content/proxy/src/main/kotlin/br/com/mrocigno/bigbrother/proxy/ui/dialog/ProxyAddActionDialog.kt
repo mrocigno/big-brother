@@ -14,6 +14,8 @@ import br.com.mrocigno.bigbrother.common.utils.visible
 import br.com.mrocigno.bigbrother.proxy.R
 import br.com.mrocigno.bigbrother.proxy.model.ProxyActionModel
 import br.com.mrocigno.bigbrother.proxy.model.ProxyActions
+import br.com.mrocigno.bigbrother.proxy.model.ProxyActions.SET_BODY_REQUEST
+import br.com.mrocigno.bigbrother.proxy.model.ProxyActions.SET_BODY_RESPONSE
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.bigbrother.common.R as CR
@@ -108,7 +110,8 @@ private fun getPositiveButtonClick(
                 action = action,
                 name = name.text.toString().trim(),
                 value = value.text.toString().trim(),
-                body = body.text.toString().trim().takeIf { action == ProxyActions.SET_BODY }
+                body = body.text.toString().trim()
+                    .takeIf { action == SET_BODY_REQUEST || action == SET_BODY_RESPONSE }
             )
         )
         dismiss()
