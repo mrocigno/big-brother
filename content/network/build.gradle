@@ -2,6 +2,7 @@ plugins {
     alias libs.plugins.android.library
     alias libs.plugins.android.kotlin
     id 'kotlin-parcelize'
+    id 'kotlinx-serialization'
 }
 
 apply from: file('../../gradle/publish.gradle')
@@ -15,4 +16,5 @@ dependencies {
     compileOnly libs.squareup.okhttp3
 
     implementation libs.androidx.activity
+    implementation libs.kotlin.serialization
 }

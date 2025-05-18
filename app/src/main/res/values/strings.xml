@@ -25,4 +25,5 @@
     <string name="custom_page_comment">// Inside BigBrotherProvider</string>
     <string name="custom_page_title">Custom page</string>
     <string name="compose_activity_button">Compose activity</string>
+    <string name="upload_image">Upload image</string>
 </resources>

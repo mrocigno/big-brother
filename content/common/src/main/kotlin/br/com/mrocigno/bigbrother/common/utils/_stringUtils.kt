@@ -22,6 +22,13 @@ fun String.startsWith(vararg chars: Char) =
 
 fun String.isJson() = trim().startsWith('{', '[')
 
+fun String.isHtml(): Boolean {
+    val trimmed = trim()
+    return trimmed.startsWith("<!DOCTYPE", ignoreCase = true) ||
+            trimmed.contains("<html", ignoreCase = true) ||
+            trimmed.contains("<body", ignoreCase = true)
+}
+
 fun String.toIntRound() = toFloat().roundToInt()
 
 fun String.toLongRound() = toDouble().roundToLong()

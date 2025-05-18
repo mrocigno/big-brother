@@ -3,8 +3,12 @@ package br.com.mrocigno.bigbrother.network.model
 import androidx.recyclerview.widget.DiffUtil
 import br.com.mrocigno.bigbrother.common.entity.NetworkEntity
 import br.com.mrocigno.bigbrother.common.utils.bbSessionId
+import br.com.mrocigno.bigbrother.common.utils.toReadable
 import br.com.mrocigno.bigbrother.report.bbTrack
 import br.com.mrocigno.bigbrother.report.model.ReportType
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import okhttp3.MultipartBody
 import okhttp3.Request
 import okhttp3.Response
 import okio.Buffer
@@ -115,10 +119,13 @@ class NetworkPayloadModel(
     constructor(request: Request) : this(
         headers = request.headers.toMultimap(),
         body = request.let {
-            val buffer = Buffer()
-            it.body
-                ?.writeTo(buffer)
-                ?.let { buffer.readUtf8() }
+            when (val body = request.body) {
+                is MultipartBody -> Json.encodeToString(NetworkMultiPartModel(body))
+                else -> {
+                    val buffer = Buffer()
+                    it.body?.writeTo(buffer)?.let { buffer.readUtf8() }
+                }
+            }
         }
     )
 
@@ -143,26 +150,11 @@ class NetworkPayloadModel(
         }.recoverCatching {
             JSONArray(body).toString(2)
         }.getOrElse {
-            body
+            body.trim()
         }
 
     val formattedHeaders: String get() =
-        if (headers.isNullOrEmpty()) "empty" else {
-            headers.toReadable()
-        }
-
-    private fun Map<String, List<String>>?.toReadable(): String {
-        if (this.isNullOrEmpty()) return "empty"
-
-        val builder = StringBuilder()
-        keys.forEach {
-            builder.append(it)
-            builder.append(": ")
-            builder.append(this[it]?.joinToString(", "))
-            builder.append("\n")
-        }
-        return builder.toString()
-    }
+        if (headers.isNullOrEmpty()) "empty" else headers.toReadable()
 
     companion object {
 

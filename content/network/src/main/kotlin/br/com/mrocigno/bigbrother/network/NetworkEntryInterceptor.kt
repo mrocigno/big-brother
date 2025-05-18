@@ -8,7 +8,7 @@ import okhttp3.Request
 import okhttp3.Response
 import java.util.Objects
 
-internal class NetworkEntryInterceptor() : BBInterceptor {
+internal class NetworkEntryInterceptor : BBInterceptor {
 
     override val priority: Int = 0
 

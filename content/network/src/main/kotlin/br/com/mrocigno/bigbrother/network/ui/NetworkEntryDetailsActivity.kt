@@ -66,10 +66,10 @@ internal class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbroth
 
     private fun setupToolbar() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
         toolbar.updateLayoutParams<ConstraintLayout.LayoutParams> {
             setMargins(0, statusBarHeight, 0, 0)
         }
-        toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -80,27 +80,7 @@ internal class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbroth
             method.text = model.method
             generalInfo.text = model.formatInfo()
             copyAll.setOnClickListener { copyToClipboard(model.toCURL()) }
-            if (checkIntent(intentToProxyListRules(null))) {
-                val ids = model.proxyRules?.split(", ")
-                    ?.map { it.toLong() }
-                    ?.toLongArray()
-                    ?: longArrayOf()
-
-                proxyContainer.visible()
-                if (ids.isEmpty()) {
-                    proxyLabel.text = getString(R.string.bigbrother_net_entry_details_zero_proxy_rules)
-                    proxyRules.text = getString(R.string.bigbrother_net_entry_details_zero_proxy_button)
-                    proxyRules.setOnClickListener {
-                        intentToProxyCreateRule(model.method, model.fullUrl).run(::startActivity)
-                    }
-                } else {
-                    proxyLabel.text = resources.getQuantityString(R.plurals.bigbrother_net_entry_details_proxy_rules, ids.size, ids.size)
-                    proxyRules.text = resources.getQuantityString(R.plurals.bigbrother_net_entry_details_proxy_button, ids.size)
-                    proxyRules.setOnClickListener {
-                        intentToProxyListRules(ids).run(::startActivity)
-                    }
-                }
-            }
+            setupProxyInfo(model)
 
             NetworkEntryTemplate(model).load(webView)
             webView.webViewClient = object : WebViewClient() {
@@ -145,6 +125,29 @@ internal class NetworkEntryDetailsActivity : AppCompatActivity(R.layout.bigbroth
                     }
                 }
                 false
+            }
+        }
+    }
+
+    private fun setupProxyInfo(model: NetworkEntryModel) {
+        if (!checkIntent(intentToProxyListRules(null))) return
+        val ids = model.proxyRules?.split(", ")
+            ?.map { it.toLong() }
+            ?.toLongArray()
+            ?: longArrayOf()
+
+        proxyContainer.visible()
+        if (ids.isEmpty()) {
+            proxyLabel.text = getString(R.string.bigbrother_net_entry_details_zero_proxy_rules)
+            proxyRules.text = getString(R.string.bigbrother_net_entry_details_zero_proxy_button)
+            proxyRules.setOnClickListener {
+                intentToProxyCreateRule(model.method, model.fullUrl).run(::startActivity)
+            }
+        } else {
+            proxyLabel.text = resources.getQuantityString(R.plurals.bigbrother_net_entry_details_proxy_rules, ids.size, ids.size)
+            proxyRules.text = resources.getQuantityString(R.plurals.bigbrother_net_entry_details_proxy_button, ids.size)
+            proxyRules.setOnClickListener {
+                intentToProxyListRules(ids).run(::startActivity)
             }
         }
     }

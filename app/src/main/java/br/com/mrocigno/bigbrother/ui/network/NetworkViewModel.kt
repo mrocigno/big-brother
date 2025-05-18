@@ -1,12 +1,20 @@
 package br.com.mrocigno.bigbrother.ui.network
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.com.mrocigno.bigbrother.di.DI
 import br.com.mrocigno.bigbrother.network.MutableResponseFlow
 import br.com.mrocigno.bigbrother.network.ResponseFlow
 import br.com.mrocigno.bigbrother.repository.GithubRepository
 import br.com.mrocigno.bigbrother.repository.model.ApiBase
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+import java.io.FileOutputStream
 
 class NetworkViewModel(
     private val githubRepository: GithubRepository = DI.githubRepository
@@ -24,4 +32,26 @@ class NetworkViewModel(
     fun fetchPost() = _list.sync(githubRepository.simulatePost().map {
         ApiBase(0, false, emptyList())
     })
+
+    fun uploadImg(context: Context) = viewModelScope.launch {
+        val fileName = "upload-example.jpg"
+        val tempFile = File.createTempFile("tmp_", fileName, context.cacheDir)
+        context.assets.open(fileName).use { input ->
+            FileOutputStream(tempFile).use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        val requestBody = tempFile.asRequestBody("image/*".toMediaTypeOrNull())
+        val part = MultipartBody.Part.createFormData("image", tempFile.name, requestBody)
+        runCatching {
+            githubRepository.uploadImage(part)
+        }.getOrNull()
+    }
+
+    fun fetchXmlApi() = viewModelScope.launch {
+        runCatching {
+            githubRepository.xmlApi()
+        }.getOrNull()
+    }
 }

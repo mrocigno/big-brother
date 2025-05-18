@@ -6,6 +6,7 @@ import br.com.mrocigno.bigbrother.network.model.NetworkPayloadModel
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -22,6 +23,9 @@ object NetworkConfig {
             if (it.request().headers["slowly"] == "true") Thread.sleep(5000L)
             it.proceed(it.request())
         }
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
         .build()
 
     val retrofit : Retrofit = Retrofit.Builder()
