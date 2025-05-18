@@ -16,6 +16,8 @@
             <option value="$PROJECT_DIR$/content/core" />
             <option value="$PROJECT_DIR$/content/crash" />
             <option value="$PROJECT_DIR$/content/database" />
+            <option value="$PROJECT_DIR$/content/deeplink" />
+            <option value="$PROJECT_DIR$/content/deeplink/plugin" />
             <option value="$PROJECT_DIR$/content/log" />
             <option value="$PROJECT_DIR$/content/network" />
             <option value="$PROJECT_DIR$/content/proxy" />
