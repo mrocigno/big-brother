@@ -6,6 +6,7 @@ plugins {
     id("java-library")
     id("kotlin")
     id("java-gradle-plugin")
+    id("kotlinx-serialization")
 }
 
 java {
@@ -40,4 +41,5 @@ gradlePlugin {
 dependencies {
     implementation(libs.agp.core)
     implementation(libs.agp.api)
+    implementation(libs.kotlin.serialization)
 }

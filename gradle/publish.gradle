@@ -6,7 +6,6 @@ def libGroup = "io.github.mrocigno"
 def libVersion = project.findProperty("libVersion")
 
 android {
-
     publishing {
         singleVariant("release") {
             withSourcesJar()
