@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.edit
+import br.com.mrocigno.bigbrother.BuildConfig
 import br.com.mrocigno.bigbrother.R
 import br.com.mrocigno.bigbrother.ui.compose.ComposableActivity
 import br.com.mrocigno.bigbrother.ui.general.CustomPageActivity
@@ -23,12 +25,18 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setupVersion()
         setupNetworkGroup()
         setupReportGroup()
         setupLogGroup()
         setupGeneralGroup()
 
         createTestSharedPreferences()
+    }
+
+    private fun setupVersion() {
+        findViewById<AppCompatTextView>(R.id.version).text =
+            "v${BuildConfig.VERSION_NAME}"
     }
 
     private fun createTestSharedPreferences() {

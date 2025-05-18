@@ -20,7 +20,14 @@ fun String.trimExtension() = substringBeforeLast(".")
 fun String.startsWith(vararg chars: Char) =
     firstOrNull()?.run(chars::contains) ?: false
 
-fun String.isJson() = trim().startsWith('{', ']')
+fun String.isJson() = trim().startsWith('{', '[')
+
+fun String.isHtml(): Boolean {
+    val trimmed = trim()
+    return trimmed.startsWith("<!DOCTYPE", ignoreCase = true) ||
+            trimmed.contains("<html", ignoreCase = true) ||
+            trimmed.contains("<body", ignoreCase = true)
+}
 
 fun String.toIntRound() = toFloat().roundToInt()
 

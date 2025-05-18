@@ -16,7 +16,7 @@ import br.com.mrocigno.bigbrother.database.R
 import kotlin.math.min
 import br.com.mrocigno.bigbrother.common.R as CR
 
-class SharedPreferencesItemAdapter(
+internal class SharedPreferencesItemAdapter(
     prefs: SharedPreferences,
     private val onItemClick: ((String, Any?) -> Unit)? = null
 ) : Adapter<SharedPreferencesItemViewHolder>() {

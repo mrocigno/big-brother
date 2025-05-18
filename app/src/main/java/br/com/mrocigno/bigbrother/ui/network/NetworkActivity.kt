@@ -19,6 +19,8 @@ class NetworkActivity : AppCompatActivity(R.layout.network_activity) {
     private val successLoadList: AppCompatButton by lazy { findViewById(R.id.success_load_list) }
     private val slowLoadList: AppCompatButton by lazy { findViewById(R.id.slow_load_list) }
     private val errorLoadList: AppCompatButton by lazy { findViewById(R.id.error_load_list) }
+    private val uploadImage: AppCompatButton by lazy { findViewById(R.id.upload_img) }
+    private val xmlApi: AppCompatButton by lazy { findViewById(R.id.xml_api) }
     private val progressBar: LinearProgressIndicator by lazy { findViewById(R.id.progress_bar) }
     private val toolbar: Toolbar by lazy { findViewById(R.id.toolbar) }
 
@@ -51,7 +53,17 @@ class NetworkActivity : AppCompatActivity(R.layout.network_activity) {
 
         errorLoadList.setOnClickListener {
             openBigBrotherBubble()
-            viewModel.fetchPost()
+            viewModel.fetchError()
+        }
+
+        uploadImage.setOnClickListener {
+            openBigBrotherBubble()
+            viewModel.uploadImg(this)
+        }
+
+        xmlApi.setOnClickListener {
+            openBigBrotherBubble()
+            viewModel.fetchXmlApi()
         }
     }
 }

@@ -5,10 +5,10 @@
         <title>network entry</title>
         <style>
             body {
-                color: BBtextColor;
+                color: #BBtextColor;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
                 margin: 0px 0px 100px 0px;
-                background-color: BBbackgroundColor;
+                background-color: #BBbackgroundColor;
             }
 
             .container {
@@ -16,15 +16,15 @@
                 display: flex;
                 flex-direction: column;
                 border-radius: 16px;
-                background-color: BBbackgroundSecondaryColor;
+                background-color: #BBbackgroundSecondaryColor;
             }
 
             .container .head {
                 display: flex;
                 padding: 10px;
-                font-size: 15px; 
+                font-size: 15px;
                 align-items: center;
-                background-color: BBbackgroundTertiaryColor;
+                background-color: #BBbackgroundTertiaryColor;
                 border-top-left-radius: 16px;
                 border-top-right-radius: 16px;
             }
@@ -56,22 +56,41 @@
             }
 
             .action-buttons svg:hover {
-                background-color: BBbackgroundTertiaryColor;
+                background-color: #BBbackgroundTertiaryColor;
             }
 
-            .container p {
+            .container pre {
                 padding: 10px 0px;
                 margin: 0px;
-                white-space: nowrap;
                 overflow-x: auto;
                 font-family: 'Courier New', Courier, monospace;
+            }
+
+            .container code {
+                padding: 10px 0px;
+                margin: 0px;
+                overflow-x: auto;
+                font-family: 'Courier New', Courier, monospace;
+            }
+
+            iframe {
+                border: none;
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
             }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="head">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="BBtextColor">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#BBtextColor">
                     <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/>
                 </svg>
                 &nbsp;REQUEST
@@ -80,32 +99,32 @@
                 <h1>
                     Headers
                     <div class="action-buttons">
-                        <svg onclick="javascript: NativeAndroid.copyToClipboard(document.getElementById('request-header').innerText);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="BBtextLinkColor">
+                        <svg onclick="javascript: NativeAndroid.copyToClipboard(document.getElementById('request-header').innerText);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#BBtextLinkColor">
                             <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/>
                         </svg>
                     </div>
                 </h1>
-                <p id="request-header">%request_headers%</p>
+                <pre><code id="request-header">%request_headers%</code></pre>
             </div>
             <div class="content">
                 <h1>
                     Body
                     <div class="action-buttons">
-                        <svg onclick="javascript: NativeAndroid.openJson(document.getElementById('request-body').innerHTML);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="BBtextLinkColor">
+                        <svg onclick="javascript: NativeAndroid.openJson(document.getElementById('request-body').innerHTML);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#BBtextLinkColor">
                             <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
                         </svg>
-                        <svg onclick="javascript: NativeAndroid.copyToClipboard(document.getElementById('request-body').innerHTML);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="BBtextLinkColor">
+                        <svg onclick="javascript: NativeAndroid.copyToClipboard(document.getElementById('request-body').innerHTML);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#BBtextLinkColor">
                             <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/>
                         </svg>
                     </div>
                 </h1>
-                <p id="request-body">%request_body%</p>
+                <pre><code id="request-body">%request_body%</code></pre>
             </div>
         </div>
         <br/>
         <div class="container">
             <div class="head">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="BBtextColor">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#BBtextColor">
                     <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/>
                 </svg>
                 &nbsp;RESPONSE
@@ -114,27 +133,39 @@
                 <h1>
                     Headers
                     <div class="action-buttons">
-                        <svg onclick="javascript: NativeAndroid.copyToClipboard(document.getElementById('response-header').innerText);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="BBtextLinkColor">
+                        <svg onclick="javascript: NativeAndroid.copyToClipboard(document.getElementById('response-header').innerText);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#BBtextLinkColor">
                             <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/>
                         </svg>
                     </div>
                 </h1>
-                <p id="response-header">%response_headers%</p>
+                <pre><code id="response-header">%response_headers%</code></pre>
             </div>
             <div class="content">
                 <h1>
                     Body
                     <div class="action-buttons">
-                        <svg onclick="javascript: NativeAndroid.openJson(document.getElementById('response-body').innerHTML);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="BBtextLinkColor">
+                        <svg onclick="javascript: NativeAndroid.openJson(document.getElementById('response-body').innerHTML);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#BBtextLinkColor">
                             <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
                         </svg>
-                        <svg onclick="javascript: NativeAndroid.copyToClipboard(document.getElementById('response-body').innerHTML);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="BBtextLinkColor">
+                        <svg onclick="javascript: NativeAndroid.copyToClipboard(document.getElementById('response-body').innerHTML);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#BBtextLinkColor">
                             <path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/>
                         </svg>
                     </div>
                 </h1>
-                <p id="response-body">%response_body%</p>
+                <pre><code id="response-body">%response_body%</code></pre>
             </div>
         </div>
     </body>
+    <script>
+        const iframe = document.getElementById("response-html");
+        iframe.onload = function() {
+            iframe.style.height = iframe.contentWindow.document.body.scrollHeight + "px";
+            const links = iframe.contentDocument.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); // bloqueia o clique
+                });
+            });
+        };
+    </script>
 </html>

@@ -72,11 +72,41 @@
         android:foreground="?selectableItemBackground"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/network_copy"
+        android:text="@string/bigbrother_network_copy"
         android:textColor="@color/bb_text_hyperlink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/net_entry_details_general_info" />
+
+    <LinearLayout
+        android:id="@+id/net_entry_details_proxy_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/bb_background_secondary"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/net_entry_details_background">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/net_entry_details_proxy_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingHorizontal="10dp"
+            tools:text="@tools:sample/lorem[3]" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/net_entry_details_proxy_rules"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/bb_text_hyperlink"
+            android:textSize="11sp"
+            tools:text="@tools:sample/lorem[2]" />
+
+    </LinearLayout>
 
     <WebView
         android:id="@+id/net_entry_details_web"
@@ -85,7 +115,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/net_entry_details_background" />
+        app:layout_constraintTop_toBottomOf="@id/net_entry_details_proxy_container" />
 
     <FrameLayout
         android:id="@+id/net_entry_details_loading_container"

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import br.com.mrocigno.bigbrother.common.utils.gone
 import br.com.mrocigno.bigbrother.common.utils.inflate
 import br.com.mrocigno.bigbrother.common.utils.visible
-import br.com.mrocigno.bigbrother.core.utils.getTask
+import br.com.mrocigno.bigbrother.core.utils.getBigBrotherTask
 import br.com.mrocigno.bigbrother.database.DatabaseTask
 import br.com.mrocigno.bigbrother.database.R
 import br.com.mrocigno.bigbrother.database.model.FileListItem
@@ -32,7 +32,7 @@ internal class DatabaseAdapter(
         }
 
     init {
-        val task = getTask(DatabaseTask::class)
+        val task = getBigBrotherTask(DatabaseTask::class)
         val databases = task?.databases?.values.orEmpty()
         val sharedPreferences = task?.sharedPreferences.orEmpty()
 
@@ -42,14 +42,14 @@ internal class DatabaseAdapter(
             FileListItem(
                 nodeLvl = 1,
                 type = DATABASE,
-                icon = R.drawable.bigbrother_ic_database,
+                icon = CR.drawable.bigbrother_ic_database,
                 title = db.name,
                 databaseHelper = db,
                 children = db.tablesName.map { tableName ->
                     FileListItem(
                         nodeLvl = 2,
                         type = FileListItem.TABLE,
-                        icon = R.drawable.bigbrother_ic_table,
+                        icon = CR.drawable.bigbrother_ic_table,
                         title = tableName,
                         databaseHelper = db
                     )
@@ -62,7 +62,7 @@ internal class DatabaseAdapter(
                 nodeLvl = 1,
                 type = SHARED_PREFERENCES,
                 title = sp,
-                icon = R.drawable.bigbrother_ic_file,
+                icon = CR.drawable.bigbrother_ic_file,
             )
         }
     }

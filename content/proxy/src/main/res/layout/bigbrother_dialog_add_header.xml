@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/input_outlined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/bigbrother_proxy_add_action_name_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/proxy_header_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:capitalize="none"
+            android:singleLine="true"
+            android:imeOptions="actionNext" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/input_outlined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bb_spacing_s"
+        android:hint="@string/bigbrother_proxy_add_action_value_hint"
+        app:helperText="Use * para permitir qualquer valor">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/proxy_header_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:text="*" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

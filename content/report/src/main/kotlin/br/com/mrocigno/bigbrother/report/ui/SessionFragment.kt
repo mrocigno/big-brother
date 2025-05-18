@@ -33,7 +33,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import java.util.concurrent.CancellationException
 import br.com.mrocigno.bigbrother.common.R as CR
 
-class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) {
+internal class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) {
 
     private val recycler: RecyclerView by lazy { requireView().findViewById(R.id.session_recycler) }
     private val searchLayout: TextInputLayout by lazy { requireView().findViewById(R.id.session_search_layout) }
@@ -86,6 +86,7 @@ class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) {
     private fun onViewClick(session: SessionEntry, view: View) {
         PopupMenu(requireContext(), view, Gravity.CENTER_HORIZONTAL).apply {
             inflate(R.menu.bigbrother_session_menu)
+            setForceShowIcon(true)
 
             val sessionIntent = SessionDetailsActivity.intent(requireContext(), session.id)
             val networkSessionIntent = requireContext().intentToNetworkList(session.id)

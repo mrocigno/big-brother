@@ -24,9 +24,9 @@
         android:id="@+id/net_entry_loading"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:indeterminateTint="@color/bb_text_highlight"
         android:scaleX="2"
         android:scaleY="2"
-        android:indeterminateTint="@color/bb_text_highlight"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/net_entry_dot"
         app:layout_constraintEnd_toEndOf="@id/net_entry_dot"
@@ -59,6 +59,33 @@
         app:layout_constraintStart_toEndOf="@id/net_entry_hour"
         app:layout_constraintTop_toTopOf="@id/net_entry_hour"
         tools:text="300ms" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/net_entry_proxied_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/net_entry_elapsed_time"
+        app:layout_constraintStart_toEndOf="@id/net_entry_elapsed_time"
+        app:layout_constraintTop_toTopOf="@id/net_entry_elapsed_time"
+        app:srcCompat="@drawable/bigbrother_ic_terminal"
+        app:tint="@color/bb_text_hyperlink"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/net_entry_proxied"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/bb_spacing_xxs"
+        android:text="@string/bigbrother_network_proxied"
+        android:textColor="@color/bb_text_hyperlink"
+        android:textSize="11sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/net_entry_proxied_icon"
+        app:layout_constraintStart_toEndOf="@id/net_entry_proxied_icon"
+        app:layout_constraintTop_toTopOf="@id/net_entry_proxied_icon"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/net_entry_url"

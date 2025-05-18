@@ -1,9 +1,9 @@
 package br.com.mrocigno.bigbrother.log
 
 import android.util.Log
+import br.com.mrocigno.bigbrother.common.dao.LogDao
+import br.com.mrocigno.bigbrother.common.db.BigBrotherDatabase.Companion.bbdb
 import br.com.mrocigno.bigbrother.core.BigBrother
-import br.com.mrocigno.bigbrother.core.BigBrotherDatabaseTask.Companion.bbdb
-import br.com.mrocigno.bigbrother.core.dao.LogDao
 import br.com.mrocigno.bigbrother.log.model.LogEntry
 import br.com.mrocigno.bigbrother.log.model.LogEntryType
 import kotlinx.coroutines.CoroutineScope

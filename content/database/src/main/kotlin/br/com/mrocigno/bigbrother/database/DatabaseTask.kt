@@ -19,10 +19,9 @@ internal class DatabaseTask : BigBrotherTask() {
     private val supervisor = SupervisorJob()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + supervisor)
 
-    override fun onCreate(): Boolean {
+    override fun onStartTask() {
         listDefaultDatabases()
         listSharedPreferences()
-        return super.onCreate()
     }
 
     fun listDefaultDatabases() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

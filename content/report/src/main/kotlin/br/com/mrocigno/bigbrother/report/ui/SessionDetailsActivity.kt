@@ -21,7 +21,7 @@ import br.com.mrocigno.bigbrother.report.R
 import br.com.mrocigno.bigbrother.common.R as CR
 
 @OutOfDomain
-class SessionDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_session_details) {
+internal class SessionDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_session_details) {
 
     private val root: MotionLayout by lazy { findViewById(R.id.session_details_root) }
     private val toolbar: Toolbar by lazy { findViewById(R.id.session_details_toolbar) }
@@ -53,7 +53,7 @@ class SessionDetailsActivity : AppCompatActivity(R.layout.bigbrother_activity_se
 
     private fun setupView() {
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
-        toolbar.title = getString(R.string.report_session_session, sessionId)
+        toolbar.title = getString(R.string.bigbrother_report_session_session, sessionId)
 
         runCatching {
             BitmapFactory.decodeStream(openFileInput("print_crash_session_$sessionId.png"))

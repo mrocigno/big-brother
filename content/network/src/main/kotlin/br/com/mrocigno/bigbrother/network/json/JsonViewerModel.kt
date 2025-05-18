@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import org.json.JSONArray
 import org.json.JSONObject
 
-fun JSONObject.toListModel(lvl: Int): List<JsonViewerModel> {
+internal fun JSONObject.toListModel(lvl: Int): List<JsonViewerModel> {
     val result = mutableListOf<JsonViewerModel>()
 
     for (key in keys()) {
@@ -29,7 +29,7 @@ fun JSONObject.toListModel(lvl: Int): List<JsonViewerModel> {
     return result
 }
 
-fun JSONArray.toListModel(lvl: Int): List<JsonViewerModel> {
+internal fun JSONArray.toListModel(lvl: Int): List<JsonViewerModel> {
     val result = mutableListOf<JsonViewerModel>()
 
     for (index in 0 until length()) {
@@ -55,7 +55,7 @@ fun JSONArray.toListModel(lvl: Int): List<JsonViewerModel> {
     return result
 }
 
-class JsonViewerModel(
+internal class JsonViewerModel(
     val lvl: Int,
     val key: String,
     val value: String?,

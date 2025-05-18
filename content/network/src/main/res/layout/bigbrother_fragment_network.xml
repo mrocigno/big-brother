@@ -29,7 +29,7 @@
                     android:id="@+id/net_search_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/network_search_hint" />
+                    android:hint="@string/bigbrother_network_search_hint" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,14 +64,14 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/bigbrother_search_list" />
+            app:srcCompat="@drawable/bigbrother_ic_search_list" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="@string/network_empty_state"
+            android:text="@string/bigbrother_network_empty_state"
             android:textColor="@color/bb_text_title"
             android:textSize="17sp" />
 

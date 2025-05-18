@@ -66,7 +66,7 @@ inline fun <reified T : Serializable> Bundle.getSerializableCompat(key: String):
     else -> @Suppress("DEPRECATION") getSerializable(key) as? T?
 }
 
-fun String.highlightQuery(query: String, @ColorInt color: Int = Color.YELLOW): CharSequence {
+fun CharSequence.highlightQuery(query: String, @ColorInt color: Int = Color.YELLOW): CharSequence {
     val index = indexOf(query, ignoreCase = true)
     return if (index < 0) this
     else SpannableStringBuilder(this).apply {

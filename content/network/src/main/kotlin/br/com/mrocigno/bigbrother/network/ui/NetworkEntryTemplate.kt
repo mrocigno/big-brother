@@ -6,10 +6,16 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import br.com.mrocigno.bigbrother.common.R
 import br.com.mrocigno.bigbrother.common.utils.copyToClipboard
+import br.com.mrocigno.bigbrother.common.utils.isHtml
+import br.com.mrocigno.bigbrother.common.utils.isJson
+import br.com.mrocigno.bigbrother.common.utils.toHtml
 import br.com.mrocigno.bigbrother.network.json.JsonViewerActivity
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
+import br.com.mrocigno.bigbrother.network.model.NetworkMultiPartModel
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
-class NetworkEntryTemplate(private val model: NetworkEntryModel) {
+internal class NetworkEntryTemplate(private val model: NetworkEntryModel) {
 
     private val fileName = "network-entry-details.html"
 
@@ -23,7 +29,7 @@ class NetworkEntryTemplate(private val model: NetworkEntryModel) {
     private val backgroundSecondaryParam = "BBbackgroundSecondaryColor"
     private val backgroundTertiaryParam = "BBbackgroundTertiaryColor"
 
-    fun getHtml(context: Context): String {
+    private fun getHtml(context: Context): String {
         val hexText = Integer.toHexString(context.getColor(R.color.bb_text_title))
         val hexTextLink = Integer.toHexString(context.getColor(R.color.bb_text_hyperlink))
         val hexBackground = Integer.toHexString(context.getColor(R.color.bb_background))
@@ -33,40 +39,45 @@ class NetworkEntryTemplate(private val model: NetworkEntryModel) {
         return context.assets.open(fileName).bufferedReader().use {
             it.readText()
                 .replace(requestHeaderParam, model.request.headers.toHtml())
-                .replace(requestBodyParam, model.request.formattedBody.toHtml())
+                .replace(requestBodyParam, model.request.formattedBody.bodyToHtml())
                 .replace(responseHeaderParam, model.response?.headers.toHtml())
-                .replace(responseBodyParam, model.response?.formattedBody.toHtml())
-                .replace(textParam, "%23${hexText.substring(2)}FF")
-                .replace(textLinkParam, "%23${hexTextLink.substring(2)}FF")
-                .replace(backgroundParam, "%23${hexBackground.substring(2)}FF")
-                .replace(backgroundSecondaryParam, "%23${hexSecondary.substring(2)}FF")
-                .replace(backgroundTertiaryParam, "%23${hexTertiary.substring(2)}FF")
-
+                .replace(responseBodyParam, model.response?.formattedBody.bodyToHtml())
+                .replace(textParam, "${hexText.substring(2)}FF")
+                .replace(textLinkParam, "${hexTextLink.substring(2)}FF")
+                .replace(backgroundParam, "${hexBackground.substring(2)}FF")
+                .replace(backgroundSecondaryParam, "${hexSecondary.substring(2)}FF")
+                .replace(backgroundTertiaryParam, "${hexTertiary.substring(2)}FF")
+                .replace("#", "%23")
         }
     }
 
-    private fun Map<String, List<String>>?.toHtml(): String {
-        if (this.isNullOrEmpty()) return "empty"
+    private fun String?.bodyToHtml() = when {
+        this == null -> "empty"
 
-        val builder = StringBuilder()
-        this.keys.forEach {
-            builder.append("<b>$it</b>")
-            builder.append(": ")
-            builder.append(this[it]?.joinToString(", "))
-            builder.append("<br/>\n")
+        isHtml() -> """
+            <iframe id="response-html" sandbox="allow-same-origin" srcdoc='${replace("'", "\"")}'></iframe>
+        """.trimIndent()
+
+        contains("bigBrotherIdentifier") -> {
+            Json.decodeFromString<NetworkMultiPartModel>(this).toHtml()
         }
-        return builder.toString()
+
+        else -> escapeHtml()
     }
 
-    private fun String?.toHtml() = this
-        ?.replace(" ", "&nbsp;")
-        ?.replace("\n", "<br>")
-        .orEmpty()
+    private fun String.escapeHtml(): String = this
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace("\"", "&quot;")
+        .replace("'", "&#39;")
 
-    private fun String?.fromHtml() = this
-        ?.replace("&nbsp;", " ")
-        ?.replace("<br>", "\n")
-        .orEmpty()
+    private fun String.fromHtml(): String = this
+        .replace("&amp;", "&")
+        .replace("&lt;", "<")
+        .replace("&gt;", ">")
+        .replace("&quot;", "\"")
+        .replace("&#39;", "'")
 
     @SuppressLint("SetJavaScriptEnabled")
     fun load(webView: WebView) {
@@ -81,8 +92,9 @@ class NetworkEntryTemplate(private val model: NetworkEntryModel) {
 
             @JavascriptInterface
             fun openJson(json: String) {
+                if (!json.isJson()) return
                 val context = webView.context
-                context.startActivity(JsonViewerActivity.intent(context, json.fromHtml()))
+                context.startActivity(JsonViewerActivity.intent(context, json))
             }
         }, "NativeAndroid")
     }

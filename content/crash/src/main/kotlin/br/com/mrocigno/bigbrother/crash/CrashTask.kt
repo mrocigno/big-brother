@@ -4,7 +4,7 @@ import android.app.Activity
 import br.com.mrocigno.bigbrother.core.BigBrotherTask
 import java.lang.ref.WeakReference
 
-class CrashTask : BigBrotherTask() {
+internal class CrashTask : BigBrotherTask() {
 
     override fun onActivityResume(activity: Activity) {
         val currentObserver = Thread.getDefaultUncaughtExceptionHandler()

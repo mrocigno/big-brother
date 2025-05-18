@@ -14,6 +14,9 @@ okhttp3 = "4.10.0"
 timber = "5.0.1"
 compose-compiler = "1.4.2"
 compose-runtime = "1.3.3"
+medivh = "1.2.4"
+serialization = "1.8.10"
+
 # confirm
 kotlin-reflection = "1.7.21"
 kotlin-coroutines = "1.6.1"
@@ -23,15 +26,20 @@ kotlin-coroutines = "1.6.1"
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
+androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "activity" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
 # Material
 material = { module = "com.google.android.material:material", version.ref = "material" }
+
 # Kotlin
 kotlin-reflection = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin-reflection" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
+kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.3.3" }
+
 # Squareup
 squareup-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 squareup-retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
@@ -55,3 +63,5 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+medivh = { id = "tech.medivh.plugin.publisher", version.ref = "medivh" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }

@@ -1,17 +1,17 @@
 package br.com.mrocigno.bigbrother.core.utils
 
-import android.graphics.PointF
-import kotlin.random.Random
+/**
+ * Exposes common variables to third party developer
+ */
 
-private val dataLake = mutableMapOf<String, Any?>()
-private val randomSession by lazy {
-    Random(System.currentTimeMillis()).nextLong(10000,99999)
-}
+import android.graphics.PointF
+import br.com.mrocigno.bigbrother.common.utils.bbSessionId as commonBbSessionId
+import br.com.mrocigno.bigbrother.common.utils.lastClickPosition as commonLastClickPosition
 
 var lastClickPosition: PointF?
-    get() = dataLake["lastClick"] as? PointF
-    set(value) { dataLake["lastClick"] = value }
+    get() = commonLastClickPosition
+    set(value) { commonLastClickPosition = value }
 
 var bbSessionId: Long
-    get() = dataLake["sessionId"] as? Long ?: randomSession
-    set(value) { dataLake["sessionId"] = value.takeIf { it != -1L } }
+    get() = commonBbSessionId
+    set(value) { commonBbSessionId = value.takeIf { it != -1L } ?: 0L }

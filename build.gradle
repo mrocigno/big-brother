@@ -4,6 +4,8 @@ plugins {
     alias libs.plugins.android.library apply false
     alias libs.plugins.android.kotlin apply false
     alias libs.plugins.ksp apply false
+    alias libs.plugins.medivh apply false
+    alias libs.plugins.serialization apply false
 }
 
 allprojects {
@@ -23,7 +25,7 @@ allprojects {
                 minSdk 23
                 targetSdk 34
                 versionCode 1
-                versionName "1.0"
+                versionName project.findProperty("libVersion")
                 resConfigs "en", "pt"
 
                 testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

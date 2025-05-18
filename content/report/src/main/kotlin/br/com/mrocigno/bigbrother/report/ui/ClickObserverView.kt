@@ -27,7 +27,7 @@ import br.com.mrocigno.bigbrother.report.R
 import br.com.mrocigno.bigbrother.common.R as CR
 
 @SuppressLint("ClickableViewAccessibility")
-class ClickObserverView @JvmOverloads constructor(
+internal class ClickObserverView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -58,7 +58,7 @@ class ClickObserverView @JvmOverloads constructor(
 
     init {
         layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
-        id = R.id.click_observer
+        id = R.id.bigbrother_click_observer
         setWillNotDraw(false)
 
         // Tooltip balloon
@@ -237,11 +237,11 @@ class ClickObserverView @JvmOverloads constructor(
                 .takeIf { BigBrother.config.isClickRecorderEnabled }
 
         fun get(activity: Activity) =
-            (activity.findViewById<ClickObserverView>(R.id.click_observer))
+            (activity.findViewById<ClickObserverView>(R.id.bigbrother_click_observer))
                 .takeIf { BigBrother.config.isClickRecorderEnabled }
 
         fun get(fragment: Fragment) =
-            (fragment.view?.findViewById<ClickObserverView>(R.id.click_observer))
+            (fragment.view?.findViewById<ClickObserverView>(R.id.bigbrother_click_observer))
                 .takeIf { BigBrother.config.isClickRecorderEnabled }
     }
 }

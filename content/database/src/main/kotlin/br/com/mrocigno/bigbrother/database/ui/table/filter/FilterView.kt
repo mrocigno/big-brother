@@ -27,7 +27,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.bigbrother.common.R as CR
 
-class FilterView @JvmOverloads constructor(
+internal class FilterView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,

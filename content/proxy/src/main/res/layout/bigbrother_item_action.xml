@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/bb_spacing_m"
+    android:foreground="?selectableItemBackground">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/proxy_item_action_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/bb_spacing_xs"
+        android:layout_marginVertical="@dimen/bb_spacing_xxs"
+        android:background="@drawable/bigbrother_background_dot"
+        android:backgroundTint="@color/bb_background"
+        android:padding="@dimen/bb_spacing_xs"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bigbrother_ic_terminal" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/proxy_item_action_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/bb_spacing_xs"
+        android:layout_marginTop="@dimen/bb_spacing_m"
+        android:layout_marginEnd="@dimen/bb_spacing_m"
+        android:textColor="@color/bb_text_paragraph"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/proxy_item_action_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem[20]" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/proxy_item_action_body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bb_spacing_xs"
+        android:background="@drawable/bigbrother_background_json"
+        android:padding="10dp"
+        android:textColor="@color/bb_text_title"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:fontFamily="@font/courier_regular"
+        app:layout_constraintEnd_toEndOf="@id/proxy_item_action_description"
+        app:layout_constraintStart_toStartOf="@id/proxy_item_action_description"
+        app:layout_constraintTop_toBottomOf="@id/proxy_item_action_description"
+        tools:text="@tools:sample/lorem[10]"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

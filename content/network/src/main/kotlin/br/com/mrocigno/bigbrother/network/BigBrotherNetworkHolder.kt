@@ -1,7 +1,7 @@
 package br.com.mrocigno.bigbrother.network
 
-import br.com.mrocigno.bigbrother.core.BigBrotherDatabaseTask.Companion.bbdb
-import br.com.mrocigno.bigbrother.core.dao.NetworkDao
+import br.com.mrocigno.bigbrother.common.dao.NetworkDao
+import br.com.mrocigno.bigbrother.common.db.BigBrotherDatabase.Companion.bbdb
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

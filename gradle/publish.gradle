@@ -1,8 +1,9 @@
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
+apply plugin: 'tech.medivh.plugin.publisher'
 
 def libGroup = "io.github.mrocigno"
-def libVersion = "1.0.0"
+def libVersion = project.findProperty("libVersion")
 
 android {
 
@@ -54,17 +55,7 @@ publishing {
     }
 
     repositories {
-        maven {
-            if (libVersion.containsIgnoreCase("SNAPSHOT")) {
-                url = "https://s01.oss.sonatype.org/content/repositories/snapshots"
-            } else {
-                url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
-            }
-            credentials {
-                username = System.getenv("ossrh_username") ?: project.properties["ossrh_username"]
-                password = System.getenv("ossrh_password") ?: project.properties["ossrh_password"]
-            }
-        }
+        mavenLocal()
     }
 }
 

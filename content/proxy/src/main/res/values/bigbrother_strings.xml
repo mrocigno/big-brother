@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bigbrother_proxy_empty_label" translatable="false"></string>
+    <string name="bigbrother_proxy_set_body_label" translatable="false">SET BODY REQUEST</string>
+    <string name="bigbrother_proxy_set_body_response_label" translatable="false">SET BODY RESPONSE</string>
+    <string name="bigbrother_proxy_set_path_label" translatable="false">SET PATH</string>
+    <string name="bigbrother_proxy_set_header_label" translatable="false">SET HEADER</string>
+    <string name="bigbrother_proxy_set_method_label" translatable="false">SET METHOD</string>
+    <string name="bigbrother_proxy_set_response_label" translatable="false">SET RESPONSE CODE</string>
+    <string name="bigbrother_proxy_remove_header_label" translatable="false">REMOVE HEADER</string>
+    <string name="bigbrother_proxy_set_query_label" translatable="false">SET QUERY</string>
+    <string name="bigbrother_proxy_set_response_code_label" translatable="false">SET RESPONSE CODE</string>
+    <string name="bigbrother_proxy_remove_query_label" translatable="false">REMOVE QUERY</string>
+
+    <string name="bigbrother_proxy_empty_message">Select an option into dropdown to continue</string>
+    <string name="bigbrother_proxy_set_body_message">To edit the body before the request is executed</string>
+    <string name="bigbrother_proxy_set_body_response_message">To edit the body response</string>
+    <string name="bigbrother_proxy_set_path_message">To edit the endpoint before the request is executed</string>
+    <string name="bigbrother_proxy_set_header_message">To add or edit a header before the request is executed</string>
+    <string name="bigbrother_proxy_set_method_message">To change request method</string>
+    <string name="bigbrother_proxy_remove_header_message">To remove a header before the request is executed</string>
+    <string name="bigbrother_proxy_set_query_message">To add or edit a queryString before the request is executed</string>
+    <string name="bigbrother_proxy_set_response_code_message">To change response code</string>
+    <string name="bigbrother_proxy_remove_query_message">To remove a queryString before the request is executed</string>
+
+    <string name="bigbrother_proxy_set_header_description">Adds or edits the \"%s\" header with the value \"%s\"</string>
+    <string name="bigbrother_proxy_set_method_description">Changes the request method to %s\"%2s\"</string>
+    <string name="bigbrother_proxy_set_path_description">Changes the request path to %s\"%2s\"</string>
+    <string name="bigbrother_proxy_set_body_description">Replaces the request body</string>
+    <string name="bigbrother_proxy_set_body_response_description">Replaces the response body</string>
+    <string name="bigbrother_proxy_set_query_description">Adds or edits the \"%s\" queryString with the value \"%s\"</string>
+    <string name="bigbrother_proxy_set_response_code_description">Replaces the response code to %s\"%2s\"</string>
+    <string name="bigbrother_proxy_remove_header_description">Removes the \"%s\" header</string>
+    <string name="bigbrother_proxy_remove_query_description">Removes the \"%s\" queryString</string>
+
+    <string name="bigbrother_proxy_number_field">The field must be a number</string>
+    <string name="bigbrother_proxy_required_field">Required field</string>
+    <string name="bigbrother_proxy_json_invalid">Invalid format\n%1$s</string>
+    <string name="bigbrother_proxy_spaces_error">This field cannot contain spaces</string>
+    <string name="bigbrother_proxy_rule_title">Creating a new rule</string>
+    <string name="bigbrother_proxy_rule_name_helper">It might be a good idea to add a more descriptive name for your rule, but random names are fun!</string>
+    <string name="bigbrother_proxy_rule_name_hint">Rule name</string>
+    <string name="bigbrother_proxy_rule_condition_title">Conditions</string>
+    <string name="bigbrother_proxy_rule_method_hint" translatable="false">Method</string>
+    <string name="bigbrother_proxy_rule_path_hint">Path</string>
+    <string name="bigbrother_proxy_rule_path_helper">Use * if you want this rule to affect all paths</string>
+    <string name="bigbrother_proxy_rule_header_helper">Only requests containing these headers will be affected</string>
+    <string name="bigbrother_proxy_rule_header_hint">Headers</string>
+    <string name="bigbrother_proxy_rule_action_title">Actions</string>
+    <string name="bigbrother_proxy_rule_empty_label">No action added</string>
+    <string name="bigbrother_proxy_rule_empty_button">Add action</string>
+    <string name="bigbrother_proxy_add_action_action_hint">Select an action</string>
+    <string name="bigbrother_proxy_add_action_name_hint">Name</string>
+    <string name="bigbrother_proxy_add_action_value_hint">Value</string>
+    <string name="bigbrother_bigbrother_proxy_add_action_body_hint">Body</string>
+    <string name="bigbrother_proxy_list_url_search_hint">Search URL</string>
+    <string name="bigbrother_proxy_list_url_empty_label">No URL found</string>
+    <string name="bigbrother_proxy_list_rules_search_hint">Search rule</string>
+    <string name="bigbrother_proxy_list_rules_empty_label">No proxy rule created</string>
+    <string name="bigbrother_proxy_list_rules_empty_button">Add rule</string>
+    <string name="bigbrother_proxy_add_action_title">New Action</string>
+    <string name="bigbrother_proxy_edit_action_title">Editing</string>
+    <string name="bigbrother_proxy_add_header_title">Add Header</string>
+    <string name="bigbrother_proxy_actions_afects_all">Affects all requests</string>
+    <string name="bigbrother_proxy_actions_afects_few">Affects some requests</string>
+    <string name="bigbrother_proxy_actions_do_nothing">No actions added</string>
+    <string name="bigbrother_proxy_list_rules_enable_all">Enable all rules</string>
+    <string name="bigbrother_proxy_list_rules_disable_all">Disable all rules</string>
+    <string name="bigbrother_proxy_list_rules_title">Applied rules</string>
+    <string name="bigbrother_proxy_menu_create_rule">Create new rule</string>
+    <string name="bigbrother_proxy_menu_import_rule">Import rules</string>
+    <string name="bigbrother_proxy_menu_export_rule">Export rules</string>
+    <string name="bigbrother_proxy_export_copy">Copy</string>
+</resources>

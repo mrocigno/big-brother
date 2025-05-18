@@ -23,7 +23,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
 @SuppressLint("ViewConstructor")
-class BigBrotherContainerView(
+internal class BigBrotherContainerView(
     private val vortex: BigBrotherView
 ) : FrameLayout(vortex.context) {
 

@@ -31,6 +31,11 @@
         <item name="android:textColor">@color/bb_text_title_inverse</item>
     </style>
 
+    <style name="BigBrotherButtonSmall" parent="Widget.AppCompat.Button.Small">
+        <item name="android:backgroundTint">@color/bb_text_title</item>
+        <item name="android:textColor">@color/bb_text_title_inverse</item>
+    </style>
+
     <style name="SearchView" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
         <item name="boxBackgroundColor">#33000000</item>
         <item name="endIconCheckable">true</item>
@@ -45,6 +50,23 @@
         <item name="endIconTint">?colorPrimary</item>
     </style>
 
+    <style name="spinner_outlined" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">#33000000</item>
+        <item name="materialThemeOverlay">@style/Theme.MyApp.Spinner.ThemeOverlay</item>
+    </style>
+
+    <style name="Theme.MyApp.Spinner.ThemeOverlay" parent="">
+        <item name="autoCompleteTextViewStyle">@style/Widget.MyApp.Spinner.ThemeOverlay.AutoCompleteTextView</item>
+        <item name="colorSurface">@color/bb_background_secondary</item>
+    </style>
+
+    <style name="Widget.MyApp.Spinner.ThemeOverlay.AutoCompleteTextView" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:background">@null</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textColor">@color/bb_text_title</item>
+        <item name="android:textSize">@dimen/bb_text_m</item>
+    </style>
+
     <style name="TextAppearance_Tab">
         <item name="android:fontFamily">@font/courier_bold</item>
         <item name="android:textColor">@color/bb_text_title</item>
@@ -56,5 +78,9 @@
         <item name="colorPrimary">@color/bb_brand_default</item>
         <item name="colorPrimaryVariant">@color/bb_brand_secondary</item>
         <item name="colorOnPrimary">@android:color/white</item>
+    </style>
+
+    <style name="BigBrotherSwitch">
+        <item name="colorControlActivated">@color/bb_brand_default</item>
     </style>
 </resources>

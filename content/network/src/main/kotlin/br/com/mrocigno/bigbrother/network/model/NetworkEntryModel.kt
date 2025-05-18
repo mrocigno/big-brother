@@ -1,12 +1,14 @@
 package br.com.mrocigno.bigbrother.network.model
 
-import android.content.Context
 import androidx.recyclerview.widget.DiffUtil
-import br.com.mrocigno.bigbrother.core.entity.NetworkEntity
-import br.com.mrocigno.bigbrother.core.utils.bbSessionId
-import br.com.mrocigno.bigbrother.network.R
+import br.com.mrocigno.bigbrother.common.entity.NetworkEntity
+import br.com.mrocigno.bigbrother.common.utils.bbSessionId
+import br.com.mrocigno.bigbrother.common.utils.toReadable
 import br.com.mrocigno.bigbrother.report.bbTrack
 import br.com.mrocigno.bigbrother.report.model.ReportType
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import okhttp3.MultipartBody
 import okhttp3.Request
 import okhttp3.Response
 import okio.Buffer
@@ -25,7 +27,8 @@ data class NetworkEntryModel(
     val hour: String,
     val method: String,
     val request: NetworkPayloadModel,
-    var response: NetworkPayloadModel? = null
+    var response: NetworkPayloadModel? = null,
+    val proxyRules: String? = null
 ) : Serializable {
 
     constructor(request: Request) : this(
@@ -44,11 +47,12 @@ data class NetworkEntryModel(
         elapsedTime = entry.elapsedTime,
         hour = entry.hour,
         method = entry.method,
+        proxyRules = entry.proxyRules,
         request = NetworkPayloadModel.fromString(entry.requestHeader, entry.requestBody)!!,
         response = NetworkPayloadModel.fromString(entry.responseHeader, entry.responseBody)
     )
 
-    class Differ : DiffUtil.ItemCallback<NetworkEntryModel>() {
+    internal class Differ : DiffUtil.ItemCallback<NetworkEntryModel>() {
         override fun areItemsTheSame(oldItem: NetworkEntryModel, newItem: NetworkEntryModel) =
             oldItem.hour == newItem.hour
                 && oldItem.url == newItem.url
@@ -71,20 +75,6 @@ data class NetworkEntryModel(
         .appendLine(hour)
         .toString()
 
-    fun all(context: Context) =
-        context.getString(
-            R.string.network_copy_all_template,
-            fullUrl,
-            method,
-            (statusCode ?: -1).toString(),
-            hour,
-            elapsedTime,
-            request.headers,
-            request.formattedBody,
-            response?.headers ?: "empty",
-            response?.formattedBody ?: "empty"
-        )
-
     fun toCURL() = StringBuilder("curl --location --request $method '$fullUrl'").apply {
         request.headers?.takeIf { it.isNotEmpty() }
             ?.map {
@@ -97,14 +87,14 @@ data class NetworkEntryModel(
                 append(headers)
             }
 
-        if (!request.body.isNullOrBlank()) {
+        if (!request.body.takeIf { it != "empty" }.isNullOrBlank()) {
             append(" \\")
             appendLine()
             append("--data '${request.body}'")
         }
     }.toString()
 
-    fun toEntity(): NetworkEntity = NetworkEntity(
+    internal fun toEntity(): NetworkEntity = NetworkEntity(
         id = id,
         sessionId = bbSessionId,
         fullUrl = fullUrl,
@@ -113,6 +103,7 @@ data class NetworkEntryModel(
         elapsedTime = elapsedTime,
         hour = hour,
         method = method,
+        proxyRules = proxyRules,
         requestHeader = request.formattedHeaders,
         requestBody = request.formattedBody,
         responseHeader = response?.formattedHeaders.toString(),
@@ -128,10 +119,13 @@ class NetworkPayloadModel(
     constructor(request: Request) : this(
         headers = request.headers.toMultimap(),
         body = request.let {
-            val buffer = Buffer()
-            it.body
-                ?.writeTo(buffer)
-                ?.let { buffer.readUtf8() }
+            when (val body = request.body) {
+                is MultipartBody -> Json.encodeToString(NetworkMultiPartModel(body))
+                else -> {
+                    val buffer = Buffer()
+                    it.body?.writeTo(buffer)?.let { buffer.readUtf8() }
+                }
+            }
         }
     )
 
@@ -156,26 +150,11 @@ class NetworkPayloadModel(
         }.recoverCatching {
             JSONArray(body).toString(2)
         }.getOrElse {
-            body
+            body.trim()
         }
 
     val formattedHeaders: String get() =
-        if (headers.isNullOrEmpty()) "empty" else {
-            headers.toReadable()
-        }
-
-    private fun Map<String, List<String>>?.toReadable(): String {
-        if (this.isNullOrEmpty()) return "empty"
-
-        val builder = StringBuilder()
-        keys.forEach {
-            builder.append(it)
-            builder.append(": ")
-            builder.append(this[it]?.joinToString(", "))
-            builder.append("\n")
-        }
-        return builder.toString()
-    }
+        if (headers.isNullOrEmpty()) "empty" else headers.toReadable()
 
     companion object {
 

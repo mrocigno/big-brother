@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/proxy_rule_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/bigbrother_ic_arrow_back"
+        app:title="@string/bigbrother_proxy_rule_title" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/proxy_rule_name_layout"
+                style="@style/input_outlined"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/bb_spacing_m"
+                app:endIconDrawable="@drawable/bigbrother_ic_shuffle"
+                app:helperText="@string/bigbrother_proxy_rule_name_helper"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/proxy_rule_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/bigbrother_proxy_rule_name_hint" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/proxy_rule_condition_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/bb_spacing_m"
+                android:layout_marginTop="@dimen/bb_spacing_l"
+                android:text="@string/bigbrother_proxy_rule_condition_title"
+                android:textColor="@color/bb_text_title"
+                android:textSize="@dimen/bb_text_l"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_name_layout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/proxy_rule_method_layout"
+                style="@style/spinner_outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/bb_spacing_m"
+                app:endIconDrawable="@drawable/bigbrother_ic_arrow_drop_down"
+                app:layout_constraintBottom_toBottomOf="@id/proxy_rule_condition_layout"
+                app:layout_constraintEnd_toStartOf="@id/proxy_rule_condition_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/proxy_rule_condition_layout">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/proxy_rule_method"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:hint="@string/bigbrother_proxy_rule_method_hint"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="*" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/proxy_rule_condition_layout"
+                style="@style/input_outlined"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/bb_spacing_m"
+                app:endIconDrawable="@drawable/bigbrother_ic_search"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/proxy_rule_method_layout"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_title">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/proxy_rule_condition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/bigbrother_proxy_rule_path_hint"
+                    tools:text="*" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:id="@+id/proxy_rule_condition_helper"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/bb_spacing_m"
+                android:text="@string/bigbrother_proxy_rule_path_helper"
+                android:layout_marginTop="@dimen/bb_spacing_xxs"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="@id/proxy_rule_condition_layout"
+                app:layout_constraintStart_toStartOf="@id/proxy_rule_method_layout"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_layout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/proxy_rule_condition_header_layout"
+                style="@style/input_outlined"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/bb_spacing_m"
+                app:endIconDrawable="@drawable/bigbrother_ic_add"
+                app:helperText="@string/bigbrother_proxy_rule_header_helper"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_helper"
+                app:placeholderText="example1=*;example2=*">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/proxy_rule_condition_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/bigbrother_proxy_rule_header_hint" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/proxy_rule_actions_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/bb_spacing_m"
+                android:layout_marginTop="@dimen/bb_spacing_l"
+                android:text="@string/bigbrother_proxy_rule_action_title"
+                android:textColor="@color/bb_text_title"
+                android:textSize="@dimen/bb_text_l"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_condition_header_layout" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/proxy_rule_actions_group"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="proxy_rule_add_action, proxy_rule_actions_recycler" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/proxy_rule_add_action"
+                android:layout_width="?minTouchTargetSize"
+                android:layout_height="?minTouchTargetSize"
+                android:layout_marginEnd="@dimen/bb_spacing_m"
+                android:foreground="?selectableItemBackground"
+                android:scaleType="center"
+                android:src="@drawable/bigbrother_ic_add"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/proxy_rule_actions_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/proxy_rule_actions_title"
+                tools:visibility="visible" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/proxy_rule_actions_recycler"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:visibility="gone"
+                tools:listitem="@layout/bigbrother_item_action"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_actions_title"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/proxy_rule_actions_empty_state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bb_spacing_m"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/proxy_rule_actions_title"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/bigbrother_ic_terminal" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/bigbrother_proxy_rule_empty_label"
+                    android:textColor="@color/bb_text_title"
+                    android:textSize="17sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/proxy_rule_empty_add_action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bigbrother_proxy_rule_empty_button"
+                    android:textColor="@color/bb_text_hyperlink" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bb_text_title">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bb_divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/bb_spacing_xxs">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/proxy_rule_delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/bb_spacing_xxs"
+                android:layout_marginStart="@dimen/bb_spacing_xxs"
+                android:layout_marginEnd="@dimen/bb_spacing_xxs"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/bigbrother_ic_clear"
+                android:drawableTint="@color/design_default_color_error"
+                android:text="@string/delete"
+                android:textColor="@color/design_default_color_error"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/proxy_rule_save"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/bb_spacing_xxs"
+                android:layout_marginStart="@dimen/bb_spacing_xxs"
+                android:layout_marginEnd="@dimen/bb_spacing_xs"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/bigbrother_ic_save"
+                android:drawableTint="@color/bb_text_title_inverse"
+                android:text="@string/save"
+                android:textColor="@color/bb_text_title_inverse" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

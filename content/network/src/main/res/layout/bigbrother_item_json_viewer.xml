@@ -26,7 +26,7 @@
         android:paddingHorizontal="10dp"
         android:textColor="@color/bb_text_paragraph"
         android:textStyle="bold"
-        tools:text="@string/json_viewer_expand_click" />
+        tools:text="@string/bigbrother_json_viewer_expand_click" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/json_viewer_item_ic_down"

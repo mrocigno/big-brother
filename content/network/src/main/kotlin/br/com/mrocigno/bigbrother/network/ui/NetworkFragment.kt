@@ -5,23 +5,27 @@ import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.mrocigno.bigbrother.common.route.checkIntent
+import br.com.mrocigno.bigbrother.common.route.intentToProxyCreateRule
+import br.com.mrocigno.bigbrother.common.utils.bbSessionId
 import br.com.mrocigno.bigbrother.common.utils.disableChangeAnimation
 import br.com.mrocigno.bigbrother.core.OutOfDomain
-import br.com.mrocigno.bigbrother.core.utils.bbSessionId
 import br.com.mrocigno.bigbrother.network.BigBrotherNetworkHolder
 import br.com.mrocigno.bigbrother.network.R
+import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.bigbrother.common.R as CommonR
 
 @OutOfDomain
-class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) {
+internal class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) {
 
     private val recycler: RecyclerView by lazy { requireView().findViewById(R.id.net_recycler) }
     private val searchViewLayout: TextInputLayout by lazy { requireView().findViewById(R.id.net_search_layout) }
@@ -48,9 +52,10 @@ class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) {
     private fun setupRecycler() {
         recycler.disableChangeAnimation()
         recycler.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-        recycler.adapter = NetworkEntryAdapter {
-            startActivity(NetworkEntryDetailsActivity.intent(requireContext(), it.id))
-        }
+        recycler.adapter = NetworkEntryAdapter(
+            onEntryClick = ::onEntryClick,
+            onEntryLongClick = ::onEntryLongClick
+        )
 
         lifecycleScope.launchWhenCreated {
             BigBrotherNetworkHolder.getBySessionId(sessionId)?.collect {
@@ -58,6 +63,26 @@ class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) {
                 adapter.setList(it.toList())
             }
         }
+    }
+
+    private fun onEntryClick(entry: NetworkEntryModel) {
+        startActivity(NetworkEntryDetailsActivity.intent(requireContext(), entry.id))
+    }
+
+    private fun onEntryLongClick(view: View, entry: NetworkEntryModel) {
+        val intent = requireContext().intentToProxyCreateRule(entry.method, entry.fullUrl)
+        if (!requireContext().checkIntent(intent)) return
+
+        PopupMenu(requireContext(), view).apply {
+            menuInflater.inflate(R.menu.network_entry_menu, menu)
+            setForceShowIcon(true)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.network_menu_proxy -> startActivity(intent)
+                }
+                true
+            }
+        }.show()
     }
 
     private fun setupSearchView() {

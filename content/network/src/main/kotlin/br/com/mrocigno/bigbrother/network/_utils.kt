@@ -1,12 +1,15 @@
 package br.com.mrocigno.bigbrother.network
 
 import android.content.res.ColorStateList
+import android.util.Base64
 import android.view.View
 import br.com.mrocigno.bigbrother.common.R
 import br.com.mrocigno.bigbrother.core.BigBrother
 import br.com.mrocigno.bigbrother.core.BigBrotherProvider
+import br.com.mrocigno.bigbrother.core.utils.addBigBrotherInterceptor
 import br.com.mrocigno.bigbrother.network.ui.NetworkFragment
 import okhttp3.OkHttpClient
+import okio.Buffer
 
 internal fun View.byStatusCode(statusCode: Int?) {
     val containerColor = when (statusCode) {
@@ -17,13 +20,19 @@ internal fun View.byStatusCode(statusCode: Int?) {
     backgroundTintList = ColorStateList.valueOf(context.getColor(containerColor))
 }
 
+internal fun Buffer.toBase64(): String =
+    Base64.encodeToString(readByteArray(), Base64.NO_WRAP)
+
 fun BigBrotherProvider.addNetworkPage(customName: String = "Network") {
+    addInterceptor(NetworkEntryInterceptor())
     addPage(customName) { NetworkFragment() }
 }
 
 fun BigBrother.addNetworkPage(customName: String = "Network") {
+    addInterceptor(NetworkEntryInterceptor())
     addPage(customName) { NetworkFragment() }
 }
 
+@Deprecated("Use addBigBrotherInterceptor instead")
 fun OkHttpClient.Builder.bigBrotherIntercept(vararg blockList: String) =
-    addInterceptor(BigBrotherInterceptor(*blockList))
+    addBigBrotherInterceptor(*blockList)

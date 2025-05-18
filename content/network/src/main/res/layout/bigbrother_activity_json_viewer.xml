@@ -39,7 +39,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="@string/json_viewer_disclaimer"
+        android:text="@string/bigbrother_json_viewer_disclaimer"
         android:textColor="@color/bb_text_paragraph"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
