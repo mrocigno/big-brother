@@ -12,6 +12,89 @@ android {
     composeOptions.kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
 }
 
+import javax.xml.parsers.DocumentBuilderFactory
+
+android.applicationVariants.configureEach { variant ->
+
+    def variantName = variant.name // ex: "debug"
+    def capitalizedVariant = variantName.capitalize() // ex: "Debug"
+
+    def manifestPath = "${buildDir}/intermediates/merged_manifests/${variantName}/process${capitalizedVariant}Manifest/AndroidManifest.xml"
+    def outputFile = file("${buildDir}/outputs/deeplinks/${variantName}_deeplinks.txt")
+
+    def taskName = "extract${capitalizedVariant}DeepLinks"
+    println("✅ taskName: $taskName")
+
+    tasks.register(taskName) {
+        group = "big-brother"
+        description = "Extrai deeplinks do AndroidManifest mesclado (${variantName})"
+
+        inputs.file manifestPath
+        outputs.file outputFile
+
+        doLast {
+            def manifestFile = file(manifestPath)
+            if (!manifestFile.exists()) {
+                throw new GradleException("Manifest file not found: $manifestPath")
+            }
+
+            def deepLinks = []
+            def factory = DocumentBuilderFactory.newInstance()
+            def builder = factory.newDocumentBuilder()
+            def doc = builder.parse(manifestFile)
+            doc.documentElement.normalize()
+
+            def activities = doc.getElementsByTagName("activity")
+            (0..<activities.length).each { i ->
+                def activity = activities.item(i)
+                def filters = activity.getElementsByTagName("intent-filter")
+
+                (0..<filters.length).each { j ->
+                    def filter = filters.item(j)
+                    def actions = filter.getElementsByTagName("action")
+                    def categories = filter.getElementsByTagName("category")
+                    def datas = filter.getElementsByTagName("data")
+
+                    def hasView = (0..<actions.length).any { idx ->
+                        actions.item(idx).getAttribute("android:name") == "android.intent.action.VIEW"
+                    }
+                    def hasBrowsable = (0..<categories.length).any { idx ->
+                        categories.item(idx).getAttribute("android:name") == "android.intent.category.BROWSABLE"
+                    }
+
+                    if (hasView && hasBrowsable) {
+                        (0..<datas.length).each { k ->
+                            def data = datas.item(k)
+                            def scheme = data.getAttribute("android:scheme")
+                            def host = data.getAttribute("android:host")
+                            def path = data.getAttribute("android:path")
+
+                            def url = "${scheme}://${host}${path ?: ''}"
+                            deepLinks << url
+                        }
+                    }
+                }
+            }
+
+            outputFile.parentFile.mkdirs()
+            outputFile.text = deepLinks.join('\n')
+            println "✅ ${deepLinks.size()} deep links extraídos para: ${outputFile.absolutePath}"
+        }
+    }
+
+    // Garantir que process<Variant>MainManifest rode antes
+    def processManifestTaskName = "process${capitalizedVariant}Manifest"
+    tasks.named(taskName).configure {
+        dependsOn tasks.named(processManifestTaskName)
+    }
+
+    // Rodar após assemble<Variant>
+    def assembleTaskName = "process${capitalizedVariant}Manifest"
+    tasks.named(assembleTaskName).configure {
+        finalizedBy tasks.named(taskName)
+    }
+}
+
 dependencies {
 
     implementation libs.squareup.retrofit
