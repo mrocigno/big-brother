@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+
+        <provider
+            android:name="br.com.mrocigno.bigbrother.ui_automator.UiAutomatorTask"
+            android:authorities="${applicationId}.UI_AUTOMATOR"
+            android:enabled="true"
+            android:exported="false" />
+    </application>
+</manifest>

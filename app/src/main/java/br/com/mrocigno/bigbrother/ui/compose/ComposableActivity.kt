@@ -38,12 +38,15 @@ class ComposableActivity : AppCompatActivity() {
                         .weight(1f)
                         .fillMaxWidth()
                 ) {
-                    Button(onClick = { listOf("")[2] }) {
+                    Button(onClick = {
+                        println("aaa")
+                    }) {
                         Text(stringResource(R.string.force_crash))
                     }
                 }
             }
         }
+        val teste = 1
     }
 }
 

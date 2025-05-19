@@ -36,4 +36,5 @@ dependencies {
     implementation project(":content:proxy")
     implementation project(":content:log")
     implementation project(":content:database")
+    implementation project(":content:ui-automator")
 }

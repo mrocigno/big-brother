@@ -2,4 +2,5 @@
 <resources>
 
     <id name="bigbrother"/>
+    <id name="bigbrother_click_observer"/>
 </resources>

@@ -15,6 +15,7 @@ internal class BigBrotherWatchTask : BigBrotherTask() {
 
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
         if (!alive) return
+        BigBrotherClickObserverView.getOrCreate(activity)?.run(activity.rootView::addView)
         activity.rootView.addView(BigBrotherView.getOrCreate(activity) {
             kill(activity.rootView)
         })

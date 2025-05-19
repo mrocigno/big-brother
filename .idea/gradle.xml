@@ -6,7 +6,7 @@
       <GradleProjectSettings>
         <option name="testRunner" value="CHOOSE_PER_TEST" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="jbr-17" />
+        <option name="gradleJvm" value="corretto-17" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/content/network" />
             <option value="$PROJECT_DIR$/content/proxy" />
             <option value="$PROJECT_DIR$/content/report" />
+            <option value="$PROJECT_DIR$/content/ui-automator" />
           </set>
         </option>
       </GradleProjectSettings>

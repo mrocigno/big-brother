@@ -1,5 +1,6 @@
 package br.com.mrocigno.bigbrother.common.utils
 
+import java.util.Locale
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
@@ -32,3 +33,5 @@ fun String.isHtml(): Boolean {
 fun String.toIntRound() = toFloat().roundToInt()
 
 fun String.toLongRound() = toDouble().roundToLong()
+
+fun String.compatCapitalize() = replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }

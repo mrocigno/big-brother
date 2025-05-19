@@ -4,7 +4,7 @@ plugins {
     alias libs.plugins.android.library apply false
     alias libs.plugins.android.kotlin apply false
     alias libs.plugins.ksp apply false
-    alias libs.plugins.medivh apply false
+//    alias libs.plugins.medivh apply false
     alias libs.plugins.serialization apply false
 }
 
@@ -18,7 +18,7 @@ allprojects {
         if (!project.hasProperty("android")) return
 
         android {
-            namespace "br.com.mrocigno.bigbrother$suffix"
+            namespace "br.com.mrocigno.bigbrother${suffix.replace("-", "_")}"
             compileSdk 34
 
             defaultConfig {
