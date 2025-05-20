@@ -11,6 +11,8 @@
     <dimen name="bb_spacing_xl">34dp</dimen>
     <dimen name="bb_spacing_td_top">48dp</dimen>
 
+    <dimen name="bb_size_s">10dp</dimen>
+
     <dimen name="bb_text_m">16sp</dimen>
     <dimen name="bb_text_l">24sp</dimen>
 </resources>

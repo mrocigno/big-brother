@@ -4,7 +4,8 @@ import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
-import br.com.mrocigno.bigbrother.ui_automator.UiAutomatorView
+import br.com.mrocigno.bigbrother.core.BigBrotherClickObserverView
+import br.com.mrocigno.bigbrother.ui_automator.ui.UiAutomatorView
 
 interface ViewFinder {
 
@@ -12,12 +13,20 @@ interface ViewFinder {
 
     val name: String?
 
+    val hasClickAction: Boolean
+
+    val hasLongClickAction: Boolean
+
     fun click()
+
+    fun longClick()
+
+    val identifier: String
 
     companion object {
 
         fun fromCoordinates(x: Float, y: Float, root: View): ViewFinder? {
-            if (root is UiAutomatorView) return null
+            if (root is UiAutomatorView || root is BigBrotherClickObserverView) return null
             val rect = Rect()
             if (!root.getGlobalVisibleRect(rect) || !rect.contains(x.toInt(), y.toInt())) return null
             when (root) {

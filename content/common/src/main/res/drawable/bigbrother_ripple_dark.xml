@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#33000000"> <!-- Default ripple color, can be overridden -->
+
+    <!-- Optional: Mask for the ripple effect -->
+    <!-- If you want the ripple to be bounded by a shape (e.g., rounded corners),
+         define a mask here. If omitted, the ripple will fill the view's bounds. -->
+
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white"/>
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+</ripple>

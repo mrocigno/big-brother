@@ -11,6 +11,7 @@ import br.com.mrocigno.bigbrother.report.model.ReportType
 internal class ReportTask : BigBrotherTask() {
 
     private val mapping = mutableMapOf<Int, Int>()
+    override val priority: Int = 2
 
     override fun onStartTask() {
         try {

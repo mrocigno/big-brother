@@ -3,4 +3,5 @@
 
     <id name="bigbrother"/>
     <id name="bigbrother_click_observer"/>
+    <id name="bigbrother_tooltip"/>
 </resources>

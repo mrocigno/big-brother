@@ -92,6 +92,7 @@
         </br.com.mrocigno.bigbrother.ui.GroupLayout>
 
         <br.com.mrocigno.bigbrother.ui.GroupLayout
+            android:id="@+id/report_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -113,7 +114,6 @@
         <br.com.mrocigno.bigbrother.ui.GroupLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_margin="10dp"
             android:text="Logs">
 

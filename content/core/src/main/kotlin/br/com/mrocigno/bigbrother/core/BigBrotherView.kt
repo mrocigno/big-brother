@@ -35,47 +35,32 @@ class BigBrotherView @JvmOverloads constructor(
     defStyleAttr
 ) {
 
-    val isExpanded: Boolean
-        get() = bigBrotherContainerView.isExpanded
+    val isExpanded: Boolean get() = bigBrotherContainerView.isExpanded
 
     private val activity get() = (context as ContextThemeWrapper).baseContext as FragmentActivity
-
-    private val bigBrotherContainerView = BigBrotherContainerView(this)
-    private val moveDuration = 200L
+    private val parentVG get() = parent as ViewGroup
+    private val bigBrotherContainerView by lazy { BigBrotherContainerView(this) }
+    private val statusBarHeight by lazy { activity.statusBarHeight.toFloat() }
+    private val navigationBarHeight by lazy { activity.getNavigationBarHeight().toFloat() }
+    private val fadeAnimation =
+        ObjectAnimator.ofFloat(this@BigBrotherView, "alpha", 1f, config.disabledAlpha)
+            .apply { startDelay = 2000L }
 
     private var onVortexKilled: (() -> Unit)? = null
-
-    private val statusBarHeight = activity.statusBarHeight.toFloat()
-    private val navigationBarHeight = activity.getNavigationBarHeight().toFloat()
-    private val parentVG get() = parent as ViewGroup
-    private val fadeAnimation =
-        ObjectAnimator.ofFloat(this, "alpha", 1f, config.disabledAlpha).apply {
-            startDelay = 2000L
-        }
-
-    private val View.bounds get() = RectF(x, y, x + width, y + height)
-    private val area by lazy {
-        RectF(
-            0f,
-            statusBarHeight,
-            (parentVG.width - width).toFloat(),
-            parentVG.height - height - navigationBarHeight
-        )
-    }
-    private val excludeSystemGesturesArea by lazy {
-        Rect(
-            0, 0,
-            BigBrother.config.size, BigBrother.config.size
-        )
+    private var onMoveCallback: ((BigBrotherView, Boolean) -> Unit)? = null
+    internal val View.bounds get() = RectF(x, y, x + width, y + height)
+    internal val area by lazy {
+        val right = parentVG.width - width.toFloat()
+        RectF(0f, statusBarHeight, right, parentVG.height - navigationBarHeight)
     }
 
     private val removableView by lazy {
-        val padding = context.resources.getDimensionPixelSize(CommonR.dimen.bb_spacing_s)
         FrameLayout(context).apply {
+            val padding = resources.getDimensionPixelSize(CommonR.dimen.bb_spacing_s)
             setBackgroundResource(CommonR.drawable.bigbrother_remove_area_background)
             layoutParams = LayoutParams(config.size, config.size).apply {
                 x = area.width() / 2
-                y = area.bottom - padding
+                y = area.bottom - padding - height
             }
         }
     }
@@ -83,6 +68,7 @@ class BigBrotherView @JvmOverloads constructor(
     init {
         id = R.id.bigbrother
         config.initial(this)
+        z = 10f
 
         setOnLongClickListener {
             parentVG.addView(removableView)
@@ -104,6 +90,10 @@ class BigBrotherView @JvmOverloads constructor(
                 animateToCenter()
             }
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            systemGestureExclusionRects = listOf(Rect(0, 0, config.size, config.size))
+        }
     }
 
     private fun moveBubble(event: MotionEvent) {
@@ -113,9 +103,11 @@ class BigBrotherView @JvmOverloads constructor(
                 if (isInRemovableArea(event)) {
                     x = removableView.x
                     y = removableView.y
+                    onMoveCallback?.invoke(this, false)
                 } else {
                     x = max(area.left, min(event.rawX - width / 2, area.right))
-                    y = max(area.top, min(event.rawY - height / 2, area.bottom))
+                    y = max(area.top, min(event.rawY - height / 2, (area.bottom - height)))
+                    onMoveCallback?.invoke(this, true)
                 }
                 if (parentVG.contains(bigBrotherContainerView)) bigBrotherContainerView.collapse()
             }
@@ -146,12 +138,13 @@ class BigBrotherView @JvmOverloads constructor(
 
     fun animateToCenter() {
         config.initialLocation.set(x, y)
+        onMoveCallback?.invoke(this, false)
         if (parentVG.contains(bigBrotherContainerView)) return
         animate()
             .x(parentVG.width / 2f - width / 2)
             .y(statusBarHeight)
             .alpha(1f)
-            .setDuration(moveDuration)
+            .setDuration(config.animationDuration)
             .withEndAction {
                 parentVG.addView(bigBrotherContainerView)
                 bigBrotherContainerView.expand()
@@ -166,12 +159,19 @@ class BigBrotherView @JvmOverloads constructor(
             .x(config.initialLocation.x)
             .y(config.initialLocation.y)
             .alpha(config.disabledAlpha)
-            .setStartDelay((moveDuration * 1.25).roundToLong())
-            .setDuration(moveDuration)
+            .setStartDelay((config.animationDuration * 1.25).roundToLong())
+            .setDuration(config.animationDuration)
+            .withEndAction {
+                onMoveCallback?.invoke(this, true)
+            }
             .start()
     }
 
-    fun setOnVortexKilled(action: () -> Unit) {
+    fun setOnMoveCallback(action: ((BigBrotherView, Boolean) -> Unit)?) {
+        onMoveCallback = action
+    }
+
+    fun setOnVortexKilled(action: (() -> Unit)?) {
         onVortexKilled = action
     }
 
@@ -189,14 +189,6 @@ class BigBrotherView @JvmOverloads constructor(
 
     private fun RectF.intersects(bounds: RectF): Boolean {
         return intersects(bounds.left, bounds.top, bounds.right, bounds.bottom)
-    }
-
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            systemGestureExclusionRects = listOf(excludeSystemGesturesArea)
-        }
     }
 
     companion object {

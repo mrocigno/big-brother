@@ -10,7 +10,7 @@ import br.com.mrocigno.bigbrother.common.R as CommonR
  * @param initialLocation initial position of the BigBrotherView
  * @param disabledAlpha alpha of the BigBrotherView when disabled
  * @param iconRes icon of the BigBrotherView
- * @param size size of the BigBrotherView
+ * @param sizeRes size of the BigBrotherView
  * @param isClickRecorderEnabled enable/disable click recorder coordinates to indicate crash click location
  *          disabling it is useful when is needed to remove "bigbrother_click_observer" view, allowing to use Layout Inspector
  */
@@ -20,6 +20,7 @@ class BigBrotherConfig(
     @DrawableRes var iconRes: Int = CommonR.drawable.bigbrother_ic_main,
     @DimenRes private var sizeRes: Int = CommonR.dimen.bigbrother_size,
     var isClickRecorderEnabled: Boolean = true,
+    var animationDuration: Long = 200L
 ) {
 
     internal var size: Int = 0

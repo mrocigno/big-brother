@@ -110,6 +110,10 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
         findViewById<View>(R.id.log_debug).setOnClickListener {
             Timber.tag("custom tag name").d("This a debug log example")
         }
+        findViewById<View>(R.id.log_debug).setOnLongClickListener {
+            Timber.tag("custom tag name").d("You just found an easter egg")
+            true
+        }
         findViewById<View>(R.id.log_error).setOnClickListener {
             Timber.tag("custom tag name").e(Exception("custom exception for error"), "This a error log example")
         }

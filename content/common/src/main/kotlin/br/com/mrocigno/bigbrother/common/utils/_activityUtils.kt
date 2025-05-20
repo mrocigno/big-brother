@@ -2,6 +2,7 @@ package br.com.mrocigno.bigbrother.common.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.res.Configuration
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
@@ -10,6 +11,8 @@ import android.widget.FrameLayout
 import br.com.mrocigno.bigbrother.common.R
 
 val Activity.rootView: FrameLayout get() = window.decorView as FrameLayout
+
+val Context.rootView: FrameLayout? get() = (this as? Activity)?.rootView
 
 val Activity.statusBarHeight: Int
     @SuppressLint("DiscouragedApi", "InternalInsetResource")

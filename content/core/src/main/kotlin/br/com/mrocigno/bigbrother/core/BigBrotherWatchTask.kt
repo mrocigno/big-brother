@@ -10,6 +10,8 @@ import br.com.mrocigno.bigbrother.common.utils.rootView
 
 internal class BigBrotherWatchTask : BigBrotherTask() {
 
+    override val priority: Int = 0
+
     private val lastPoint = PointF(0f, 200f)
     private var alive = true
 
@@ -21,11 +23,6 @@ internal class BigBrotherWatchTask : BigBrotherTask() {
         })
     }
 
-    override fun onActivityPaused(activity: Activity) {
-        val bigBrotherView = BigBrotherView.get(activity) ?: return
-        lastPoint.set(bigBrotherView.x, bigBrotherView.y)
-    }
-
     override fun onActivityStarted(activity: Activity) {
         val bigBrotherView = BigBrotherView.get(activity) ?: return
         if (!alive) {
@@ -34,6 +31,11 @@ internal class BigBrotherWatchTask : BigBrotherTask() {
             bigBrotherView.x = lastPoint.x
             bigBrotherView.y = lastPoint.y
         }
+    }
+
+    override fun onActivityPaused(activity: Activity) {
+        val bigBrotherView = BigBrotherView.get(activity) ?: return
+        lastPoint.set(bigBrotherView.x, bigBrotherView.y)
     }
 
     override fun onFragmentStarted(fragment: Fragment) {

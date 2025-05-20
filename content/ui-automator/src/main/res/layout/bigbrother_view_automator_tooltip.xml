@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/automator_tooltip_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/automator_tooltip_container"
-    android:elevation="12dp"
-    android:padding="12dp"
-    android:orientation="vertical"
     android:background="@drawable/bigbrother_content_background"
+    android:elevation="12dp"
+    android:orientation="vertical"
     tools:parentTag="android.widget.LinearLayout">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/automator_tooltip_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/bb_spacing_s"
+        android:layout_gravity="center_horizontal"
         android:gravity="center"
+        android:maxWidth="300dp"
         android:textColor="@color/bb_text_title"
         android:textSize="@dimen/bb_text_m"
         tools:text="@tools:sample/lorem[3]" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/automator_tooltip_perform_click"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Perform click"/>
+        android:layout_gravity="center_horizontal"
+        android:text="Perform click" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/automator_tooltip_perform_long_click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Perform long click" />
 </LinearLayout>

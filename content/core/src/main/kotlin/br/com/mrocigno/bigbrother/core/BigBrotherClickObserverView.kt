@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import br.com.mrocigno.bigbrother.core.utils.lastClickPosition
 
 @SuppressLint("ClickableViewAccessibility")
-internal class BigBrotherClickObserverView @JvmOverloads constructor(
+class BigBrotherClickObserverView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

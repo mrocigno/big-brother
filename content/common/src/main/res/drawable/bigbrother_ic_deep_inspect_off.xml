@@ -1,0 +1,15 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bigbrother_ic_deep_inspect_on" />
+    <item
+        android:width="2dp"
+        android:gravity="center">
+        <rotate
+            android:fromDegrees="45"
+            android:pivotX="50%"
+            android:pivotY="50%">
+            <shape android:shape="rectangle">
+                <solid android:color="@color/design_default_color_error" />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

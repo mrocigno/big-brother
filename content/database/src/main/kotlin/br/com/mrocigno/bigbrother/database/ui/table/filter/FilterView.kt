@@ -3,10 +3,7 @@ package br.com.mrocigno.bigbrother.database.ui.table.filter
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
-import android.graphics.drawable.RotateDrawable
 import android.transition.TransitionManager
 import android.util.AttributeSet
 import android.view.View
@@ -21,6 +18,7 @@ import br.com.mrocigno.bigbrother.common.utils.cast
 import br.com.mrocigno.bigbrother.common.utils.cleaner
 import br.com.mrocigno.bigbrother.common.utils.getBounds
 import br.com.mrocigno.bigbrother.common.utils.onMeasured
+import br.com.mrocigno.bigbrother.common.utils.setColor
 import br.com.mrocigno.bigbrother.database.R
 import br.com.mrocigno.bigbrother.database.model.TableDump
 import com.google.android.material.textfield.TextInputEditText
@@ -67,13 +65,14 @@ internal class FilterView @JvmOverloads constructor(
         setPadding(paddingOffset, refView.height, paddingOffset, paddingOffset)
         content.onMeasured {
             val headerCenter = refView.visibleCenter()
+            val color = context.getColor(CR.color.bb_background_secondary)
 
             background.cast(LayerDrawable::class).apply {
                 val inset = ((headerCenter - (width / 2)) * 2).toInt()
                 setLayerInsetLeft(0, inset)
                 setLayerInsetLeft(2, inset)
-                findDrawableByLayerId(CR.id.arrow).fixColor()
-                findDrawableByLayerId(CR.id.content).fixColor()
+                findDrawableByLayerId(CR.id.arrow).setColor(color)
+                findDrawableByLayerId(CR.id.content).setColor(color)
             }
         }
 
@@ -155,14 +154,6 @@ internal class FilterView @JvmOverloads constructor(
 
     private fun onCancel() {
         performClick()
-    }
-
-    private fun Drawable.fixColor() {
-        val color = context.getColor(CR.color.bb_background_secondary)
-        when (this) {
-            is RotateDrawable -> drawable?.fixColor()
-            is GradientDrawable -> setColor(color)
-        }
     }
 
     override fun onDraw(canvas: Canvas) {
