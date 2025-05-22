@@ -10,6 +10,7 @@ import androidx.compose.ui.semantics.SemanticsOwner
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getAllSemanticsNodes
 import androidx.compose.ui.semantics.getOrNull
+import androidx.compose.ui.text.AnnotatedString
 import br.com.mrocigno.bigbrother.common.utils.field
 import br.com.mrocigno.bigbrother.ui_automator.getXpath
 
@@ -73,9 +74,9 @@ class ComposableFinder_133(
     override fun setText(text: String) {
         val setTextAction = selectedNode
             ?.config
-            ?.getOrNull(SemanticsActions.Expand)
+            ?.getOrNull(SemanticsActions.SetText)
 
-        setTextAction?.action?.invoke()
+        setTextAction?.action?.invoke(AnnotatedString(text))
     }
 
     private fun findNodeByTestTag(testTag: String, root: SemanticsNode?): SemanticsNode? {

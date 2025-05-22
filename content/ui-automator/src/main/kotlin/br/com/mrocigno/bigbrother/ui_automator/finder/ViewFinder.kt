@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import br.com.mrocigno.bigbrother.ui_automator.R
-import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.bigbrother.core.R as CoreR
 import com.google.android.material.R as MaterialR
 
@@ -43,24 +42,15 @@ interface ViewFinder {
             val rect = Rect()
             if (!root.getGlobalVisibleRect(rect) || !rect.contains(x.toInt(), y.toInt())) return null
             when (root) {
-                is TextInputLayout -> {
-                    var found: ViewFinder? = null
-                    for (i in 0 until root.childCount) {
-                        val child = root.getChildAt(i)
-                        found = fromCoordinates(x, y, child) ?: found
-                    }
-                    return found
-                }
                 is ComposeView -> return ComposableFinder_133(x, y, root)
                 is ViewGroup -> {
-                    var found: ViewFinder? = null
+                    var found: ViewFinder = AndroidViewFinder(root)
                     for (i in 0 until root.childCount) {
                         val child = root.getChildAt(i)
                         found = fromCoordinates(x, y, child) ?: found
                     }
                     return found
                 }
-
             }
 
             return AndroidViewFinder(root)
