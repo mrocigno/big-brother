@@ -35,6 +35,10 @@ abstract class BigBrotherTask : ContentProvider() {
         return true
     }
 
+    protected fun removeMe() {
+        BigBrother.tasks.remove(this)
+    }
+
     override fun query(
         uri: Uri,
         projection: Array<out String>?,

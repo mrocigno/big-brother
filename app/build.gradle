@@ -37,4 +37,7 @@ dependencies {
     implementation project(":content:log")
     implementation project(":content:database")
     implementation project(":content:ui-automator")
+
+    // NEVER implement this on your project otherwise puppies will die
+    implementation project(":content:common")
 }

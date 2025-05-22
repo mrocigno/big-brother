@@ -1,7 +1,10 @@
 package br.com.mrocigno.bigbrother.ui_automator
 
+import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
+import br.com.mrocigno.bigbrother.common.utils.contentView
 import br.com.mrocigno.bigbrother.core.BigBrother
 import br.com.mrocigno.bigbrother.core.BigBrotherProvider
 import br.com.mrocigno.bigbrother.ui_automator.ui.UiAutomatorFragment
@@ -14,8 +17,9 @@ fun BigBrother.addUiAutomatorPage(customName: String = "UiAutomator") {
     addPage(customName) { UiAutomatorFragment() }
 }
 
-internal fun View.getEntryName() = runCatching { resources.getResourceEntryName(id) }
-    .getOrNull()
+internal fun View.getEntryName() = runCatching {
+    id.takeIf { it > 0 }?.run(resources::getResourceEntryName)
+}.getOrNull()
 
 internal fun View.getXpath() = buildString {
     var current: View? = this@getXpath
@@ -45,8 +49,36 @@ private fun findViewsWithId(root: ViewGroup, id: String): List<View> {
     val views = mutableListOf<View>()
     for (i in 0 until root.childCount) {
         val child = root.getChildAt(i)
-        if (runCatching { child.resources.getResourceEntryName(child.id) }.getOrNull() == id) views.add(child)
+        if (runCatching { child.getEntryName() }.getOrNull() == id) views.add(child)
         if (child is ViewGroup) views.addAll(findViewsWithId(child, id))
     }
     return views
 }
+
+internal fun Activity.findViewByXPath(xpath: String): View? {
+    val pathSegments = xpath.split("/").filter { it.isNotEmpty() }
+    var currentView: View? = contentView
+
+    for (segment in pathSegments) {
+        val className = segment.substringBefore("[")
+        val condition = segment.substringAfter("[").substringBefore("]")
+
+        if (condition.startsWith("@id='")) {
+            val idString = condition.substringAfter("@id='").substringBeforeLast("'")
+            val id = getResIdByName(idString) ?: return null
+            currentView = currentView?.findViewById(id) ?: return null
+        } else {
+            val index = condition.toIntOrNull() ?: 0
+            currentView = (currentView as? ViewGroup)?.getChildAt(index)
+        }
+
+        if (currentView is ComposeView) break
+    }
+    return currentView
+}
+
+private fun Activity.getResIdByName(name: String): Int? =
+    runCatching {
+        val rClass = Class.forName("${packageName}.R\$id")
+        rClass.getDeclaredField(name).getInt(null)
+    }.getOrNull()

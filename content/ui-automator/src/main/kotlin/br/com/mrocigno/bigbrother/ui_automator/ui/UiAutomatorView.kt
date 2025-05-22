@@ -22,6 +22,7 @@ import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
 import br.com.mrocigno.bigbrother.common.utils.visible
 import br.com.mrocigno.bigbrother.core.utils.getBigBrotherTask
 import br.com.mrocigno.bigbrother.ui_automator.R
+import br.com.mrocigno.bigbrother.ui_automator.UiAutomatorHolder
 import br.com.mrocigno.bigbrother.ui_automator.UiAutomatorTask
 import br.com.mrocigno.bigbrother.ui_automator.finder.ViewFinder
 import kotlin.math.roundToInt
@@ -46,7 +47,8 @@ internal class UiAutomatorView @JvmOverloads constructor(
         xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 
-    internal var clickActive = getBigBrotherTask(UiAutomatorTask::class)?.isDeepInspectActive ?: true
+    private val task = getBigBrotherTask(UiAutomatorTask::class) ?: error("UiAutomatorTask not found")
+    private var clickActive = task.isDeepInspectActive
     private val location = IntArray(2)
     private val activity: Activity? get() = context as? Activity
     private val tooltip = UiAutomatorTooltipView(context)
@@ -80,10 +82,18 @@ internal class UiAutomatorView @JvmOverloads constructor(
     private fun setupTooltip() {
         tooltip.setOnPerformClick {
             lastClickedView?.click()
+            UiAutomatorHolder.recordClick(activity!!, lastClickedView!!)
             lastClickedView = null
         }
         tooltip.setOnPerformLongClick {
             lastClickedView?.longClick()
+            UiAutomatorHolder.recordLongClick(activity!!, lastClickedView!!)
+            lastClickedView = null
+        }
+
+        tooltip.setOnSetText {
+            lastClickedView?.setText(it)
+            UiAutomatorHolder.recordSetText(activity!!, lastClickedView!!, it)
             lastClickedView = null
         }
         addView(tooltip)

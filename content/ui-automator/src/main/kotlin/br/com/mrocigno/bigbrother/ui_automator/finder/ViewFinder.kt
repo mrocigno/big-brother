@@ -4,8 +4,10 @@ import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
-import br.com.mrocigno.bigbrother.core.BigBrotherClickObserverView
-import br.com.mrocigno.bigbrother.ui_automator.ui.UiAutomatorView
+import br.com.mrocigno.bigbrother.ui_automator.R
+import com.google.android.material.textfield.TextInputLayout
+import br.com.mrocigno.bigbrother.core.R as CoreR
+import com.google.android.material.R as MaterialR
 
 interface ViewFinder {
 
@@ -17,30 +19,56 @@ interface ViewFinder {
 
     val hasLongClickAction: Boolean
 
+    val isTextField: Boolean
+
     fun click()
 
     fun longClick()
+
+    fun setText(text: String)
 
     val identifier: String
 
     companion object {
 
+        private fun blockListBecauseGoogleHateAllOfUs(view: View): Boolean = when (view.id) {
+            CoreR.id.bigbrother_click_observer,
+            R.id.bigbrother_ui_automator,
+            MaterialR.id.textinput_placeholder -> true
+            else -> false
+        }
+
         fun fromCoordinates(x: Float, y: Float, root: View): ViewFinder? {
-            if (root is UiAutomatorView || root is BigBrotherClickObserverView) return null
+            if (blockListBecauseGoogleHateAllOfUs(root)) return null
             val rect = Rect()
             if (!root.getGlobalVisibleRect(rect) || !rect.contains(x.toInt(), y.toInt())) return null
             when (root) {
-                is ComposeView -> return ComposableFinder_133(x, y, root)
-                is ViewGroup -> {
+                is TextInputLayout -> {
+                    var found: ViewFinder? = null
                     for (i in 0 until root.childCount) {
                         val child = root.getChildAt(i)
-                        val found = fromCoordinates(x, y, child)
-                        if (found != null) return found
+                        found = fromCoordinates(x, y, child) ?: found
                     }
+                    return found
                 }
+                is ComposeView -> return ComposableFinder_133(x, y, root)
+                is ViewGroup -> {
+                    var found: ViewFinder? = null
+                    for (i in 0 until root.childCount) {
+                        val child = root.getChildAt(i)
+                        found = fromCoordinates(x, y, child) ?: found
+                    }
+                    return found
+                }
+
             }
 
             return AndroidViewFinder(root)
+        }
+
+        fun fromXPath(xPath: String, root: View): ViewFinder = when (root) {
+            is ComposeView -> ComposableFinder_133(root, xPath)
+            else -> AndroidViewFinder(root)
         }
     }
 }

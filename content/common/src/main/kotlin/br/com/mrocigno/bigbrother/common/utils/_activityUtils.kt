@@ -7,10 +7,14 @@ import android.content.res.Configuration
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.ViewConfiguration
+import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
 import br.com.mrocigno.bigbrother.common.R
 
 val Activity.rootView: FrameLayout get() = window.decorView as FrameLayout
+
+val Activity.contentView: ViewGroup get() = findViewById(android.R.id.content)
 
 val Context.rootView: FrameLayout? get() = (this as? Activity)?.rootView
 
@@ -35,3 +39,6 @@ fun Activity.getNavigationBarHeight(force: Boolean = false): Int {
     }
     return 0
 }
+
+fun Activity.toast(message: String, duration: Int = Toast.LENGTH_SHORT) =
+    Toast.makeText(this, message, duration).show()

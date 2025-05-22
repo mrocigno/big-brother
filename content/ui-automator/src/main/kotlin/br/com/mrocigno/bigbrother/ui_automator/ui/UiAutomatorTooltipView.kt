@@ -15,6 +15,8 @@ import br.com.mrocigno.bigbrother.common.provider.id
 import br.com.mrocigno.bigbrother.common.utils.cast
 import br.com.mrocigno.bigbrother.ui_automator.R
 import br.com.mrocigno.bigbrother.ui_automator.finder.ViewFinder
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import br.com.mrocigno.bigbrother.common.R as CR
 
 class UiAutomatorTooltipView @JvmOverloads constructor(
@@ -27,6 +29,8 @@ class UiAutomatorTooltipView @JvmOverloads constructor(
     private val title: AppCompatTextView by id(R.id.automator_tooltip_title)
     private val performClickButton: AppCompatButton by id(R.id.automator_tooltip_perform_click)
     private val performLongClickButton: AppCompatButton by id(R.id.automator_tooltip_perform_long_click)
+    private val setTextLayout: TextInputLayout by id(R.id.automator_tooltip_set_text_layout)
+    private val setText: TextInputEditText by id(R.id.automator_tooltip_set_text)
 
     private val diff = resources.getDimensionPixelOffset(CR.dimen.bb_size_s)
 
@@ -44,6 +48,12 @@ class UiAutomatorTooltipView @JvmOverloads constructor(
         performLongClickButton.setOnClickListener(listener)
     }
 
+    fun setOnSetText(listener: (String) -> Unit) {
+        setTextLayout.setEndIconOnClickListener {
+            listener(setText.text.toString())
+        }
+    }
+
     fun updateBackground(upArrow: Boolean = true, block: LayerDrawable.() -> Unit) {
         if (upArrow) container.setPadding(diff, diff * 2, diff, diff)
         else container.setPadding(diff, diff, diff, diff * 2)
@@ -59,5 +69,6 @@ class UiAutomatorTooltipView @JvmOverloads constructor(
         title.text = viewFinder.name.orEmpty()
         performClickButton.isVisible = viewFinder.hasClickAction
         performLongClickButton.isVisible = viewFinder.hasLongClickAction
+        setTextLayout.isVisible = viewFinder.isTextField
     }
 }

@@ -34,8 +34,9 @@
 
         <activity android:name=".ui.general.CustomPageActivity" />
 
-        <activity android:name=".ui.compose.ComposableActivity"
-            android:exported="true"/>
+        <activity android:name=".ui.compose.ComposableActivity" />
+
+        <activity android:name=".ui.automator.PlaygroundActivity" />
 
         <provider
             android:authorities="${applicationId}.SAMPLE"

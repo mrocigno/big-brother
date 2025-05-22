@@ -8,11 +8,13 @@ import br.com.mrocigno.bigbrother.common.provider.id
 import br.com.mrocigno.bigbrother.core.utils.closeBigBrotherBubble
 import br.com.mrocigno.bigbrother.core.utils.getBigBrotherTask
 import br.com.mrocigno.bigbrother.ui_automator.R
+import br.com.mrocigno.bigbrother.ui_automator.UiAutomatorHolder
 import br.com.mrocigno.bigbrother.ui_automator.UiAutomatorTask
 
 class UiAutomatorFragment : Fragment(R.layout.bigbrother_fragment_ui_automator) {
 
     private val toggle: AppCompatButton by id(R.id.automator_toggle)
+    private val play: AppCompatButton by id(R.id.automator_play)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,6 +28,10 @@ class UiAutomatorFragment : Fragment(R.layout.bigbrother_fragment_ui_automator) 
                 toggle.text = "Stop recording"
                 requireActivity().closeBigBrotherBubble()
             }
+        }
+
+        play.setOnClickListener {
+            UiAutomatorHolder.play(requireActivity())
         }
     }
 }

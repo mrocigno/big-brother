@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/automator_tooltip_container"
     android:layout_width="wrap_content"
@@ -19,6 +20,23 @@
         android:textColor="@color/bb_text_title"
         android:textSize="@dimen/bb_text_m"
         tools:text="@tools:sample/lorem[3]" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/automator_tooltip_set_text_layout"
+        style="@style/input_outlined"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:hint="Set text"
+        android:minWidth="300dp"
+        app:endIconDrawable="@drawable/bigbrother_ic_send">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/automator_tooltip_set_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/automator_tooltip_perform_click"

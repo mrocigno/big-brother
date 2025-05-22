@@ -112,6 +112,26 @@
         </br.com.mrocigno.bigbrother.ui.GroupLayout>
 
         <br.com.mrocigno.bigbrother.ui.GroupLayout
+            android:id="@+id/automator_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="UiAutomator">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/open_automator_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Ui Automator Playground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </br.com.mrocigno.bigbrother.ui.GroupLayout>
+
+        <br.com.mrocigno.bigbrother.ui.GroupLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

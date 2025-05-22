@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import androidx.fragment.app.FragmentActivity
 import br.com.mrocigno.bigbrother.common.utils.onStart
 import br.com.mrocigno.bigbrother.common.utils.onStop
@@ -20,6 +21,8 @@ internal class BigBrotherObserver : Application.ActivityLifecycleCallbacks {
                 Log.e("BIG BROTHER", "${it::class.simpleName} - Error inside onActivityCreated task", e)
             }
         }
+
+        val service = activity.getSystemService(WindowManager::class.java)
 
         if (activity is FragmentActivity) {
             activity.supportFragmentManager.addFragmentOnAttachListener { _, fragment ->

@@ -14,23 +14,27 @@ import br.com.mrocigno.bigbrother.common.utils.field
 import br.com.mrocigno.bigbrother.ui_automator.getXpath
 
 class ComposableFinder_133(
-    x: Float,
-    y: Float,
+    x: Float? = null,
+    y: Float? = null,
     val view: ComposeView
 ) : ViewFinder {
 
     override val rect: Rect = Rect()
 
-    override val name: String get() = getXpath()
+    override val name: String get() =
+        selectedNode.getTestTag()?.takeIf { isIdUnique(it) } ?: getXpath()
 
     override val identifier: String
-        get() = selectedNode.getTestTag()?.takeIf { isIdUnique(it) } ?: getXpath()
+        get() = getXpath()
 
     override val hasClickAction: Boolean
         get() = selectedNode?.config?.getOrNull(SemanticsActions.OnClick) != null
 
     override val hasLongClickAction: Boolean
         get() = selectedNode?.config?.getOrNull(SemanticsActions.OnLongClick) != null
+
+    override val isTextField: Boolean
+        get() = selectedNode?.config?.getOrNull(SemanticsActions.SetText) != null
 
     private val owner: SemanticsOwner? = view
         .field<Any>("composition")
@@ -39,9 +43,15 @@ class ComposableFinder_133(
 
     internal var selectedNode: SemanticsNode? = null
 
+    constructor(view: ComposeView, xpath: String) : this(null, null, view) {
+        selectedNode = findNodeByXpath(xpath)
+    }
+
     init {
-        selectedNode = findViewAtCoordinates(x, y, owner?.rootSemanticsNode)
-        selectedNode?.boundsInWindow?.toAndroidRect()?.let { rect.set(it) }
+        if (x != null && y != null) {
+            selectedNode = findNodeByCoordinates(x, y, owner?.rootSemanticsNode)
+            selectedNode?.boundsInWindow?.toAndroidRect()?.run(rect::set)
+        }
     }
 
     override fun click() {
@@ -60,7 +70,26 @@ class ComposableFinder_133(
         clickAction?.action?.invoke()
     }
 
-    private fun findViewAtCoordinates(x: Float, y: Float, root: SemanticsNode?): SemanticsNode? {
+    override fun setText(text: String) {
+        val setTextAction = selectedNode
+            ?.config
+            ?.getOrNull(SemanticsActions.Expand)
+
+        setTextAction?.action?.invoke()
+    }
+
+    private fun findNodeByTestTag(testTag: String, root: SemanticsNode?): SemanticsNode? {
+        root ?: return null
+        if (root.getTestTag() == testTag) return root
+        val children = root.children
+        var found: SemanticsNode? = null
+        children.forEach { child ->
+            found = findNodeByTestTag(testTag, child) ?: found
+        }
+        return found
+    }
+
+    private fun findNodeByCoordinates(x: Float, y: Float, root: SemanticsNode?): SemanticsNode? {
         root ?: return null
         val rect = root.boundsInWindow
         if (!rect.contains(Offset(x, y))) return null
@@ -68,11 +97,31 @@ class ComposableFinder_133(
         val children = root.children
 
         children.forEach { child ->
-            val found = findViewAtCoordinates(x, y, child)
+            val found = findNodeByCoordinates(x, y, child)
             if (found != null) return found
         }
 
         return root
+    }
+
+    private fun findNodeByXpath(xpath: String): SemanticsNode? {
+        val pathSegments = xpath.split("/").filter { it.isNotEmpty() }
+        var currentNode: SemanticsNode? = owner?.rootSemanticsNode
+
+        for (segment in pathSegments) {
+            val role = segment.substringBefore("[")
+            if (role == ComposeView::class.simpleName) continue
+            val condition = segment.substringAfter("[").substringBefore("]")
+
+            if (condition.startsWith("@id='")) {
+                val idString = condition.substringAfter("@id='").substringBeforeLast("'")
+                currentNode = findNodeByTestTag(idString, currentNode)
+            } else {
+                val index = condition.toIntOrNull() ?: 0
+                currentNode = currentNode?.children?.get(index)
+            }
+        }
+        return currentNode
     }
 
     private fun SemanticsNode?.getTestTag() =
