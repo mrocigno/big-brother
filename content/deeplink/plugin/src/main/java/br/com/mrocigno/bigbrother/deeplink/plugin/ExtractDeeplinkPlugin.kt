@@ -21,16 +21,18 @@ class ExtractDeeplinkPlugin : Plugin<Project> {
                 val variantName = variant.name
                 val capitalizedVariant = variantName.replaceFirstChar(Char::uppercase)
 
-                val manifestPath = "${buildDir}/intermediates/merged_manifests/$variantName/process${capitalizedVariant}Manifest/AndroidManifest.xml"
                 val outputFile = File(buildDir, "generated/assets/$variantName/deeplinks.json")
                 val taskName = "extract${capitalizedVariant}DeepLinks"
-                val processManifestTaskName = "process${capitalizedVariant}Manifest"
+                val processManifestTaskName = "process${capitalizedVariant}MainManifest"
+                val manifestFile = project.tasks.getByName(processManifestTaskName).outputs.files.first {
+                    it.absolutePath.contains("/$variantName/") && it.name == "AndroidManifest.xml"
+                }
 
                 val task = project.tasks.register(taskName) {
                     it.group = "big-brother"
                     it.description = "Extracts deeplinks from the merged AndroidManifest for the $variantName variant"
 
-                    it.inputs.file(manifestPath)
+                    it.inputs.file(manifestFile)
                     it.outputs.file(outputFile)
 
                     android.sourceSets { sourceSets ->
@@ -40,13 +42,13 @@ class ExtractDeeplinkPlugin : Plugin<Project> {
                     }
 
                     it.doLast {
-                        val manifestFile = File(manifestPath)
                         val encoder = Json {
                             prettyPrint = true
+                            encodeDefaults = true
                         }
 
                         if (!manifestFile.exists()) {
-                            println("❌ Manifest file not found: $manifestPath")
+                            println("❌ Manifest file not found: $manifestFile")
                             println("❌ Aborting deeplink extraction")
                             return@doLast
                         }
@@ -54,7 +56,10 @@ class ExtractDeeplinkPlugin : Plugin<Project> {
                         val visitor = ManifestVisitor(manifestFile)
 
                         outputFile.parentFile.mkdirs()
-                        outputFile.writeText(encoder.encodeToString(visitor.deepLinks))
+                        val json = runCatching { encoder.encodeToString(visitor.deepLinks.toList()) }
+                            .recoverCatching { it.stackTraceToString() }
+                            .getOrElse { "" }
+                        outputFile.writeText(json)
                         println("✅ ${visitor.deepLinks.size} deeplinks extracted to: ${outputFile.absolutePath}")
                     }
                 }

@@ -50,7 +50,9 @@ class ManifestVisitor(file: File) {
                     }
                 }
 
-                if (!filterModel.isEmpty) links.add(filterModel.copy())
+                if (filterModel.hasView && filterModel.hasBrowsable) {
+                    links.add(filterModel.copy())
+                }
             }
 
             if (links.isEmpty()) continue

@@ -10,13 +10,13 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 tasks.withType(KotlinCompile::class.java) {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
+        jvmTarget.set(JvmTarget.JVM_11)
     }
 }
 
@@ -39,7 +39,10 @@ gradlePlugin {
 }
 
 dependencies {
-    implementation(libs.agp.core)
-    implementation(libs.agp.api)
+    // Hardcoded to 7.0.4 to avoid issues with the Android Gradle Plugin
+    implementation("com.android.tools.build:gradle:7.0.4")
+    implementation("com.android.tools.build:gradle-api:7.0.4")
+
+    // I don't even know why I'm using this, Gson is better
     implementation(libs.kotlin.serialization)
 }
