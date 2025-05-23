@@ -15,7 +15,7 @@ Big Brother's goal is to provide tools that help developers/QA test their featur
 To use BigBrother in the app, implements the following dependencies in `build.gradle` on app module:
 ```groovy
 dependencies {
-    def bigbrother_last_release = '1.1.2'
+    def bigbrother_last_release = '1.2.0'
 
     // The version definition is required only on core implementation
     debugImplementation "io.github.mrocigno:big-brother-core:$bigbrother_last_release"
