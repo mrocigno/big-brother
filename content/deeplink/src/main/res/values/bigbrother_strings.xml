@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bigbrother_deeplink_empty_state">No deeplink found in AndroidManifest</string>
+    <string name="bigbrother_deeplink_copied">Deeplink path copied to clipboard</string>
+    <string name="bigbrother_deeplink_queries_title">Append query</string>
+    <string name="bigbrother_deeplink_queries_hint">Queries</string>
+    <string name="bigbrother_deeplink_queries_final">Final path:</string>
+    <string name="bigbrother_deeplink_queries_launch">Start</string>
+    <string name="bigbrother_deeplink_recent_title">Recent</string>
+    <string name="bigbrother_deeplink_all">All deeplinks</string>
+    <string name="bigbrother_deeplink_new_title">New deeplink</string>
+    <string name="bigbrother_deeplink_new_scheme" translatable="false">Scheme</string>
+    <string name="bigbrother_deeplink_new_host" translatable="false">Host</string>
+    <string name="bigbrother_deeplink_new_path" translatable="false">Path</string>
+    <string name="bigbrother_deeplink_error_scheme">Scheme is required</string>
+    <string name="bigbrother_deeplink_query_no_value_error">%1$s do not contains value</string>
+    <string name="bigbrother_deeplink_query_invalid_error">%1$s=%2$s is invalid</string>
+</resources>

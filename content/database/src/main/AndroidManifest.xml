@@ -7,13 +7,13 @@
             android:name=".ui.table.TableInspectorActivity"
             android:exported="false"
             android:label="teste"
-            android:theme="@style/Theme.BigBrother"/>
+            android:theme="@style/BigBrotherTheme"/>
 
         <activity
             android:name=".ui.prefs.SharedPreferencesDetailsActivity"
             android:exported="false"
             android:label="teste"
-            android:theme="@style/Theme.BigBrother"/>
+            android:theme="@style/BigBrotherTheme"/>
 
         <provider
             android:authorities="${applicationId}.DATABASE"

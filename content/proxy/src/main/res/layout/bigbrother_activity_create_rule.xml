@@ -27,7 +27,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/proxy_rule_name_layout"
-                style="@style/input_outlined"
+                style="@style/BigBrotherInputOutlined"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/bb_spacing_m"
@@ -61,7 +61,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/proxy_rule_method_layout"
-                style="@style/spinner_outlined"
+                style="@style/BigBrotherSpinnerOutlined"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/bb_spacing_m"
@@ -84,7 +84,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/proxy_rule_condition_layout"
-                style="@style/input_outlined"
+                style="@style/BigBrotherInputOutlined"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/bb_spacing_m"
@@ -116,7 +116,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/proxy_rule_condition_header_layout"
-                style="@style/input_outlined"
+                style="@style/BigBrotherInputOutlined"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/bb_spacing_m"

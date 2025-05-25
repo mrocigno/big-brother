@@ -6,7 +6,7 @@
         <activity
             android:name=".ui.ProxyCreateRuleActivity"
             android:exported="false"
-            android:theme="@style/Theme.BigBrother"
+            android:theme="@style/BigBrotherTheme"
             android:windowSoftInputMode="adjustResize" >
 
             <intent-filter>
@@ -18,7 +18,7 @@
         <activity
             android:name=".ui.ProxyListRulesActivity"
             android:exported="false"
-            android:theme="@style/Theme.BigBrother"
+            android:theme="@style/BigBrotherTheme"
             android:windowSoftInputMode="adjustResize" >
 
             <intent-filter>

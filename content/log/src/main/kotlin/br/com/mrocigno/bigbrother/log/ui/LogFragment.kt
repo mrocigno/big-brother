@@ -43,7 +43,7 @@ internal class LogFragment : Fragment(R.layout.bigbrother_fragment_log) {
 
     override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
         val inflater = super.onGetLayoutInflater(savedInstanceState)
-        val context = ContextThemeWrapper(inflater.context, CommonR.style.Theme_BigBrother)
+        val context = ContextThemeWrapper(inflater.context, CommonR.style.BigBrotherTheme)
         return inflater.cloneInContext(context)
     }
 
@@ -102,7 +102,7 @@ internal class LogFragment : Fragment(R.layout.bigbrother_fragment_log) {
     }
 
     override fun getContext(): Context {
-        return ContextThemeWrapper(super.getContext(), CommonR.style.Theme_BigBrother)
+        return ContextThemeWrapper(super.getContext(), CommonR.style.BigBrotherTheme)
     }
 
     companion object {

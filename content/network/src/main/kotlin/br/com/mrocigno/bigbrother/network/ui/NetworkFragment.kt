@@ -38,7 +38,7 @@ internal class NetworkFragment : Fragment(R.layout.bigbrother_fragment_network) 
 
     override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
         val inflater = super.onGetLayoutInflater(savedInstanceState)
-        val context = ContextThemeWrapper(inflater.context, CommonR.style.Theme_BigBrother)
+        val context = ContextThemeWrapper(inflater.context, CommonR.style.BigBrotherTheme)
         return inflater.cloneInContext(context)
     }
 

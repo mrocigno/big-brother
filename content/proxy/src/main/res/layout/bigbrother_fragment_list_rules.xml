@@ -24,7 +24,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/proxy_search_layout"
-                    style="@style/SearchView"
+                    style="@style/BigBrotherSearchView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="50dp"

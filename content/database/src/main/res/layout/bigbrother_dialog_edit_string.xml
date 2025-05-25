@@ -6,7 +6,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edit_string_layout"
-        style="@style/input_outlined"
+        style="@style/BigBrotherInputOutlined"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

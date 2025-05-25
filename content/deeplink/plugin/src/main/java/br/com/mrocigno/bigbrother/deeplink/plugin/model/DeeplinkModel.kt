@@ -3,21 +3,20 @@ package br.com.mrocigno.bigbrother.deeplink.plugin.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DeeplinkModel(
+internal data class DeeplinkModel(
     val activityName: String,
     val exported: Boolean = false,
     val links: List<DeeplinkFilterModel>
-)
+) {
+
+    val type: String = if (exported) "EXTERNAL" else "INTERNAL"
+}
 
 @Serializable
-data class DeeplinkFilterModel(
+internal data class DeeplinkFilterModel(
     var scheme: String = "",
     var host: String = "",
     var path: String = "",
     var hasView: Boolean = false,
     var hasBrowsable: Boolean = false
-) {
-
-    val isEmpty: Boolean
-        get() = scheme.isEmpty() && host.isEmpty() && path.isEmpty() && !hasView && !hasBrowsable
-}
+)

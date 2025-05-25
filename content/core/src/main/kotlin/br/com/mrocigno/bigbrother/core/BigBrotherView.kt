@@ -30,7 +30,7 @@ class BigBrotherView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     private val config: BigBrotherConfig = BigBrother.config
 ) : FrameLayout(
-    ContextThemeWrapper(context, CommonR.style.Theme_BigBrother),
+    ContextThemeWrapper(context, CommonR.style.BigBrotherTheme),
     attrs,
     defStyleAttr
 ) {

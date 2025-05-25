@@ -21,7 +21,9 @@ class ExtractDeeplinkPlugin : Plugin<Project> {
                 val variantName = variant.name
                 val capitalizedVariant = variantName.replaceFirstChar(Char::uppercase)
 
-                val outputFile = File(buildDir, "generated/assets/$variantName/deeplinks.json")
+                val fileName = "bb_deeplinks.json"
+                val outputFile = File(buildDir, "intermediates/assets/$variantName/merge${capitalizedVariant}Assets/$fileName")
+
                 val taskName = "extract${capitalizedVariant}DeepLinks"
                 val processManifestTaskName = "process${capitalizedVariant}MainManifest"
                 val manifestFile = project.tasks.getByName(processManifestTaskName).outputs.files.first {
@@ -34,12 +36,6 @@ class ExtractDeeplinkPlugin : Plugin<Project> {
 
                     it.inputs.file(manifestFile)
                     it.outputs.file(outputFile)
-
-                    android.sourceSets { sourceSets ->
-                        sourceSets.findByName(variantName)?.assets {
-                            srcDir(outputFile.parentFile)
-                        }
-                    }
 
                     it.doLast {
                         val encoder = Json {
@@ -67,6 +63,8 @@ class ExtractDeeplinkPlugin : Plugin<Project> {
                 project.tasks.matching { it.name == taskName }
                     .configureEach {
                         it.dependsOn(project.tasks.named(processManifestTaskName))
+                        it.dependsOn(project.tasks.named("merge${capitalizedVariant}Assets"))
+                        it.dependsOn(project.tasks.named("compress${capitalizedVariant}Assets"))
                     }
 
                 project.tasks.matching { it.name == processManifestTaskName }

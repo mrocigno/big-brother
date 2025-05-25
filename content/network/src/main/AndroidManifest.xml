@@ -6,17 +6,17 @@
         <activity
             android:name=".json.JsonViewerActivity"
             android:exported="false"
-            android:theme="@style/Theme.BigBrother" />
+            android:theme="@style/BigBrotherTheme" />
 
         <activity
             android:name=".ui.NetworkEntryDetailsActivity"
             android:exported="false"
-            android:theme="@style/Theme.BigBrother" />
+            android:theme="@style/BigBrotherTheme" />
 
         <activity
             android:name=".ui.NetworkListActivity"
             android:exported="false"
-            android:theme="@style/Theme.BigBrother">
+            android:theme="@style/BigBrotherTheme">
 
             <intent-filter>
                 <action android:name="${applicationId}.LIST_NETWORK_SESSION" />

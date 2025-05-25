@@ -5,7 +5,7 @@ import br.com.mrocigno.bigbrother.deeplink.plugin.model.DeeplinkModel
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
 
-class ManifestVisitor(file: File) {
+internal class ManifestVisitor(file: File) {
 
     val deepLinks = mutableListOf<DeeplinkModel>()
 
