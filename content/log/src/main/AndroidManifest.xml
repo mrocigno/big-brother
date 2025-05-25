@@ -6,7 +6,7 @@
         <activity
             android:name=".ui.LogListActivity"
             android:exported="false"
-            android:theme="@style/Theme.BigBrother">
+            android:theme="@style/BigBrotherTheme">
 
             <intent-filter>
                 <action android:name="${applicationId}.LOG_LIST_ACTIVITY" />

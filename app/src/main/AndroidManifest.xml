@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/bigbrother_ic_round_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BigBrother"
+        android:theme="@style/BigBrotherTheme"
         android:name=".SampleApplication"
         tools:targetApi="31">
 
@@ -28,9 +28,27 @@
 
         <activity android:name=".ui.network.NetworkActivity" />
 
-        <activity android:name=".ui.report.ReportActivity" />
+        <activity android:name=".ui.report.ReportActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="app"
+                    android:host="bb" />
+            </intent-filter>
+        </activity>
 
-        <activity android:name=".ui.general.OutOfDomainActivity" />
+        <activity android:name=".ui.general.OutOfDomainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="app"
+                    android:host="bdb" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".ui.general.CustomPageActivity" />
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/deeplink_menu_start"
+        android:icon="@drawable/bigbrother_ic_link"
+        android:title="@string/bigbrother_deeplink_queries_launch" />
+
+    <item
+        android:id="@+id/deeplink_menu_append"
+        android:icon="@drawable/bigbrother_ic_add"
+        android:title="@string/bigbrother_deeplink_queries_title" />
+
+    <item
+        android:id="@+id/deeplink_menu_copy"
+        android:icon="@drawable/bigbrother_ic_copy"
+        android:title="@string/copy" />
+
+    <item
+        android:id="@+id/deeplink_menu_delete"
+        android:icon="@drawable/bigbrother_ic_clear"
+        android:title="@string/delete" />
+</menu>

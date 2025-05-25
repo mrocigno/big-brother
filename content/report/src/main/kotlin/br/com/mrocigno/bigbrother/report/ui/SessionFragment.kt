@@ -47,7 +47,7 @@ internal class SessionFragment : Fragment(R.layout.bigbrother_fragment_session) 
 
     override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
         val inflater = super.onGetLayoutInflater(savedInstanceState)
-        val context = ContextThemeWrapper(inflater.context, CR.style.Theme_BigBrother)
+        val context = ContextThemeWrapper(inflater.context, CR.style.BigBrotherTheme)
         return inflater.cloneInContext(context)
     }
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bb_background_secondary">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/deeplink_header_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/bigbrother_ic_clock"
+        app:layout_constraintBottom_toBottomOf="@id/deeplink_header_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/deeplink_header_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/deeplink_header_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/bb_spacing_m"
+        android:layout_marginStart="@dimen/bb_spacing_m"
+        android:textColor="@color/bb_text_title"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/deeplink_header_clear"
+        app:layout_constraintStart_toEndOf="@id/deeplink_header_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Header" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/deeplink_header_clear"
+        android:layout_width="?minTouchTargetSize"
+        android:layout_height="?minTouchTargetSize"
+        android:foreground="?selectableItemBackground"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bigbrother_ic_clear"
+        app:tint="@color/bb_brand_default" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

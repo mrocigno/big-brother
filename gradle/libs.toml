@@ -16,6 +16,7 @@ compose-compiler = "1.4.2"
 compose-runtime = "1.3.3"
 medivh = "1.2.4"
 serialization = "1.8.10"
+big-brother="1.2.0"
 
 # confirm
 kotlin-reflection = "1.7.21"
@@ -58,10 +59,17 @@ jakewharton-threetenabp = { module = "com.jakewharton.threetenabp:threetenabp", 
 gson = { module = "com.google.code.gson:gson", version = "2.10.1" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
+# AGP
+agp-core = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+agp-api = { group = "com.android.tools.build", name = "gradle-api", version.ref = "agp" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 medivh = { id = "tech.medivh.plugin.publisher", version.ref = "medivh" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
+plugin-publish = { id = "com.gradle.plugin-publish", version = "1.2.1" }
+deeplink = { id = "io.github.mrocigno.extract.deeplink", version.ref = "big-brother" }

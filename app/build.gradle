@@ -1,13 +1,13 @@
 plugins {
     alias libs.plugins.android.application
     alias libs.plugins.android.kotlin
+    alias libs.plugins.deeplink
 }
 
 android {
     defaultConfig {
         applicationId "br.com.mrocigno.bigbrother"
     }
-
     buildFeatures.compose true
     composeOptions.kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
 }
@@ -36,4 +36,5 @@ dependencies {
     implementation project(":content:proxy")
     implementation project(":content:log")
     implementation project(":content:database")
+    implementation project(":content:deeplink")
 }

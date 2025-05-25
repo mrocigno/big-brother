@@ -16,12 +16,15 @@
             <option value="$PROJECT_DIR$/content/core" />
             <option value="$PROJECT_DIR$/content/crash" />
             <option value="$PROJECT_DIR$/content/database" />
+            <option value="$PROJECT_DIR$/content/deeplink" />
+            <option value="$PROJECT_DIR$/content/deeplink/plugin" />
             <option value="$PROJECT_DIR$/content/log" />
             <option value="$PROJECT_DIR$/content/network" />
             <option value="$PROJECT_DIR$/content/proxy" />
             <option value="$PROJECT_DIR$/content/report" />
           </set>
         </option>
+        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

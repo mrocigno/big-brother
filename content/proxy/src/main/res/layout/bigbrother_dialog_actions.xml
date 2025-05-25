@@ -9,7 +9,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/proxy_action_spinner_layout"
-        style="@style/spinner_outlined"
+        style="@style/BigBrotherSpinnerOutlined"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:endIconDrawable="@drawable/bigbrother_ic_arrow_drop_down"
@@ -41,7 +41,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/proxy_action_name_layout"
-        style="@style/input_outlined"
+        style="@style/BigBrotherInputOutlined"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -61,7 +61,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/proxy_action_value_layout"
-        style="@style/input_outlined"
+        style="@style/BigBrotherInputOutlined"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -81,7 +81,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/proxy_action_body_layout"
-        style="@style/input_outlined"
+        style="@style/BigBrotherInputOutlined"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

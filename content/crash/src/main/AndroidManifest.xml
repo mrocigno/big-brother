@@ -6,7 +6,7 @@
         <activity
             android:name="br.com.mrocigno.bigbrother.crash.CrashActivity"
             android:exported="false"
-            android:theme="@style/Theme.BigBrother">
+            android:theme="@style/BigBrotherTheme">
 
             <intent-filter>
                 <action android:name="${applicationId}.CRASH_ACTIVITY"/>

@@ -1,0 +1,19 @@
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.android.kotlin
+    id 'kotlin-parcelize'
+    id 'kotlinx-serialization'
+}
+
+apply from: file('../../gradle/publish.gradle')
+
+dependencies {
+
+    compileOnly project(":content:core")
+    compileOnly project(":content:log")
+    implementation project(":content:common")
+
+    implementation libs.androidx.lifecycle.runtime
+    implementation libs.androidx.fragment
+    implementation libs.kotlin.serialization
+}
