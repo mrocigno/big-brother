@@ -12,7 +12,7 @@ data class DeeplinkEntity(
     @ColumnInfo(name = "exported") val exported: Boolean,
     @ColumnInfo(name = "type") val type: String,
     @ColumnInfo(name = "path") val path: String,
-    @ColumnInfo(name = "has_view") val hasView: Boolean,
-    @ColumnInfo(name = "has_browsable") val hasBrowsable: Boolean,
+    @ColumnInfo(name = "actions") val actions: List<String>,
+    @ColumnInfo(name = "categories") val categories: List<String>,
     @ColumnInfo(name = "time") val time: LocalDateTime = LocalDateTime.now()
 )

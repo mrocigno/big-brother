@@ -3,6 +3,7 @@ package br.com.mrocigno.bigbrother.common.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import br.com.mrocigno.bigbrother.common.converter.ListStringConverter
 import br.com.mrocigno.bigbrother.common.converter.LocalDateTimeConverter
 import br.com.mrocigno.bigbrother.common.dao.CrashDao
 import br.com.mrocigno.bigbrother.common.dao.DeeplinkDao
@@ -33,7 +34,7 @@ import br.com.mrocigno.bigbrother.common.entity.SessionEntity
         DeeplinkEntity::class
     ]
 )
-@TypeConverters(LocalDateTimeConverter::class)
+@TypeConverters(LocalDateTimeConverter::class, ListStringConverter::class)
 abstract class BigBrotherDatabase : RoomDatabase() {
 
     abstract fun sessionDao(): SessionDao

@@ -1,6 +1,5 @@
 package br.com.mrocigno.bigbrother.deeplink.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.ContextThemeWrapper
@@ -81,14 +80,13 @@ internal class DeeplinkFragment : Fragment(R.layout.bigbrother_fragment_deeplink
     }
 
     private fun onItemLongClick(model: DeeplinkEntry, view: View) {
-        if (model.id == 0) return
-        showPopupMenu(model, view, true)
+        showPopupMenu(model, view, model.id != 0)
     }
 
     private fun onClearClick() = viewModel.deleteAll()
 
     private fun showPopupMenu(model: DeeplinkEntry, view: View, shouldUpdate: Boolean) {
-        PopupMenu(context, view).apply {
+        PopupMenu(requireContext(), view).apply {
             inflate(R.menu.deeplink_menu)
             setForceShowIcon(true)
             menu.findItem(R.id.deeplink_menu_delete).isVisible = shouldUpdate
@@ -106,9 +104,16 @@ internal class DeeplinkFragment : Fragment(R.layout.bigbrother_fragment_deeplink
 
     private fun launchDeeplink(model: DeeplinkEntry) {
         try {
-            Intent(Intent.ACTION_VIEW)
-                .setData(model.path.toUri())
-                .run(::startActivity)
+            val action =
+                if (model.exported) Intent.ACTION_VIEW
+                else model.actions.firstOrNull() ?: throw IllegalArgumentException("No action found")
+
+            Intent(action).apply {
+                setPackage(requireContext().packageName)
+                model.categories.forEach(::addCategory)
+                if (model.path.isNotBlank()) setData(model.path.toUri())
+            }.run(::startActivity)
+
             viewModel.save(model.toEntity())
         } catch (e: Exception) {
             Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
@@ -161,9 +166,5 @@ internal class DeeplinkFragment : Fragment(R.layout.bigbrother_fragment_deeplink
     private fun applyFilter(query: String) {
         val type = runCatching { DeeplinkType.values()[chipGroup.checkedChipId] }.getOrNull()
         adapter.filter(query, type)
-    }
-
-    override fun getContext(): Context {
-        return ContextThemeWrapper(super.getContext(), CommonR.style.BigBrotherTheme)
     }
 }

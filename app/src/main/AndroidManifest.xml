@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".SampleApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,7 +14,6 @@
         android:roundIcon="@mipmap/bigbrother_ic_round_launcher"
         android:supportsRtl="true"
         android:theme="@style/BigBrotherTheme"
-        android:name=".SampleApplication"
         tools:targetApi="31">
 
         <activity
@@ -21,44 +21,79 @@
             android:exported="true">
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity android:name=".ui.network.NetworkActivity" />
 
-        <activity android:name=".ui.report.ReportActivity"
-            android:exported="true">
+        <activity
+            android:name=".ui.report.ReportActivity"
+            android:exported="false">
+
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="${applicationId}.REPORT" />
+
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="app"
-                    android:host="bb" />
+
+                <data
+                    android:host="report"
+                    android:scheme="bigbrother" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.general.OutOfDomainActivity"
+        <activity
+            android:name=".ui.general.OutOfDomainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="app"
-                    android:host="bdb" />
+
+                <data
+                    android:host="out-of-domain"
+                    android:scheme="bigbrother" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.general.CustomPageActivity" />
+        <activity
+            android:name=".ui.general.CustomPageActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-        <activity android:name=".ui.compose.ComposableActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="custom-page"
+                    android:scheme="bigbrother" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.compose.ComposableActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="composable"
+                    android:scheme="bigbrother" />
+            </intent-filter>
+        </activity>
 
         <provider
-            android:authorities="${applicationId}.SAMPLE"
             android:name=".BigBrotherCustom"
+            android:authorities="${applicationId}.SAMPLE"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
     </application>
 

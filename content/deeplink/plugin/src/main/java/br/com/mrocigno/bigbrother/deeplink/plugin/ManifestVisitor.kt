@@ -33,14 +33,10 @@ internal class ManifestVisitor(file: File) {
                     val element = actions.item(k)
                     when (element.nodeName) {
                         "action" -> {
-                            if (element.attributes.androidName == "android.intent.action.VIEW") {
-                                filterModel.hasView = true
-                            }
+                            filterModel.actions += element.attributes.androidName.orEmpty()
                         }
                         "category" -> {
-                            if (element.attributes.androidName == "android.intent.category.BROWSABLE") {
-                                filterModel.hasBrowsable = true
-                            }
+                            filterModel.categories += element.attributes.androidName.orEmpty()
                         }
                         "data" -> {
                             element.attributes.androidScheme?.also { filterModel.scheme = it }
@@ -50,9 +46,8 @@ internal class ManifestVisitor(file: File) {
                     }
                 }
 
-                if (filterModel.hasView && filterModel.hasBrowsable) {
-                    links.add(filterModel.copy())
-                }
+                if (filterModel.isPathEmpty()) continue
+                links.add(filterModel.copy())
             }
 
             if (links.isEmpty()) continue

@@ -17,6 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.transition.doOnEnd
 import androidx.core.view.isInvisible
 import br.com.mrocigno.bigbrother.common.CircularRevealTransition
+import br.com.mrocigno.bigbrother.common.provider.id
 import br.com.mrocigno.bigbrother.common.utils.cast
 import br.com.mrocigno.bigbrother.common.utils.cleaner
 import br.com.mrocigno.bigbrother.common.utils.getBounds
@@ -36,14 +37,14 @@ internal class FilterView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     //region Views
-    private val content: ConstraintLayout get() = findViewById(R.id.filter_view_content)
-    private val sortAz: AppCompatTextView get() = findViewById(R.id.filter_view_sort_az)
-    private val sortZa: AppCompatTextView get() = findViewById(R.id.filter_view_sort_za)
-    private val clear: AppCompatTextView get() = findViewById(R.id.filter_view_clear)
-    private val confirm: AppCompatTextView get() = findViewById(R.id.filter_view_confirm)
-    private val cancel: AppCompatTextView get() = findViewById(R.id.filter_view_cancel)
-    private val searchLayout: TextInputLayout get() = findViewById(R.id.filter_view_search_layout)
-    private val search: TextInputEditText get() = findViewById(R.id.filter_view_search)
+    private val content: ConstraintLayout by id(R.id.filter_view_content)
+    private val sortAz: AppCompatTextView by id(R.id.filter_view_sort_az)
+    private val sortZa: AppCompatTextView by id(R.id.filter_view_sort_za)
+    private val clear: AppCompatTextView by id(R.id.filter_view_clear)
+    private val confirm: AppCompatTextView by id(R.id.filter_view_confirm)
+    private val cancel: AppCompatTextView by id(R.id.filter_view_cancel)
+    private val searchLayout: TextInputLayout by id(R.id.filter_view_search_layout)
+    private val search: TextInputEditText by id(R.id.filter_view_search)
     //endregion
 
     //region Draw holders

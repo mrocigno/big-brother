@@ -15,12 +15,12 @@ internal data class DeeplinkInfo(
     val scheme: String,
     val host: String,
     val path: String,
-    val hasView: Boolean,
-    val hasBrowsable: Boolean
+    val actions: List<String> = emptyList(),
+    val categories: List<String> = emptyList()
 ) {
     fun getFullPath(): String = buildString {
         append(scheme)
-        append("://")
+        if (scheme.isNotBlank()) append("://")
         append(host)
         if (path.isNotEmpty()) {
             append("/")

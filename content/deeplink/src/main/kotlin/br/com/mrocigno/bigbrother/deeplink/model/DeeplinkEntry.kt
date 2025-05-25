@@ -10,8 +10,8 @@ internal data class DeeplinkEntry(
     val exported: Boolean = false,
     val type: DeeplinkType = EXTERNAL,
     val path: String = "",
-    val hasView: Boolean = false,
-    val hasBrowsable: Boolean = false,
+    val actions: List<String> = emptyList(),
+    val categories: List<String> = emptyList(),
 ) : DeeplinkAdapterItem {
 
     override val viewType: Int = ENTRY
@@ -25,8 +25,8 @@ internal data class DeeplinkEntry(
         exported = entity.exported,
         type = DeeplinkType.valueOf(entity.type),
         path = entity.path,
-        hasView = entity.hasView,
-        hasBrowsable = entity.hasBrowsable
+        actions = entity.actions,
+        categories = entity.categories
     )
 
     fun toEntity() = DeeplinkEntity(
@@ -35,8 +35,8 @@ internal data class DeeplinkEntry(
         exported = exported,
         type = type.name,
         path = path,
-        hasView = hasView,
-        hasBrowsable = hasBrowsable
+        actions = actions,
+        categories = categories
     )
 
     companion object {
@@ -48,8 +48,8 @@ internal data class DeeplinkEntry(
                     exported = model.exported,
                     type = model.type,
                     path = link.getFullPath(),
-                    hasView = link.hasView,
-                    hasBrowsable = link.hasBrowsable
+                    actions = link.actions,
+                    categories = link.categories
                 )
             }
         }.sortedBy {

@@ -25,38 +25,6 @@
         tools:text="Internal" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/deeplink_item_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/bb_spacing_s"
-        android:background="@drawable/bigbrother_background_secondary_radius"
-        android:backgroundTint="@color/bb_beaver"
-        android:paddingHorizontal="@dimen/bb_spacing_xs"
-        android:paddingVertical="@dimen/bb_spacing_xxs"
-        android:text="VIEW"
-        android:textColor="@android:color/white"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="@id/deeplink_item_type"
-        app:layout_constraintStart_toEndOf="@id/deeplink_item_type"
-        app:layout_constraintTop_toTopOf="@id/deeplink_item_type" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/deeplink_item_browsable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/bb_spacing_xs"
-        android:background="@drawable/bigbrother_background_secondary_radius"
-        android:backgroundTint="@color/bb_beaver"
-        android:paddingHorizontal="@dimen/bb_spacing_xs"
-        android:paddingVertical="@dimen/bb_spacing_xxs"
-        android:text="BROWSABLE"
-        android:textColor="@android:color/white"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="@id/deeplink_item_view"
-        app:layout_constraintStart_toEndOf="@id/deeplink_item_view"
-        app:layout_constraintTop_toTopOf="@id/deeplink_item_view" />
-
-    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/deeplink_item_path"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

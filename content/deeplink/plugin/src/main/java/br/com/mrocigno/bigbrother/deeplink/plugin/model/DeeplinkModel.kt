@@ -17,6 +17,12 @@ internal data class DeeplinkFilterModel(
     var scheme: String = "",
     var host: String = "",
     var path: String = "",
-    var hasView: Boolean = false,
-    var hasBrowsable: Boolean = false
-)
+    var actions: List<String> = emptyList(),
+    var categories: List<String> = emptyList()
+) {
+
+    fun isPathEmpty() =
+        scheme.isEmpty()
+            && host.isEmpty()
+            && path.isEmpty()
+}
