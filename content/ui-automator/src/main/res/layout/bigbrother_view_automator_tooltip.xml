@@ -51,4 +51,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Perform long click" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/automator_tooltip_perform_scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Perform scroll" />
 </LinearLayout>

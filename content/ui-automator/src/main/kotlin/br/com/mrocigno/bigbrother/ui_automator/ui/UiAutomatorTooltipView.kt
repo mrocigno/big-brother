@@ -29,6 +29,7 @@ class UiAutomatorTooltipView @JvmOverloads constructor(
     private val title: AppCompatTextView by id(R.id.automator_tooltip_title)
     private val performClickButton: AppCompatButton by id(R.id.automator_tooltip_perform_click)
     private val performLongClickButton: AppCompatButton by id(R.id.automator_tooltip_perform_long_click)
+    private val performScrollButton: AppCompatButton by id(R.id.automator_tooltip_perform_scroll)
     private val setTextLayout: TextInputLayout by id(R.id.automator_tooltip_set_text_layout)
     private val setText: TextInputEditText by id(R.id.automator_tooltip_set_text)
 
@@ -46,6 +47,10 @@ class UiAutomatorTooltipView @JvmOverloads constructor(
 
     fun setOnPerformLongClick(listener: OnClickListener) {
         performLongClickButton.setOnClickListener(listener)
+    }
+
+    fun setOnPerformScroll(listener: OnClickListener) {
+        performScrollButton.setOnClickListener(listener)
     }
 
     fun setOnSetText(listener: (String) -> Unit) {
@@ -70,5 +75,6 @@ class UiAutomatorTooltipView @JvmOverloads constructor(
         performClickButton.isVisible = viewFinder.hasClickAction
         performLongClickButton.isVisible = viewFinder.hasLongClickAction
         setTextLayout.isVisible = viewFinder.isTextField
+        performScrollButton.isVisible = viewFinder.isScrollable
     }
 }

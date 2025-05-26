@@ -1,6 +1,9 @@
 package br.com.mrocigno.bigbrother.ui_automator
 
 import android.app.Activity
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
 import br.com.mrocigno.bigbrother.common.utils.rootView
 import br.com.mrocigno.bigbrother.core.BigBrotherTask
 import br.com.mrocigno.bigbrother.core.BigBrotherTooltipView
@@ -15,6 +18,8 @@ class UiAutomatorTask : BigBrotherTask() {
     internal var isDeepInspectActive: Boolean = true
 
     override val priority: Int = 9
+
+    private var onBackPressedCallback: OnBackPressedCallback? = null
 
     override fun onActivityResume(activity: Activity) {
         val automatorView = UiAutomatorView.get(activity)
@@ -36,11 +41,20 @@ class UiAutomatorTask : BigBrotherTask() {
         BigBrotherTooltipView.getOrCreate(activity)
             .applyActions(activity)
             .run(activity.rootView::addView)
+
+        val dispatcher = (activity as? AppCompatActivity)?.onBackPressedDispatcher
+        onBackPressedCallback = dispatcher?.addCallback {
+            UiAutomatorHolder.recordBackPressed(activity)
+            remove()
+            dispatcher.onBackPressed()
+        }
     }
 
     fun stopRecording(activity: Activity) {
         isRecording = false
         isDeepInspectActive = true
+        onBackPressedCallback?.remove()
+        onBackPressedCallback = null
         UiAutomatorView.get(activity)?.run(activity.rootView::removeView)
         BigBrotherTooltipView.get(activity)?.run(activity.rootView::removeView)
     }

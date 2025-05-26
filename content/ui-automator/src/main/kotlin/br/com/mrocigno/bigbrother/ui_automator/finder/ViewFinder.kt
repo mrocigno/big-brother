@@ -11,22 +11,19 @@ import com.google.android.material.R as MaterialR
 interface ViewFinder {
 
     val rect: Rect
-
-    val name: String?
-
-    val hasClickAction: Boolean
-
-    val hasLongClickAction: Boolean
-
-    val isTextField: Boolean
-
-    fun click()
-
-    fun longClick()
-
-    fun setText(text: String)
-
     val identifier: String
+    val name: String?
+    val scrollX: Float
+    val scrollY: Float
+    val hasClickAction: Boolean
+    val hasLongClickAction: Boolean
+    val isTextField: Boolean
+    val isScrollable: Boolean
+    val parent: ViewFinder?
+    fun click()
+    fun longClick()
+    fun setText(text: String)
+    fun scroll(x: Float, y: Float, exactly: Boolean)
 
     companion object {
 

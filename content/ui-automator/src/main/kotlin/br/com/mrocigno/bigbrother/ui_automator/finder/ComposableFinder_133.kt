@@ -4,10 +4,17 @@ import android.graphics.Rect
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsActions.OnClick
+import androidx.compose.ui.semantics.SemanticsActions.OnLongClick
+import androidx.compose.ui.semantics.SemanticsActions.ScrollBy
+import androidx.compose.ui.semantics.SemanticsActions.SetText
 import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.semantics.SemanticsOwner
-import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.SemanticsProperties.HorizontalScrollAxisRange
+import androidx.compose.ui.semantics.SemanticsProperties.Role
+import androidx.compose.ui.semantics.SemanticsProperties.TestTag
+import androidx.compose.ui.semantics.SemanticsProperties.VerticalScrollAxisRange
+import androidx.compose.ui.semantics.SemanticsPropertyKey
 import androidx.compose.ui.semantics.getAllSemanticsNodes
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.text.AnnotatedString
@@ -20,22 +27,36 @@ class ComposableFinder_133(
     val view: ComposeView
 ) : ViewFinder {
 
-    override val rect: Rect = Rect()
-
-    override val name: String get() =
-        selectedNode.getTestTag()?.takeIf { isIdUnique(it) } ?: getXpath()
+    override val rect: Rect =
+        Rect()
 
     override val identifier: String
         get() = getXpath()
 
+    override val name: String get() =
+        selectedNode[TestTag]?.takeIf { isIdUnique(it) } ?: getXpath()
+
+    override val scrollX: Float
+        get() = selectedNode[HorizontalScrollAxisRange]?.value?.invoke() ?: 0f
+
+    override val scrollY: Float
+        get() = selectedNode[VerticalScrollAxisRange]?.value?.invoke() ?: 0f
+
     override val hasClickAction: Boolean
-        get() = selectedNode?.config?.getOrNull(SemanticsActions.OnClick) != null
+        get() = selectedNode[OnClick] != null
 
     override val hasLongClickAction: Boolean
-        get() = selectedNode?.config?.getOrNull(SemanticsActions.OnLongClick) != null
+        get() = selectedNode[OnLongClick] != null
 
     override val isTextField: Boolean
-        get() = selectedNode?.config?.getOrNull(SemanticsActions.SetText) != null
+        get() = selectedNode[SetText] != null
+
+    override val isScrollable: Boolean
+        get() = selectedNode[ScrollBy] != null
+
+    override val parent: ViewFinder
+        get() = selectedNode?.parent?.let { ComposableFinder_133(view, it) }
+            ?: AndroidViewFinder(view)
 
     private val owner: SemanticsOwner? = view
         .field<Any>("composition")
@@ -48,6 +69,10 @@ class ComposableFinder_133(
         selectedNode = findNodeByXpath(xpath)
     }
 
+    constructor(view: ComposeView, node: SemanticsNode) : this(null, null, view) {
+        selectedNode = node
+    }
+
     init {
         if (x != null && y != null) {
             selectedNode = findNodeByCoordinates(x, y, owner?.rootSemanticsNode)
@@ -56,32 +81,25 @@ class ComposableFinder_133(
     }
 
     override fun click() {
-        val clickAction = selectedNode
-            ?.config
-            ?.getOrNull(SemanticsActions.OnClick)
-
-        clickAction?.action?.invoke()
+        selectedNode[OnClick]?.action?.invoke()
     }
 
     override fun longClick() {
-        val clickAction = selectedNode
-            ?.config
-            ?.getOrNull(SemanticsActions.OnLongClick)
-
-        clickAction?.action?.invoke()
+        selectedNode[OnLongClick]?.action?.invoke()
     }
 
     override fun setText(text: String) {
-        val setTextAction = selectedNode
-            ?.config
-            ?.getOrNull(SemanticsActions.SetText)
+        selectedNode[SetText]?.action?.invoke(AnnotatedString(text))
+    }
 
-        setTextAction?.action?.invoke(AnnotatedString(text))
+    override fun scroll(x: Float, y: Float, exactly: Boolean) {
+        if (exactly) selectedNode[ScrollBy]?.action?.invoke(x, y)
+        else selectedNode[ScrollBy]?.action?.invoke(x, scrollY - y)
     }
 
     private fun findNodeByTestTag(testTag: String, root: SemanticsNode?): SemanticsNode? {
         root ?: return null
-        if (root.getTestTag() == testTag) return root
+        if (root[TestTag] == testTag) return root
         val children = root.children
         var found: SemanticsNode? = null
         children.forEach { child ->
@@ -125,15 +143,12 @@ class ComposableFinder_133(
         return currentNode
     }
 
-    private fun SemanticsNode?.getTestTag() =
-        this?.config?.getOrNull(SemanticsProperties.TestTag)
-
-    private fun SemanticsNode?.getRole() =
-        this?.config?.getOrNull(SemanticsProperties.Role)?.toString() ?: "node"
+    private operator fun <T> SemanticsNode?.get(key: SemanticsPropertyKey<T>): T? =
+        this?.config?.getOrNull(key)
 
     private fun isIdUnique(id: String): Boolean {
         val nodes = owner?.getAllSemanticsNodes(true).orEmpty()
-            .filter { it.getTestTag() == id }
+            .filter { it[TestTag] == id }
         return nodes.size == 1
     }
 
@@ -146,10 +161,10 @@ class ComposableFinder_133(
                 (0 until p.children.size).indexOfFirst { i -> p.children[i].id == current?.id }
             } ?: 0
 
-            val currentId = current.getTestTag()
+            val currentId = current[TestTag]
             val isUniqueId = isIdUnique(currentId ?: "")
 
-            insert(0, "/${current.getRole()}${if (currentId != null) "[@id='$currentId']" else "[$index]"}")
+            insert(0, "/${current[Role]}${if (currentId != null) "[@id='$currentId']" else "[$index]"}")
             current = if (isUniqueId) null else parent
 
             if (current?.id == 1) break

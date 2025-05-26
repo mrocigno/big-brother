@@ -111,7 +111,7 @@
         app:navigationIcon="@drawable/bigbrother_ic_arrow_back"
         app:title="@string/list_title" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/list_item"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -119,6 +119,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="asiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsauiasiudhsauh\nduhasiud husah\ndusahuidhsaui"/>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

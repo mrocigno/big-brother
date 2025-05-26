@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -44,7 +47,8 @@ class ComposableActivity : AppCompatActivity() {
                         .fillMaxWidth()
                 ) {
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.verticalScroll(rememberScrollState())
                     ) {
                         Button(
                             modifier = Modifier.testTag("testButton1"),
@@ -58,6 +62,36 @@ class ComposableActivity : AppCompatActivity() {
                             text = "Click me",
                             modifier = Modifier
                                 .testTag("testButton2")
+                                .combinedClickable(
+                                    onClick = {
+                                        println("aaa")
+                                    },
+                                    onLongClick = {
+                                        println("bbb")
+                                    }
+                                ),
+                        )
+                        Text(
+                            text = "aaa",
+                            modifier = Modifier
+                                .testTag("testButton3")
+                                .height(1000.dp)
+                                .combinedClickable(
+                                    onClick = {
+                                        println("aaa")
+                                    },
+                                    onLongClick = {
+                                        println("bbb")
+                                    }
+                                ),
+                        )
+
+                        Text(
+                            text = "asdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\nasdasdasda\n",
+                            color = Color.White,
+                            modifier = Modifier
+                                .testTag("testButton3")
+                                .height(1000.dp)
                                 .combinedClickable(
                                     onClick = {
                                         println("aaa")
