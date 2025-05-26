@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/deeplink_item_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/bigbrother_background_secondary_radius"
+        android:backgroundTint="@color/bb_licorice"
+        android:drawableStart="@drawable/bigbrother_ic_link"
+        android:drawablePadding="@dimen/bb_spacing_xxs"
+        android:drawableTint="@android:color/white"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/bb_spacing_xs"
+        android:paddingVertical="2dp"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Internal" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/deeplink_item_path"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bb_spacing_xs"
+        android:textColor="@color/bb_text_title"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/deeplink_item_arrow"
+        app:layout_constraintStart_toStartOf="@id/deeplink_item_type"
+        app:layout_constraintTop_toBottomOf="@id/deeplink_item_type"
+        tools:text="teste://asda" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/deeplink_item_activity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bb_spacing_xs"
+        app:fontFamily="@font/courier_regular"
+        app:layout_constraintEnd_toStartOf="@id/deeplink_item_arrow"
+        app:layout_constraintStart_toStartOf="@id/deeplink_item_path"
+        app:layout_constraintTop_toBottomOf="@id/deeplink_item_path"
+        tools:text="TestActivity" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/deeplink_item_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:rotation="-90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bigbrother_ic_down" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/bb_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/deeplink_item_activity" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

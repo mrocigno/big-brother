@@ -2,6 +2,7 @@ package br.com.mrocigno.bigbrother
 
 import br.com.mrocigno.bigbrother.core.BigBrotherProvider
 import br.com.mrocigno.bigbrother.database.addDatabasePage
+import br.com.mrocigno.bigbrother.deeplink.addDeeplinkPage
 import br.com.mrocigno.bigbrother.log.addLogPage
 import br.com.mrocigno.bigbrother.network.addNetworkPage
 import br.com.mrocigno.bigbrother.proxy.addProxyPage
@@ -17,6 +18,7 @@ class BigBrotherCustom : BigBrotherProvider() {
         addUiAutomatorPage()
         addNetworkPage()
         addProxyPage()
+        addDeeplinkPage()
         addDatabasePage()
         addLogPage()
         addSessionPage()

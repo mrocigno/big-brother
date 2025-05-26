@@ -7,7 +7,7 @@
             android:name=".ui.SessionDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.BigBrother" />
+            android:theme="@style/BigBrotherTheme" />
 
         <provider
             android:name=".ReportTask"

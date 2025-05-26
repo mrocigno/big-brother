@@ -67,6 +67,7 @@
         android:id="@+id/net_entry_details_copy_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableTint="@color/bb_text_hyperlink"
         android:drawableStart="@drawable/bigbrother_ic_copy"
         android:drawablePadding="10dp"
         android:foreground="?selectableItemBackground"

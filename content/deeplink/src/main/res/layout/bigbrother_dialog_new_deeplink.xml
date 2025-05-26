@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/BigBrotherInputOutlined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:placeholderText="app"
+        android:hint="@string/bigbrother_deeplink_new_scheme">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/deeplink_new_scheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:capitalize="none"
+            android:imeOptions="actionNext" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/BigBrotherInputOutlined"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        app:placeholderText="bigbrother.com"
+        android:hint="@string/bigbrother_deeplink_new_host">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/deeplink_new_host"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:capitalize="none"
+            android:imeOptions="actionNext" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/BigBrotherInputOutlined"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        app:placeholderText="/path"
+        android:hint="@string/bigbrother_deeplink_new_path">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/deeplink_new_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:capitalize="none"
+            android:imeOptions="actionNext" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/BigBrotherInputOutlined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/bigbrother_deeplink_queries_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/deeplink_new_queries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:capitalize="none"
+            android:imeOptions="actionDone" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bb_spacing_m"
+        android:text="@string/bigbrother_deeplink_queries_final"
+        android:textSize="14sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/deeplink_new_final_path"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bb_spacing_xxs"
+        android:textColor="@color/bb_text_title"
+        android:textSize="15sp"
+        tools:text="bb://teste/deeplink" />
+
+</LinearLayout>

@@ -6,6 +6,7 @@ plugins {
     alias libs.plugins.ksp apply false
 //    alias libs.plugins.medivh apply false
     alias libs.plugins.serialization apply false
+    alias libs.plugins.deeplink apply false
 }
 
 allprojects {
@@ -15,7 +16,7 @@ allprojects {
 
     afterEvaluate {
 
-        if (!project.hasProperty("android")) return
+        if (!project.hasProperty("android") || project.name.contains("plugin")) return
 
         android {
             namespace "br.com.mrocigno.bigbrother${suffix.replace("-", "_")}"

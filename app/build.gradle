@@ -1,6 +1,7 @@
 plugins {
     alias libs.plugins.android.application
     alias libs.plugins.android.kotlin
+    alias libs.plugins.deeplink
 }
 
 android {
@@ -36,6 +37,7 @@ dependencies {
     implementation project(":content:proxy")
     implementation project(":content:log")
     implementation project(":content:database")
+    implementation project(":content:deeplink")
     implementation project(":content:ui-automator")
 
     // NEVER implement this on your project otherwise puppies will die
