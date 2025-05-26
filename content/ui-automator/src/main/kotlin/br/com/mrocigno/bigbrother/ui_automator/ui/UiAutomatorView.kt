@@ -1,21 +1,27 @@
 package br.com.mrocigno.bigbrother.ui_automator.ui
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.PointF
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.FrameLayout.LayoutParams.MATCH_PARENT
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.toRectF
+import androidx.core.graphics.withTranslation
 import androidx.core.view.isInvisible
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
+import br.com.mrocigno.bigbrother.common.utils.gone
 import br.com.mrocigno.bigbrother.common.utils.ifFalse
 import br.com.mrocigno.bigbrother.common.utils.rootView
 import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
@@ -26,6 +32,7 @@ import br.com.mrocigno.bigbrother.ui_automator.UiAutomatorHolder
 import br.com.mrocigno.bigbrother.ui_automator.UiAutomatorTask
 import br.com.mrocigno.bigbrother.ui_automator.finder.ViewFinder
 import kotlin.math.roundToInt
+import br.com.mrocigno.bigbrother.common.R as CR
 
 @SuppressLint("ClickableViewAccessibility")
 internal class UiAutomatorView @JvmOverloads constructor(
@@ -39,8 +46,12 @@ internal class UiAutomatorView @JvmOverloads constructor(
         style = Paint.Style.STROKE
         strokeWidth = 6f
     }
-    private val overlayPaint = Paint().apply {
+    private val darkOverlayPaint = Paint().apply {
         color = Color.argb(180, 0, 0, 0)
+        style = Paint.Style.FILL
+    }
+    private val lightOverlayPaint = Paint().apply {
+        color = Color.argb(100, 255, 255, 255)
         style = Paint.Style.FILL
     }
     private val clearPaint = Paint().apply {
@@ -49,6 +60,8 @@ internal class UiAutomatorView @JvmOverloads constructor(
 
     private val task = getBigBrotherTask(UiAutomatorTask::class) ?: error("UiAutomatorTask not found")
     private var clickActive = task.isDeepInspectActive
+    private var isRecordingScroll: Boolean = false
+    private val scrollOffset: PointF = PointF()
     private val location = IntArray(2)
     private val activity: Activity? get() = context as? Activity
     private val tooltip = UiAutomatorTooltipView(context)
@@ -59,6 +72,20 @@ internal class UiAutomatorView @JvmOverloads constructor(
             invalidate()
         }
 
+    private val swipeIcon by lazy {
+        ContextCompat.getDrawable(context, CR.drawable.bigbrother_ic_swipe_vertical)?.apply {
+            setBounds(0, 0, 100, 100)
+            setTint(Color.BLACK)
+        }
+    }
+    private val swipeAnimator = ValueAnimator.ofFloat(-100f, 100f).apply {
+        interpolator = DecelerateInterpolator()
+        duration = 1000L
+        addUpdateListener { invalidate() }
+        repeatMode = ValueAnimator.REVERSE
+        repeatCount = ValueAnimator.INFINITE
+    }
+
     init {
         layoutParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
         id = R.id.bigbrother_ui_automator
@@ -66,16 +93,44 @@ internal class UiAutomatorView @JvmOverloads constructor(
 
         setupTooltip()
 
+        var consumedY = -1f
         setOnTouchListener { _, event ->
             if (!clickActive) return@setOnTouchListener false
             when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    consumedY = event.rawY
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    if (!isRecordingScroll) return@setOnTouchListener false
+                    lastClickedView?.scroll(scrollOffset.x, consumedY - event.rawY, false)
+                    consumedY = event.rawY
+                }
                 MotionEvent.ACTION_UP -> {
-                    lastClickedView =
-                        if (lastClickedView != null) null
-                        else ViewFinder.fromCoordinates(event.rawX, event.rawY, context.rootView!!)
+                    val safeFinder = lastClickedView
+                    if (isRecordingScroll && safeFinder != null) {
+                        val scrollY = safeFinder.scrollY
+                        val scrollX = safeFinder.scrollX
+                        UiAutomatorHolder.recordScroll(activity!!, safeFinder, scrollY)
+                        lastClickedView = null
+                        isRecordingScroll = false
+                        swipeAnimator.cancel()
+                    } else {
+                        val clickedView = ViewFinder.fromCoordinates(event.rawX, event.rawY, context.rootView!!)
+                        lastClickedView = when {
+                            lastClickedView == clickedView -> lastClickedView?.parent
+                            lastClickedView != null -> null
+                            else -> clickedView
+                        }
+                    }
                 }
             }
             true
+        }
+    }
+
+    fun setClickActive(active: Boolean) {
+        clickActive = active.ifFalse {
+            lastClickedView = null
         }
     }
 
@@ -85,10 +140,16 @@ internal class UiAutomatorView @JvmOverloads constructor(
             UiAutomatorHolder.recordClick(activity!!, lastClickedView!!)
             lastClickedView = null
         }
+
         tooltip.setOnPerformLongClick {
             lastClickedView?.longClick()
             UiAutomatorHolder.recordLongClick(activity!!, lastClickedView!!)
             lastClickedView = null
+        }
+
+        tooltip.setOnPerformScroll {
+            isRecordingScroll = true
+            swipeAnimator.start()
         }
 
         tooltip.setOnSetText {
@@ -97,12 +158,6 @@ internal class UiAutomatorView @JvmOverloads constructor(
             lastClickedView = null
         }
         addView(tooltip)
-    }
-
-    fun setClickActive(active: Boolean) {
-        clickActive = active.ifFalse {
-            lastClickedView = null
-        }
     }
 
     private fun updateTooltip() {
@@ -152,15 +207,28 @@ internal class UiAutomatorView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         if (lastClickedView != null) {
             val saved = canvas.saveLayer(null, null)
-            canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), overlayPaint)
+            canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), darkOverlayPaint)
             lastClickedView?.let {
                 it.rect.offset(-location[0], -location[1])
                 canvas.drawRect(it.rect, clearPaint)
                 canvas.drawRect(it.rect, borderPaint)
+
+                if (isRecordingScroll && swipeIcon != null) {
+                    canvas.drawRect(it.rect, lightOverlayPaint)
+                    canvas.withTranslation {
+                        val rectF = it.rect.toRectF()
+                        val iconRect = checkNotNull(swipeIcon).bounds.toRectF()
+                        translate(
+                            rectF.centerX() - (iconRect.width() / 2),
+                            rectF.centerY() - (iconRect.height() / 2) - swipeAnimator.animatedValue as Float
+                        )
+                        checkNotNull(swipeIcon).draw(canvas)
+                    }
+                }
             }
             canvas.restoreToCount(saved)
         } else {
-            tooltip.visibility = View.INVISIBLE
+            tooltip.gone()
         }
         super.onDraw(canvas)
     }

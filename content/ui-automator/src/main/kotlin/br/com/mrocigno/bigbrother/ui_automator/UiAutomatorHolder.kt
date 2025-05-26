@@ -19,20 +19,27 @@ object UiAutomatorHolder {
     fun recordSetText(activity: Activity, finder: ViewFinder, text: String) =
         record(activity, finder, RecordedAction.SET_TEXT, text)
 
+    fun recordBackPressed(activity: Activity) =
+        record(activity, null, RecordedAction.BACK_PRESSED)
+
+    fun recordScroll(activity: Activity, finder: ViewFinder, value: Float) =
+        record(activity, finder, RecordedAction.SCROLL_Y, value)
+
+
     fun play(activity: Activity) {
         UiAutomatorRunnerTask(activity, recordedViews).play()
     }
 
     private fun record(
         activity: Activity,
-        finder: ViewFinder,
+        finder: ViewFinder? = null,
         action: RecordedAction,
         value: Any? = null
     ) {
         recordedViews.add(
             UiAutomatorRecordModel(
                 context = activity.javaClass.name,
-                identifier = finder.identifier,
+                identifier = finder?.identifier.orEmpty(),
                 action = action,
                 value = value
             )
