@@ -1,6 +1,9 @@
 package br.com.mrocigno.bigbrother.ui_automator.finder
 
 import android.graphics.Rect
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.gestures.scrollBy
+import androidx.compose.ui.CombinedModifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.platform.ComposeView
@@ -19,7 +22,9 @@ import androidx.compose.ui.semantics.getAllSemanticsNodes
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.text.AnnotatedString
 import br.com.mrocigno.bigbrother.common.utils.field
+import br.com.mrocigno.bigbrother.common.utils.property
 import br.com.mrocigno.bigbrother.ui_automator.getXpath
+import kotlinx.coroutines.runBlocking
 
 class ComposableFinder_133(
     x: Float? = null,
@@ -93,8 +98,16 @@ class ComposableFinder_133(
     }
 
     override fun scroll(x: Float, y: Float, exactly: Boolean) {
-        if (exactly) selectedNode[ScrollBy]?.action?.invoke(x, y)
-        else selectedNode[ScrollBy]?.action?.invoke(x, scrollY - y)
+        // Google will pay me for this, I promise
+        val state = selectedNode?.layoutInfo
+            .field<CombinedModifier>("modifier")
+            .field<Any>("inner")
+            .property<ScrollState>("scrollerState")
+
+        runBlocking {
+            if (exactly) state?.scrollTo(y.toInt())
+            else state?.scrollBy(y)
+        }
     }
 
     private fun findNodeByTestTag(testTag: String, root: SemanticsNode?): SemanticsNode? {

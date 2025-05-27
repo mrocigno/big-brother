@@ -25,7 +25,6 @@ object UiAutomatorHolder {
     fun recordScroll(activity: Activity, finder: ViewFinder, value: Float) =
         record(activity, finder, RecordedAction.SCROLL_Y, value)
 
-
     fun play(activity: Activity) {
         UiAutomatorRunnerTask(activity, recordedViews).play()
     }

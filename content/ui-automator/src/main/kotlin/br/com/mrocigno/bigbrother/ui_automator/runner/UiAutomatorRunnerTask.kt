@@ -52,6 +52,7 @@ class UiAutomatorRunnerTask(
             while (context != currentContext.await()) {
                 currentContext = CompletableDeferred()
             }
+
             val activity = currentActivity?.get()
             val view = activity?.findViewByXPath(identifier)
 

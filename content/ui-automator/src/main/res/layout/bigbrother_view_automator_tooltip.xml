@@ -23,7 +23,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/automator_tooltip_set_text_layout"
-        style="@style/input_outlined"
+        style="@style/BigBrotherInputOutlined"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
