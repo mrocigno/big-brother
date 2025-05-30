@@ -37,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
+                android:visibility="gone"
                 android:enabled="false"
                 android:text="Disabled button" />
 
@@ -69,6 +70,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TEste"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nested_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"/>
 
             <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/compose_view"

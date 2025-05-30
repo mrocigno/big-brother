@@ -8,7 +8,8 @@ data class UiAutomatorRecordModel(
     val context: String = "",
     val action: RecordedAction,
     val identifier: String = "",
-    val value: Any? = null
+    val value: Any? = null,
+    val timeout: Long = 15000
 ) {
 
     fun executeAction(activity: Activity, finder: ViewFinder) {

@@ -148,6 +148,7 @@ internal class UiAutomatorView @JvmOverloads constructor(
         }
 
         tooltip.setOnPerformScroll {
+            lastClickedView = lastClickedView?.scrollableParent
             isRecordingScroll = true
             swipeAnimator.start()
         }
@@ -178,12 +179,15 @@ internal class UiAutomatorView @JvmOverloads constructor(
         val yDiff = borderPaint.strokeWidth.roundToInt()
         var x = rect.centerX() - (tooltipWidth / 2)
         var y = rect.bottom + yDiff
-        val isArrowUp = y + tooltipHeight < height
+        var isArrowUp = y + tooltipHeight < height
 
         if (x < 0) x = 0
         if (x + tooltipWidth > width) x = width - tooltipWidth
         if (y + tooltipHeight > height) y = rect.top - tooltipHeight - yDiff
-        if (y < activity!!.statusBarHeight) y = activity!!.statusBarHeight
+        if (y < activity!!.statusBarHeight) {
+            y = activity!!.statusBarHeight
+            isArrowUp = true
+        }
 
         tooltip.visible()
         tooltip.updateLayoutParams<LayoutParams> {

@@ -1,14 +1,17 @@
 package br.com.mrocigno.bigbrother.ui_automator.runner
 
 import android.app.Activity
+import br.com.mrocigno.bigbrother.common.utils.contentView
+import br.com.mrocigno.bigbrother.common.utils.toast
 import br.com.mrocigno.bigbrother.core.BigBrotherTask
-import br.com.mrocigno.bigbrother.ui_automator.findViewByXPath
 import br.com.mrocigno.bigbrother.ui_automator.finder.ViewFinder
+import br.com.mrocigno.bigbrother.ui_automator.finder.findViewByXPath
 import br.com.mrocigno.bigbrother.ui_automator.model.UiAutomatorRecordModel
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import java.lang.ref.WeakReference
 
 class UiAutomatorRunnerTask(
@@ -34,6 +37,8 @@ class UiAutomatorRunnerTask(
         // Run
         scope.launch {
             run(playIndex)
+        }.invokeOnCompletion {
+            currentActivity?.get()?.toast("canceled $it")
         }
     }
 
@@ -49,16 +54,16 @@ class UiAutomatorRunnerTask(
         if (!isPlaying || index >= steps.size) { removeMe(); return }
 
         with(currentStep) {
-            while (context != currentContext.await()) {
+            while (context != withTimeout(timeout) { currentContext.await()}) {
                 currentContext = CompletableDeferred()
             }
 
             val activity = currentActivity?.get()
-            val view = activity?.findViewByXPath(identifier)
+            val view = activity?.contentView?.findViewByXPath(identifier, timeout)
 
             if (activity != null && view != null) {
-                val finder = ViewFinder.fromXPath(identifier, view)
-                executeAction(activity, finder)
+                val finder = ViewFinder.fromView(view)
+                if (finder.isReady(identifier, timeout)) executeAction(activity, finder)
             }
             run(++playIndex)
         }
