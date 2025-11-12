@@ -1,6 +1,5 @@
 package br.com.mrocigno.bigbrother.core
 
-import br.com.mrocigno.bigbrother.core.BigBrother.interceptors
 import br.com.mrocigno.bigbrother.core.model.RequestModel
 import br.com.mrocigno.bigbrother.core.model.ResponseModel
 import io.ktor.client.HttpClient
@@ -28,6 +27,8 @@ class BigBrotherInterceptor(private vararg val blockList: String) : Interceptor 
 
     override fun intercept(chain: Interceptor.Chain): Response {
         if (chain.request().isBlocked()) return chain.proceed(chain.request())
+
+        val interceptors = BigBrother.interceptors.map { it.invoke() }
 
         val orderedInterceptors = interceptors
             .sortedByDescending { it.priority }
@@ -64,11 +65,6 @@ class BigBrotherInterceptor(private vararg val blockList: String) : Interceptor 
 
 fun HttpClient.addBigBrotherInterceptor(vararg blockList: String) {
 
-//    install(createClientPlugin("BigBrotherInterceptor") {
-//        onRequest {  }
-//    })
-
-
     fun HttpRequestBuilder.isBlocked(): Boolean {
         val strUrl = url.toString()
         return blockList.any { strUrl.contains(it, true) }
@@ -76,6 +72,8 @@ fun HttpClient.addBigBrotherInterceptor(vararg blockList: String) {
 
     plugin(HttpSend).intercept { chain ->
         if (chain.isBlocked()) return@intercept execute(chain)
+
+        val interceptors = BigBrother.interceptors.map { it.invoke() }
 
         val orderedInterceptors = interceptors
             .sortedByDescending { it.priority }
@@ -116,6 +114,8 @@ fun HttpClientConfig<*>.addBigBrotherInterceptor(vararg blockList: String) {
         onRequest { builder, content ->
             if (builder.isBlocked()) return@onRequest
 
+            val interceptors = BigBrother.interceptors.map { it.invoke() }
+
             val orderedInterceptors = interceptors
                 .sortedByDescending { it.priority }
 
@@ -136,6 +136,8 @@ fun HttpClientConfig<*>.addBigBrotherInterceptor(vararg blockList: String) {
         }
 
         transformResponseBody { response, content, type ->
+            val interceptors = BigBrother.interceptors.map { it.invoke() }
+
             val orderedInterceptors = interceptors
                 .sortedByDescending { it.priority }
 

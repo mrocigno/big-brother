@@ -12,27 +12,27 @@ internal class NetworkEntryInterceptor : BBInterceptor {
 
     override val priority: Int = 0
 
-    private val startingAt = ThreadLocal<Long>()
-    private val entry = ThreadLocal<NetworkEntryModel>()
+    private var startingAt: Long? = null
+    private var entry: NetworkEntryModel? = null
 
     override fun onRequest(request: RequestModel): RequestModel {
-        startingAt.set(System.currentTimeMillis())
+        startingAt = System.currentTimeMillis()
         val requestModel = NetworkEntryModel(request)
-        entry.set(requestModel.copy(id = BigBrotherNetworkHolder.addEntry(requestModel)))
+        entry = requestModel.copy(id = BigBrotherNetworkHolder.addEntry(requestModel))
         return request
     }
 
     override fun onResponse(response: ResponseModel): ResponseModel {
         val endingAt = System.currentTimeMillis()
         val payloadModel = NetworkPayloadModel(response)
-        val currentEntry = entry.get()?.copy(
-            elapsedTime = "${endingAt - (startingAt.get() ?: endingAt)}ms",
+        val currentEntry = entry?.copy(
+            elapsedTime = "${endingAt - (startingAt ?: endingAt)}ms",
             statusCode = response.code,
             response = payloadModel,
             proxyRules = payloadModel.headers?.get(PROXY_APPLIED_HEADER)?.joinToString()
         ) ?: throw IllegalStateException("Unknow request")
-        entry.remove()
-        startingAt.remove()
+        entry = null
+        startingAt = null
 
         BigBrotherNetworkHolder.updateEntry(currentEntry)
 
@@ -41,13 +41,13 @@ internal class NetworkEntryInterceptor : BBInterceptor {
 
     override fun onError(e: Exception): Exception {
         val endingAt = System.currentTimeMillis()
-        val currentEntry = entry.get()?.copy(
-            elapsedTime = "${endingAt - (startingAt.get() ?: endingAt)}ms",
+        val currentEntry = entry?.copy(
+            elapsedTime = "${endingAt - (startingAt ?: endingAt)}ms",
             statusCode = -1,
             response = NetworkPayloadModel(e)
         ) ?: throw IllegalStateException("Unknow request")
-        entry.remove()
-        startingAt.remove()
+        entry = null
+        startingAt = null
 
         BigBrotherNetworkHolder.updateEntry(currentEntry)
 

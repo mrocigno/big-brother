@@ -2,7 +2,9 @@ package br.com.mrocigno.bigbrother.core.model
 
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.url
+import io.ktor.client.utils.EmptyContent
 import io.ktor.http.HttpMethod
+import io.ktor.http.content.TextContent
 import io.ktor.http.encodedPath
 import io.ktor.util.toMap
 import okhttp3.Headers
@@ -31,7 +33,10 @@ data class RequestModel(
         encodedPath = request.url.encodedPath,
         method = request.method.value,
         headers = request.headers.build().toMap(),
-        body = request.body.toString().let { Body.Text(it) }
+        body = when (val body = request.body) {
+            is TextContent -> Body.Text(body.text)
+            else -> Body.Text("")
+        }
     )
 
     fun toOkHttpRequest(builder: okhttp3.Request.Builder) = builder

@@ -24,7 +24,6 @@
             <option value="$PROJECT_DIR$/content/report" />
           </set>
         </option>
-        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
