@@ -4,10 +4,20 @@ import br.com.mrocigno.bigbrother.core.model.RequestModel
 import br.com.mrocigno.bigbrother.core.model.ResponseModel
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
+import io.ktor.client.call.HttpClientCall
 import io.ktor.client.plugins.HttpSend
 import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.client.plugins.plugin
 import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.HttpRequestData
+import io.ktor.client.request.HttpResponseData
+import io.ktor.client.request.invoke
+import io.ktor.client.statement.bodyAsChannel
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.content.TextContent
+import io.ktor.http.invoke
+import io.ktor.util.InternalAPI
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -63,7 +73,11 @@ class BigBrotherInterceptor(private vararg val blockList: String) : Interceptor 
     }
 }
 
+@OptIn(InternalAPI::class)
 fun HttpClient.addBigBrotherInterceptor(vararg blockList: String) {
+
+    fun Map<String, List<String>>.toKtorHeaders() =
+        io.ktor.http.headersOf(*this.toList().toTypedArray())
 
     fun HttpRequestBuilder.isBlocked(): Boolean {
         val strUrl = url.toString()
@@ -92,6 +106,18 @@ fun HttpClient.addBigBrotherInterceptor(vararg blockList: String) {
                 response = it.onResponse(response)
             }
 
+//            HttpClientCall(
+//                client = this@addBigBrotherInterceptor,
+//                requestData = newRequest.build(),
+//                responseData = HttpResponseData(
+//                    statusCode = HttpStatusCode.fromValue(response.code),
+//                    requestTime = execute.response.requestTime,
+//                    headers = response.headers?.toKtorHeaders() ?: execute.response.headers,
+//                    version = execute.response.version,
+//                    body = execute.response,
+//                    callContext = execute.coroutineContext
+//                ),
+//            )
             execute
         } catch (e: Exception) {
             var exception = e
