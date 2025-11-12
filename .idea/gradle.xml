@@ -25,7 +25,6 @@
             <option value="$PROJECT_DIR$/content/ui-automator" />
           </set>
         </option>
-        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

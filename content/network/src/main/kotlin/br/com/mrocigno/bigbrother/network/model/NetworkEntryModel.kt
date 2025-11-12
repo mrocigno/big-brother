@@ -4,14 +4,11 @@ import androidx.recyclerview.widget.DiffUtil
 import br.com.mrocigno.bigbrother.common.entity.NetworkEntity
 import br.com.mrocigno.bigbrother.common.utils.bbSessionId
 import br.com.mrocigno.bigbrother.common.utils.toReadable
+import br.com.mrocigno.bigbrother.core.model.Body
+import br.com.mrocigno.bigbrother.core.model.RequestModel
+import br.com.mrocigno.bigbrother.core.model.ResponseModel
 import br.com.mrocigno.bigbrother.report.bbTrack
 import br.com.mrocigno.bigbrother.report.model.ReportType
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import okhttp3.MultipartBody
-import okhttp3.Request
-import okhttp3.Response
-import okio.Buffer
 import org.json.JSONArray
 import org.json.JSONObject
 import org.threeten.bp.LocalDateTime
@@ -31,9 +28,9 @@ data class NetworkEntryModel(
     val proxyRules: String? = null
 ) : Serializable {
 
-    constructor(request: Request) : this(
-        fullUrl = request.url.toString(),
-        url = request.url.encodedPath,
+    constructor(request: RequestModel) : this(
+        fullUrl = request.url,
+        url = request.encodedPath,
         hour = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME),
         method = request.method,
         request = NetworkPayloadModel(request)
@@ -116,27 +113,22 @@ class NetworkPayloadModel(
     val body: String?
 ) : Serializable {
 
-    constructor(request: Request) : this(
-        headers = request.headers.toMultimap(),
+    constructor(request: RequestModel) : this(
+        headers = request.headers,
         body = request.let {
             when (val body = request.body) {
-                is MultipartBody -> Json.encodeToString(NetworkMultiPartModel(body))
-                else -> {
-                    val buffer = Buffer()
-                    it.body?.writeTo(buffer)?.let { buffer.readUtf8() }
+                is Body.Multipart -> {
+//                    Json.encodeToString(NetworkMultiPartModel(body))
+                    ""
                 }
+                else -> body?.toString()
             }
         }
     )
 
-    constructor(response: Response) : this(
-        headers = response.headers.toMultimap(),
-        body = response.let {
-            val source = it.body?.source()
-            source?.request(Long.MAX_VALUE)
-            val buffer = source?.buffer
-            buffer?.clone()?.readUtf8()
-        }
+    constructor(response: ResponseModel) : this(
+        headers = response.headers,
+        body = response.body
     )
 
     constructor(exception: Exception) : this(

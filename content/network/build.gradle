@@ -14,6 +14,7 @@ dependencies {
     implementation project(":content:common")
 
     compileOnly libs.squareup.okhttp3
+    compileOnly libs.ktor.core
 
     implementation libs.androidx.activity
     implementation libs.kotlin.serialization

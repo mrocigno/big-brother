@@ -1,12 +1,15 @@
 package br.com.mrocigno.bigbrother.network.model
 
+import android.annotation.SuppressLint
 import br.com.mrocigno.bigbrother.common.utils.toHtml
 import br.com.mrocigno.bigbrother.network.toBase64
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 import okhttp3.MultipartBody
 import okio.Buffer
 
 @Serializable
+@OptIn(InternalSerializationApi::class)
 data class NetworkMultiPartModel(
     val bigBrotherIdentifier: String,
     val parts: List<NetworkPartModel>
@@ -40,6 +43,7 @@ data class NetworkMultiPartModel(
     }
 }
 
+@SuppressLint("UnsafeOptInUsageError")
 @Serializable
 data class NetworkPartModel(
     val headers: Map<String, List<String>>?,

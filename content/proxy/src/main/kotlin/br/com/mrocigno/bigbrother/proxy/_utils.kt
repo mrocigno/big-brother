@@ -6,12 +6,12 @@ import br.com.mrocigno.bigbrother.core.BigBrotherProvider
 import br.com.mrocigno.bigbrother.proxy.ui.ProxyListRulesFragment
 
 fun BigBrotherProvider.addProxyPage(name: String = "Proxy") {
-    addInterceptor(ProxyInterceptor())
+    addInterceptor { ProxyInterceptor() }
     addPage(name) { ProxyListRulesFragment() }
 }
 
 fun BigBrother.addProxyPage(name: String = "Proxy") {
-    addInterceptor(ProxyInterceptor())
+    addInterceptor { ProxyInterceptor() }
     addPage(name) { ProxyListRulesFragment() }
 }
 
