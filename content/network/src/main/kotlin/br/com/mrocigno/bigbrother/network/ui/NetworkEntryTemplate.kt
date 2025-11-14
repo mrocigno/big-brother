@@ -11,10 +11,7 @@ import br.com.mrocigno.bigbrother.common.utils.isJson
 import br.com.mrocigno.bigbrother.common.utils.toHtml
 import br.com.mrocigno.bigbrother.network.json.JsonViewerActivity
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
-import br.com.mrocigno.bigbrother.network.model.NetworkMultiPartModel
 import kotlinx.serialization.InternalSerializationApi
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 
 @OptIn(InternalSerializationApi::class)
 internal class NetworkEntryTemplate(private val model: NetworkEntryModel) {
@@ -60,8 +57,8 @@ internal class NetworkEntryTemplate(private val model: NetworkEntryModel) {
             <iframe id="response-html" sandbox="allow-same-origin" srcdoc='${replace("'", "\"")}'></iframe>
         """.trimIndent()
 
-        contains("bigBrotherIdentifier") -> {
-            Json.decodeFromString<NetworkMultiPartModel>(this).toHtml()
+        startsWith("bigBrotherIdentifier") -> {
+            this.removePrefix("bigBrotherIdentifier")
         }
 
         else -> escapeHtml()

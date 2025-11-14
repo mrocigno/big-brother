@@ -31,7 +31,6 @@ data class ResponseModel(
         body = runBlocking { response.bodyAsText() }
     )
 
-
     fun toOkHttpResponse(builder: Response.Builder) = builder
         .code(code)
         .headers(Headers.headersOf(*getHeadersAsList()))

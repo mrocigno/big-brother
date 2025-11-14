@@ -3,21 +3,14 @@ package br.com.mrocigno.bigbrother.core
 import br.com.mrocigno.bigbrother.core.model.RequestModel
 import br.com.mrocigno.bigbrother.core.model.ResponseModel
 import io.ktor.client.HttpClient
-import io.ktor.client.HttpClientConfig
 import io.ktor.client.call.HttpClientCall
 import io.ktor.client.plugins.HttpSend
-import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.client.plugins.plugin
 import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.request.HttpRequestData
 import io.ktor.client.request.HttpResponseData
-import io.ktor.client.request.invoke
-import io.ktor.client.statement.bodyAsChannel
-import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.content.TextContent
-import io.ktor.http.invoke
 import io.ktor.util.InternalAPI
+import io.ktor.utils.io.ByteReadChannel
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -38,9 +31,8 @@ class BigBrotherInterceptor(private vararg val blockList: String) : Interceptor 
     override fun intercept(chain: Interceptor.Chain): Response {
         if (chain.request().isBlocked()) return chain.proceed(chain.request())
 
-        val interceptors = BigBrother.interceptors.map { it.invoke() }
-
-        val orderedInterceptors = interceptors
+        val orderedInterceptors = BigBrother.interceptors
+            .map { it.invoke() }
             .sortedByDescending { it.priority }
 
         try {
@@ -87,14 +79,13 @@ fun HttpClient.addBigBrotherInterceptor(vararg blockList: String) {
     plugin(HttpSend).intercept { chain ->
         if (chain.isBlocked()) return@intercept execute(chain)
 
-        val interceptors = BigBrother.interceptors.map { it.invoke() }
-
-        val orderedInterceptors = interceptors
+        val interceptors = BigBrother
+            .interceptors.map { it.invoke() }
             .sortedByDescending { it.priority }
 
         try {
             var request = RequestModel(chain)
-            orderedInterceptors.forEach {
+            interceptors.forEach {
                 request = it.onRequest(request)
             }
 
@@ -102,88 +93,28 @@ fun HttpClient.addBigBrotherInterceptor(vararg blockList: String) {
             val execute = execute(newRequest)
 
             var response = ResponseModel(execute.response)
-            orderedInterceptors.forEach {
+            interceptors.forEach {
                 response = it.onResponse(response)
             }
 
-//            HttpClientCall(
-//                client = this@addBigBrotherInterceptor,
-//                requestData = newRequest.build(),
-//                responseData = HttpResponseData(
-//                    statusCode = HttpStatusCode.fromValue(response.code),
-//                    requestTime = execute.response.requestTime,
-//                    headers = response.headers?.toKtorHeaders() ?: execute.response.headers,
-//                    version = execute.response.version,
-//                    body = execute.response,
-//                    callContext = execute.coroutineContext
-//                ),
-//            )
-            execute
+            HttpClientCall(
+                client = this@addBigBrotherInterceptor,
+                requestData = newRequest.build(),
+                responseData = HttpResponseData(
+                    statusCode = HttpStatusCode.fromValue(response.code),
+                    requestTime = execute.response.requestTime,
+                    headers = response.headers?.toKtorHeaders() ?: execute.response.headers,
+                    version = execute.response.version,
+                    body = response.body?.run(::ByteReadChannel) ?: execute.response.content,
+                    callContext = execute.coroutineContext
+                ),
+            )
         } catch (e: Exception) {
             var exception = e
-            orderedInterceptors.forEach {
+            interceptors.forEach {
                 exception = it.onError(exception)
             }
             throw e
         }
     }
-}
-
-fun HttpClientConfig<*>.addBigBrotherInterceptor(vararg blockList: String) {
-
-    fun HttpRequestBuilder.isBlocked(): Boolean {
-        val strUrl = url.toString()
-        return blockList.any { strUrl.contains(it, true) }
-    }
-
-    install(createClientPlugin("BigBrotherInterceptor") {
-        onRequest { builder, content ->
-            if (builder.isBlocked()) return@onRequest
-
-            val interceptors = BigBrother.interceptors.map { it.invoke() }
-
-            val orderedInterceptors = interceptors
-                .sortedByDescending { it.priority }
-
-            try {
-                var request = RequestModel(builder)
-                orderedInterceptors.forEach {
-                    request = it.onRequest(request)
-                }
-
-                request.applyToBuilder(builder)
-            } catch (e: Exception) {
-                var exception = e
-                orderedInterceptors.forEach {
-                    exception = it.onError(exception)
-                }
-                throw e
-            }
-        }
-
-        transformResponseBody { response, content, type ->
-            val interceptors = BigBrother.interceptors.map { it.invoke() }
-
-            val orderedInterceptors = interceptors
-                .sortedByDescending { it.priority }
-
-            var responseModel = ResponseModel(response)
-            orderedInterceptors.forEach {
-                responseModel = it.onResponse(responseModel)
-            }
-
-            ""
-        }
-
-//        transformRequestBody { request, body ->
-//            var response = ResponseModel(execute.response)
-//            orderedInterceptors.forEach {
-//                response = it.onResponse(response)
-//            }
-//
-//            execute
-//        }
-    })
-
-
 }

@@ -4,7 +4,6 @@ import androidx.recyclerview.widget.DiffUtil
 import br.com.mrocigno.bigbrother.common.entity.NetworkEntity
 import br.com.mrocigno.bigbrother.common.utils.bbSessionId
 import br.com.mrocigno.bigbrother.common.utils.toReadable
-import br.com.mrocigno.bigbrother.core.model.Body
 import br.com.mrocigno.bigbrother.core.model.RequestModel
 import br.com.mrocigno.bigbrother.core.model.ResponseModel
 import br.com.mrocigno.bigbrother.report.bbTrack
@@ -117,10 +116,10 @@ class NetworkPayloadModel(
         headers = request.headers,
         body = request.let {
             when (val body = request.body) {
-                is Body.Multipart -> {
+//                is Body.Multipart -> {
 //                    Json.encodeToString(NetworkMultiPartModel(body))
-                    ""
-                }
+//                    ""
+//                }
                 else -> body?.toString()
             }
         }
