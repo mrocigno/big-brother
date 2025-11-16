@@ -1,14 +1,14 @@
 package br.com.mrocigno.bigbrother.network
 
 import br.com.mrocigno.bigbrother.common.route.PROXY_APPLIED_HEADER
-import br.com.mrocigno.bigbrother.core.BBInterceptor
+import br.com.mrocigno.bigbrother.core.interceptor.BigBrotherInterceptor
 import br.com.mrocigno.bigbrother.core.model.RequestModel
 import br.com.mrocigno.bigbrother.core.model.ResponseModel
 import br.com.mrocigno.bigbrother.network.model.NetworkEntryModel
 import br.com.mrocigno.bigbrother.network.model.NetworkPayloadModel
 import java.util.Objects
 
-internal class NetworkEntryInterceptor : BBInterceptor {
+internal class NetworkEntryInterceptor : BigBrotherInterceptor {
 
     override val priority: Int = 0
 
