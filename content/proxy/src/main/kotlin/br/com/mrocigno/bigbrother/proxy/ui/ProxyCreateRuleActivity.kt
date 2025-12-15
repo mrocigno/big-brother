@@ -19,6 +19,7 @@ import br.com.mrocigno.bigbrother.common.route.METHOD_ARG
 import br.com.mrocigno.bigbrother.common.route.PATH_ARG
 import br.com.mrocigno.bigbrother.common.utils.getParcelableExtraCompat
 import br.com.mrocigno.bigbrother.common.utils.gone
+import br.com.mrocigno.bigbrother.common.utils.statusBarHeight
 import br.com.mrocigno.bigbrother.common.utils.visible
 import br.com.mrocigno.bigbrother.core.OutOfDomain
 import br.com.mrocigno.bigbrother.proxy.R
@@ -77,6 +78,7 @@ internal class ProxyCreateRuleActivity : AppCompatActivity(R.layout.bigbrother_a
     }
 
     private fun setupToolbar() {
+        toolbar.setPadding(0, statusBarHeight, 0, 0)
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }

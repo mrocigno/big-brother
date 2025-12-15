@@ -54,6 +54,7 @@ data class RequestModel(
 
     @OptIn(InternalAPI::class)
     fun applyToBuilder(builder: HttpRequestBuilder) = builder.also { request ->
+        request.url.parameters.run { names().forEach(::remove) }
         request.url(url)
         request.method = HttpMethod.parse(method.uppercase())
         headers?.forEach { (name, values) ->
