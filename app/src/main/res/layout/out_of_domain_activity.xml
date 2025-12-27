@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -36,8 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="\@OutOfDomain"
-            android:textSize="11sp"
             android:textColor="@color/bb_text_highlight"
+            android:textSize="11sp"
             app:fontFamily="@font/courier_bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,8 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="class "
-            android:textSize="11sp"
             android:textColor="@color/bb_net_entry_put"
+            android:textSize="11sp"
             app:fontFamily="@font/courier_bold"
             app:layout_constraintStart_toStartOf="@id/annotation"
             app:layout_constraintTop_toBottomOf="@id/annotation" />
@@ -56,9 +57,9 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="11sp"
             android:text="OutOfDomainActivity : AppCompactActivity()"
             android:textColor="@color/bb_text_title"
+            android:textSize="11sp"
             app:fontFamily="@font/courier_bold"
             app:layout_constraintStart_toEndOf="@id/clazz"
             app:layout_constraintTop_toBottomOf="@id/annotation" />

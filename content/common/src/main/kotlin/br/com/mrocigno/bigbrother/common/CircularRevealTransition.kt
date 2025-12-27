@@ -23,7 +23,7 @@ class CircularRevealTransition(
     }
 
     override fun createAnimator(
-        sceneRoot: ViewGroup?,
+        sceneRoot: ViewGroup,
         startValues: TransitionValues?,
         endValues: TransitionValues?
     ): Animator? {

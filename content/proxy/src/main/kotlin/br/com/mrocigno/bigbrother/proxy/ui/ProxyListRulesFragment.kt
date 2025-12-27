@@ -1,6 +1,8 @@
 package br.com.mrocigno.bigbrother.proxy.ui
 
 import android.os.Bundle
+import android.view.ContextThemeWrapper
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.PopupMenu
@@ -25,6 +27,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import br.com.mrocigno.bigbrother.common.R as CR
 
 internal class ProxyListRulesFragment : Fragment(R.layout.bigbrother_fragment_list_rules) {
 
@@ -40,6 +43,12 @@ internal class ProxyListRulesFragment : Fragment(R.layout.bigbrother_fragment_li
     private val rulesId: LongArray? by lazy { arguments?.getLongArray(RULES_ARG) }
     private val serializer = Json {
         prettyPrint = true
+    }
+
+    override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
+        val inflater = super.onGetLayoutInflater(savedInstanceState)
+        val context = ContextThemeWrapper(inflater.context, CR.style.BigBrotherTheme)
+        return inflater.cloneInContext(context)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -20,11 +20,11 @@ allprojects {
 
         android {
             namespace "br.com.mrocigno.bigbrother$suffix"
-            compileSdk 34
+            compileSdk 36
 
             defaultConfig {
                 minSdk 23
-                targetSdk 34
+                targetSdk 36
                 versionCode 1
                 versionName project.findProperty("libVersion")
                 resConfigs "en", "pt"

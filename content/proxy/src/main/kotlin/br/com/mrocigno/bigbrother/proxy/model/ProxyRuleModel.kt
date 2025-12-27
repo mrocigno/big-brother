@@ -5,12 +5,14 @@ import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import br.com.mrocigno.bigbrother.common.entity.ProxyRuleEntity
 import br.com.mrocigno.bigbrother.common.entity.ProxyRuleWithActions
 import br.com.mrocigno.bigbrother.common.utils.orTrue
+import br.com.mrocigno.bigbrother.core.model.RequestModel
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
-import okhttp3.Request
 
 @Parcelize
 @Serializable
+@OptIn(InternalSerializationApi::class)
 internal data class ProxyRuleModel(
     val id: Long = 0,
     val ruleName: String = "",
@@ -31,16 +33,16 @@ internal data class ProxyRuleModel(
         enabled = entity.rule.enabled
     )
 
-    fun matches(request: Request): Boolean = when {
+    fun matches(request: RequestModel): Boolean = when {
         !methodCondition.fixRegex().matches(request.method) -> false
-        !pathCondition.fixRegex().matches(request.url.toString()) -> false
+        !pathCondition.fixRegex().matches(request.url) -> false
         !headerCondition
             .split(";")
             .filter { it.contains("=") }
             .takeIf { it.isNotEmpty() }
             ?.any { condition ->
                 val (name, value) = condition.split("=", limit = 2)
-                value.fixRegex().matches(request.headers[name].orEmpty())
+                value.fixRegex().matches(request.headers?.get(name)?.joinToString().orEmpty())
             }
             .orTrue() -> false
         else -> true

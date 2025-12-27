@@ -5,22 +5,21 @@ import androidx.core.net.toUri
 import br.com.mrocigno.bigbrother.common.dao.ProxyDao
 import br.com.mrocigno.bigbrother.common.db.BigBrotherDatabase.Companion.bbdb
 import br.com.mrocigno.bigbrother.common.route.PROXY_APPLIED_HEADER
-import br.com.mrocigno.bigbrother.core.BBInterceptor
+import br.com.mrocigno.bigbrother.core.interceptor.BigBrotherInterceptor
+import br.com.mrocigno.bigbrother.core.model.Body
+import br.com.mrocigno.bigbrother.core.model.RequestModel
+import br.com.mrocigno.bigbrother.core.model.ResponseModel
 import br.com.mrocigno.bigbrother.proxy.model.ProxyActionModel
 import br.com.mrocigno.bigbrother.proxy.model.ProxyActions
 import br.com.mrocigno.bigbrother.proxy.model.ProxyRuleModel
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
-import okhttp3.ResponseBody.Companion.toResponseBody
 
-internal class ProxyInterceptor : BBInterceptor {
+internal class ProxyInterceptor : BigBrotherInterceptor {
 
     override val priority: Int = 1000
     private val proxyDao: ProxyDao? get() = bbdb?.proxyDao()
     private val rules: ThreadLocal<List<ProxyRuleModel>> = ThreadLocal()
 
-    override fun onRequest(request: Request): Request {
+    override fun onRequest(request: RequestModel): RequestModel {
         val list = proxyDao?.getAllEnabled()
             ?.map(::ProxyRuleModel)
             ?.filter { it.matches(request) }
@@ -32,7 +31,7 @@ internal class ProxyInterceptor : BBInterceptor {
         return request.applyAllActions(actions)
     }
 
-    override fun onResponse(response: Response): Response {
+    override fun onResponse(response: ResponseModel): ResponseModel {
         val list = rules.get() ?: return response
         rules.remove()
 
@@ -44,9 +43,9 @@ internal class ProxyInterceptor : BBInterceptor {
         return e
     }
 
-    private fun Request.applyAllActions(actions: List<ProxyActionModel>): Request {
-        val pathBuilder = url.toString().toUri().buildUpon()
-        val builder = newBuilder()
+    private fun RequestModel.applyAllActions(actions: List<ProxyActionModel>): RequestModel {
+        val pathBuilder = url.toUri().buildUpon()
+        var builder = this
         var newMethod = method
         var newBody = body
         actions.forEach {
@@ -56,17 +55,21 @@ internal class ProxyInterceptor : BBInterceptor {
                 ProxyActions.SET_RESPONSE_CODE -> Unit
 
                 ProxyActions.SET_BODY_REQUEST -> {
-                    newBody = it.body?.toRequestBody()
+                    newBody = Body.Text(it.body)
                 }
 
                 ProxyActions.SET_HEADER -> {
-                    builder.header(it.name.orEmpty(), it.value.orEmpty())
+                    builder = builder.copy(
+                        headers = (builder.headers ?: mutableMapOf()) + mapOf(
+                            it.name.orEmpty() to listOf(it.value.toString())
+                        )
+                    )
                 }
 
                 ProxyActions.SET_METHOD -> {
                     newMethod = it.value.orEmpty()
                     if (!newMethod.equals("get", true) && newBody == null) {
-                        newBody = "".toRequestBody()
+                        newBody = Body.Text("")
                     }
                 }
 
@@ -83,7 +86,9 @@ internal class ProxyInterceptor : BBInterceptor {
                 }
 
                 ProxyActions.REMOVE_HEADER -> {
-                    builder.removeHeader(it.name.orEmpty())
+                    builder = builder.copy(
+                        headers = (builder.headers ?: mutableMapOf()) - it.name.orEmpty()
+                    )
                 }
 
                 ProxyActions.REMOVE_QUERY -> {
@@ -91,15 +96,21 @@ internal class ProxyInterceptor : BBInterceptor {
                 }
             }
         }
-        builder.method(newMethod, newBody.takeIf { !newMethod.equals("get", true) })
-        builder.url(pathBuilder.build().toString())
-        return builder.build()
+
+        return builder.copy(
+            method = newMethod,
+            body = newBody.takeIf { !newMethod.equals("get", true) },
+            url = pathBuilder.build().toString()
+        )
     }
 
-    private fun Response.applyAllActions(rules: List<ProxyRuleModel>): Response {
+    private fun ResponseModel.applyAllActions(rules: List<ProxyRuleModel>): ResponseModel {
         val actions = rules.flatMap { it.actions }
-        val builder = newBuilder()
-            .addHeader(PROXY_APPLIED_HEADER, rules.joinToString { it.id.toString() })
+        var builder = copy(
+            headers = (headers ?: mutableMapOf()) + mapOf(
+                PROXY_APPLIED_HEADER to listOf(rules.joinToString { it.id.toString() })
+            )
+        )
 
         actions.forEach {
             when (it.action) {
@@ -113,16 +124,16 @@ internal class ProxyInterceptor : BBInterceptor {
                 ProxyActions.REMOVE_QUERY -> Unit
 
                 ProxyActions.SET_BODY_RESPONSE -> {
-                    builder.body(it.body?.toResponseBody())
+                    builder = builder.copy(body = it.body)
                 }
 
                 ProxyActions.SET_RESPONSE_CODE -> {
-                    builder.code(it.value?.toIntOrNull() ?: -1)
+                    builder = builder.copy(code = it.value?.toIntOrNull() ?: -1)
                 }
             }
         }
 
-        return builder.build()
+        return builder
     }
 
     private fun Uri.Builder.setQuery(name: String, value: String? = null) {
