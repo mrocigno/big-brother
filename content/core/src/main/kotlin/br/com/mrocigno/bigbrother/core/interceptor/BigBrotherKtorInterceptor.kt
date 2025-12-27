@@ -9,13 +9,14 @@ import io.ktor.client.plugins.Sender
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.HttpResponseData
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.headersOf
 import io.ktor.util.InternalAPI
 import io.ktor.utils.io.ByteReadChannel
 
 class BigBrotherKtorInterceptor(private vararg val blockList: String) : HttpSendInterceptor {
 
     fun Map<String, List<String>>.toKtorHeaders() =
-        io.ktor.http.headersOf(*this.toList().toTypedArray())
+        headersOf(*this.toList().toTypedArray())
 
     fun HttpRequestBuilder.isBlocked(): Boolean {
         val strUrl = url.toString()

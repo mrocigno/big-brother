@@ -114,15 +114,7 @@ class NetworkPayloadModel(
 
     constructor(request: RequestModel) : this(
         headers = request.headers,
-        body = request.let {
-            when (val body = request.body) {
-//                is Body.Multipart -> {
-//                    Json.encodeToString(NetworkMultiPartModel(body))
-//                    ""
-//                }
-                else -> body?.toString()
-            }
-        }
+        body = request.body?.toString()
     )
 
     constructor(response: ResponseModel) : this(

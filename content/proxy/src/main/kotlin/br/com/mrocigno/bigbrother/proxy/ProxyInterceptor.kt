@@ -17,7 +17,7 @@ internal class ProxyInterceptor : BigBrotherInterceptor {
 
     override val priority: Int = 1000
     private val proxyDao: ProxyDao? get() = bbdb?.proxyDao()
-    private val rules: ThreadLocal<List<ProxyRuleModel>> = ThreadLocal()
+    private var rules: List<ProxyRuleModel> = emptyList()
 
     override fun onRequest(request: RequestModel): RequestModel {
         val list = proxyDao?.getAllEnabled()
@@ -26,20 +26,19 @@ internal class ProxyInterceptor : BigBrotherInterceptor {
             ?.takeIf { it.isNotEmpty() }
             ?: return request
 
-        rules.set(list)
+        rules = list
         val actions = list.flatMap { it.actions }
         return request.applyAllActions(actions)
     }
 
     override fun onResponse(response: ResponseModel): ResponseModel {
-        val list = rules.get() ?: return response
-        rules.remove()
+        val list = rules.ifEmpty { return response }
 
         return response.applyAllActions(list)
     }
 
     override fun onError(e: Exception): Exception {
-        rules.remove()
+        rules = emptyList()
         return e
     }
 
