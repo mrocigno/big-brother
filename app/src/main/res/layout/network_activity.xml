@@ -5,6 +5,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     app:layoutDescription="@xml/network_activity_scene">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +29,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <RadioGroup
+            android:id="@+id/network_client_options"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/bb_spacing_m"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actions_title">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/okhttp_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="OkHttp 3 + Retrofit" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/ktor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ktor" />
+
+        </RadioGroup>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/success_load_list"
             android:layout_width="0dp"
@@ -37,7 +63,7 @@
             android:text="@string/success_load_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/actions_title" />
+            app:layout_constraintTop_toBottomOf="@id/network_client_options" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/slow_load_list"

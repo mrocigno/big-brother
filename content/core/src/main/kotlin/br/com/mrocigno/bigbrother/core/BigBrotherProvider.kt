@@ -6,6 +6,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
 import androidx.fragment.app.Fragment
+import br.com.mrocigno.bigbrother.core.interceptor.BigBrotherInterceptor
 import kotlin.reflect.KClass
 
 abstract class BigBrotherProvider : ContentProvider() {
@@ -26,8 +27,8 @@ abstract class BigBrotherProvider : ContentProvider() {
     fun addPage(location: KClass<out Activity>, wrapper: ActivityPageWrapper.() -> Unit) =
         BigBrother.addPage(location, wrapper)
 
-    fun addInterceptor(interceptor: BBInterceptor) =
-        BigBrother.addInterceptor(interceptor)
+    fun addInterceptor(interceptorCreator: () -> BigBrotherInterceptor) =
+        BigBrother.addInterceptor(interceptorCreator)
 
     final override fun query(
         p0: Uri,

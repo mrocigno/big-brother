@@ -24,12 +24,12 @@ internal fun Buffer.toBase64(): String =
     Base64.encodeToString(readByteArray(), Base64.NO_WRAP)
 
 fun BigBrotherProvider.addNetworkPage(customName: String = "Network") {
-    addInterceptor(NetworkEntryInterceptor())
+    addInterceptor { NetworkEntryInterceptor() }
     addPage(customName) { NetworkFragment() }
 }
 
 fun BigBrother.addNetworkPage(customName: String = "Network") {
-    addInterceptor(NetworkEntryInterceptor())
+    addInterceptor { NetworkEntryInterceptor() }
     addPage(customName) { NetworkFragment() }
 }
 

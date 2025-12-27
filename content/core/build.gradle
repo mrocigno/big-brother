@@ -12,6 +12,7 @@ dependencies {
     implementation libs.kotlin.reflection
 
     compileOnly libs.squareup.okhttp3
+    compileOnly libs.ktor.core
 
     constraints {
         api project(":content:log")

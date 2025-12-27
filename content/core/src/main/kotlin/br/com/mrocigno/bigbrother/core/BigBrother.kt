@@ -4,13 +4,14 @@ import android.app.Activity
 import android.app.Application
 import android.util.Log
 import androidx.fragment.app.Fragment
+import br.com.mrocigno.bigbrother.core.interceptor.BigBrotherInterceptor
 import kotlin.reflect.KClass
 
 object BigBrother {
 
     val config = BigBrotherConfig()
     internal val tasks = mutableListOf<BigBrotherTask>()
-    internal val interceptors = mutableSetOf<BBInterceptor>()
+    internal val interceptors = mutableSetOf<() -> BigBrotherInterceptor>()
 
     private val activityPages: HashMap<KClass<out Activity>, List<PageData>> = hashMapOf()
     private val pages: MutableList<PageData> = mutableListOf()
@@ -23,9 +24,9 @@ object BigBrother {
         pages.add(PageData(name, creator))
     }
 
-    fun addInterceptor(interceptor: BBInterceptor) {
-        Log.e("TAG", "addInterceptor: ${interceptor.hashCode()}")
-        interceptors.add(interceptor)
+    fun addInterceptor(interceptorCreator: () -> BigBrotherInterceptor) {
+        Log.e("TAG", "addInterceptor: ${interceptorCreator.hashCode()}")
+        interceptors.add(interceptorCreator)
     }
 
     fun config(configuration: BigBrotherConfig.() -> Unit) = apply {

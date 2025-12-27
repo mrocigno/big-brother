@@ -23,6 +23,11 @@ dependencies {
     implementation libs.androidx.lifecycle.runtime
     implementation libs.gson
     implementation libs.timber
+    implementation libs.ktor.core
+    implementation libs.ktor.okhttp
+    implementation libs.ktor.gson
+    implementation libs.ktor.contentNegotiation
+    implementation libs.ktor.logging
 
     implementation libs.compose.material3
     implementation libs.compose.runtime

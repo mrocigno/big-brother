@@ -4,3 +4,11 @@
 /AndroidProjectSystem.xml
 /androidTestResultsUserPreferences.xml
 /runConfigurations.xml
+/gradle.xml
+/*.xml
+/misc.xml
+/compiler.xml
+/deploymentTargetDropDown.xml
+/kotlinc.xml
+/migrations.xml
+/vcs.xml

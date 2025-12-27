@@ -5,6 +5,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     app:layoutDescription="@xml/report_activity_scene">
 
     <androidx.constraintlayout.widget.ConstraintLayout

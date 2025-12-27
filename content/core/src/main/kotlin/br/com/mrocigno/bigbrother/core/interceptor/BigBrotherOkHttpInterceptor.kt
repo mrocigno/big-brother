@@ -1,41 +1,36 @@
-package br.com.mrocigno.bigbrother.core
+package br.com.mrocigno.bigbrother.core.interceptor
 
-import br.com.mrocigno.bigbrother.core.BigBrother.interceptors
+import br.com.mrocigno.bigbrother.core.BigBrother
+import br.com.mrocigno.bigbrother.core.model.RequestModel
+import br.com.mrocigno.bigbrother.core.model.ResponseModel
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 
-interface BBInterceptor {
-
-    val priority: Int
-
-    fun onRequest(request: Request): Request
-
-    fun onResponse(response: Response): Response
-
-    fun onError(e: Exception): Exception
-}
-
-class BigBrotherInterceptor(private vararg val blockList: String) : Interceptor {
+class BigBrotherOkHttpInterceptor(private vararg val blockList: String) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         if (chain.request().isBlocked()) return chain.proceed(chain.request())
 
-        val orderedInterceptors = interceptors
+        val orderedInterceptors = BigBrother.interceptors
+            .map { it.invoke() }
             .sortedByDescending { it.priority }
 
         try {
-            var request = chain.request()
+            var request = RequestModel(chain.request())
             orderedInterceptors.forEach {
                 request = it.onRequest(request)
             }
 
-            var response = chain.proceed(request)
+            val newRequest = request.toOkHttpRequest(chain.request().newBuilder())
+            val proceed = chain.proceed(newRequest)
+
+            var response = ResponseModel(proceed)
             orderedInterceptors.forEach {
                 response = it.onResponse(response)
             }
 
-            return response
+            return response.toOkHttpResponse(proceed.newBuilder())
         } catch (e: Exception) {
             var exception = e
             orderedInterceptors.forEach {

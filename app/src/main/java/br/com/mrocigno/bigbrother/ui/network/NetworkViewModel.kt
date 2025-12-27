@@ -3,6 +3,7 @@ package br.com.mrocigno.bigbrother.ui.network
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.mrocigno.bigbrother.R
 import br.com.mrocigno.bigbrother.di.DI
 import br.com.mrocigno.bigbrother.network.MutableResponseFlow
 import br.com.mrocigno.bigbrother.network.ResponseFlow
@@ -20,16 +21,18 @@ class NetworkViewModel(
     private val githubRepository: GithubRepository = DI.githubRepository
 ) : ViewModel() {
 
+    private var clientId: Int = R.id.okhttp_3
+
     private val _list = MutableResponseFlow<ApiBase>()
     val list: ResponseFlow<ApiBase> get() = _list
 
-    fun fetchList() = _list.sync(githubRepository.getList())
+    fun fetchList() = _list.sync(githubRepository.getList(clientId))
 
-    fun fetchListSlowly() = _list.sync(githubRepository.getListSlowly())
+    fun fetchListSlowly() = _list.sync(githubRepository.getListSlowly(clientId))
 
-    fun fetchError() = _list.sync(githubRepository.getError())
+    fun fetchError() = _list.sync(githubRepository.getError(clientId))
 
-    fun fetchPost() = _list.sync(githubRepository.simulatePost().map {
+    fun fetchPost() = _list.sync(githubRepository.simulatePost(clientId).map {
         ApiBase(0, false, emptyList())
     })
 
@@ -51,7 +54,11 @@ class NetworkViewModel(
 
     fun fetchXmlApi() = viewModelScope.launch {
         runCatching {
-            githubRepository.xmlApi()
+            githubRepository.xmlApi(clientId)
         }.getOrNull()
+    }
+
+    fun setClientById(checkedId: Int) {
+        clientId = checkedId
     }
 }
