@@ -117,7 +117,8 @@ private suspend fun View?.awaitView(timeout: Long, block: () -> View?): View? {
                 ?.takeIf { it.isViewReady }
                 ?.run(completableView::complete)
                 ?.also {
-                    observer.removeOnGlobalLayoutListener(listener)
+                    observer.takeIf { it.isAlive }
+                        ?.removeOnGlobalLayoutListener(listener)
                 }
         }
         observer.addOnGlobalLayoutListener(listener)

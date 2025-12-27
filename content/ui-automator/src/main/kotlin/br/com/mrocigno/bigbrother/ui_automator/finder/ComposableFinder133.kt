@@ -25,8 +25,10 @@ import androidx.compose.ui.text.AnnotatedString
 import br.com.mrocigno.bigbrother.common.utils.field
 import br.com.mrocigno.bigbrother.common.utils.property
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.yield
 
 class ComposableFinder133(
     val view: ComposeView,
@@ -155,6 +157,8 @@ class ComposableFinder133(
         val pathSegments = xpath.split("/").trimTill("ComposeView")
         var currentNode: SemanticsNode? = owner?.rootSemanticsNode
 
+        recomposer?.currentState?.first { it == Recomposer.State.Idle }
+
         for (segment in pathSegments) {
             val condition = segment.substringAfter("[").substringBefore("]")
 
@@ -189,6 +193,7 @@ class ComposableFinder133(
             var node: SemanticsNode? = safeRunner.invoke()
             while (node == null) {
                 node = runCatching { safeRunner.invoke() }.getOrNull()
+                yield()
                 delay(100)
             }
             node
@@ -221,7 +226,7 @@ class ComposableFinder133(
             insert(0, "/${current[Role] ?: "Node"}${if (currentId != null) "[@id='$currentId']" else "[$index]"}")
             current = if (isUniqueId) null else parent
 
-            if (current?.id == 1) break
+            if (current?.isRoot == true) break
         }
 
         insert(0, view.getXpath())

@@ -19,9 +19,6 @@ object UiAutomatorHolder {
     fun recordSetText(activity: Activity, finder: ViewFinder, text: String) =
         record(activity, finder, RecordedAction.SET_TEXT, text)
 
-    fun recordBackPressed(activity: Activity) =
-        record(activity, null, RecordedAction.BACK_PRESSED)
-
     fun recordScroll(activity: Activity, finder: ViewFinder, value: Float) =
         record(activity, finder, RecordedAction.SCROLL_Y, value)
 

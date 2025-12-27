@@ -7,11 +7,12 @@ import br.com.mrocigno.bigbrother.core.BigBrotherTask
 import br.com.mrocigno.bigbrother.ui_automator.finder.ViewFinder
 import br.com.mrocigno.bigbrother.ui_automator.finder.findViewByXPath
 import br.com.mrocigno.bigbrother.ui_automator.model.UiAutomatorRecordModel
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.yield
 import java.lang.ref.WeakReference
 
 class UiAutomatorRunnerTask(
@@ -20,7 +21,6 @@ class UiAutomatorRunnerTask(
 ) : BigBrotherTask() {
 
     private val scope = CoroutineScope(Dispatchers.Main)
-    private var currentContext = CompletableDeferred(activity.javaClass.name)
     private var currentActivity: WeakReference<Activity>? = WeakReference(activity)
     private var isPlaying: Boolean = false
     private var playIndex: Int = 0
@@ -46,7 +46,6 @@ class UiAutomatorRunnerTask(
         val contextName = activity.javaClass.name
         if (contextName == currentStep.context) {
             currentActivity = WeakReference(activity)
-            currentContext.complete(contextName)
         }
     }
 
@@ -54,8 +53,11 @@ class UiAutomatorRunnerTask(
         if (!isPlaying || index >= steps.size) { removeMe(); return }
 
         with(currentStep) {
-            while (context != withTimeout(timeout) { currentContext.await()}) {
-                currentContext = CompletableDeferred()
+            withTimeout(timeout) {
+                while (currentActivity?.get()?.javaClass?.name != context) {
+                    yield()
+                    delay(100)
+                }
             }
 
             val activity = currentActivity?.get()
@@ -63,7 +65,7 @@ class UiAutomatorRunnerTask(
 
             if (activity != null && view != null) {
                 val finder = ViewFinder.fromView(view)
-                if (finder.isReady(identifier, timeout)) executeAction(activity, finder)
+                if (finder.isReady(identifier, timeout)) executeAction(finder)
             }
             run(++playIndex)
         }
