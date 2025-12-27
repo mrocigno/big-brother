@@ -27,8 +27,7 @@ publishing {
             }
 
             pom {
-
-                name = 'BigBrother'
+                name = "BigBrother${project.name.capitalize()}"
                 description = 'Think on a better description'
                 url = 'https://github.com/mrocigno/big-brother'
                 licenses {
