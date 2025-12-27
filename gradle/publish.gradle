@@ -1,6 +1,6 @@
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
-//apply plugin: 'tech.medivh.plugin.publisher'
+apply plugin: 'tech.medivh.plugin.publisher'
 
 def libGroup = "io.github.mrocigno"
 def libVersion = project.findProperty("libVersion")
@@ -9,7 +9,7 @@ android {
     publishing {
         singleVariant("release") {
             withSourcesJar()
-//            withJavadocJar()
+            withJavadocJar()
         }
     }
 }

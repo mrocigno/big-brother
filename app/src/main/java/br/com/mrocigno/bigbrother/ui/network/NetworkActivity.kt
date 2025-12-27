@@ -1,6 +1,7 @@
 package br.com.mrocigno.bigbrother.ui.network
 
 import android.os.Bundle
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,7 @@ class NetworkActivity : AppCompatActivity(R.layout.network_activity) {
     private val xmlApi: AppCompatButton by lazy { findViewById(R.id.xml_api) }
     private val progressBar: LinearProgressIndicator by lazy { findViewById(R.id.progress_bar) }
     private val toolbar: Toolbar by lazy { findViewById(R.id.toolbar) }
+    private val networkClientOption: RadioGroup by lazy { findViewById(R.id.network_client_options) }
 
     private val viewModel: NetworkViewModel by viewModels()
 
@@ -64,6 +66,11 @@ class NetworkActivity : AppCompatActivity(R.layout.network_activity) {
         xmlApi.setOnClickListener {
             openBigBrotherBubble()
             viewModel.fetchXmlApi()
+        }
+
+        networkClientOption.setOnCheckedChangeListener { _, checkedId ->
+            viewModel.setClientById(checkedId)
+            uploadImage.isEnabled = checkedId == R.id.okhttp_3
         }
     }
 }
