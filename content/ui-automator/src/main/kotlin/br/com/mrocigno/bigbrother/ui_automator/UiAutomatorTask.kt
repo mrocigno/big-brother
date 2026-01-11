@@ -1,7 +1,15 @@
 package br.com.mrocigno.bigbrother.ui_automator
 
 import android.app.Activity
+import android.content.Context
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
+import androidx.fragment.app.Fragment
+import br.com.mrocigno.bigbrother.common.utils.decorView
+import br.com.mrocigno.bigbrother.common.utils.field
 import br.com.mrocigno.bigbrother.common.utils.rootView
 import br.com.mrocigno.bigbrother.core.BigBrotherTask
 import br.com.mrocigno.bigbrother.core.BigBrotherTooltipView
@@ -35,10 +43,19 @@ class UiAutomatorTask : BigBrotherTask() {
 
     fun startRecording(activity: Activity) {
         isRecording = true
-        UiAutomatorView.getOrCreate(activity).run(activity.rootView::addView)
+        val teste = UiAutomatorView.getOrCreate(activity)
+        teste.run(activity.rootView::addView)
         BigBrotherTooltipView.getOrCreate(activity)
             .applyActions(activity)
             .run(activity.rootView::addView)
+    }
+
+    fun startRecording(fragment: Fragment) {
+        isRecording = true
+        UiAutomatorView.getOrCreate(fragment).run(fragment.decorView!!::addView)
+        BigBrotherTooltipView.getOrCreate(fragment)
+            ?.applyActions(fragment.requireActivity())
+            .run(fragment.decorView!!::addView)
     }
 
     fun stopRecording(activity: Activity) {
@@ -74,5 +91,37 @@ class UiAutomatorTask : BigBrotherTask() {
                 }
             )
         )
+        addAction(
+            BigBrotherTooltipAction(
+                icon = CR.drawable.bigbrother_ic_arrow_back,
+                action = {
+                    UiAutomatorHolder.recordBackPressed(activity)
+                    if (activity is AppCompatActivity) {
+                        activity.onBackPressedDispatcher.onBackPressed()
+                    } else {
+                        activity.onBackPressed()
+                    }
+                }
+            )
+        )
+    }
+
+    fun checkForDialogs(context: Context) {
+        val views = Class.forName("android.view.WindowManagerGlobal")
+            ?.getMethod("getInstance")?.invoke(null)
+            ?.field<ArrayList<View>>("mViews")
+            ?.ifEmpty { null }
+            ?: return
+
+        val filtered = views
+            .filter { it.toString().contains(context::class.simpleName.orEmpty()) }
+            .ifEmpty { views }
+            .mapNotNull { it as? ViewGroup }
+            .filter { it.children.toList().none { child -> child is UiAutomatorView } }
+
+        filtered.forEach { decor ->
+            val tea = UiAutomatorView(context)
+            decor.addView(tea)
+        }
     }
 }

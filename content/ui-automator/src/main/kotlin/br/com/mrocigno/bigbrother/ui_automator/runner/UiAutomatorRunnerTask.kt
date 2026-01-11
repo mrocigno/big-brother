@@ -65,7 +65,7 @@ class UiAutomatorRunnerTask(
 
             if (activity != null && view != null) {
                 val finder = ViewFinder.fromView(view)
-                if (finder.isReady(identifier, timeout)) executeAction(finder)
+                if (finder.isReady(identifier, timeout)) executeAction(activity, finder)
             }
             run(++playIndex)
         }

@@ -21,5 +21,6 @@ dependencies {
         api project(":content:crash")
         api project(":content:database")
         api project(":content:proxy")
+        api project(":content:ui-automator")
     }
 }

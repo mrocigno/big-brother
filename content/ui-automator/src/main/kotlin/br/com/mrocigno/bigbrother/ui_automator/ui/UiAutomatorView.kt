@@ -12,6 +12,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.FrameLayout.LayoutParams.MATCH_PARENT
@@ -61,6 +62,7 @@ internal class UiAutomatorView @JvmOverloads constructor(
     private val task = getBigBrotherTask(UiAutomatorTask::class) ?: error("UiAutomatorTask not found")
     private var clickActive = task.isDeepInspectActive
     private var isRecordingScroll: Boolean = false
+    private var rootView: ViewGroup = context.rootView!!
     private val scrollOffset: PointF = PointF()
     private val location = IntArray(2)
     private val activity: Activity? get() = context as? Activity
@@ -115,7 +117,7 @@ internal class UiAutomatorView @JvmOverloads constructor(
                         isRecordingScroll = false
                         swipeAnimator.cancel()
                     } else {
-                        val clickedView = ViewFinder.fromCoordinates(event.rawX, event.rawY, context.rootView!!)
+                        val clickedView = ViewFinder.fromCoordinates(event.rawX, event.rawY, rootView)
                         lastClickedView = when {
                             lastClickedView == clickedView -> lastClickedView?.parent
                             lastClickedView != null -> null
@@ -206,6 +208,18 @@ internal class UiAutomatorView @JvmOverloads constructor(
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
         getLocationOnScreen(location)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        rootView = parent as ViewGroup
+    }
+
+    override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
+        super.onWindowFocusChanged(hasWindowFocus)
+        if (!hasWindowFocus) {
+            getBigBrotherTask(UiAutomatorTask::class)?.checkForDialogs(context)
+        }
     }
 
     override fun onDraw(canvas: Canvas) {

@@ -3,6 +3,7 @@ package br.com.mrocigno.bigbrother.ui.automator
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.CheckedTextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 import androidx.appcompat.widget.AppCompatButton
@@ -31,7 +32,6 @@ import br.com.mrocigno.bigbrother.common.helpers.SimpleSpinnerAdapter
 import br.com.mrocigno.bigbrother.common.provider.id
 import br.com.mrocigno.bigbrother.common.utils.inflate
 import br.com.mrocigno.bigbrother.common.utils.toast
-import br.com.mrocigno.bigbrother.common.utils.visible
 import br.com.mrocigno.bigbrother.proxy.R as CR
 
 class PlaygroundActivity : AppCompatActivity(R.layout.playground_activity) {
@@ -51,7 +51,13 @@ class PlaygroundActivity : AppCompatActivity(R.layout.playground_activity) {
         }
 
         simulateLoading.setOnClickListener {
-            disabledButton.visible()
+            AlertDialog.Builder(this)
+                .setTitle("TESTE")
+                .setMessage("asudhsaudhausd\nashdiashuda\nasudhsaudhausd\nashdiashuda\nasudhsaudhausd\nashdiashuda\nasudhsaudhausd\nashdiashuda\nasudhsaudhausd\nashdiashuda\nasudhsaudhausd\nashdiashuda\nasudhsaudhausd\nashdiashuda\nasudhsaudhausd\nashdiashuda\n")
+                .setPositiveButton("asda") { d, a ->
+                    d.dismiss()
+                }
+                .show()
         }
 
         disabledButton.setOnClickListener {

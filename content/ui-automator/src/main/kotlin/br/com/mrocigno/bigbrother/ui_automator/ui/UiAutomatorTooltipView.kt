@@ -3,6 +3,7 @@ package br.com.mrocigno.bigbrother.ui_automator.ui
 import android.content.Context
 import android.graphics.drawable.LayerDrawable
 import android.util.AttributeSet
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -35,8 +36,11 @@ class UiAutomatorTooltipView @JvmOverloads constructor(
 
     private val diff = resources.getDimensionPixelOffset(CR.dimen.bb_size_s)
 
+    private val themedContext: Context
+        get() = ContextThemeWrapper(context, CR.style.BigBrotherTheme)
+
     init {
-        inflate(context, R.layout.bigbrother_view_automator_tooltip, this)
+        inflate(themedContext, R.layout.bigbrother_view_automator_tooltip, this)
         visibility = View.INVISIBLE
         layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
     }
